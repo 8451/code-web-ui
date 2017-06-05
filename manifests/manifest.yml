@@ -1,0 +1,9 @@
+---
+applications:
+ - name: code-web-ui
+   memory: 64m
+   host: code-web-ui
+   disk_quota: 512m
+   instances: 1
+   env:
+       API_URL: http://tbd
