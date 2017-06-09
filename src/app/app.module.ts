@@ -6,11 +6,15 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
+import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
+import { QuestionService } from './services/question.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionDashboardComponent
+    QuestionDashboardComponent,
+    QuestionListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +22,7 @@ import { QuestionDashboardComponent } from './question-dashboard/question-dashbo
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

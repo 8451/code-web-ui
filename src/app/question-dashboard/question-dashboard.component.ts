@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionService } from '../services/question.service';
+import { Question } from '../question'
 
 @Component({
   selector: 'app-question-dashboard',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionDashboardComponent implements OnInit {
 
-  constructor() { }
+  private questions: Promise<Question[]>;
+
+  constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
+    this.questions = this.questionService.getQuestions();
   }
 
 }
