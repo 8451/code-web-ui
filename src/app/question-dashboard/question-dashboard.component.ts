@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../services/question.service';
 import { Question } from '../question'
+import { MockQuestionService } from '../services/mockQuestion.service';
 
 @Component({
   selector: 'app-question-dashboard',
@@ -9,12 +10,24 @@ import { Question } from '../question'
 })
 export class QuestionDashboardComponent implements OnInit {
 
-  private questions: Promise<Question[]>;
+  private questions: Question[];
 
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: MockQuestionService) {
+
+   }
 
   ngOnInit() {
-    this.questions = this.questionService.getQuestions();
+    this.getQuestions();
   }
+
+  getQuestions(): void {
+    this.questionService.getQuestions().then(
+      questions => this.questions = questions,
+      error => {
+        console.error("An error occurred in the question component", error);
+      }
+    );
+  }
+
 
 }

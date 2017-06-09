@@ -1,10 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
+import { QuestionDetailsComponent } from './question-details/question-details.component';
 const routes: Routes = [
   {
     path: '',
-    children: []
+    redirectTo:'/questions',
+    pathMatch: 'full'
+  },
+  {
+    path: 'questions',
+    component: QuestionDashboardComponent
+  },
+  {
+    path: 'question/:id',
+    component: QuestionDetailsComponent
   }
 ];
 

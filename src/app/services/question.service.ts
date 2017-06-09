@@ -21,4 +21,13 @@ export class QuestionService {
       })
   }
 
+  getQuestion(id: string): Promise<Question> {
+    return this.http.get(`${this.questionsUrl}/${id}`)
+    .toPromise()
+    .then(response => response.json().question as Question)
+      .catch(e => {
+        console.error('An error occurred when trying to retrieve a question', e);
+        return Promise.reject(e.message || e);
+    });
+  }
 }
