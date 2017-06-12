@@ -10,9 +10,9 @@ import { MockQuestionService } from '../services/mockQuestion.service';
 })
 export class QuestionDashboardComponent implements OnInit {
 
-  private questions: Question[];
+  questions: Question[];
 
-  constructor(private questionService: MockQuestionService) {
+  constructor(private questionService: QuestionService) {
 
    }
 

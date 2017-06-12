@@ -1,3 +1,26 @@
-<p>
-  question-details works!
-</p>
+<!--<form>-->
+  <md-toolbar>
+      <button md-raised-button (click)="navigateBack()">Back</button>
+      <span class="example-spacer"></span>
+      <button md-raised-button color="primary" (click)="navigateBack()">Save</button>
+      <button md-raised-button color="warn" (click)="navigateBack()">Delete</button>
+  </md-toolbar>
+
+  <md-grid-list cols="4" rowHeight="8:1">
+    <md-grid-tile [colspan]="3" [rowspan]="2">
+      <md-input-container style="width:75%">
+        <input mdInput placeholder="Question Title">
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1" [rowspan]="14">Metadata</md-grid-tile>
+    <md-grid-tile [colspan]="3" [rowspan]="6">
+      <md-input-container style="width:75%">
+        <textarea rows="10" mdInput placeholder="Question Body"></textarea>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="3" [rowspan]="6">
+      <md-input-container style="width:75%">
+        <textarea rows="8" mdInput placeholder="Suggested Answer"></textarea>
+      </md-input-container></md-grid-tile>
+  </md-grid-list>
+<!--</form>-->

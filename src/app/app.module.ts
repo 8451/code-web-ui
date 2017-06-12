@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdListModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule, MdGridListModule, MdInputModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +29,10 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
     BrowserAnimationsModule,
     MdButtonModule,
     MdCardModule,
-    MdListModule
+    MdListModule,
+    MdToolbarModule,
+    MdGridListModule,
+    MdInputModule
   ],
   providers: [QuestionService, MockQuestionService],
   bootstrap: [AppComponent]

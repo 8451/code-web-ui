@@ -1,3 +1,4 @@
+import { QuestionService } from './../services/question.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -5,11 +6,47 @@ import { QuestionDashboardComponent } from './question-dashboard.component';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { AppModule } from '../app.module';
+import { MockQuestionService } from '../services/mockQuestion.service';
 
 describe('QuestionDashboardComponent', () => {
-   //let component: QuestionDashboardComponent;
-   //let fixture: ComponentFixture<QuestionDashboardComponent>;
+   let component: QuestionDashboardComponent;
+   let fixture: ComponentFixture<QuestionDashboardComponent>;
+   let questions: any[] = [
+       {
+           "id": "id1",
+           "title": "Title1",
+           "body": "Body1",
+           "suggestedAnswer": "SuggestedAnswer1",
+           "createdBy": "createdBy1",
+           "createdDate" : null,
+           "modifiedBy": "modifiedBy1",
+           "modifiedDate": null
+        },
+        {
+            "id": "id2",
+           "title": "Title2",
+           "body": "Body2",
+           "suggestedAnswer": "SuggestedAnswer2",
+           "createdBy": "createdBy2",
+           "createdDate" : null,
+           "modifiedBy": "modifiedBy2",
+           "modifiedDate": null
+        },
+        {   
+            "id": "id3",
+           "title": "Title3",
+           "body": "Body3",
+           "suggestedAnswer": "SuggestedAnswer3",
+           "createdBy": "createdBy3",
+           "createdDate" : null,
+           "modifiedBy": "modifiedBy3",
+           "modifiedDate": null
+        }
+        
+   ];
 
+  let spy: any; 
+  let questionService : QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -17,22 +54,30 @@ describe('QuestionDashboardComponent', () => {
         MaterialModule,
         AppModule,
         RouterTestingModule
-      ]
+      ],
+      providers: [ QuestionService ]
     }).compileComponents();
+    fixture = TestBed.createComponent(QuestionDashboardComponent);
+    component = fixture.debugElement.componentInstance;
   }));
 
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(QuestionDashboardComponent);
-    const component = fixture.debugElement.componentInstance;
+  it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should have a list of questions', async(() => {
-    const fixture = TestBed.createComponent(QuestionDashboardComponent);
-    fixture.detectChanges();
-    const component = fixture.debugElement.componentInstance;
-    console.error(component);
-    expect(component).toBeTruthy();
+
+  it('question dashboard component should be populated with a list of questions', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spy = spyOn(questionService, 'getQuestions').and.returnValue(Promise.resolve(questions));
+    component.ngOnInit();
+
+    fixture.whenStable().then(() => { // wait for async getQuote
+      fixture.detectChanges();        // update view with quote
+      expect(component.questions).toEqual(questions);
+    });
   }));
+
+
+
 });
