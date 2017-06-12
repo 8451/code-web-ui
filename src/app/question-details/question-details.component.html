@@ -1,26 +1,57 @@
-<!--<form>-->
+<form #questionForm="ngForm">
   <md-toolbar>
       <button md-raised-button (click)="navigateBack()">Back</button>
       <span class="example-spacer"></span>
       <button md-raised-button color="primary" (click)="navigateBack()">Save</button>
       <button md-raised-button color="warn" (click)="navigateBack()">Delete</button>
   </md-toolbar>
-
-  <md-grid-list cols="4" rowHeight="8:1">
+  <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">
     <md-grid-tile [colspan]="3" [rowspan]="2">
       <md-input-container style="width:75%">
-        <input mdInput placeholder="Question Title">
+        <input mdInput placeholder="Question Title" name="title" [(ngModel)]="question.title">
       </md-input-container>
     </md-grid-tile>
-    <md-grid-tile [colspan]="1" [rowspan]="14">Metadata</md-grid-tile>
-    <md-grid-tile [colspan]="3" [rowspan]="6">
+    <md-grid-tile [colspan]="2" [rowspan]="18">
+      <md-card>
+        <md-card-title>
+          Question Details
+        </md-card-title>
+        <md-card-content>
+          <md-list>
+            <md-list-item>
+            <md-input-container style="width:25%">
+              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" [(ngModel)]="question.difficulty">
+            </md-input-container>
+            </md-list-item>
+            <h3 md-subheader>Metadata</h3>
+            <md-list-item>
+              <h4 md-line>Modified by</h4>
+              <p md-line>{{question.modifiedBy}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Modified on</h4>
+              <p md-line>{{question.modifiedDate}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Created by</h4>
+              <p md-line>{{question.createdBy}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Created on</h4>
+              <p md-line>{{question.createdDate}}</p>
+            </md-list-item>
+          </md-list>
+        </md-card-content>
+      </md-card>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="3" [rowspan]="8">
       <md-input-container style="width:75%">
-        <textarea rows="10" mdInput placeholder="Question Body"></textarea>
+        <textarea rows="10" mdInput placeholder="Question Body" name="body" [(ngModel)]="question.body"></textarea>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="3" [rowspan]="6">
       <md-input-container style="width:75%">
-        <textarea rows="8" mdInput placeholder="Suggested Answer"></textarea>
+        <textarea rows="8" mdInput placeholder="Suggested Answer" name="suggestedAnswer" [(ngModel)]="question.suggestedAnswer"></textarea>
       </md-input-container></md-grid-tile>
   </md-grid-list>
-<!--</form>-->
+</form>

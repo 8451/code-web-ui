@@ -46,7 +46,7 @@ describe('QuestionDashboardComponent', () => {
    ];
 
   let spy: any; 
-  let questionService : QuestionService;
+  let questionService : MockQuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -68,7 +68,7 @@ describe('QuestionDashboardComponent', () => {
 
 
   it('question dashboard component should be populated with a list of questions', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
+    questionService = fixture.debugElement.injector.get(MockQuestionService);
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Promise.resolve(questions));
     component.ngOnInit();
 

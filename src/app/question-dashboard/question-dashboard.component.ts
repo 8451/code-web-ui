@@ -12,7 +12,7 @@ export class QuestionDashboardComponent implements OnInit {
 
   questions: Question[];
 
-  constructor(private questionService: QuestionService) {
+  constructor(private questionService: MockQuestionService) {
 
    }
 

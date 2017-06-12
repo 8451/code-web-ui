@@ -1,3 +1,4 @@
+import { MockQuestionService } from './../services/mockQuestion.service';
 import { Question } from './../question';
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
@@ -13,10 +14,11 @@ import 'rxjs/add/operator/switchMap';
 
 export class QuestionDetailsComponent implements OnInit {
 
-  private question: Question;
+  question: Question;
+  private id: string;
 
   constructor(
-    private questionService: QuestionService,
+    private questionService: MockQuestionService,
     private route: ActivatedRoute,
     private _location: Location
     ) {}

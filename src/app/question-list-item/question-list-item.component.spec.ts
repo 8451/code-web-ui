@@ -3,10 +3,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppModule } from './../app.module';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { Question } from '../question';
 
 import { QuestionListItemComponent } from './question-list-item.component';
 import { MaterialModule } from '@angular/material';
-import { Question } from '../question';
+
 
 describe('QuestionListItemComponent', () => {
   let question = 
@@ -15,11 +16,11 @@ describe('QuestionListItemComponent', () => {
            "title": "Title1",
            "body": "Body1",
            "suggestedAnswer": "SuggestedAnswer1",
-           "difficulty": "5",
+           "difficulty": 5,
            "createdBy": "createdBy1",
-           "createdDate" : new Date(),
+           "createdDate" : new Date(1),
            "modifiedBy": "modifiedBy1",
-           "modifiedDate": new Date()
+           "modifiedDate": new Date(1)
         };
   let mockRouter = {navigate: jasmine.createSpy('navigate')};
   let component: QuestionListItemComponent;
@@ -27,11 +28,13 @@ describe('QuestionListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AppModule, 
+      imports: [ 
         RouterTestingModule, 
         MaterialModule, 
         BrowserAnimationsModule
+      ],
+      declarations: [
+        QuestionListItemComponent
       ],
       providers: [
         {
@@ -58,8 +61,9 @@ describe('QuestionListItemComponent', () => {
       component.question = question;
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
+      
       expect(compiled.querySelector('md-card-title').textContent).toContain(question.title);
-      expect(compiled.querySelector('#modificationSubtitle').textContent).toContain('Modified by ' + question.modifiedBy +' on ' + question.modifiedDate);
+      expect(compiled.querySelector('#modificationSubtitle').textContent).toContain('Modified by ' + question.modifiedBy +' on ' + question.modifiedDate);     
       expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
     }))
 });
