@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from '../services/question.service';
-import { Question } from '../question'
-import { MockQuestionService } from '../services/mockQuestion.service';
+import { QuestionService } from '../services/question/question.service';
+import { Question } from '../domains/question'
+import { MockQuestionService } from '../services/question/mockQuestion.service';
 
 @Component({
   selector: 'app-question-dashboard',

@@ -9,8 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
 import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
-import { QuestionService } from './services/question.service';
-import { MockQuestionService } from './services/mockQuestion.service';
+import { QuestionService } from './services/question/question.service';
+import { MockQuestionService } from './services/question/mockQuestion.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { Question } from '../question';
+import { Question } from '../../question';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/toPromise';

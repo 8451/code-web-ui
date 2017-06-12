@@ -1,9 +1,9 @@
-import { MockQuestionService } from './../services/mockQuestion.service';
-import { Question } from './../question';
+import { MockQuestionService } from './../services/question/mockQuestion.service';
+import { Question } from './../domains/question';
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
 import {ActivatedRoute, Params} from '@angular/router';
-import { QuestionService } from '../services/question.service';
+import { QuestionService } from '../services/question/question.service';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -31,6 +31,14 @@ export class QuestionDetailsComponent implements OnInit {
 
   navigateBack(): void {
     this._location.back();
+  }
+
+  questionSubmit(): void {
+    this.questionService.updateQuestion(this.question);
+  }
+
+  deleteQuestion(questionId: string): void {
+    this.questionService.deleteQuestion(this.question.id);
   }
 
 }

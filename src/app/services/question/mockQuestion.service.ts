@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import { Question } from '../question';
+import { Question } from '../../question';
+
+import { QuestionService } from './question.service'
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class MockQuestionService {
-  private questionsUrl = 'http://localhost:8090/api/v1/questions';
   
    private test: any[] = [
        {
@@ -45,7 +45,7 @@ export class MockQuestionService {
         
    ];
 
-  constructor(private http: Http) { }
+  constructor() { }
  
 
   getQuestions(): Promise<Question[]> {
