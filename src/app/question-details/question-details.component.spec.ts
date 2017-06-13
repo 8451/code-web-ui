@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+import { QuestionService } from './../services/question/question.service';
 import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -8,6 +10,8 @@ import { AppModule } from '../app.module';
 
 
 describe('QuestionDetailsComponent', () => {
+  let spy: any;
+  let questionService: QuestionService;
   let component: QuestionDetailsComponent;
   let fixture: ComponentFixture<QuestionDetailsComponent>;
   let question: Question = {
@@ -26,7 +30,8 @@ describe('QuestionDetailsComponent', () => {
     TestBed.configureTestingModule({
       imports: [AppModule,
       RouterTestingModule,
-      FormsModule]
+      FormsModule],
+      providers: [ QuestionService ]
     })
     .compileComponents();
   }));
@@ -43,8 +48,17 @@ describe('QuestionDetailsComponent', () => {
   });
 
   it('should be an invalid form if the title is empty', () => {
-      component.question = question;
-      component.question.title = '';
-      //expect(component.questionForm.valid).toBeFalsy();
+      questionService = fixture.debugElement.injector.get(QuestionService);
+      spy = spyOn(questionService, 'getQuestion').and.returnValue(Observable.of(question));
+      component.ngOnInit();
+
+
+      fixture.whenStable().then(() => { // wait for async getQuote
+        component.question.title = ''; //Invalidates the title field
+        fixture.detectChanges();        // update view with quote
+        
+        expect(component.questionForm.valid).toBeFalsy();
+      });
   })
+
 });

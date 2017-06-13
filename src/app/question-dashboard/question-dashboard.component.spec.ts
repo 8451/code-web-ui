@@ -68,7 +68,7 @@ describe('QuestionDashboardComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  //Will fail because there is a dependency on mock service
+  
   it('question dashboard component should be populated with a list of questions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));

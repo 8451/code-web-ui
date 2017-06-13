@@ -1,5 +1,5 @@
-import { FormsModule } from '@angular/forms';
-//import { MockQuestionService } from './../services/question/mockQuestion.service';
+import { NgForm } from '@angular/forms';
+import { MockQuestionService } from './../services/question/mockQuestion.service';
 import { Question } from './../domains/question';
 import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import {Location} from '@angular/common';
@@ -18,7 +18,7 @@ export class QuestionDetailsComponent implements OnInit {
 
   question: Question;
   private id: string;
-  //@ViewChild('questionForm') questionForm: NgForm;
+  @ViewChild('questionForm') questionForm: NgForm;
 
 
   constructor(
