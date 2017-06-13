@@ -20,7 +20,7 @@
         <md-card-content>
           <md-list>
             <md-list-item>
-            <md-input-container style="width:25%">
+            <md-input-container style="width:50%">
               <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" [(ngModel)]="question.difficulty" required>
             </md-input-container>
             </md-list-item>
@@ -31,7 +31,7 @@
             </md-list-item>
             <md-list-item>
               <h4 md-line>Modified on</h4>
-              <p md-line>{{question.modifiedDate}}</p>
+              <p md-line>{{question.modifiedDate | date: "mediumDate"}}</p>
             </md-list-item>
             <md-list-item>
               <h4 md-line>Created by</h4>
@@ -39,7 +39,7 @@
             </md-list-item>
             <md-list-item>
               <h4 md-line>Created on</h4>
-              <p md-line>{{question.createdDate}}</p>
+              <p md-line>{{question.createdDate | date: "mediumDate"}}</p>
             </md-list-item>
           </md-list>
         </md-card-content>

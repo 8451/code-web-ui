@@ -2,12 +2,14 @@ import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { AppModule } from '../app.module';
+import { routes } from '../app-routing.module';
 
 
 describe('QuestionDashboardComponent', () => {
@@ -74,11 +76,24 @@ describe('QuestionDashboardComponent', () => {
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
 
-    fixture.whenStable().then(() => { // wait for async getQuote
-      fixture.detectChanges();        // update view with quote
+    fixture.whenStable().then(() => { 
+      fixture.detectChanges();        
       expect(component.questions).toEqual(questions);
     });
   }));
+
+  // it('should route to detail page on click', () => {
+  //   component.questions = questions;
+  //   fixture.detectChanges();
+  //   let router = fixture.debugElement.componentInstance(Router);
+  //   spy = spyOn(router, 'navigate');
+  //   let compiled = fixture.debugElement.nativeElement;
+  //   let listItem = compiled.querySelector('app-question-list-item');
+  //   listItem.click();
+  //   console.log('Spy calls ', spy.calls.count());
+  //   expect(spy.calls.count()).toBe(1);
+
+  // })
 
 
 

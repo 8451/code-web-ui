@@ -20,7 +20,8 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alertSubscription.unsubscribe();
+    if (this.alertSubscription)
+      this.alertSubscription.unsubscribe();
   }
 
   openInfoSnackBar(alert: Alert, action: string) {

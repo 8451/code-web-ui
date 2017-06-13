@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { QuestionDetailsComponent } from './question-details.component';
 import { AppModule } from '../app.module';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 
 
 describe('QuestionDetailsComponent', () => {
@@ -27,25 +27,13 @@ describe('QuestionDetailsComponent', () => {
       "modifiedDate": null
   }
 
-  let mockRoute = {
-    'snapshot': {
-      'url': [
-        {'path': 'question'},
-        {'path': 'new'}
-      ]
-    }
-  }
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [AppModule,
       RouterTestingModule,
       FormsModule],
-      providers: [ QuestionService,
-        {
-          provide: ActivatedRoute,
-          useValue: mockRoute
-        } 
+      providers: [ QuestionService, 
+        {provide: ActivatedRoute, useValue: {url: Observable.of([{path: 'new'}])}} 
       ]
     })
     .compileComponents();
@@ -55,26 +43,24 @@ describe('QuestionDetailsComponent', () => {
     fixture = TestBed.createComponent(QuestionDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.ngOnInit();
-
   });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be an invalid form if the title is empty', () => {
-      questionService = fixture.debugElement.injector.get(QuestionService);
+  it('should be an invalid form if the title is empty', async(() => {
+      questionService = fixture.debugElement.injector.get(QuestionService);      
       spy = spyOn(questionService, 'getQuestion').and.returnValue(Observable.of(question));
-      component.ngOnInit();
 
-
-      fixture.whenStable().then(() => { // wait for async getQuote
+       fixture.whenStable().then(() => { // wait for async getQuestion
+        component.question = question;
         component.question.title = ''; //Invalidates the title field
-        fixture.detectChanges();        // update view with quote
-        
+        fixture.detectChanges();        // update question with the new title
         expect(component.questionForm.valid).toBeFalsy();
+       }).catch((e) => {
+        console.error(e); 
       });
-  })
+  }))
 
 });
