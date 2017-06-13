@@ -1,5 +1,7 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '@angular/material';
+import { AlertService } from './../services/alert/alert.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AlertComponent } from './alert.component';
 
 describe('AlertComponent', () => {
@@ -8,7 +10,12 @@ describe('AlertComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlertComponent ]
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [ AlertComponent ],
+      providers: [ AlertService ]
     })
     .compileComponents();
   }));

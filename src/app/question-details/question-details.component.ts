@@ -33,8 +33,7 @@ export class QuestionDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.isNew = this.route.snapshot.url[this.route.snapshot.url.length-1].path === 'new';
-
+    this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
     if (this.isNew) {
       this.question = new Question();
     } else {

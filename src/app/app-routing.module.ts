@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo:'/questions',
