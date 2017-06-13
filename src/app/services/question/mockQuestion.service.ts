@@ -1,5 +1,6 @@
+import { Question } from './../../domains/question';
 import { Injectable } from '@angular/core';
-import { Question } from '../../question';
+
 
 import { QuestionService } from './question.service'
 
@@ -62,4 +63,6 @@ export class MockQuestionService {
           }));
       });
   }
+
+
 }

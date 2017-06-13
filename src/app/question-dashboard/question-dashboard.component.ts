@@ -12,7 +12,7 @@ export class QuestionDashboardComponent implements OnInit {
 
   questions: Question[];
 
-  constructor(private questionService: MockQuestionService) {
+  constructor(private questionService: QuestionService) {
 
    }
 
@@ -21,7 +21,7 @@ export class QuestionDashboardComponent implements OnInit {
   }
 
   getQuestions(): void {
-    this.questionService.getQuestions().then(
+    this.questionService.getQuestions().subscribe(
       questions => this.questions = questions,
       error => {
         console.error("An error occurred in the question component", error);

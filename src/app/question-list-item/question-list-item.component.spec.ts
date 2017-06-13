@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppModule } from './../app.module';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { Question } from '../question';
+import { Question } from '../domains/question';
 
 import { QuestionListItemComponent } from './question-list-item.component';
 import { MaterialModule } from '@angular/material';

@@ -1,10 +1,12 @@
-import { MockQuestionService } from './../services/question/mockQuestion.service';
+import { FormsModule } from '@angular/forms';
+//import { MockQuestionService } from './../services/question/mockQuestion.service';
 import { Question } from './../domains/question';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import {Location} from '@angular/common';
 import {ActivatedRoute, Params} from '@angular/router';
 import { QuestionService } from '../services/question/question.service';
 import 'rxjs/add/operator/switchMap';
+
 
 @Component({
   selector: 'app-question-details',
@@ -16,9 +18,11 @@ export class QuestionDetailsComponent implements OnInit {
 
   question: Question;
   private id: string;
+  //@ViewChild('questionForm') questionForm: NgForm;
+
 
   constructor(
-    private questionService: MockQuestionService,
+    private questionService: QuestionService,
     private route: ActivatedRoute,
     private _location: Location
     ) {}

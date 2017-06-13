@@ -1,10 +1,11 @@
+import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { QuestionDetailsComponent } from './question-details.component';
 import { AppModule } from '../app.module';
-import { Question } from '../question';
+
 
 describe('QuestionDetailsComponent', () => {
   let component: QuestionDetailsComponent;

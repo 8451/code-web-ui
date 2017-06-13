@@ -1,4 +1,6 @@
-import { QuestionService } from './../services/question.service';
+import { Observable } from 'rxjs/Observable';
+import { QuestionService } from './../services/question/question.service';
+
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -6,7 +8,7 @@ import { QuestionDashboardComponent } from './question-dashboard.component';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { AppModule } from '../app.module';
-import { MockQuestionService } from '../services/mockQuestion.service';
+
 
 describe('QuestionDashboardComponent', () => {
    let component: QuestionDashboardComponent;
@@ -46,7 +48,7 @@ describe('QuestionDashboardComponent', () => {
    ];
 
   let spy: any; 
-  let questionService : MockQuestionService;
+  let questionService : QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -66,10 +68,10 @@ describe('QuestionDashboardComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-
+  //Will fail because there is a dependency on mock service
   it('question dashboard component should be populated with a list of questions', async(() => {
-    questionService = fixture.debugElement.injector.get(MockQuestionService);
-    spy = spyOn(questionService, 'getQuestions').and.returnValue(Promise.resolve(questions));
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
 
     fixture.whenStable().then(() => { // wait for async getQuote
