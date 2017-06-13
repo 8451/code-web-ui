@@ -34,11 +34,10 @@ export class QuestionDetailsComponent implements OnInit {
   ngOnInit(): void {
 
     this.isNew = this.route.snapshot.url[this.route.snapshot.url.length-1].path === 'new';
-        
-    if(this.isNew) {
+
+    if (this.isNew) {
       this.question = new Question();
-    }
-    else {
+    } else {
       this.route.params
         .switchMap((params: Params) => this.questionService.getQuestion(params['id']))
         .subscribe(question => this.question = question);
@@ -51,15 +50,14 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   submitQuestion(): void {
-    console.log("Question formatting: ", this.question);
+    console.log('Question formatting: ', this.question);
     if(this.isNew) {
       this.questionService.createQuestion(this.question).subscribe(res => {
         console.log(res);
         this.alertService.info('Message Created!');
         this.router.navigate(['/questions']);
       });
-    }
-    else {
+    } else {
       this.questionService.updateQuestion(this.question).subscribe(res => {
         console.log(res);
         this.alertService.info('Message Saved!');
@@ -69,9 +67,13 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   deleteQuestion(questionId: string): void {
-    console.log('attempting to delete');
-    this.questionService.deleteQuestion(this.question.id).subscribe(res => {
-      this.router.navigate(['/questions']);
+    const subs = this.alertService.confirmation('Are you sure you want to delete?').subscribe(result => {
+      if (result) {
+        this.questionService.deleteQuestion(this.question.id).subscribe(res => {
+          this.router.navigate(['/questions']);
+        });
+      }
+      subs.unsubscribe();
     });
   }
 

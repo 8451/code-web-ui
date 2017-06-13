@@ -25,7 +25,7 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
-  createQuestion(question : Question): Observable<Question> {
+  createQuestion(question: Question): Observable<Question> {
     return this.http.post(`${this.questionsUrl}`, question)
       .map(res => res.json().questions[0])
       .catch(this.handleError);

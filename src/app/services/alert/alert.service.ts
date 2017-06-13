@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AlertService {
 
-  private message: Subject<Alert> = new Subject<Alert>();
+  private message: Subject<Alert<any>> = new Subject<Alert<any>>();
 
   constructor() { }
 
-  getAlert(): Observable<Alert> {
+  getAlert(): Observable<Alert<any>> {
     return this.message;
   }
 
@@ -28,19 +28,23 @@ export class AlertService {
   }
 
   confirmation(message: string): Observable<boolean> {
+    const subject = new Subject<boolean>();
+
     this.message.next({
       type: AlertType.CONFIRMATION,
-      message: message
+      message: message,
+      result: subject
     });
 
-    return Observable.of(false);
+    return subject;
   }
 
 }
 
-export class Alert {
+export class Alert<T> {
   type: AlertType;
   message: string;
+  result?: Subject<T>;
 }
 
 export enum AlertType {
