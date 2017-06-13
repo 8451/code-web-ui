@@ -1,10 +1,10 @@
 <form #questionForm="ngForm" (ngSubmit)="submitQuestion()">
   <md-toolbar>
-      <button md-raised-button (click)="navigateBack()">Back</button>
+      <button md-raised-button type="button" (click)="navigateBack()">Back</button>
       <span class="example-spacer"></span>
       <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="!isNew">Save</button>
       <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="isNew">Add</button>
-      <button md-raised-button color="warn" (click)="navigateBack()">Delete</button>
+      <button md-raised-button color="warn" type="button" (click)="deleteQuestion()">Delete</button>
   </md-toolbar>
   <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">
     <md-grid-tile [colspan]="3" [rowspan]="2">
