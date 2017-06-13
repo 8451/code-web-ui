@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./question-list-item.component.css']
 })
 export class QuestionListItemComponent implements OnInit {
-  @Input() question: Question;
+  @Input() question: Question;  
 
   constructor(private router: Router) { }
 

@@ -2,7 +2,8 @@
   <md-toolbar>
       <button md-raised-button (click)="navigateBack()">Back</button>
       <span class="example-spacer"></span>
-      <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid">Save</button>
+      <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="!isNew">Save</button>
+      <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="isNew">Add</button>
       <button md-raised-button color="warn" (click)="navigateBack()">Delete</button>
   </md-toolbar>
   <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">

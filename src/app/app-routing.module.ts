@@ -14,6 +14,11 @@ const routes: Routes = [
     component: QuestionDashboardComponent
   },
   {
+    path: 'question/new',
+    pathMatch: 'full',
+    component: QuestionDetailsComponent
+  },
+  {
     path: 'question/:id',
     component: QuestionDetailsComponent
   }

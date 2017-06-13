@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { QuestionDetailsComponent } from './question-details.component';
 import { AppModule } from '../app.module';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 
 describe('QuestionDetailsComponent', () => {
@@ -26,12 +27,26 @@ describe('QuestionDetailsComponent', () => {
       "modifiedDate": null
   }
 
+  let mockRoute = {
+    'snapshot': {
+      'url': [
+        {'path': 'question'},
+        {'path': 'new'}
+      ]
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [AppModule,
       RouterTestingModule,
       FormsModule],
-      providers: [ QuestionService ]
+      providers: [ QuestionService,
+        {
+          provide: ActivatedRoute,
+          useValue: mockRoute
+        } 
+      ]
     })
     .compileComponents();
   }));
@@ -41,6 +56,7 @@ describe('QuestionDetailsComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     component.ngOnInit();
+
   });
 
   it('should be created', () => {
