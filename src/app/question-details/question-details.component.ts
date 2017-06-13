@@ -45,22 +45,33 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   navigateBack(): void {
+    console.log('navigating back');
     this.router.navigate(['/questions']);
   }
 
   submitQuestion(): void {
     console.log("Question formatting: ", this.question);
     if(this.isNew) {
-      this.questionService.createQuestion(this.question).subscribe(res => console.log(res));
+      this.questionService.createQuestion(this.question).subscribe(res => {
+        console.log(res);
+        this.router.navigate(['/questions']);
+      });
     }
     else {
-      this.questionService.updateQuestion(this.question).subscribe(res => console.log(res));
+      this.questionService.updateQuestion(this.question).subscribe(res => {
+        console.log(res);
+        this.router.navigate(['/questions']);
+      });
     }      
-    this.router.navigate(['/questions']);
+    
   }
 
   deleteQuestion(questionId: string): void {
-    this.questionService.deleteQuestion(this.question.id);
+    console.log('attempting to delete');
+    this.questionService.deleteQuestion(this.question.id).subscribe(res => {
+      this.router.navigate(['/questions']);
+    });
+    
   }
 
 }
