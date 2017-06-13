@@ -52,16 +52,17 @@ export class QuestionDetailsComponent implements OnInit {
 
   submitQuestion(): void {
     console.log("Question formatting: ", this.question);
-    this.alertService.info('saved!');
     if(this.isNew) {
       this.questionService.createQuestion(this.question).subscribe(res => {
         console.log(res);
+        this.alertService.info('Message Created!');
         this.router.navigate(['/questions']);
       });
     }
     else {
       this.questionService.updateQuestion(this.question).subscribe(res => {
         console.log(res);
+        this.alertService.info('Message Saved!');
         this.router.navigate(['/questions']);
       });
     }
