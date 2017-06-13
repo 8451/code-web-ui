@@ -5,6 +5,7 @@ import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { QuestionService } from '../services/question/question.service';
+import { AlertService } from '../services/alert/alert.service';
 import 'rxjs/add/operator/switchMap';
 
 
@@ -26,9 +27,9 @@ export class QuestionDetailsComponent implements OnInit {
     private questionService: QuestionService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
-    ) {
-    }
+    private location: Location,
+    private alertService: AlertService,
+    ) {}
 
   ngOnInit(): void {
 
@@ -50,13 +51,14 @@ export class QuestionDetailsComponent implements OnInit {
 
   submitQuestion(): void {
     console.log("Question formatting: ", this.question);
+    this.alertService.info('saved!');
     if(this.isNew) {
       this.questionService.createQuestion(this.question).subscribe(res => console.log(res));
     }
     else {
       this.questionService.updateQuestion(this.question).subscribe(res => console.log(res));
     }      
-    this.router.navigate(['/questions']);
+    //this.router.navigate(['/questions']);
   }
 
   deleteQuestion(questionId: string): void {

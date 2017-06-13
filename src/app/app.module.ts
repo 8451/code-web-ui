@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule, MdGridListModule, MdInputModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
+   MdGridListModule, MdInputModule, MdSnackBarModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +12,9 @@ import { QuestionDashboardComponent } from './question-dashboard/question-dashbo
 import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
 import { QuestionService } from './services/question/question.service';
 import { MockQuestionService } from './services/question/mockQuestion.service';
+import { AlertService } from './services/alert/alert.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 @NgModule({
@@ -19,7 +22,8 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
     AppComponent,
     QuestionDashboardComponent,
     QuestionListItemComponent,
-    QuestionDetailsComponent
+    QuestionDetailsComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +36,10 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
     MdListModule,
     MdToolbarModule,
     MdGridListModule,
-    MdInputModule
+    MdInputModule,
+    MdSnackBarModule,
   ],
-  providers: [QuestionService, MockQuestionService],
+  providers: [AlertService, QuestionService, MockQuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
