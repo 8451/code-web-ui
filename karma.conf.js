@@ -29,13 +29,19 @@ module.exports = function (config) {
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
-    // coverageReporter: {
-    //   type : 'html',
-    //   dir : 'coverage/'
-    // },
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly'],
       fixWebpackSourcePaths: true
+    },
+    remapIstanbulReporter: {
+      reports: {
+        html: 'coverage',
+        lcovonly: './coverage/coverage.lcov'
+      }
     },
     angularCli: {
       environment: 'dev'
@@ -43,9 +49,6 @@ module.exports = function (config) {
     reporters: config.angularCli && config.angularCli.codeCoverage 
                 ? ['spec', 'karma-remap-istanbul'] 
                 : ['spec'],
-    // reporters: config.angularCli && config.angularCli.codeCoverage
-    //           ? ['progress', 'istanbul-coverage']
-    //           : ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
