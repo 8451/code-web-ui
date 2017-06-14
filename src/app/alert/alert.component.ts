@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from '../services/alert/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MdSnackBar, MdDialog, MdDialogRef } from '@angular/material';
-import { Alert, AlertType } from '../services/alert/alert.service';
+import { Alert, AlertType } from '../domains/alert';
 
 
 @Component({
@@ -23,8 +23,9 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.alertSubscription)
+    if (this.alertSubscription) {
       this.alertSubscription.unsubscribe();
+    }
   }
 
   openInfoSnackBar(alert: Alert<any>, action: string) {
