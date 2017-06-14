@@ -1,6 +1,6 @@
 <h1 md-dialog-title>Confirm</h1>
-<div md-dialog-content>{{alert.message}}</div>
+<div id="alert-message" md-dialog-content>{{alert.message}}</div>
 <div md-dialog-actions>
-  <button md-button (click)="dialogRef.close(true)">Yes</button>
-  <button md-button (click)="dialogRef.close()">No</button>
+  <button id="yes-button" md-button (click)="dialogRef.close(true)">Yes</button>
+  <button id="no-button" md-button (click)="dialogRef.close()">No</button>
 </div>
