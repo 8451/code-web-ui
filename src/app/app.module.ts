@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
 import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
 import { QuestionService } from './services/question/question.service';
-import { MockQuestionService } from './services/question/mockQuestion.service';
 import { AlertService } from './services/alert/alert.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { AlertComponent } from './alert/alert.component';
@@ -46,7 +45,7 @@ import { DialogComponent } from './alert/dialog/dialog.component';
     DialogComponent,
     AlertComponent,
   ],
-  providers: [AlertService, QuestionService, MockQuestionService],
+  providers: [AlertService, QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

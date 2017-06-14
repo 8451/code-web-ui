@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../services/question/question.service';
 import { Question } from '../domains/question'
-import { MockQuestionService } from '../services/question/mockQuestion.service';
 
 
 @Component({
