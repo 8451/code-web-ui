@@ -1,4 +1,4 @@
-import { Alert } from './../../services/alert/alert.service';
+import { Alert } from '../../domains/alert';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 

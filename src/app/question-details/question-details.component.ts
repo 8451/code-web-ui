@@ -1,5 +1,4 @@
 import { NgForm } from '@angular/forms';
-import { MockQuestionService } from './../services/question/mockQuestion.service';
 import { Question } from './../domains/question';
 import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
