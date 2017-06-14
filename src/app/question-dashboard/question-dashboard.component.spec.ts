@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
-import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { AppModule } from '../app.module';
 import { routes } from '../app-routing.module';

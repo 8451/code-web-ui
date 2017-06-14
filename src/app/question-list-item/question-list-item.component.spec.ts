@@ -28,9 +28,9 @@ describe('QuestionListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ 
-        RouterTestingModule, 
-        MaterialModule, 
+      imports: [
+        RouterTestingModule,
+        MaterialModule,
         BrowserAnimationsModule
       ],
       declarations: [

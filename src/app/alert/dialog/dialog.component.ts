@@ -1,6 +1,6 @@
 import { Alert } from './../../services/alert/alert.service';
 import { Component, OnInit } from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-dialog',
