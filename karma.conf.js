@@ -10,8 +10,10 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
+      require('karma-remap-istanbul'),
       require('@angular/cli/plugins/karma'),
       require('karma-phantomjs-launcher'),
+      require('karma-coverage'),
       require('karma-spec-reporter')
     ],
     client:{
@@ -27,18 +29,22 @@ module.exports = function (config) {
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
+    // coverageReporter: {
+    //   type : 'html',
+    //   dir : 'coverage/'
+    // },
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
+      reports: [ 'html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
     angularCli: {
       environment: 'dev'
     },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['spec', 'karma-remap-istanbul']
-              : ['spec'],
+    reporters: config.angularCli && config.angularCli.codeCoverage 
+                ? ['spec', 'karma-remap-istanbul'] 
+                : ['spec'],
     // reporters: config.angularCli && config.angularCli.codeCoverage
-    //           ? ['progress', 'coverage-istanbul']
+    //           ? ['progress', 'istanbul-coverage']
     //           : ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
