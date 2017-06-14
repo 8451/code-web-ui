@@ -9,7 +9,7 @@
   <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">
     <md-grid-tile [colspan]="3" [rowspan]="2">
       <md-input-container style="width:75%">
-        <input mdInput placeholder="Question Title" name="title" [(ngModel)]="question.title" required>
+        <input mdInput placeholder="Question Title" id="title" name="title" [(ngModel)]="question.title" required>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="2" [rowspan]="18">
