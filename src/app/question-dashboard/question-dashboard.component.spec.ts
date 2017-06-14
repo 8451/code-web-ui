@@ -70,17 +70,16 @@ describe('QuestionDashboardComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  
   it('question dashboard component should be populated with a list of questions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
 
-    fixture.whenStable().then(() => { 
-      fixture.detectChanges();        
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(component.questions).toEqual(questions);
     });
-  }));
+  }), 5000);
 
   // it('should route to detail page on click', () => {
   //   component.questions = questions;
