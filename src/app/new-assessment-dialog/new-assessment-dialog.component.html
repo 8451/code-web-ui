@@ -1,0 +1,18 @@
+<form #newAssessmentForm="ngForm" (ngSubmit)="createAssessment()">
+    <h1 md-dialog-title>New Assessment</h1>
+    <div md-dialog-content>
+        <md-input-container>
+            <input mdInput name="firstName" placeholder="First Name" [(ngModel)]="assessment.firstName" required>
+        </md-input-container>
+        <md-input-container>
+            <input mdInput name="lastName" placeholder="Last Name" [(ngModel)]="assessment.lastName" required>
+        </md-input-container>
+        <md-input-container>
+            <input mdInput name="email" placeholder="Email" [(ngModel)]="assessment.email" required>
+        </md-input-container>
+    </div>
+    <div md-dialog-actions>
+        <button md-button type="submit" md-dialog-close="Submit" [disabled]="!newAssessmentForm.form.valid">Submit</button>
+        <button md-button type="button" md-dialog-close="Cancel">Cancel</button>
+    </div>
+</form>
