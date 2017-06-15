@@ -13,7 +13,7 @@ import { Assessment } from './../domains/assessment';
 import { Observable } from 'rxjs/Observable';
 
 class MdDialogRefMock {
-
+  close() {};
 }
 
 describe('NewAssessmentDialogComponent', () => {
