@@ -66,11 +66,11 @@ describe('QuestionDashboardComponent', () => {
   }));
 
 
-  it('should create the question dashboard component', fakeAsync(() => {
+  it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
-  }));
+  }), 5000);
 
-  it('question dashboard component should be populated with a list of questions', fakeAsync(() => {
+  it('question dashboard component should be populated with a list of questions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
