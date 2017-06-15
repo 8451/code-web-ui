@@ -16,15 +16,15 @@ describe('QuestionDetailsComponent', () => {
   let component: QuestionDetailsComponent;
   let fixture: ComponentFixture<QuestionDetailsComponent>;
   let question: Question = {
-      "id": "id1",
-      "title": "Title1",
-      "difficulty": 2,
-      "body": "Body1",
-      "suggestedAnswer": "SuggestedAnswer1",
-      "createdBy": "createdBy1",
-      "createdDate" : null,
-      "modifiedBy": "modifiedBy1",
-      "modifiedDate": null
+      'id': 'id1',
+      'title': 'Title1',
+      'difficulty': 2,
+      'body': 'Body1',
+      'suggestedAnswer': 'SuggestedAnswer1',
+      'createdBy': 'createdBy1',
+      'createdDate' : null,
+      'modifiedBy': 'modifiedBy1',
+      'modifiedDate': null
   }
 
   beforeEach(async(() => {
@@ -50,16 +50,16 @@ describe('QuestionDetailsComponent', () => {
   });
 
   it('should be an invalid form if the title is empty', async(() => {
-      questionService = fixture.debugElement.injector.get(QuestionService);      
+      questionService = fixture.debugElement.injector.get(QuestionService);
       spy = spyOn(questionService, 'getQuestion').and.returnValue(Observable.of(question));
 
        fixture.whenStable().then(() => { // wait for async getQuestion
         component.question = question;
-        component.question.title = ''; //Invalidates the title field
+        component.question.title = ''; // Invalidates the title field
         fixture.detectChanges();        // update question with the new title
         expect(component.questionForm.valid).toBeFalsy();
        }).catch((e) => {
-        console.error(e); 
+        console.error(e);
       });
   }))
 

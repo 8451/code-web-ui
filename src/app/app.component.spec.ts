@@ -30,8 +30,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
 
-    fixture.whenStable().then(() => { 
-      fixture.detectChanges();        
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(app).toBeTruthy();
     });
 
@@ -41,11 +41,11 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
 
-    fixture.whenStable().then(() => { 
-      fixture.detectChanges();        
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(app.title).toEqual('CoDE: Collaborative Development Environment');
     });
-    
+
   }));
 
   it(`should render the title 'CoDE: Collaborative Development Environment' in a h1 tag`, async(() => {
@@ -53,10 +53,10 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
 
-    fixture.whenStable().then(() => { 
-      fixture.detectChanges();        
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(compiled.querySelector('#appTitle').textContent).toContain('CoDE: Collaborative Development Environment');
     });
-    
+
   }));
 });

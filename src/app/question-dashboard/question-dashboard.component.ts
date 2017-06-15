@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../services/question/question.service';
-import { Question } from '../domains/question'
+import { Question } from '../domains/question';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class QuestionDashboardComponent implements OnInit {
     this.questionService.getQuestions().subscribe(
       questions => this.questions = questions,
       error => {
-        console.error("An error occurred in the question component", error);
+        console.error('An error occurred in the question component', error);
       }
     );
   }
