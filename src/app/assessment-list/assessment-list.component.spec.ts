@@ -27,4 +27,17 @@ describe('AssessmentListComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should open a dialog when create assessment is called', () => {
+    spyOn(component.dialog, 'open');
+    component.createAssessment();
+    expect(component.dialog.open).toHaveBeenCalled();
+  });
+
+  it('should call createAssessment when the button is clicked', () => {
+    const button = fixture.debugElement.nativeElement.querySelector('button');
+    spyOn(component, 'createAssessment');
+    button.click();
+    expect(component.createAssessment).toHaveBeenCalled();
+  });
 });

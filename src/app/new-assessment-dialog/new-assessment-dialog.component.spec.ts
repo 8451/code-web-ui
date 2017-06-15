@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { NewAssessmentDialogComponent } from './new-assessment-dialog.component';
 
@@ -10,6 +10,7 @@ import { MdDialogRef, MdInputModule, MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Assessment } from './../domains/assessment';
+import { Observable } from 'rxjs/Observable';
 
 class MdDialogRefMock {
 
@@ -18,6 +19,11 @@ class MdDialogRefMock {
 describe('NewAssessmentDialogComponent', () => {
   let component: NewAssessmentDialogComponent;
   let fixture: ComponentFixture<NewAssessmentDialogComponent>;
+  const assessment: Assessment = {
+    firstName: 'First',
+    lastName: 'Last',
+    email: 'e@mail.com'
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,6 +54,14 @@ describe('NewAssessmentDialogComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('when createAssessment is called, the assessment service should call createAssessment', () => {
+    const service = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(service, 'createAssessment').and.returnValue(Observable.of(assessment));
+    component.assessment = assessment;
+    component.createAssessment();
+    expect(service.createAssessment).toHaveBeenCalledWith(assessment);
   });
 
 

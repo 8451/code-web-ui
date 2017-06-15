@@ -21,5 +21,4 @@ export class AssessmentListComponent implements OnInit {
   createAssessment(): void {
     this.dialog.open(NewAssessmentDialogComponent);
   }
-
 }
