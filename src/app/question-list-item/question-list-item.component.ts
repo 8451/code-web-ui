@@ -15,7 +15,7 @@ export class QuestionListItemComponent implements OnInit {
   ngOnInit() {
   }
   goToQuestionDetails(): void {
-    this.router.navigate(['/question', this.question.id])
+    this.router.navigate(['/question', this.question.id]);
   }
 
 }

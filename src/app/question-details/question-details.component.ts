@@ -49,7 +49,7 @@ export class QuestionDetailsComponent implements OnInit {
 
   submitQuestion(): void {
     console.log('Question formatting: ', this.question);
-    if(this.isNew) {
+    if (this.isNew) {
       this.questionService.createQuestion(this.question).subscribe(res => {
         console.log(res);
         this.alertService.info('Message Created!');

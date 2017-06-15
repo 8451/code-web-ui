@@ -6,7 +6,7 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
 export const routes: Routes = [
   {
     path: '',
-    redirectTo:'/questions',
+    redirectTo: '/questions',
     pathMatch: 'full'
   },
   {
