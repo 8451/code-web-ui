@@ -6,13 +6,13 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AssessmentService {
 
-  private assessmentsUrl = 'http://localhost:8090/api/v1/assessments';
+  private assessmentsUrl = 'http://code-bff.ci.cfapps.int.8451.com/api/v1/assessments';
 
   constructor(private http: Http) { }
 
   getAssessments(): Observable<Assessment[]> {
     return this.http.get(this.assessmentsUrl)
-      .map(res => res.json().questions)
+      .map(res => res.json().assessments)
       .catch(this.handleError);
   }
 

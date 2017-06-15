@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs/Observable';
+import { HttpModule } from '@angular/http';
+import { AssessmentService } from './../services/assessment/assessment.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentListComponent } from './assessment-list.component';
@@ -9,11 +12,16 @@ import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-ass
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
-
+  let assessments: Assessment[] = [{
+    firstName: 'first',
+    lastName: 'lastName',
+    email: 'e@mail.com'
+  }]
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AssessmentListComponent ],
-      imports: [MdCardModule, MdDialogModule]
+      imports: [MdCardModule, MdDialogModule, HttpModule],
+      providers: [AssessmentService]
     })
     .compileComponents();
   }));
@@ -21,6 +29,8 @@ describe('AssessmentListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentListComponent);
     component = fixture.componentInstance;
+    const assessmentService: AssessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(assessments));
     fixture.detectChanges();
   });
 

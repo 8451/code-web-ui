@@ -1,3 +1,4 @@
+import { AssessmentService } from './../services/assessment/assessment.service';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
@@ -13,9 +14,12 @@ export class AssessmentListComponent implements OnInit {
 
   assessments: Assessment[];
 
-  constructor(public dialog: MdDialog) { }
+  constructor(public dialog: MdDialog, private assessmentService: AssessmentService) { }
 
   ngOnInit() {
+    this.assessmentService.getAssessments().subscribe(res => {
+      this.assessments = res;
+    });
   }
 
   createAssessment(): void {
