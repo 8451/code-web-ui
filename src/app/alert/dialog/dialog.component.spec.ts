@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogComponent } from './dialog.component';
 import { MdDialogRef } from '@angular/material';
-import { Alert, AlertType } from './../../services/alert/alert.service';
+import { Alert, AlertType } from '../../domains/alert';
 
 class MdDialogRefMock {
   close(confirmed: string) {

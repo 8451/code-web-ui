@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { Alert, AlertType } from '../../domains/alert';
 
 @Injectable()
 export class AlertService {
@@ -39,16 +40,4 @@ export class AlertService {
     return subject;
   }
 
-}
-
-export class Alert<T> {
-  type: AlertType;
-  message: string;
-  result?: Subject<T>;
-}
-
-export enum AlertType {
-  INFO,
-  ERROR,
-  CONFIRMATION
 }
