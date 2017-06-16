@@ -20,6 +20,7 @@ export class QuestionService {
         return res.json().questions;
       })
       .catch(this.handleError);
+
   }
 
   getQuestion(id: string): Observable<Question> {
