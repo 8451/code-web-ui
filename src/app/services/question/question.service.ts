@@ -9,13 +9,16 @@ import 'rxjs/add/operator/toPromise';
 export class QuestionService {
 
   // TODO: dynamically fill this based on the environment.
-  private questionsUrl = 'http://localhost:8090/api/v1/questions';
+  private questionsUrl = 'http://code-bff.ci.cfapps.int.8451.com/api/v1/questions';
 
   constructor(private http: Http) { }
 
   getQuestions(): Observable<Question[]> {
     return this.http.get(this.questionsUrl)
-      .map(res => res.json().questions)
+      .map((res) => {
+        console.log(res.json().questions);
+        return res.json().questions;
+      })
       .catch(this.handleError);
   }
 

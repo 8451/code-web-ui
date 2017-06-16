@@ -31,15 +31,28 @@ export class QuestionDetailsComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.initQuestion();
+    // this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
+    // if (this.isNew) {
+    //   this.question = new Question();
+    // } else {
+    //   this.route.params
+    //     .switchMap((params: Params) => this.questionService.getQuestion(params['id']))
+    //     .subscribe(question => this.question = question);
+    // }
+  }
 
-    this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
-    if (this.isNew) {
-      this.question = new Question();
-    } else {
+  initQuestion(): void {
       this.route.params
-        .switchMap((params: Params) => this.questionService.getQuestion(params['id']))
-        .subscribe(question => this.question = question);
-    }
+        .switchMap((params: Params) => {
+          return this.questionService.getQuestion(params['id']);
+        })
+        .subscribe(question => this.question = question, error => {
+          this.isNew = true;
+          this.question = new Question();
+          console.error('init question error', error);
+          // TODO further handling
+        });
   }
 
   navigateBack(): void {
