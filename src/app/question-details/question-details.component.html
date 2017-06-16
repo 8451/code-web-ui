@@ -1,0 +1,58 @@
+<form #questionForm="ngForm" (ngSubmit)="submitQuestion()">
+  <md-toolbar>
+      <button md-raised-button type="button" (click)="navigateBack()">Back</button>
+      <span class="example-spacer"></span>
+      <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="!isNew">Save</button>
+      <button md-raised-button color="primary" type="submit" [disabled]="!questionForm.form.valid" *ngIf="isNew">Add</button>
+      <button md-raised-button color="warn" type="button" (click)="deleteQuestion()">Delete</button>
+  </md-toolbar>
+  <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">
+    <md-grid-tile [colspan]="3" [rowspan]="2">
+      <md-input-container style="width:75%">
+        <input mdInput placeholder="Question Title" name="title" [(ngModel)]="question.title" required>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="2" [rowspan]="18">
+      <md-card>
+        <md-card-title>
+          Question Details
+        </md-card-title>
+        <md-card-content>
+          <md-list>
+            <md-list-item>
+            <md-input-container style="width:50%">
+              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" [(ngModel)]="question.difficulty" required>
+            </md-input-container>
+            </md-list-item>
+            <h3 md-subheader>Metadata</h3>
+            <md-list-item>
+              <h4 md-line>Modified by</h4>
+              <p md-line>{{question.modifiedBy}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Modified on</h4>
+              <p md-line>{{question.modifiedDate | date: "mediumDate"}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Created by</h4>
+              <p md-line>{{question.createdBy}}</p>
+            </md-list-item>
+            <md-list-item>
+              <h4 md-line>Created on</h4>
+              <p md-line>{{question.createdDate | date: "mediumDate"}}</p>
+            </md-list-item>
+          </md-list>
+        </md-card-content>
+      </md-card>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="3" [rowspan]="8">
+      <md-input-container style="width:75%">
+        <textarea rows="10" mdInput placeholder="Question Body" name="body" [(ngModel)]="question.body" required></textarea>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="3" [rowspan]="6">
+      <md-input-container style="width:75%">
+        <textarea rows="8" mdInput placeholder="Suggested Answer" name="suggestedAnswer" [(ngModel)]="question.suggestedAnswer"></textarea>
+      </md-input-container></md-grid-tile>
+  </md-grid-list>
+</form>
