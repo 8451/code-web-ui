@@ -1,3 +1,32 @@
-<p>
-  register works!
-</p>
+<md-card>
+  <form class="register-form">
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <md-input-container class="full-width">
+            <input mdInput placeholder="First Name" required title="First Name">
+          </md-input-container>
+        </td>
+        <td>
+          <md-input-container class="full-width">
+            <input mdInput placeholder="Last Name" required title="Last Name">
+          </md-input-container>
+        </td>
+      </tr>
+    </table>
+    <div>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="Email" required title="Email Address">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput type="password" #password placeholder="Password" required title="Password">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput type="password" #confirmPassword placeholder="Confirm Password" required title="Confirm Password">
+      </md-input-container>
+    </div>
+    <div>
+      <button md-button color="primary">Register</button>
+    </div>
+  </form>
+</md-card>
