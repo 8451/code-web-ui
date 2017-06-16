@@ -43,22 +43,18 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   navigateBack(): void {
-    console.log('navigating back');
     this.router.navigate(['/questions']);
   }
 
   submitQuestion(): void {
-    console.log('Question formatting: ', this.question);
-    if(this.isNew) {
+    if (this.isNew) {
       this.questionService.createQuestion(this.question).subscribe(res => {
-        console.log(res);
-        this.alertService.info('Message Created!');
+        this.alertService.info('Question Created!');
         this.router.navigate(['/questions']);
       });
     } else {
       this.questionService.updateQuestion(this.question).subscribe(res => {
-        console.log(res);
-        this.alertService.info('Message Saved!');
+        this.alertService.info('Question Saved!');
         this.router.navigate(['/questions']);
       });
     }
