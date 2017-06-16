@@ -77,7 +77,7 @@ export class QuestionDetailsComponent implements OnInit {
     }
   }
 
-  deleteQuestion(questionId: string): void {
+  deleteQuestion(): void {
     const subs = this.alertService.confirmation('Are you sure you want to delete?').subscribe(result => {
       if (result) {
         this.questionService.deleteQuestion(this.question.id).subscribe(res => {
