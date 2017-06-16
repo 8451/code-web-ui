@@ -37,9 +37,6 @@ describe('AssessmentListComponent', () => {
       set: {
         template: '<span>NewAssessmentDialogComponent</span>'
       }
-      // remove: {
-      //   templateUrl: './assessment-list.component.html'
-      // }
     })
     .compileComponents();
   }));
