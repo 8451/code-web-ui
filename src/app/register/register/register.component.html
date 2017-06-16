@@ -1,32 +1,42 @@
 <md-card>
-  <form class="register-form">
-    <table class="full-width" cellspacing="0">
-      <tr>
-        <td>
-          <md-input-container class="full-width">
-            <input mdInput placeholder="First Name" required title="First Name">
-          </md-input-container>
-        </td>
-        <td>
-          <md-input-container class="full-width">
-            <input mdInput placeholder="Last Name" required title="Last Name">
-          </md-input-container>
-        </td>
-      </tr>
-    </table>
-    <div>
-      <md-input-container class="full-width">
-        <input mdInput placeholder="Email" required title="Email Address">
-      </md-input-container>
-      <md-input-container class="full-width">
-        <input mdInput type="password" #password placeholder="Password" required title="Password">
-      </md-input-container>
-      <md-input-container class="full-width">
-        <input mdInput type="password" #confirmPassword placeholder="Confirm Password" required title="Confirm Password">
-      </md-input-container>
-    </div>
-    <div>
-      <button md-button color="primary">Register</button>
-    </div>
-  </form>
+  <md-card-content>
+    <h4>Register</h4>
+    <form class="register-form" #userForm="ngForm" (ngSubmit)="onSubmitRegister()">
+      <table class="full-width" cellspacing="0">
+        <tr>
+          <td>
+            <md-input-container class="full-width">
+              <input mdInput placeholder="First Name" required title="First Name" [(ngModel)]="user.firstName" name="firstName">
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="full-width">
+              <input mdInput placeholder="Last Name" required title="Last Name" [(ngModel)]="user.lastName" name="lastName">
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+      <div>
+        <md-input-container class="full-width">
+          <input mdInput placeholder="Email" required title="Email Address" [(ngModel)]="user.email" name="email" pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com">
+          <md-error>
+            Must have a valid 84.51 email address
+          </md-error>
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput type="password" placeholder="Password" required title="Password" [(ngModel)]="user.password" name="password">
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password"
+              [(ngModel)]="confirmPassword" name="confirmPassword" [pattern]="user.password">
+          <md-error>
+            Passwords must match
+          </md-error>
+        </md-input-container>
+      </div>
+      <div>
+        <button md-button color="primary" type="submit" [disabled]="!userForm.valid">Register</button>
+      </div>
+    </form>
+  </md-card-content>
 </md-card>
