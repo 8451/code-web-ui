@@ -15,7 +15,7 @@ describe('QuestionDetailsComponent', () => {
   let questionService: QuestionService;
   let component: QuestionDetailsComponent;
   let fixture: ComponentFixture<QuestionDetailsComponent>;
-  let question: Question = {
+  const question: Question = {
       'id': 'id1',
       'title': 'Title1',
       'difficulty': 2,
@@ -25,15 +25,15 @@ describe('QuestionDetailsComponent', () => {
       'createdDate' : null,
       'modifiedBy': 'modifiedBy1',
       'modifiedDate': null
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [AppModule,
       RouterTestingModule,
       FormsModule],
-      providers: [ QuestionService, 
-        {provide: ActivatedRoute, useValue: {url: Observable.of([{path: 'new'}])}} 
+      providers: [ QuestionService,
+        {provide: ActivatedRoute, useValue: {url: Observable.of([{path: 'new'}])}}
       ]
     })
     .compileComponents();
@@ -61,6 +61,6 @@ describe('QuestionDetailsComponent', () => {
        }).catch((e) => {
         console.error(e);
       });
-  }))
+  }));
 
 });

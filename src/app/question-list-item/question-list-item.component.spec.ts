@@ -66,5 +66,5 @@ describe('QuestionListItemComponent', () => {
       // expect(compiled.querySelector('#modificationSubtitle').textContent).
       // toContain('Modified by ' + question.modifiedBy +' on ' + question.modifiedDate);
       expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
-    }))
+    }));
 });
