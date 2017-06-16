@@ -15,6 +15,7 @@ import { AlertService } from './services/alert/alert.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { AlertComponent } from './alert/alert.component';
 import { DialogComponent } from './alert/dialog/dialog.component';
+import { RegisterComponent } from './register/register/register.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DialogComponent } from './alert/dialog/dialog.component';
     QuestionListItemComponent,
     QuestionDetailsComponent,
     AlertComponent,
-    DialogComponent
+    DialogComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
