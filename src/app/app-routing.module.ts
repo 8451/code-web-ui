@@ -1,3 +1,4 @@
+import { RegisterComponent } from './register/register/register.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -21,6 +22,11 @@ export const routes: Routes = [
   {
     path: 'question/:id',
     component: QuestionDetailsComponent
+  },
+  {
+    path: 'register',
+    pathMatch: 'full',
+    component: RegisterComponent
   }
 ];
 
