@@ -6,7 +6,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let form: NgForm;
@@ -52,7 +52,6 @@ fdescribe('RegisterComponent', () => {
   it('registerForm invalid when no firstName', () => {
     fixture.whenStable().then(() => {
       const firstNameControl = component.userForm.control.get('firstName');
-      console.log(firstNameControl);
       firstNameControl.setValue('');
       expect(firstNameControl.valid).toBeFalsy();
     });
