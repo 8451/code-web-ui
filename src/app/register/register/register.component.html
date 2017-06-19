@@ -1,41 +1,43 @@
 <md-card>
   <md-card-content>
     <h4>Register</h4>
-    <form class="register-form" #userForm="ngForm" (ngSubmit)="onSubmitRegister()">
+    <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmitRegister()">
       <table class="full-width" cellspacing="0">
         <tr>
           <td>
             <md-input-container class="full-width">
-              <input mdInput placeholder="First Name" required title="First Name" [(ngModel)]="user.firstName" name="firstName">
+              <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
             </md-input-container>
           </td>
           <td>
             <md-input-container class="full-width">
-              <input mdInput placeholder="Last Name" required title="Last Name" [(ngModel)]="user.lastName" name="lastName">
+              <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
             </md-input-container>
           </td>
         </tr>
       </table>
       <div>
         <md-input-container class="full-width">
-          <input mdInput placeholder="Email" required title="Email Address" [(ngModel)]="user.email" name="email" pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com">
+          <input mdInput placeholder="Email" required title="Email Address" formControlName="email">
           <md-error>
             Must have a valid 84.51 email address
           </md-error>
         </md-input-container>
         <md-input-container class="full-width">
-          <input mdInput type="password" placeholder="Password" required title="Password" [(ngModel)]="user.password" name="password">
+          <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
+          <md-error *ngIf="form.controls['password'].hasError('minlength')">
+            Password must have at least 6 characters
+          </md-error>
         </md-input-container>
         <md-input-container class="full-width">
-          <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password"
-              [(ngModel)]="confirmPassword" name="confirmPassword" [pattern]="user.password">
+          <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">
           <md-error>
             Passwords must match
           </md-error>
         </md-input-container>
       </div>
       <div>
-        <button md-button color="primary" type="submit" [disabled]="!userForm.valid">Register</button>
+        <button md-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
       </div>
     </form>
   </md-card-content>

@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './../../app-routing.module';
 import { AppModule } from './../../app.module';
@@ -9,16 +11,17 @@ import { RegisterComponent } from './register.component';
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  let form: NgForm;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AppModule,
         FormsModule,
         RouterTestingModule,
         ReactiveFormsModule,
-      ]
+        MaterialModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [RegisterComponent]
     })
     .compileComponents();
   }));
@@ -26,6 +29,7 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -33,27 +37,50 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('registerForm invalid when not 8451 email', () => {
-  //   fixture.whenStable().then(() => {
-  //     const emailControl = component.userForm.control.get('email');
-  //     emailControl.setValue('test@gmail.com');
-  //     expect(emailControl.valid).toBe(false);
-  //   });
-  // });
-
-  // it('registerForm valid when 8451 email', () => {
-  //   fixture.whenStable().then(() => {
-  //     const emailControl = component.userForm.control.get('email');
-  //     emailControl.setValue('test@8451.com');
-  //     expect(emailControl.valid).toBe(true);
-  //   }, e => console.error(e));
-  // });
-
-  it('registerForm invalid when no firstName', () => {
-    fixture.whenStable().then(() => {
-      const firstNameControl = component.userForm.control.get('firstName');
-      firstNameControl.setValue('');
-      expect(firstNameControl.valid).toBeFalsy();
-    });
+  it('form invalid when empty', () => {
+    expect(component.form.valid).toBeFalsy();
   });
+
+  it('control invalid when not 8451 email', () => {
+      const emailControl = component.form.get('email');
+      emailControl.setValue('test@gmail.com');
+      expect(emailControl.valid).toBe(false);
+  });
+
+  it('control valid when 8451 email', () => {
+    const emailControl = component.form.get('email');
+    emailControl.setValue('test@8451.com');
+    expect(emailControl.valid).toBe(true);
+  });
+
+  it('control invalid when no firstName', () => {
+    const firstNameControl = component.form.get('firstName');
+    firstNameControl.setValue('');
+    expect(firstNameControl.valid).toBeFalsy();
+  });
+
+  it('control invalid when no lastName', () => {
+    const lastNameControl = component.form.get('lastName');
+    lastNameControl.setValue('');
+    expect(lastNameControl.valid).toBeFalsy();
+  });
+
+  it('control invalid when when password not 6 characters', () => {
+    const passwordControl = component.form.get('password');
+    passwordControl.setValue('12345');
+    expect(passwordControl.valid).toBeFalsy();
+  });
+
+  it('control valid when passwords match and greater than 6 chars', () => {
+    const passwordControl = component.form.get('password');
+    const confirmPassword = component.form.get('confirmPassword');
+
+    const dummyPassword = 'S0M3DummyPassword';
+
+    passwordControl.setValue(dummyPassword);
+    confirmPassword.setValue(dummyPassword);
+
+    expect(confirmPassword.valid).toBeTruthy();
+  });
+
 });
