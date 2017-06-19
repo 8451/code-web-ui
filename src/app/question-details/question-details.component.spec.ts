@@ -1,3 +1,4 @@
+import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 import { Question } from './../domains/question';
@@ -8,8 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { QuestionDetailsComponent } from './question-details.component';
 import { AppModule } from '../app.module';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
-
-
 
 describe('QuestionDetailsComponent', () => {
   let spy: any;
@@ -40,7 +39,7 @@ describe('QuestionDetailsComponent', () => {
         RouterTestingModule,
         FormsModule],
       providers: [QuestionService,
-        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'new' }]) } }
+        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'new' }]) } },
       ]
     })
       .compileComponents();
@@ -181,9 +180,13 @@ describe('QuestionDetailsComponent', () => {
     });
   }));
 
-  it('should call deleteQuestion when the delete button is pressed', async(() => {
+  it('should call deleteQuestion when the delete button is pressed', async(() => inject([Router], (router) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
+    const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(component, 'deleteQuestion');
+    spyOn(questionService, 'deleteQuestion');
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(router, 'navigate');
 
     fixture.detectChanges();
 
@@ -194,65 +197,41 @@ describe('QuestionDetailsComponent', () => {
       expect(deleteBtn).toBeTruthy();
       deleteBtn.click();
       expect(component.deleteQuestion).toHaveBeenCalled();
+      expect(questionService.deleteQuestion).toHaveBeenCalled();
     }).catch((e) => {
       expect(true).toBeFalsy();
       console.error(e);
     });
-  }));
+  })));
 
-  it('should call createQuestion if a new question is submitted', async(() => {
+  it('should call createQuestion if a new question is submitted', async(() => inject([Router], (router) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
-    spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(question));
-
+    spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(question).map(res => res));
+    spyOn(router, 'navigate');
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
       component.question = question;
       component.isNew = true;
-
-      titleControl = component.questionForm.control.get('title');
-      bodyControl = component.questionForm.control.get('body');
-      answerControl = component.questionForm.control.get('suggestedAnswer');
-      difficultyControl = component.questionForm.control.get('difficulty');
-
-      fixture.detectChanges();
-
-      titleControl.setValue(question.title);
-      bodyControl.setValue(question.body);
-      answerControl.setValue(question.suggestedAnswer);
-      difficultyControl.setValue(question.difficulty);
-
       fixture.detectChanges();
       component.submitQuestion();
-      expect(component.isNew).toBe(true);
       expect(questionService.createQuestion).toHaveBeenCalled();
     }).catch((e) => {
       expect(true).toBeFalsy();
       console.error(e);
     });
-  }));
+  })));
 
-  it('should call updateQustion if an existing question is submitted', async(() => {
+  it('should call updateQustion if an existing question is submitted', async(() => inject([Router], (router) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(question));
+    spyOn(router, 'navigate');
 
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
       component.question = question;
       component.isNew = false;
-
-      titleControl = component.questionForm.control.get('title');
-      bodyControl = component.questionForm.control.get('body');
-      answerControl = component.questionForm.control.get('suggestedAnswer');
-      difficultyControl = component.questionForm.control.get('difficulty');
-
-      fixture.detectChanges();
-
-      titleControl.setValue(question.title);
-      bodyControl.setValue(question.body);
-      answerControl.setValue(question.suggestedAnswer);
-      difficultyControl.setValue(question.difficulty);
 
       fixture.detectChanges();
       component.submitQuestion();
@@ -262,5 +241,5 @@ describe('QuestionDetailsComponent', () => {
       expect(true).toBeFalsy();
       console.error(e);
     });
-  }));
+  })));
 });
