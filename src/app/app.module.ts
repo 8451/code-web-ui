@@ -1,3 +1,4 @@
+import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -54,7 +55,11 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     AlertComponent,
     NewAssessmentDialogComponent
   ],
-  providers: [AlertService, QuestionService, AssessmentService],
+  providers: [AlertService,
+    QuestionService,
+    AssessmentService,
+    UserService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
