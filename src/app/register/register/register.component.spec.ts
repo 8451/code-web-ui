@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs/Observable';
+import { User } from './../../domains/user';
+import { UserService } from './../../services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,7 +24,12 @@ describe('RegisterComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
       ],
-      declarations: [RegisterComponent]
+      declarations: [RegisterComponent],
+      providers: [{provide: UserService, useValue: {
+        createUser: function(user: User): Observable<User> {
+          return null;
+        }
+      }}],
     })
     .compileComponents();
   }));
@@ -81,6 +89,13 @@ describe('RegisterComponent', () => {
     confirmPassword.setValue(dummyPassword);
 
     expect(confirmPassword.valid).toBeTruthy();
+  });
+
+  it('call UserService create method', () => {
+    const mockService = fixture.debugElement.injector.get(UserService);
+    spyOn(mockService, 'createUser');
+    component.onSubmitRegister();
+    expect(mockService.createUser);
   });
 
 });

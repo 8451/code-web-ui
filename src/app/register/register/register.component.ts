@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { UserService } from './../../services/user/user.service';
 import { User } from './../../domains/user';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -14,7 +16,9 @@ export class RegisterComponent implements OnInit {
   confirmPassword: string;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+      private userService: UserService,
+      private router: Router) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -44,7 +48,9 @@ export class RegisterComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-
-    console.log('register submitted');
+    const user  = this.form.value as User;
+    this.userService.createUser(user).subscribe(createdUser => {
+      this.router.navigate(['/actviate']);
+    });
   }
 }
