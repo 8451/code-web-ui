@@ -50,8 +50,11 @@ const mockQuestion = {
 };
 
 const mockError = {
-      'statusText': 'error'
-};
+   body: {'statusText': 'error'},
+   status: 404,
+   statusText: '404 Not Found'
+  };
+
 
 
 describe('QuestionService', () => {
@@ -202,13 +205,10 @@ describe('QuestionService', () => {
     (http: Http, mockBackend: MockBackend) => {
 
       const questionService = new QuestionService(http);
-      const errorResponse = new ResponseOptions({ body: mockError });
-      mockBackend.connections.subscribe(connection => {
-        connection.mockError(new Error('errorResponse'));
-      });
+      const errorResponse = new ResponseOptions(mockError);
 
       questionService.handleError(new Response(errorResponse)).subscribe(
-        () => { }, error => expect(error).toBeNull()
+        () => { }, error => expect(error).toBe('404 Not Found')
       );
     })));
 

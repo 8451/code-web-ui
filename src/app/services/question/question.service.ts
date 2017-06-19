@@ -45,7 +45,6 @@ export class QuestionService {
 
   handleError (error: Response | any): Observable<string> {
     // TODO: add alert error messages
-    console.log('JSON error response:\n', error);
     return Observable.throw(error.statusText);
   }
 
