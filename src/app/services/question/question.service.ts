@@ -15,12 +15,8 @@ export class QuestionService {
 
   getQuestions(): Observable<Question[]> {
     return this.http.get(this.questionsUrl)
-      .map((res) => {
-        console.log(res.json().questions);
-        return res.json().questions;
-      })
+      .map(res => res.json().questions)
       .catch(this.handleError);
-
   }
 
   getQuestion(id: string): Observable<Question> {
