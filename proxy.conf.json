@@ -1,10 +1,7 @@
 {
   "/api/*": {
-    "target": "http://localhost:8080",
+    "target": "http://code-bff.ci.cfapps.int.8451.com",
     "secure": false,
-    "pathRewrite": {
-      "^/api": ""
-    },
     "changeOrigin": true,
     "logLevel": "debug"
   }
