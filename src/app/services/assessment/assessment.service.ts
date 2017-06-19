@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AssessmentService {
 
-  private assessmentsUrl = 'http://code-bff.ci.cfapps.int.8451.com/api/v1/assessments';
+  private assessmentsUrl = 'api/v1/assessments';
 
   constructor(private http: Http) { }
 

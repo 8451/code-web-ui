@@ -8,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class QuestionService {
 
-  // TODO: dynamically fill this based on the environment.
   private questionsUrl = 'api/v1/questions';
 
   constructor(private http: Http) { }
