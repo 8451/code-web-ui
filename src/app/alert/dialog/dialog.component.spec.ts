@@ -12,11 +12,10 @@ class MdDialogRefMock {
 describe('DialogComponent', () => {
   let component: DialogComponent;
   let fixture: ComponentFixture<DialogComponent>;
-  let alert: Alert<any> = {
+  const alert: Alert<any> = {
     'type': AlertType.INFO,
     'message': 'Alert!',
   };
-  let spy: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

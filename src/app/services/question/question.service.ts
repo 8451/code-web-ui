@@ -43,7 +43,7 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
-  handleError (error: Response | any) : Observable<string> {
+  handleError (error: Response | any): Observable<string> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);
   }

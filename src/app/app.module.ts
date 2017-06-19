@@ -1,3 +1,4 @@
+import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,11 +16,15 @@ import { AlertService } from './services/alert/alert.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { AlertComponent } from './alert/alert.component';
 import { DialogComponent } from './alert/dialog/dialog.component';
+import { AssessmentListComponent } from './assessment-list/assessment-list.component';
+import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AssessmentListComponent,
+    NewAssessmentDialogComponent,
     QuestionDashboardComponent,
     QuestionListItemComponent,
     QuestionDetailsComponent,
@@ -44,8 +49,9 @@ import { DialogComponent } from './alert/dialog/dialog.component';
   entryComponents: [
     DialogComponent,
     AlertComponent,
+    NewAssessmentDialogComponent
   ],
-  providers: [AlertService, QuestionService],
+  providers: [AlertService, QuestionService, AssessmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

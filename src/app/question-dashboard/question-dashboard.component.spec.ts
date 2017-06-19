@@ -3,7 +3,7 @@ import { QuestionService } from './../services/question/question.service';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,42 +15,42 @@ import { routes } from '../app-routing.module';
 describe('QuestionDashboardComponent', () => {
    let component: QuestionDashboardComponent;
    let fixture: ComponentFixture<QuestionDashboardComponent>;
-   let questions: any[] = [
+   const questions: any[] = [
        {
-           "id": "id1",
-           "title": "Title1",
-           "body": "Body1",
-           "suggestedAnswer": "SuggestedAnswer1",
-           "createdBy": "createdBy1",
-           "createdDate" : null,
-           "modifiedBy": "modifiedBy1",
-           "modifiedDate": null
+           'id': 'id1',
+           'title': 'Title1',
+           'body': 'Body1',
+           'suggestedAnswer': 'SuggestedAnswer1',
+           'createdBy': 'createdBy1',
+           'createdDate' : null,
+           'modifiedBy': 'modifiedBy1',
+           'modifiedDate': null
         },
         {
-            "id": "id2",
-           "title": "Title2",
-           "body": "Body2",
-           "suggestedAnswer": "SuggestedAnswer2",
-           "createdBy": "createdBy2",
-           "createdDate" : null,
-           "modifiedBy": "modifiedBy2",
-           "modifiedDate": null
+            'id': 'id2',
+           'title': 'Title2',
+           'body': 'Body2',
+           'suggestedAnswer': 'SuggestedAnswer2',
+           'createdBy': 'createdBy2',
+           'createdDate' : null,
+           'modifiedBy': 'modifiedBy2',
+           'modifiedDate': null
         },
-        {   
-            "id": "id3",
-           "title": "Title3",
-           "body": "Body3",
-           "suggestedAnswer": "SuggestedAnswer3",
-           "createdBy": "createdBy3",
-           "createdDate" : null,
-           "modifiedBy": "modifiedBy3",
-           "modifiedDate": null
+        {
+            'id': 'id3',
+           'title': 'Title3',
+           'body': 'Body3',
+           'suggestedAnswer': 'SuggestedAnswer3',
+           'createdBy': 'createdBy3',
+           'createdDate' : null,
+           'modifiedBy': 'modifiedBy3',
+           'modifiedDate': null
         }
-        
+
    ];
 
-  let spy: any; 
-  let questionService : QuestionService;
+  let spy: any;
+  let questionService: QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -68,7 +68,7 @@ describe('QuestionDashboardComponent', () => {
 
   it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
-  }));
+  }), 5000);
 
   it('question dashboard component should be populated with a list of questions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
@@ -80,20 +80,5 @@ describe('QuestionDashboardComponent', () => {
       expect(component.questions).toEqual(questions);
     });
   }), 5000);
-
-  // it('should route to detail page on click', () => {
-  //   component.questions = questions;
-  //   fixture.detectChanges();
-  //   let router = fixture.debugElement.componentInstance(Router);
-  //   spy = spyOn(router, 'navigate');
-  //   let compiled = fixture.debugElement.nativeElement;
-  //   let listItem = compiled.querySelector('app-question-list-item');
-  //   listItem.click();
-  //   console.log('Spy calls ', spy.calls.count());
-  //   expect(spy.calls.count()).toBe(1);
-
-  // })
-
-
 
 });

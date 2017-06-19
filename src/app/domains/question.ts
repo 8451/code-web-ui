@@ -7,5 +7,5 @@ export class Question {
     public createdBy: string;
     public createdDate: Date;
     public modifiedBy: string;
-    public modifiedDate: Date;    
+    public modifiedDate: Date;
 }

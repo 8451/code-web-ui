@@ -16,6 +16,7 @@ describe('QuestionDetailsComponent', () => {
   let questionService: QuestionService;
   let component: QuestionDetailsComponent;
   let fixture: ComponentFixture<QuestionDetailsComponent>;
+
   let question: Question = {
     'id': 'id1',
     'title': 'Title1',
@@ -31,6 +32,7 @@ describe('QuestionDetailsComponent', () => {
   let bodyControl;
   let answerControl;
   let difficultyControl;
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

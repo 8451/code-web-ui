@@ -6,4 +6,4 @@ applications:
    disk_quota: 512m
    instances: 1
    env:
-       API_URL: http://tbd
+       API_URL: http://code-bff.%domain%/api/v1/
