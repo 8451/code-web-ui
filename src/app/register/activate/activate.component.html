@@ -1,3 +1,11 @@
-<p>
-  activate works!
-</p>
+<md-card>
+  <md-card-content>
+    <h3>Activate</h3>
+    <p>You have been sent an email with an activation link.</p>
+    <p>Please copy and paste the code below, or click the link in the email.</p>
+    <md-input-container class="full-width">
+      <input mdInput type="text" required [(ngModel)]="activationCode" name="activation-code" placeholder="Activation Code">
+    </md-input-container>
+    <button md-raised-button color="primary" (click)="activate()">Activate</button>
+  </md-card-content>
+</md-card>

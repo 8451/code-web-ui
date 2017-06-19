@@ -36,7 +36,8 @@ export const routes: Routes = [
   },
   {
     path: 'activate',
-    component: ActivateComponent
+    component: ActivateComponent,
+    pathMatch: 'full'
   },
   {
     path: 'activate/:guid',
