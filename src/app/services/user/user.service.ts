@@ -18,10 +18,7 @@ export class UserService {
   }
 
   activateUser(activationCode: string): Observable<Response> {
-    return this.http.get(this.userSerivce, activationCode)
-      .map(res => {
-        return res.json().users[0];
-      }).catch(this.handleError);
+    return this.http.get(`${this.userSerivce}/${activationCode}`);
   }
 
   handleError(error: Response | any): Observable<string> {
