@@ -23,7 +23,7 @@ describe('NewAssessmentDialogComponent', () => {
     firstName: 'First',
     lastName: 'Last',
     email: 'e@mail.com'
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
