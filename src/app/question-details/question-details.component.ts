@@ -40,7 +40,7 @@ export class QuestionDetailsComponent implements OnInit {
         .subscribe(question => this.question = question);
     }
   }
-  
+
   navigateBack(): void {
     this.router.navigate(['/questions']);
   }
