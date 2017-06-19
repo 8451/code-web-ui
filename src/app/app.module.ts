@@ -1,3 +1,4 @@
+import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,11 +17,15 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
 import { AlertComponent } from './alert/alert.component';
 import { DialogComponent } from './alert/dialog/dialog.component';
 import { RegisterComponent } from './register/register/register.component';
+import { AssessmentListComponent } from './assessment-list/assessment-list.component';
+import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AssessmentListComponent,
+    NewAssessmentDialogComponent,
     QuestionDashboardComponent,
     QuestionListItemComponent,
     QuestionDetailsComponent,
@@ -47,8 +52,9 @@ import { RegisterComponent } from './register/register/register.component';
   entryComponents: [
     DialogComponent,
     AlertComponent,
+    NewAssessmentDialogComponent
   ],
-  providers: [AlertService, QuestionService],
+  providers: [AlertService, QuestionService, AssessmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

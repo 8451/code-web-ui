@@ -1,4 +1,5 @@
 import { RegisterComponent } from './register/register/register.component';
+import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -27,6 +28,10 @@ export const routes: Routes = [
     path: 'register',
     pathMatch: 'full',
     component: RegisterComponent
+  },
+  {
+    path: 'assessments',
+    component: AssessmentListComponent
   }
 ];
 
