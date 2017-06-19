@@ -20,6 +20,7 @@ import { DialogComponent } from './alert/dialog/dialog.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
+import { ActivateComponent } from './register/activate/activate.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     QuestionDetailsComponent,
     AlertComponent,
     DialogComponent,
-    RegisterComponent
+    RegisterComponent,
+    ActivateComponent
   ],
   imports: [
     BrowserModule,

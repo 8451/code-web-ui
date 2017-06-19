@@ -1,3 +1,4 @@
+import { ActivateComponent } from './register/activate/activate.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NgModule } from '@angular/core';
@@ -32,6 +33,14 @@ export const routes: Routes = [
   {
     path: 'assessments',
     component: AssessmentListComponent
+  },
+  {
+    path: 'activate',
+    component: ActivateComponent
+  },
+  {
+    path: 'activate/:guid',
+    component: ActivateComponent
   }
 ];
 
