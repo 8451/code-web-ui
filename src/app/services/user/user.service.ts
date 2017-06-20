@@ -18,7 +18,7 @@ export class UserService {
   }
 
   activateUser(activationCode: string): Observable<Response> {
-    return this.http.get(`${this.userSerivce}/${activationCode}`);
+    return this.http.get(`${this.userSerivce}/activate/${activationCode}`);
   }
 
   handleError(error: Response | any): Observable<string> {
