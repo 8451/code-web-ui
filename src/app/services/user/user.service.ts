@@ -6,7 +6,7 @@ import { Headers, Http, Response } from '@angular/http';
 @Injectable()
 export class UserService {
 
-  userSerivce = 'users';
+  userSerivce = '/api/v1/users';
 
   constructor(private http: Http) { }
 
