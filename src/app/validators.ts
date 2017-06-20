@@ -21,7 +21,7 @@ export function passwordValid(control: FormControl): {[key: string]: any} {
         uppercase: passwordValue.match('.*[A-Z].*') || false,
         lowercase: passwordValue.match('.*[a-z].*') || false,
         numbers: passwordValue.match('.*[1-9].*') || false,
-        punctuation: passwordValue.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/) || false
+        punctuation: passwordValue.match(/.*([^\w\s]).*/) || false
     };
 
     const valid: boolean = Object.keys(validChecks).map((key) => {
