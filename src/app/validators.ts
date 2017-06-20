@@ -1,14 +1,39 @@
 import { FormGroup, Validators } from '@angular/forms';
 /* custom validators that we can use */
 
-export function controlsMustHaveEqualValue(control1Key: string, control2Key: string) {
+export function sameValue(control1Key: string, control2Key: string) {
     return (group: FormGroup): {[key: string]: any} => {
         const control1 = group.controls[control1Key];
         const control2 = group.controls[control2Key];
 
         if (control1.value !== control2.value) {
             return {
-                'mismatch': true
+                'sameValue': true
+            };
+        }
+    };
+}
+
+export function passwordValid(controlKey) {
+    return (group: FormGroup): {[key: string]: any} => {
+        const passwordControl = group.controls[controlKey];
+        const passwordValue: string = passwordControl.value;
+        const validChecks = {
+            uppercase: passwordValue.match('.*[A-Z].*') || false,
+            lowercase: passwordValue.match('.*[a-z].*') || false,
+            numbers: passwordValue.match('.*[1-9].*') || false,
+            punctuation: passwordValue.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/) || false
+        };
+
+        const valid: boolean = Object.keys(validChecks).map((key) => {
+            return valid[key];
+        }).reduce((accum, value) => {
+            return value ? accum + 1 : accum;
+        }, 0) > 2;
+
+        if (!valid) {
+            return {
+                'passwordValid': true
             };
         }
     };

@@ -3,7 +3,7 @@ import { UserService } from './../../services/user/user.service';
 import { User } from './../../domains/user';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { controlsMustHaveEqualValue } from '../../validators';
+import { sameValue, passwordValid } from '../../validators';
 
 @Component({
   selector: 'app-register',
@@ -34,13 +34,16 @@ export class RegisterComponent implements OnInit {
       ]],
       password: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
+        {
+          validator: passwordValid('password')
+        }
       ]],
       confirmPassword: ['', [
         Validators.required,
       ]]
     }, {
-      validator: controlsMustHaveEqualValue('password', 'confirmPassword')
+      validator: sameValue('password', 'confirmPassword')
     });
   }
 
