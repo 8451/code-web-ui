@@ -6,7 +6,7 @@ import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './../../app-routing.module';
 import { AppModule } from './../../app.module';
-import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgForm, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
@@ -96,6 +96,25 @@ describe('RegisterComponent', () => {
     spyOn(mockService, 'createUser');
     component.onSubmitRegister();
     expect(mockService.createUser);
+  });
+
+  /*
+  Passwords must be a minimum of 8 characters and must contain at least 3 of the 4 following character types:
+  -	Upper case letters
+  -	Lower case letters
+  -	Numbers
+  -	Punctuation / special characters
+  */
+  it('password invalid when not given at least 2/ of required 3 elements given', () => {
+    const passwordControl = component.form.get('password');
+    passwordControl.setValue('1234567A');
+    expect(passwordControl.valid).toBeFalsy();
+  });
+
+  it('password valid when given 3 of required 3 elements', () => {
+    const passwordControl = component.form.get('password');
+    passwordControl.setValue('123456+A');
+    expect(passwordControl.valid).toBeTruthy();
   });
 
 });

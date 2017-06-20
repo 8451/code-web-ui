@@ -28,6 +28,9 @@
           <md-error *ngIf="form.controls['password'].hasError('minlength')">
             Password must have at least 8 characters
           </md-error>
+          <md-error *ngIf="form.controls['password'].hasError('passwordValid')">
+            Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
+          </md-error>
         </md-input-container>
         <md-input-container class="full-width">
           <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">

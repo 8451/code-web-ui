@@ -1,4 +1,4 @@
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 /* custom validators that we can use */
 
 export function sameValue(control1Key: string, control2Key: string) {
@@ -14,27 +14,25 @@ export function sameValue(control1Key: string, control2Key: string) {
     };
 }
 
-export function passwordValid(controlKey) {
-    return (group: FormGroup): {[key: string]: any} => {
-        const passwordControl = group.controls[controlKey];
-        const passwordValue: string = passwordControl.value;
-        const validChecks = {
-            uppercase: passwordValue.match('.*[A-Z].*') || false,
-            lowercase: passwordValue.match('.*[a-z].*') || false,
-            numbers: passwordValue.match('.*[1-9].*') || false,
-            punctuation: passwordValue.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/) || false
-        };
-
-        const valid: boolean = Object.keys(validChecks).map((key) => {
-            return valid[key];
-        }).reduce((accum, value) => {
-            return value ? accum + 1 : accum;
-        }, 0) > 2;
-
-        if (!valid) {
-            return {
-                'passwordValid': true
-            };
-        }
+export function passwordValid(control: FormControl): {[key: string]: any} {
+    const passwordControl = control;
+    const passwordValue: string = passwordControl.value;
+    const validChecks = {
+        uppercase: passwordValue.match('.*[A-Z].*') || false,
+        lowercase: passwordValue.match('.*[a-z].*') || false,
+        numbers: passwordValue.match('.*[1-9].*') || false,
+        punctuation: passwordValue.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/) || false
     };
+
+    const valid: boolean = Object.keys(validChecks).map((key) => {
+        return validChecks[key];
+    }).reduce((accum, value) => {
+        return value ? accum + 1 : accum;
+    }, 0) > 2;
+
+    if (!valid) {
+        return {
+            'passwordValid': true
+        };
+    }
 }
