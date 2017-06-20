@@ -18,9 +18,9 @@ export function passwordValid(control: FormControl): {[key: string]: any} {
     const passwordControl = control;
     const passwordValue: string = passwordControl.value;
     const validChecks = {
-        uppercase: passwordValue.match('.*[A-Z].*') || false,
-        lowercase: passwordValue.match('.*[a-z].*') || false,
-        numbers: passwordValue.match('.*[1-9].*') || false,
+        uppercase: passwordValue.match(/.*[A-Z].*/) || false,
+        lowercase: passwordValue.match(/.*[a-z].*/) || false,
+        numbers: passwordValue.match(/.*[1-9].*/) || false,
         punctuation: passwordValue.match(/.*([^\w\s]).*/) || false
     };
 
