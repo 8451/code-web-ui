@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class QuestionService {
 
-  private questionsUrl = 'api/v1/questions';
+  private questionsUrl = '/api/v1/questions';
 
   constructor(private http: Http) { }
 
