@@ -69,7 +69,7 @@ describe('QuestionDashboardComponent', () => {
 
   it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
-  }), 5000);
+  }), 10000);
 
   it('question dashboard component should be populated with a list of questions', (done) => {
     questionService = fixture.debugElement.injector.get(QuestionService);

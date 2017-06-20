@@ -31,7 +31,6 @@ export class QuestionDetailsComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-
     this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
     if (this.isNew) {
       this.question = new Question();
@@ -60,7 +59,7 @@ export class QuestionDetailsComponent implements OnInit {
     }
   }
 
-  deleteQuestion(questionId: string): void {
+  deleteQuestion(): void {
     const subs = this.alertService.confirmation('Are you sure you want to delete?').subscribe(result => {
       if (result) {
         this.questionService.deleteQuestion(this.question.id).subscribe(res => {
