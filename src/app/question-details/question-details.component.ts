@@ -54,7 +54,6 @@ export class QuestionDetailsComponent implements OnInit {
       modifiedDate: ['', []],
     });
 
-
     this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
     if (!this.isNew) {
       this.route.params
@@ -105,7 +104,7 @@ export class QuestionDetailsComponent implements OnInit {
 
       if (result) {
         this.questionService.deleteQuestion(this.form.controls['id'].value).subscribe(res => {
-            this.router.navigate(['/questions']);
+          this.router.navigate(['/questions']);
         });
       }
     });

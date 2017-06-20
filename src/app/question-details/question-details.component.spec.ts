@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
@@ -6,7 +5,6 @@ import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-
 import { QuestionDetailsComponent } from './question-details.component';
 import { AppModule } from '../app.module';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
@@ -191,7 +189,6 @@ describe('QuestionDetailsComponent', () => {
     expect(questionService.updateQuestion).toHaveBeenCalledTimes(0);
     expect(questionService.createQuestion).toHaveBeenCalledTimes(0);
   }));
-
 });
 
 
