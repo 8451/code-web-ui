@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { NewAssessmentDialogComponent } from './new-assessment-dialog.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Headers, Http, BaseRequestOptions, XHRBackend } from '@angular/http';
+import { Headers, Http, BaseRequestOptions, XHRBackend, Response, ResponseOptions } from '@angular/http';
 import { MockBackend} from '@angular/http/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { MdDialogRef, MdInputModule, MaterialModule } from '@angular/material';
@@ -119,6 +119,18 @@ describe('NewAssessmentDialogComponent', () => {
     spyOn(service, 'createAssessment');
     component.createAssessment();
     expect(service.createAssessment).toHaveBeenCalledTimes(0);
+  });
+
+  it('should display a toast when createAssessment throws an error', () => {
+    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(assessmentService, 'createAssessment').and.returnValue(
+      Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
+    spyOn(alertService, 'error');
+
+    component.form.setValue(assessment);
+    component.createAssessment();
+    expect(alertService.error).toHaveBeenCalled();
   });
 
 
