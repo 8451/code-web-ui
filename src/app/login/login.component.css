@@ -1,0 +1,15 @@
+button {
+    margin: auto;
+}
+
+.full-width {
+    width:100%;
+}
+
+.block {
+    display: block;
+}
+
+form {
+    padding: 100px 700px;
+}

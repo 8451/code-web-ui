@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
+  <md-input-container class="block">
+      <input mdInput placeholder="Username" required title="Username" formControlName="username">
+  </md-input-container>
+  <md-input-container class="block">
+      <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
+  </md-input-container>
+  <div>
+    <button md-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
+  </div>
+</form>
