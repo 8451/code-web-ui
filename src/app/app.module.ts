@@ -1,7 +1,7 @@
 import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
@@ -45,6 +45,7 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     DialogComponent,
