@@ -41,11 +41,12 @@ export class LoginComponent implements OnInit {
     this.authService.login(user.email, user.password)
       .subscribe(result => {
         if (result === true) {
-          this.router.navigate(['assessments']);
+          this.router.navigate(['/assessments']);
         } else {
           this.alertService.info('Invalid username or password.');
         }
       }, error => {
+        console.error('error on login');
         this.alertService.error('Could not login. Try again later.');
       });
   }

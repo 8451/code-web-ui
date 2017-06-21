@@ -43,6 +43,12 @@ export class AlertComponent implements OnInit, OnDestroy {
       });
   }
 
+  openErrorSnackBar(alert: Alert<any>, action: string) {
+    this.snackBar.open(alert.message, action, {
+      duration: 100000, extraClasses: ['errorSnack']
+    });
+  }
+
   handleAlert(alert: Alert<any>) {
     switch (alert.type) {
       case AlertType.INFO:
@@ -51,6 +57,8 @@ export class AlertComponent implements OnInit, OnDestroy {
       case AlertType.CONFIRMATION:
         this.openConfirmation(alert);
         break;
+      case AlertType.ERROR:
+      this.openErrorSnackBar(alert, 'close');
     }
   }
 

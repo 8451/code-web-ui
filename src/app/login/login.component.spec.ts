@@ -2,6 +2,7 @@ import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Rx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { MockBackend } from '@angular/http/testing';
 import { Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
@@ -10,11 +11,12 @@ import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, F
 import { MdInputModule, MaterialModule } from '@angular/material';
 import { LoginComponent } from './login.component';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
   let alertService: AlertService;
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,6 +33,7 @@ fdescribe('LoginComponent', () => {
         AuthService,
         MockBackend,
         AlertService,
+        { provide: Router, useValue: mockRouter }
       ]
     })
     .compileComponents();
@@ -86,7 +89,7 @@ fdescribe('LoginComponent', () => {
     component.form.setValue({username: 'test', password: 'test'});
     component.onSubmitLogin();
     expect(alertService.info).toHaveBeenCalled();
-  })
+  });
 
   it('should call alertService.error() when the login request fails', () => {
     authService = fixture.debugElement.injector.get(AuthService);
@@ -97,6 +100,16 @@ fdescribe('LoginComponent', () => {
     component.form.setValue({username: 'test', password: 'test'});
     component.onSubmitLogin();
     expect(alertService.error).toHaveBeenCalled();
+  });
+
+  it('should navigate to assessments on successful login', () => {
+    authService = fixture.debugElement.injector.get(AuthService);
+    spyOn(authService, 'login').and.returnValue(
+      Observable.of(true)
+    );
+    component.form.setValue({username: 'test', password: 'test'});
+    component.onSubmitLogin();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/assessments']);
   });
 
 });
