@@ -44,8 +44,8 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
       this.dialogRef.close();
     },
     e => {
-      console.error(e);
       this.dialogRef.close();
+      this.alertService.error('Error creating assessment.');
     }
     );
   }
