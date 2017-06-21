@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { ActivateComponent } from './register/activate/activate.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
@@ -42,6 +43,10 @@ export const routes: Routes = [
   {
     path: 'activate/:guid',
     component: ActivateComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

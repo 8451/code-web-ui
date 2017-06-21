@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +22,7 @@ import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
 import { ActivateComponent } from './register/activate/activate.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { ActivateComponent } from './register/activate/activate.component';
     AlertComponent,
     DialogComponent,
     RegisterComponent,
-    ActivateComponent
+    ActivateComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { ActivateComponent } from './register/activate/activate.component';
     QuestionService,
     AssessmentService,
     UserService,
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })
