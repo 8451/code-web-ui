@@ -22,6 +22,10 @@ export class AssessmentService {
       .catch(this.handleError);
   }
 
+  updateAssessment(assessment: Assessment): Observable<Assessment> {
+    return new Observable<Assessment>();
+  }
+
   handleError (error: Response | any): Observable<string> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);

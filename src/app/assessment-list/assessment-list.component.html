@@ -1,8 +1,12 @@
-<md-card *ngFor="let assessment of assessments">
-  <md-card-header>
-    <md-card-title-group>
-      <md-card-title>{{assessment.firstName}} {{assessment.lastName}}</md-card-title>
-  </md-card-title-group>
-  </md-card-header>
-</md-card>
-<button md-raised-button color="primary" (click)="createAssessment()">Create New Assessment</button>
+<md-toolbar>
+  <button md-raised-button color="primary" (click)="createAssessment()">Create New Assessment</button>
+  <span class="flex"></span>
+  <button md-raised-button type="button" color="accent" [disabled]="!selectedAssessment" (click)="startAssessment()">Start assessment</button>
+</md-toolbar>
+
+<md-list>
+  <md-list-item *ngFor="let assessment of assessments" class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
+    <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>    
+    <p md-line>{{assessment.email}}</p>
+  </md-list-item>
+</md-list>

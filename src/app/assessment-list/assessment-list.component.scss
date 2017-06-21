@@ -1,0 +1,16 @@
+.flex {
+  flex: 1 1 auto;
+}
+
+.selected {
+  color: #607D88;
+  background-color: #DDD;
+  left: .1em;
+}
+
+.assessment:hover {
+  cursor: pointer;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
