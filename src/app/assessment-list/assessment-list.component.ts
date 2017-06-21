@@ -1,3 +1,4 @@
+import { AlertService } from './../services/alert/alert.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AssessmentService } from './../services/assessment/assessment.service';
@@ -23,6 +24,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     public dialog: MdDialog,
     private assessmentService: AssessmentService,
     private router: Router,
+    private alertService: AlertService,
     ) { }
 
   ngOnInit() {
@@ -44,7 +46,6 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.selectedAssessment = assessment;
   }
 
-
   updateList(): void {
     this.subscription = this.dialogRef.afterClosed().subscribe(() => {
       this.getAssessments();
@@ -55,12 +56,11 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.selectedAssessment.active = true;
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
-      console.log(res);
+      this.alertService.info('Assessment started!');
+      this.router.navigate(['/interviewAssessment', this.selectedAssessment.interviewGuid]);
     }, error => {
-      console.log(error);
+      this.alertService.error('Unable to start assessment');
     });
-
-    this.router.navigate(['/interviewAssessment', this.selectedAssessment.interviewGuid]);
   }
 
   ngOnDestroy() {

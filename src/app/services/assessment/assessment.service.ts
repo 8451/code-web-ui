@@ -16,6 +16,12 @@ export class AssessmentService {
       .catch(this.handleError);
   }
 
+  getAssessmentByGuid(guid: string): Observable<Assessment> {
+    return this.http.get(`${this.assessmentsUrl}/${guid}`)
+      .map(res => res.json().assesments[0])
+      .catch(this.handleError);
+  }
+
   createAssessment(assessment: Assessment): Observable<Assessment> {
     return this.http.post(`${this.assessmentsUrl}`, assessment)
       .map(res => res.json().assessments[0])
@@ -23,7 +29,9 @@ export class AssessmentService {
   }
 
   updateAssessment(assessment: Assessment): Observable<Assessment> {
-    return new Observable<Assessment>();
+    return this.http.put(`${this.assessmentsUrl}`, assessment)
+      .map(res => res.json().assesments[0])
+      .catch(this.handleError);
   }
 
   handleError (error: Response | any): Observable<string> {
