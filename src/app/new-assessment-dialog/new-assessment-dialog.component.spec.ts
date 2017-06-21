@@ -119,7 +119,7 @@ describe('NewAssessmentDialogComponent', () => {
     spyOn(service, 'createAssessment');
     component.createAssessment();
     expect(service.createAssessment).toHaveBeenCalledTimes(0);
-  })
+  });
 
 
 });

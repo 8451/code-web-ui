@@ -45,7 +45,7 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   entryComponents: [
     DialogComponent,
