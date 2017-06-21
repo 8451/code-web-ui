@@ -43,8 +43,10 @@ export class LoginComponent implements OnInit {
         if (result === true) {
           this.router.navigate(['assessments']);
         } else {
-          this.alertService.error('Invalid username or password.');
+          this.alertService.info('Invalid username or password.');
         }
+      }, error => {
+        this.alertService.error('Could not login. Try again later.');
       });
   }
 

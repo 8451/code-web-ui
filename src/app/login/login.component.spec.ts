@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend } from '@angular/http/testing';
-import { Http, HttpModule } from '@angular/http';
+import { Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
@@ -30,6 +30,7 @@ fdescribe('LoginComponent', () => {
       providers: [
         AuthService,
         MockBackend,
+        AlertService,
       ]
     })
     .compileComponents();
@@ -77,10 +78,22 @@ fdescribe('LoginComponent', () => {
     expect(authService.login).toHaveBeenCalledTimes(0);
   });
 
-  it('should call alertService.error() when the login fails', () => {
+  it('should call alertService.info() when the login fails', () => {
     authService = fixture.debugElement.injector.get(AuthService);
     alertService = fixture.debugElement.injector.get(AlertService);
-    spyOn(authService, 'login').and.returnValue(Observable.throw());
+    spyOn(authService, 'login').and.returnValue(Observable.of(false));
+    spyOn(alertService, 'info');
+    component.form.setValue({username: 'test', password: 'test'});
+    component.onSubmitLogin();
+    expect(alertService.info).toHaveBeenCalled();
+  })
+
+  it('should call alertService.error() when the login request fails', () => {
+    authService = fixture.debugElement.injector.get(AuthService);
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'error');
+    spyOn(authService, 'login').and.returnValue(
+      Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
     component.form.setValue({username: 'test', password: 'test'});
     component.onSubmitLogin();
     expect(alertService.error).toHaveBeenCalled();
