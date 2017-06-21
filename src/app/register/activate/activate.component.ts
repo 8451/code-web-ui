@@ -1,3 +1,5 @@
+import { AlertService } from './../../services/alert/alert.service';
+import { Observable } from 'rxjs/Observable';
 import { UserService } from './../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +17,8 @@ export class ActivateComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -29,7 +32,12 @@ export class ActivateComponent implements OnInit, OnDestroy {
   }
 
   activate() {
-    this.userService.activateUser(this.activationCode);
+    this.userService.activateUser(this.activationCode).subscribe(
+      res => {
+        this.router.navigate(['/login']);
+    }, error => {
+      this.alertService.error('Unable to activate your account.');
+    });
   }
 
 }
