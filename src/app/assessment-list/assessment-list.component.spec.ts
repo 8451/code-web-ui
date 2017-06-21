@@ -1,6 +1,7 @@
+import { AlertService } from './../services/alert/alert.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { HttpModule } from '@angular/http';
 import { AssessmentService } from './../services/assessment/assessment.service';
@@ -26,7 +27,7 @@ describe('AssessmentListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AssessmentListComponent, NewAssessmentDialogComponent ],
       imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule ],
-      providers: [AssessmentService, MdDialog ]
+      providers: [AssessmentService, MdDialog, AlertService, FormBuilder ]
     })
     .overrideModule(BrowserDynamicTestingModule, {
       set: {
@@ -35,7 +36,8 @@ describe('AssessmentListComponent', () => {
     })
     .overrideComponent(NewAssessmentDialogComponent, {
       set: {
-        template: '<span>NewAssessmentDialogComponent</span>'
+        template: '<span>NewAssessmentDialogComponent</span>',
+        providers: []
       }
     })
     .compileComponents();

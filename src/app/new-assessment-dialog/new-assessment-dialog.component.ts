@@ -1,8 +1,9 @@
+import { AlertService } from './../services/alert/alert.service';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Assessment } from './../domains/assessment';
 import { MdDialogRef } from '@angular/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 
 
@@ -13,16 +14,33 @@ import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 })
 export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
   subscription;
-  assessment: Assessment = new Assessment();
+  form: FormGroup;
 
-  constructor(public dialogRef: MdDialogRef<NewAssessmentDialogComponent>, private assessmentService: AssessmentService) { }
+  constructor(public dialogRef: MdDialogRef<NewAssessmentDialogComponent>, private alertService: AlertService,
+              private assessmentService: AssessmentService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      firstName: ['', [
+        Validators.required
+      ]],
+      lastName: ['', [
+        Validators.required
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]]
+    });
   }
 
   createAssessment(): void {
-    this.subscription = this.assessmentService.createAssessment(this.assessment).subscribe(res => {
-      // TODO: call alert service to say the assessment was added
+    if (!this.form.valid) {
+      return;
+    }
+    const assessment: Assessment = this.form.value as Assessment;
+    this.subscription = this.assessmentService.createAssessment(assessment).subscribe(res => {
+      this.alertService.info('Assessment created');
       this.dialogRef.close();
     },
     e => {
