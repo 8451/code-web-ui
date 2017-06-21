@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs/Subscription';
 import { AssessmentService } from './../services/assessment/assessment.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { Assessment } from './../domains/assessment';
@@ -10,10 +11,11 @@ import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-ass
   templateUrl: './assessment-list.component.html',
   styleUrls: ['./assessment-list.component.css']
 })
-export class AssessmentListComponent implements OnInit {
+export class AssessmentListComponent implements OnInit, OnDestroy {
 
   assessments: Assessment[];
   dialogRef: MdDialogRef<NewAssessmentDialogComponent>;
+  subscription: Subscription;
 
   constructor(public dialog: MdDialog, private assessmentService: AssessmentService) { }
 
@@ -33,8 +35,14 @@ export class AssessmentListComponent implements OnInit {
   }
 
   updateList(): void {
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.subscription = this.dialogRef.afterClosed().subscribe(() => {
       this.getAssessments();
     });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
