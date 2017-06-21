@@ -16,7 +16,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 describe('ActivateComponent', () => {
   let component: ActivateComponent;
   let fixture: ComponentFixture<ActivateComponent>;
-  let spy: any;
   const mockActivatedRoute: any = {
     params: Observable.from([{ 'guid': '1234' }])
   };
