@@ -1,15 +1,15 @@
-<form #questionForm="ngForm" (ngSubmit)="submitQuestion()">
+<form [formGroup]="form" (ngSubmit)="submitQuestion()">
   <md-toolbar>
       <button md-raised-button type="button" (click)="navigateBack()">Back</button>
       <span class="example-spacer"></span>
-      <button md-raised-button color="primary" id="save-question-btn" type="submit" [disabled]="!questionForm.form.valid" *ngIf="!isNew">Save</button>
-      <button md-raised-button color="primary" id="add-question-btn" type="submit" [disabled]="!questionForm.form.valid" *ngIf="isNew">Add</button>
-      <button md-raised-button color="warn" id="delete-question-btn" type="button" (click)="deleteQuestion()">Delete</button>
+      <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
+      <button md-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>
+      <button md-raised-button color="warn" type="button" *ngIf="isNew" (click)="navigateBack()">Cancel</button>
   </md-toolbar>
-  <md-grid-list cols="5" rowHeight="8:1" *ngIf="question">
+  <md-grid-list cols="5" rowHeight="8:1" >
     <md-grid-tile [colspan]="3" [rowspan]="2">
       <md-input-container style="width:75%">
-        <input mdInput placeholder="Question Title" id="title" name="title" [(ngModel)]="question.title" required>
+        <input mdInput placeholder="Question Title" name="title" formControlName="title" required>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="2" [rowspan]="18">
@@ -20,26 +20,29 @@
         <md-card-content>
           <md-list>
             <md-list-item>
-            <md-input-container style="width:50%">
-              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" [(ngModel)]="question.difficulty" required>
+            <md-input-container style="width:75%">
+              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
+              <md-error>
+                Choose a difficulty between 1-5
+              </md-error>
             </md-input-container>
             </md-list-item>
             <h3 md-subheader>Metadata</h3>
             <md-list-item>
               <h4 md-line>Modified by</h4>
-              <p md-line>{{question.modifiedBy}}</p>
+              <p md-line>{{form.controls['modifiedBy'].value}}</p>
             </md-list-item>
             <md-list-item>
               <h4 md-line>Modified on</h4>
-              <p md-line>{{question.modifiedDate | date: "mediumDate"}}</p>
+              <p md-line>{{form.controls['modifiedDate'].value | date: "mediumDate"}}</p>
             </md-list-item>
             <md-list-item>
               <h4 md-line>Created by</h4>
-              <p md-line>{{question.createdBy}}</p>
+              <p md-line>{{form.controls['createdBy'].value}}</p>
             </md-list-item>
             <md-list-item>
               <h4 md-line>Created on</h4>
-              <p md-line>{{question.createdDate | date: "mediumDate"}}</p>
+              <p md-line>{{form.controls['createdDate'].value | date: "mediumDate"}}</p>
             </md-list-item>
           </md-list>
         </md-card-content>
@@ -47,12 +50,12 @@
     </md-grid-tile>
     <md-grid-tile [colspan]="3" [rowspan]="8">
       <md-input-container style="width:75%">
-        <textarea rows="10" mdInput placeholder="Question Body" name="body" [(ngModel)]="question.body" required></textarea>
+        <textarea rows="10" mdInput placeholder="Question Body" name="body" formControlName="body" required></textarea>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="3" [rowspan]="6">
       <md-input-container style="width:75%">
-        <textarea rows="8" mdInput placeholder="Suggested Answer" name="suggestedAnswer" [(ngModel)]="question.suggestedAnswer"></textarea>
+        <textarea rows="8" mdInput placeholder="Suggested Answer" name="suggestedAnswer" formControlName="suggestedAnswer"></textarea>
       </md-input-container></md-grid-tile>
   </md-grid-list>
 </form>
