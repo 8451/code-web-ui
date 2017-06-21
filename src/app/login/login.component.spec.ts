@@ -1,4 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlertService } from './../services/alert/alert.service';
+import { Observable } from 'rxjs/Rx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockBackend } from '@angular/http/testing';
+import { Http, HttpModule } from '@angular/http';
+import { AuthService } from './../services/auth/auth.service';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MdInputModule, MaterialModule } from '@angular/material';
 import { LoginComponent } from './login.component';
@@ -6,12 +13,23 @@ import { LoginComponent } from './login.component';
 fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let authService: AuthService;
+  let alertService: AlertService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MdInputModule,
+        FormsModule,
+        HttpModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
+      ],
+      providers: [
+        AuthService,
+        MockBackend,
       ]
     })
     .compileComponents();
@@ -20,6 +38,7 @@ fdescribe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -49,6 +68,22 @@ fdescribe('LoginComponent', () => {
     const password = component.form.get('password');
     password.setValue('password');
     expect(password.valid).toBeTruthy();
+  });
+
+  it('should not call authService.login() if the form is invalid', () => {
+    authService = fixture.debugElement.injector.get(AuthService);
+    spyOn(authService, 'login');
+    component.onSubmitLogin();
+    expect(authService.login).toHaveBeenCalledTimes(0);
+  });
+
+  it('should call alertService.error() when the login fails', () => {
+    authService = fixture.debugElement.injector.get(AuthService);
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(authService, 'login').and.returnValue(Observable.throw());
+    component.form.setValue({username: 'test', password: 'test'});
+    component.onSubmitLogin();
+    expect(alertService.error).toHaveBeenCalled();
   });
 
 });

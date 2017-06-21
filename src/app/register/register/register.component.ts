@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
     }
     const user  = this.form.value as User;
     this.userService.createUser(user).subscribe(createdUser => {
-      this.router.navigate(['/actviate']);
+      this.router.navigate(['/activate']);
     });
   }
 }

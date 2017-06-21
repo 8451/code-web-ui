@@ -1,3 +1,4 @@
+import { AlertService } from './../services/alert/alert.service';
 import { User } from './../domains/user';
 import { AuthService } from './../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -16,7 +17,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private alertService: AlertService,
+    ) { }
 
   ngOnInit() {
     this.authService.logout();
@@ -39,6 +42,8 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
         if (result === true) {
           this.router.navigate(['assessments']);
+        } else {
+          this.alertService.error('Invalid username or password.');
         }
       });
   }
