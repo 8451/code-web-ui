@@ -11,6 +11,7 @@ import { MaterialModule } from '@angular/material';
 import { AppModule } from '../app.module';
 import { routes } from '../app-routing.module';
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
 describe('QuestionDashboardComponent', () => {
    let component: QuestionDashboardComponent;
@@ -70,7 +71,7 @@ describe('QuestionDashboardComponent', () => {
     expect(component).toBeTruthy();
   }), 10000);
 
-  it('question dashboard component should be populated with a list of questions', async(() => {
+  it('question dashboard component should be populated with a list of questions', (done) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
@@ -78,7 +79,8 @@ describe('QuestionDashboardComponent', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(component.questions).toEqual(questions);
+      done();
     });
-  }), 10000);
+  }, 10000);
 
 });

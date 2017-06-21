@@ -1,3 +1,4 @@
+import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,8 +17,10 @@ import { AlertService } from './services/alert/alert.service';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { AlertComponent } from './alert/alert.component';
 import { DialogComponent } from './alert/dialog/dialog.component';
+import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
+import { ActivateComponent } from './register/activate/activate.component';
 
 
 @NgModule({
@@ -29,12 +32,15 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     QuestionListItemComponent,
     QuestionDetailsComponent,
     AlertComponent,
-    DialogComponent
+    DialogComponent,
+    RegisterComponent,
+    ActivateComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MdButtonModule,
@@ -52,7 +58,11 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assess
     AlertComponent,
     NewAssessmentDialogComponent
   ],
-  providers: [AlertService, QuestionService, AssessmentService],
+  providers: [AlertService,
+    QuestionService,
+    AssessmentService,
+    UserService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,5 @@
+import { ActivateComponent } from './register/activate/activate.component';
+import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -24,8 +26,22 @@ export const routes: Routes = [
     component: QuestionDetailsComponent
   },
   {
+    path: 'register',
+    pathMatch: 'full',
+    component: RegisterComponent
+  },
+  {
     path: 'assessments',
     component: AssessmentListComponent
+  },
+  {
+    path: 'activate',
+    component: ActivateComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'activate/:guid',
+    component: ActivateComponent
   }
 ];
 
