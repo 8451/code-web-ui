@@ -13,7 +13,7 @@ const mockUser = {
       id: 'id1',
       firstName: 'First Name',
       lastName: 'Last Name',
-      email: 'test@test.com',
+      username: 'test@test.com',
       password: '123456',
     },
   ]
@@ -59,7 +59,7 @@ describe('UserService', () => {
       expect(user.id).toEqual(expectedUser.id, 'user firstName should match');
       expect(user.firstName).toEqual(expectedUser.firstName, 'user firstName should match');
       expect(user.lastName).toEqual(expectedUser.lastName, 'use lastName should match');
-      expect(user.email).toEqual(expectedUser.email, 'user email should match');
+      expect(user.username).toEqual(expectedUser.username, 'user email should match');
     }, error => {
       console.log(error);
     });
