@@ -1,3 +1,4 @@
+import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
@@ -66,6 +67,7 @@ import { LoginComponent } from './login/login.component';
     AssessmentService,
     UserService,
     AuthService,
+    CanActivateAuthguard
   ],
   bootstrap: [AppComponent]
 })
