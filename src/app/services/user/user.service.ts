@@ -12,11 +12,7 @@ export class UserService {
 
   createUser(user: User): Observable<User> {
     return this.http.post(this.userSerivce, user)
-      .switchMap(res => {
-        const response = res.json();
-        console.log(res);
-        return res.json().users[0];
-      }).catch(this.handleError);
+      .map(res => res.json().users[0]).catch(this.handleError);
   }
 
   activateUser(activationCode: string): Observable<Response> {

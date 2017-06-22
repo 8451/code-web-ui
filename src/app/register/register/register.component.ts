@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit {
     }
     const user  = this.form.value as User;
     this.userService.createUser(user).subscribe(createdUser => {
-      console.log('navigate called');
       this.router.navigate(['/activate']);
     }, error => {
       console.log(error);
