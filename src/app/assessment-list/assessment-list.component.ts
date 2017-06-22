@@ -18,7 +18,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   assessments: Assessment[];
   dialogRef: MdDialogRef<NewAssessmentDialogComponent>;
   subscription: Subscription;
-  private selectedAssessment: Assessment;
+  selectedAssessment: Assessment;
 
   constructor(
     public dialog: MdDialog,

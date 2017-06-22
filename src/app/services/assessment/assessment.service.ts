@@ -18,7 +18,7 @@ export class AssessmentService {
 
   getAssessmentByGuid(guid: string): Observable<Assessment> {
     return this.http.get(`${this.assessmentsUrl}/${guid}`)
-      .map(res => res.json().assesments[0])
+      .map(res => res.json().assessments[0])
       .catch(this.handleError);
   }
 
@@ -30,7 +30,7 @@ export class AssessmentService {
 
   updateAssessment(assessment: Assessment): Observable<Assessment> {
     return this.http.put(`${this.assessmentsUrl}`, assessment)
-      .map(res => res.json().assesments[0])
+      .map(res => res.json().assessments[0])
       .catch(this.handleError);
   }
 
