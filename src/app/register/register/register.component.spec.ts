@@ -49,14 +49,14 @@ describe('RegisterComponent', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
-  it('control invalid when not 8451 email', () => {
-      const emailControl = component.form.get('email');
+  it('control invalid when not 8451 username', () => {
+      const emailControl = component.form.get('username');
       emailControl.setValue('test@gmail.com');
       expect(emailControl.valid).toBe(false);
   });
 
-  it('control valid when 8451 email', () => {
-    const emailControl = component.form.get('email');
+  it('control valid when 8451 username', () => {
+    const emailControl = component.form.get('username');
     emailControl.setValue('test@8451.com');
     expect(emailControl.valid).toBe(true);
   });

@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
       lastName: ['', [
         Validators.required,
       ]],
-      email: ['', [
+      username: ['', [
         Validators.required,
         Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
       ]],
@@ -52,6 +52,8 @@ export class RegisterComponent implements OnInit {
     const user  = this.form.value as User;
     this.userService.createUser(user).subscribe(createdUser => {
       this.router.navigate(['/activate']);
+    }, error => {
+      console.log(error);
     });
   }
 }
