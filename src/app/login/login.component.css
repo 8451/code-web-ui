@@ -1,15 +1,21 @@
-button {
-    margin: auto;
+.centered-button {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
 }
 
 .full-width {
-    width:100%;
+    width:50%;
 }
 
-.block {
-    display: block;
+.centered-card {
+    width: 50%;
+    margin: auto;
 }
 
-/*form {
-    padding: 100px 700px;
-}*/
+.spacer {
+    margin-top:10px;
+    text-align: center;
+}
