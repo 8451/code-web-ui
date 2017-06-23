@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { Question } from './../../domains/question';
 import { Observable } from 'rxjs/Observable';
 import { HttpModule, Http, Response, ResponseOptions, XHRBackend, ConnectionBackend, BaseRequestOptions } from '@angular/http';
@@ -61,6 +62,7 @@ describe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        AuthService,
         {
           provide: Http, useFactory: (
             backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
@@ -79,8 +81,9 @@ describe('QuestionService', () => {
   }));
 
 
-  it('getQuestions() should return a list of questions', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
-    const questionService = new QuestionService(http);
+  it('getQuestions() should return a list of questions', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+    const questionService = new QuestionService(http, authService);
 
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockQuestions });
@@ -111,8 +114,9 @@ describe('QuestionService', () => {
   })));
 
 
-  it('getQuestion() should return a question', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
-    const questionService = new QuestionService(http);
+  it('getQuestion() should return a question', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+    const questionService = new QuestionService(http, authService);
 
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockQuestion });
@@ -134,10 +138,10 @@ describe('QuestionService', () => {
   })));
 
   it('createQuestion() should create and return a question', fakeAsync(inject(
-    [Http, MockBackend],
-    (http: Http, mockBackend: MockBackend) => {
+    [Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
 
-      const questionService = new QuestionService(http);
+      const questionService = new QuestionService(http, authService);
 
       mockBackend.connections.subscribe(connection => {
         const response = new ResponseOptions({ body: mockQuestion });
@@ -160,10 +164,10 @@ describe('QuestionService', () => {
 
 
   it('updateQuestion() should update and existing question', fakeAsync(inject(
-    [Http, MockBackend],
-    (http: Http, mockBackend: MockBackend) => {
+    [Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
 
-      const questionService = new QuestionService(http);
+      const questionService = new QuestionService(http, authService);
 
       mockBackend.connections.subscribe(connection => {
         const response = new ResponseOptions({ body: mockQuestion });
@@ -185,10 +189,10 @@ describe('QuestionService', () => {
     })));
 
   it('deleteQuestion() should delete a question', fakeAsync(inject(
-    [Http, MockBackend],
-    (http: Http, mockBackend: MockBackend) => {
+    [Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
 
-      const questionService = new QuestionService(http);
+      const questionService = new QuestionService(http, authService);
 
       mockBackend.connections.subscribe(connection => {
         const response = new ResponseOptions({ body: mockQuestion });
@@ -201,10 +205,10 @@ describe('QuestionService', () => {
     })));
 
   it('handleError() should handle a http error', fakeAsync(inject(
-    [Http, MockBackend],
-    (http: Http, mockBackend: MockBackend) => {
+    [Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
 
-      const questionService = new QuestionService(http);
+      const questionService = new QuestionService(http, authService);
       const errorResponse = new ResponseOptions(mockError);
 
       questionService.handleError(new Response(errorResponse)).subscribe(
