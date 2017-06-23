@@ -18,7 +18,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<boolean> {
     return this.http.post(this.authService,
-      JSON.stringify({username: username, password: password}))
+      {username: username, password: password})
       .map(res => {
         const token = res.json() && res.json().token;
         if (token) {
