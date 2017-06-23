@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, F
 import { MdInputModule, MaterialModule, MdCardModule } from '@angular/material';
 import { LoginComponent } from './login.component';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;

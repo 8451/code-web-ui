@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth/auth.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
@@ -21,7 +22,9 @@ describe('QuestionDetailsComponent', () => {
       imports: [AppModule,
         RouterTestingModule,
         FormsModule],
-      providers: [QuestionService,
+      providers: [
+        QuestionService,
+        AuthService,
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'new' }]) } },
         { provide: Router, useValue: mockRouter }
       ]

@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { Assessment } from './../../domains/assessment';
 import { Observable } from 'rxjs/Observable';
 import { TestBed, inject, fakeAsync, async, tick } from '@angular/core/testing';
@@ -40,6 +41,7 @@ describe('AssessmentService', () => {
       providers: [AssessmentService,
         MockBackend,
         BaseRequestOptions,
+        AuthService,
         {
           provide: Http,
           deps: [MockBackend, BaseRequestOptions],
@@ -55,57 +57,62 @@ describe('AssessmentService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('getAssessments() should return assessment', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
+  it('getAssessments() should return assessment', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockAssessment });
       connection.mockRespond(new Response(response));
     });
-    const assessmentService = new AssessmentService(http);
+    const assessmentService = new AssessmentService(http, authService);
     assessmentService.getAssessments().subscribe(res => {
       expect(res.length).toBe(1, 'should contain 1 assessment');
       compareAssessments(res[0]);
     });
   })));
 
-  it('createAssessment() should return assessment', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
+  it('createAssessment() should return assessment', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockAssessment });
       connection.mockRespond(new Response(response));
     });
-    const assessmentService = new AssessmentService(http);
+    const assessmentService = new AssessmentService(http, authService);
     assessmentService.createAssessment(mockAssessment.assessments[0]).subscribe(res => {
       compareAssessments(res);
     });
   })));
 
-  it('getAssessmentByGuid() should update an assessment', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
+  it('getAssessmentByGuid() should update an assessment', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockAssessment });
       connection.mockRespond(new Response(response));
     });
-    const assessmentService = new AssessmentService(http);
+    const assessmentService = new AssessmentService(http, authService);
     assessmentService.getAssessmentByGuid(mockAssessment.assessments[0].interviewGuid).subscribe(res => {
       compareAssessments(res);
     });
   })));
 
-  it('updateAssessment() should update an assessment', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
+  it('updateAssessment() should update an assessment', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockAssessment });
       connection.mockRespond(new Response(response));
     });
-    const assessmentService = new AssessmentService(http);
+    const assessmentService = new AssessmentService(http, authService);
     assessmentService.updateAssessment(mockAssessment.assessments[0]).subscribe(res => {
       compareAssessments(res);
     });
   })));
 
-  it('handleError() should handle any http error', fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
+  it('handleError() should handle any http error', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
     mockBackend.connections.subscribe(connection => {
       const response = new ResponseOptions({ body: mockAssessment });
       connection.mockRespond(new Response(response));
     });
-    const assessmentService = new AssessmentService(http);
+    const assessmentService = new AssessmentService(http, authService);
     const errorResponse = new ResponseOptions(mockError);
 
     assessmentService.handleError(new Response(errorResponse)).subscribe(
