@@ -8,10 +8,10 @@ import { Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { MdInputModule, MaterialModule } from '@angular/material';
+import { MdInputModule, MaterialModule, MdCardModule } from '@angular/material';
 import { LoginComponent } from './login.component';
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
@@ -28,6 +28,7 @@ describe('LoginComponent', () => {
         HttpModule,
         RouterTestingModule,
         BrowserAnimationsModule,
+        MdCardModule
       ],
       providers: [
         AuthService,

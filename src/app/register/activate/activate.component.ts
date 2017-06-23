@@ -34,6 +34,7 @@ export class ActivateComponent implements OnInit, OnDestroy {
   activate() {
     this.userService.activateUser(this.activationCode).subscribe(
       res => {
+        this.alertService.info('Account activated!');
         this.router.navigate(['/login']);
     }, error => {
       this.alertService.error('Unable to activate your account.');
