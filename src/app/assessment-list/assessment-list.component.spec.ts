@@ -1,9 +1,10 @@
+import { Router } from '@angular/router';
 import { AlertService } from './../services/alert/alert.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { HttpModule } from '@angular/http';
+import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
@@ -18,16 +19,22 @@ import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-ass
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
+  const errorResponse = new Response(new ResponseOptions({status: 500, body: null}));
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
   const assessments: Assessment[] = [{
+    id: null,
     firstName: 'first',
     lastName: 'lastName',
-    email: 'e@mail.com'
+    email: 'e@mail.com',
+    interviewGuid: 'testGuid',
+    active: false
   }];
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AssessmentListComponent, NewAssessmentDialogComponent ],
       imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule ],
-      providers: [AssessmentService, MdDialog, AlertService, FormBuilder ]
+      providers: [AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter } ]
     })
     .overrideModule(BrowserDynamicTestingModule, {
       set: {
@@ -45,9 +52,9 @@ describe('AssessmentListComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentListComponent);
+    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(this.assesments));
     component = fixture.componentInstance;
-    const assessmentService: AssessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(assessments));
     fixture.detectChanges();
   });
 
@@ -69,4 +76,32 @@ describe('AssessmentListComponent', () => {
     button.click();
     expect(component.createAssessment).toHaveBeenCalled();
   });
+
+  it('should call startAssessment() which sets the selected assessment to active and navigates to interviewAssessment', fakeAsync(() => {
+    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assesments));
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.selectedAssessment = assessments[0];
+    component.startAssessment();
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+  }));
+
+  it('should call the alertService when starting an assessment fails', fakeAsync(() => {
+    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.selectedAssessment = assessments[0];
+    component.startAssessment();
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalled();
+  }));
 });

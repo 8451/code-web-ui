@@ -24,6 +24,7 @@ import { AssessmentListComponent } from './assessment-list/assessment-list.compo
 import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
 import { ActivateComponent } from './register/activate/activate.component';
 import { LoginComponent } from './login/login.component';
+import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { LoginComponent } from './login/login.component';
     DialogComponent,
     RegisterComponent,
     ActivateComponent,
-    LoginComponent
+    LoginComponent,
+    InterviewAssessmentComponent
   ],
   imports: [
     BrowserModule,

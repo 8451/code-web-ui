@@ -1,5 +1,6 @@
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { LoginComponent } from './login/login.component';
+import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { ActivateComponent } from './register/activate/activate.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
@@ -40,6 +41,10 @@ export const routes: Routes = [
     path: 'assessments',
     component: AssessmentListComponent,
     canActivate: [CanActivateAuthguard]
+  },
+  {
+    path: 'interviewerAssessment/:guid',
+    component: InterviewAssessmentComponent
   },
   {
     path: 'activate',
