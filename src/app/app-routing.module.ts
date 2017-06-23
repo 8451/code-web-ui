@@ -43,7 +43,7 @@ export const routes: Routes = [
     canActivate: [CanActivateAuthguard]
   },
   {
-    path: 'interviewerAssessment/:guid',
+    path: 'interviewAssessment/:guid',
     component: InterviewAssessmentComponent
   },
   {
