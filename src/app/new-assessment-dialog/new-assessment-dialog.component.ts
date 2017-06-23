@@ -21,6 +21,9 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      id: [null, [
+
+      ]],
       firstName: ['', [
         Validators.required
       ]],
@@ -30,6 +33,12 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
       email: ['', [
         Validators.required,
         Validators.email
+      ]],
+      interviewGuid: ['', [
+
+      ]],
+      active: [false, [
+
       ]]
     });
   }

@@ -1,3 +1,4 @@
+import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { ActivateComponent } from './register/activate/activate.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
@@ -33,6 +34,10 @@ export const routes: Routes = [
   {
     path: 'assessments',
     component: AssessmentListComponent
+  },
+  {
+    path: 'interviewerAssessment/:guid',
+    component: InterviewAssessmentComponent
   },
   {
     path: 'activate',

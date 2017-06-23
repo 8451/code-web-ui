@@ -5,31 +5,34 @@ import { NewAssessmentDialogComponent } from './new-assessment-dialog.component'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Headers, Http, BaseRequestOptions, XHRBackend, Response, ResponseOptions } from '@angular/http';
-import { MockBackend} from '@angular/http/testing';
+import { MockBackend } from '@angular/http/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { MdDialogRef, MdInputModule, MaterialModule } from '@angular/material';
-import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Assessment } from './../domains/assessment';
 import { Observable } from 'rxjs/Observable';
 
 class MdDialogRefMock {
-  close() {};
+  close() { };
 }
 
 describe('NewAssessmentDialogComponent', () => {
   let component: NewAssessmentDialogComponent;
   let fixture: ComponentFixture<NewAssessmentDialogComponent>;
   const assessment: Assessment = {
-    firstName: 'First',
-    lastName: 'Last',
-    email: 'e@mail.com'
+    id: null,
+    firstName: 'first',
+    lastName: 'lastName',
+    email: 'e@mail.com',
+    interviewGuid: 'testGuid',
+    active: false
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule  ],
-      declarations: [ NewAssessmentDialogComponent ],
+      imports: [MaterialModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule],
+      declarations: [NewAssessmentDialogComponent],
       providers: [
         { provide: MdDialogRef, useClass: MdDialogRefMock },
         AssessmentService,
@@ -39,13 +42,13 @@ describe('NewAssessmentDialogComponent', () => {
           provide: Http,
           deps: [MockBackend, BaseRequestOptions],
           useFactory:
-            (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-                return new Http(backend, defaultOptions);
-            }
-         },
-         AlertService ]
+          (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
+            return new Http(backend, defaultOptions);
+          }
+        },
+        AlertService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -125,7 +128,7 @@ describe('NewAssessmentDialogComponent', () => {
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
     const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(assessmentService, 'createAssessment').and.returnValue(
-      Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
+      Observable.throw(new Response(new ResponseOptions({ status: 500, body: null }))));
     spyOn(alertService, 'error');
 
     component.form.setValue(assessment);
