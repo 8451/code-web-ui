@@ -1,0 +1,21 @@
+.centered-button {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+
+.full-width {
+    width:50%;
+}
+
+.centered-card {
+    width: 50%;
+    margin: auto;
+}
+
+.spacer {
+    margin-top:10px;
+    text-align: center;
+}

@@ -1,3 +1,5 @@
+import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
+import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { ActivateComponent } from './register/activate/activate.component';
 import { RegisterComponent } from './register/register/register.component';
@@ -11,20 +13,24 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: '/questions',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [CanActivateAuthguard]
   },
   {
     path: 'questions',
-    component: QuestionDashboardComponent
+    component: QuestionDashboardComponent,
+    canActivate: [CanActivateAuthguard]
   },
   {
     path: 'question/new',
     pathMatch: 'full',
-    component: QuestionDetailsComponent
+    component: QuestionDetailsComponent,
+    canActivate: [CanActivateAuthguard]
   },
   {
     path: 'question/:id',
-    component: QuestionDetailsComponent
+    component: QuestionDetailsComponent,
+    canActivate: [CanActivateAuthguard]
   },
   {
     path: 'register',
@@ -33,7 +39,8 @@ export const routes: Routes = [
   },
   {
     path: 'assessments',
-    component: AssessmentListComponent
+    component: AssessmentListComponent,
+    canActivate: [CanActivateAuthguard]
   },
   {
     path: 'interviewerAssessment/:guid',
@@ -47,6 +54,10 @@ export const routes: Routes = [
   {
     path: 'activate/:guid',
     component: ActivateComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

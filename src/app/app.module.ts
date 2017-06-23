@@ -1,3 +1,5 @@
+import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
+import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +23,7 @@ import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NewAssessmentDialogComponent } from './new-assessment-dialog/new-assessment-dialog.component';
 import { ActivateComponent } from './register/activate/activate.component';
+import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 
 
@@ -36,6 +39,7 @@ import { InterviewAssessmentComponent } from './assessment/interview-assessment/
     DialogComponent,
     RegisterComponent,
     ActivateComponent,
+    LoginComponent,
     InterviewAssessmentComponent
   ],
   imports: [
@@ -64,6 +68,8 @@ import { InterviewAssessmentComponent } from './assessment/interview-assessment/
     QuestionService,
     AssessmentService,
     UserService,
+    AuthService,
+    CanActivateAuthguard
   ],
   bootstrap: [AppComponent]
 })
