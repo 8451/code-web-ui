@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 
 const mockToken = 'mockTokenfjaksd';
 
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

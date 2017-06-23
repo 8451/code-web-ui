@@ -45,7 +45,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   openErrorSnackBar(alert: Alert<any>, action: string) {
     this.snackBar.open(alert.message, action, {
-      duration: 100000, extraClasses: ['errorSnack']
+      duration: 5000, extraClasses: ['errorSnack']
     });
   }
 

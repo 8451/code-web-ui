@@ -1,6 +1,6 @@
+import { AuthService } from './../services/auth/auth.service';
 import { AlertService } from './../services/alert/alert.service';
 import { User } from './../domains/user';
-import { AuthService } from './../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MdInputModule, MaterialModule } from '@angular/material';
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     const user = this.form.value as User;
-    this.authService.login(user.email, user.password)
+    this.authService.login(user.username, user.password)
       .subscribe(result => {
         if (result === true) {
           this.router.navigate(['/assessments']);
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
           this.alertService.info('Invalid username or password.');
         }
       }, error => {
-        console.error('error on login');
         this.alertService.error('Could not login. Try again later.');
       });
   }
