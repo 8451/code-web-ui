@@ -34,8 +34,7 @@ export const routes: Routes = [
   {
     path: 'register',
     pathMatch: 'full',
-    component: RegisterComponent,
-    canActivate: [CanActivateAuthguard]
+    component: RegisterComponent
   },
   {
     path: 'assessments',
@@ -45,13 +44,11 @@ export const routes: Routes = [
   {
     path: 'activate',
     component: ActivateComponent,
-    pathMatch: 'full',
-    canActivate: [CanActivateAuthguard]
+    pathMatch: 'full'
   },
   {
     path: 'activate/:guid',
-    component: ActivateComponent,
-    canActivate: [CanActivateAuthguard]
+    component: ActivateComponent
   },
   {
     path: 'login',
