@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Question } from '../domains/question';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-question-list-item',
@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 export class QuestionListItemComponent implements OnInit {
   @Input() question: Question;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
   goToQuestionDetails(): void {
-    this.router.navigate(['/question', this.question.id]);
+    this.router.navigate(['../question', this.question.id], {relativeTo: this.route});
   }
 
 }

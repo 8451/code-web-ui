@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-import { AuthService } from './services/auth/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,15 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'CoDE: Collaborative Development Environment';
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  navigateTo(route: String) {
-    this.router.navigate([route]);
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
 }

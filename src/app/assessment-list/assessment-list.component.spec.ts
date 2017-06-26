@@ -1,5 +1,5 @@
 import { AuthService } from './../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from './../services/alert/alert.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,7 +35,8 @@ describe('AssessmentListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AssessmentListComponent, NewAssessmentDialogComponent ],
       imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule ],
-      providers: [AuthService, AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter } ]
+      providers: [AuthService, AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter },
+      { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments'}])}} ]
     })
     .overrideModule(BrowserDynamicTestingModule, {
       set: {

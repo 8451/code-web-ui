@@ -1,3 +1,4 @@
+import { InterviewerComponent } from './interviewer/interviewer.component';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
@@ -12,39 +13,50 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/questions',
     pathMatch: 'full',
-    canActivate: [CanActivateAuthguard]
+    redirectTo: '/interview'
   },
   {
-    path: 'questions',
-    component: QuestionDashboardComponent,
-    canActivate: [CanActivateAuthguard]
-  },
-  {
-    path: 'question/new',
-    pathMatch: 'full',
-    component: QuestionDetailsComponent,
-    canActivate: [CanActivateAuthguard]
-  },
-  {
-    path: 'question/:id',
-    component: QuestionDetailsComponent,
-    canActivate: [CanActivateAuthguard]
+    path: 'interview',
+    component: InterviewerComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'assessments',
+        pathMatch: 'full',
+        canActivate: [CanActivateAuthguard]
+      },
+      {
+        path: 'questions',
+        component: QuestionDashboardComponent,
+        canActivate: [CanActivateAuthguard]
+      },
+      {
+        path: 'question/new',
+        pathMatch: 'full',
+        component: QuestionDetailsComponent,
+        canActivate: [CanActivateAuthguard]
+      },
+      {
+        path: 'question/:id',
+        component: QuestionDetailsComponent,
+        canActivate: [CanActivateAuthguard]
+      },
+      {
+        path: 'interviewAssessment/:guid',
+        component: InterviewAssessmentComponent
+      },
+      {
+        path: 'assessments',
+        component: AssessmentListComponent,
+        canActivate: [CanActivateAuthguard]
+      },
+    ]
   },
   {
     path: 'register',
     pathMatch: 'full',
     component: RegisterComponent
-  },
-  {
-    path: 'assessments',
-    component: AssessmentListComponent,
-    canActivate: [CanActivateAuthguard]
-  },
-  {
-    path: 'interviewAssessment/:guid',
-    component: InterviewAssessmentComponent
   },
   {
     path: 'activate',

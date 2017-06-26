@@ -1,5 +1,5 @@
 import { AlertService } from './../services/alert/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -25,6 +25,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     private assessmentService: AssessmentService,
     private router: Router,
     private alertService: AlertService,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -57,7 +58,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
       this.alertService.info('Assessment started!');
-      this.router.navigate(['/interviewAssessment', this.selectedAssessment.interviewGuid]);
+      this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], {relativeTo: this.route});
     }, error => {
       this.alertService.error('Unable to start assessment');
     });

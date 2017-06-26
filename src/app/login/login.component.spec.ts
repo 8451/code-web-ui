@@ -108,7 +108,7 @@ describe('LoginComponent', () => {
     );
     component.form.setValue({username: 'test', password: 'test'});
     component.onSubmitLogin();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/assessments']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview']);
   });
 
 });

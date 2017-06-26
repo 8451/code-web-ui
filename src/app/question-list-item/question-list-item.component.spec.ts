@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from '../domains/question';
 
 import { QuestionListItemComponent } from './question-list-item.component';
@@ -37,8 +38,9 @@ describe('QuestionListItemComponent', () => {
       providers: [
         {
           provide: Router,
-          useValue: mockRouter
-        }
+          useValue: mockRouter,
+        },
+        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'questions' }]) } }
       ]
     })
     .compileComponents();
