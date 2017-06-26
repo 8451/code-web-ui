@@ -34,7 +34,7 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.email
       ]],
-      interviewGuid: ['', [
+      interviewGuid: [null, [
 
       ]],
       active: [false, [
