@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth/auth.service';
 import { AlertService } from './../services/alert/alert.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
@@ -34,6 +35,7 @@ describe('NewAssessmentDialogComponent', () => {
       imports: [MaterialModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule],
       declarations: [NewAssessmentDialogComponent],
       providers: [
+        AuthService,
         { provide: MdDialogRef, useClass: MdDialogRefMock },
         AssessmentService,
         MockBackend,

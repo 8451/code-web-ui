@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth/auth.service';
 import { HttpModule } from '@angular/http';
 import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
 import { Observable } from 'rxjs/Observable';
@@ -64,6 +65,7 @@ describe('QuestionDashboardComponent', () => {
         HttpModule,
       ],
       providers: [
+        AuthService,
         QuestionService,
         { provide: Router, useValue: mockRouter }
       ]

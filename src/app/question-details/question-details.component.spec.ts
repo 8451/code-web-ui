@@ -1,6 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
+import { AuthService } from './../services/auth/auth.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
@@ -28,7 +29,9 @@ describe('QuestionDetailsComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         ],
-      providers: [QuestionService,
+      providers: [
+        QuestionService,
+        AuthService,
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'new' }]) } },
         { provide: Router, useValue: mockRouter },
         AlertService,

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { HttpModule } from '@angular/http';
 import { Assessment } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
@@ -26,8 +27,11 @@ describe('InterviewAssessmentComponent', () => {
       imports: [
         HttpModule,
         RouterTestingModule,
-        FormsModule],
-      providers: [AssessmentService,
+        FormsModule
+      ],
+      providers: [
+        AuthService,
+        AssessmentService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
       ]
     })
