@@ -29,13 +29,20 @@ describe('NewAssessmentDialogComponent', () => {
     interviewGuid: 'testGuid',
     active: false
   };
+  const mockAuthService = {
+    logout() {},
+    getHeaders() {},
+    login(username: string, password: string) {},
+    isLoggedIn() {},
+    getToken() {}
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule],
       declarations: [NewAssessmentDialogComponent],
       providers: [
-        AuthService,
+        { provide: AuthService, useValue: mockAuthService},
         { provide: MdDialogRef, useClass: MdDialogRefMock },
         AssessmentService,
         MockBackend,

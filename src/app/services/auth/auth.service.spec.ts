@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MockBackend } from '@angular/http/testing';
 import { Headers, HttpModule, Http, ConnectionBackend, BaseRequestOptions, ResponseOptions, Response } from '@angular/http';
 import { TestBed, inject, fakeAsync } from '@angular/core/testing';
@@ -5,6 +6,10 @@ import { TestBed, inject, fakeAsync } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 
 const mockToken = 'mockTokenfjaksd';
+const mockRouter = { navigate: jasmine.createSpy('navigate') };
+const mockAuthService = {
+    logout() {}
+  };
 
 describe('AuthService', () => {
   beforeEach(() => {
@@ -17,6 +22,7 @@ describe('AuthService', () => {
             return new Http(backend, defaultOptions);
           }, deps: [MockBackend, BaseRequestOptions]
         },
+        {provide: Router, useValue: mockRouter },
         MockBackend,
         BaseRequestOptions
       ]
@@ -34,8 +40,6 @@ describe('AuthService', () => {
       'Authorization': 'Bearer ' + service.getToken()
     });
     const actualHeaders = service.getHeaders();
-    console.log('actual: ', actualHeaders.get('Content-type'));
-    console.log('expected: ', expectedHeaders.get('Content-type'));
     const sameContentType = actualHeaders.get('Content-type') === expectedHeaders.get('Content-type');
     const sameToken = actualHeaders.get('Content-type') === expectedHeaders.get('Content-type');
     expect(sameContentType).toBeTruthy();

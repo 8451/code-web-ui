@@ -1,5 +1,13 @@
-<h1 id="appTitle">
+<nav class="app-nav mat-elevation-z10">
+    <img src="../assets/CoDE-logo.PNG" class="logo"/>
+    <a md-button (click)="navigateTo('/assessments')">Assessments</a>
+    <a md-button (click)="navigateTo('/questions')">Questions</a>
+    <button md-button id="logoutButton" (click)="logout()">Logout</button>
+</nav>
+<div class="app-body">
+  <h1 id="appTitle">
   {{title}}
-</h1>
-<router-outlet></router-outlet>
-<app-alert></app-alert>
+  </h1>
+  <router-outlet></router-outlet>
+  <app-alert></app-alert>
+<div>

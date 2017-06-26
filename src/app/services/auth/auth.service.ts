@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -7,7 +8,7 @@ export class AuthService {
 
   authService = '/api/v1/auth';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private router: Router) { }
 
   getHeaders(): Headers {
     return new Headers({
@@ -38,6 +39,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 
   getToken(): string {
