@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   let fixture;
   let component;
-  let mockAuthService = {
+  const mockAuthService = {
     logout() { }
   };
   const mockRouter = { navigate: jasmine.createSpy('navigate') };

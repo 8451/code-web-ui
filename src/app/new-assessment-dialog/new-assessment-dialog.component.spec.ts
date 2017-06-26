@@ -29,7 +29,7 @@ describe('NewAssessmentDialogComponent', () => {
     interviewGuid: 'testGuid',
     active: false
   };
-  let mockAuthService = {
+  const mockAuthService = {
     logout() {},
     getHeaders() {},
     login(username: string, password: string) {},

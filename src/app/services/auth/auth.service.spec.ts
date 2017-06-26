@@ -6,8 +6,8 @@ import { TestBed, inject, fakeAsync } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 
 const mockToken = 'mockTokenfjaksd';
-const mockRouter = { navigate: jasmine.createSpy('navigate') }; 
-let mockAuthService = {
+const mockRouter = { navigate: jasmine.createSpy('navigate') };
+const mockAuthService = {
     logout() {}
   };
 

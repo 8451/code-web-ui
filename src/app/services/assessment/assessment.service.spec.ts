@@ -26,7 +26,7 @@ const mockError = {
   statusText: '500 Internal Server Error'
 };
 
-let mockAuthService = {
+const mockAuthService = {
     logout() {},
     getHeaders() {},
     login(username: string, password: string) {},

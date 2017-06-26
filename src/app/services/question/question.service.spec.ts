@@ -56,7 +56,7 @@ const mockError = {
    statusText: '404 Not Found'
   };
 
-let mockAuthService = {
+const mockAuthService = {
     logout() {},
     getHeaders() {},
     login(username: string, password: string) {},
