@@ -74,6 +74,11 @@ describe('NewAssessmentDialogComponent', () => {
     expect(firstName.valid).toBeFalsy();
   });
 
+  it('should send null for interviewGuid', () => {
+    const interviewGuid = component.form.get('interviewGuid');
+    expect(interviewGuid.value).toBeNull();
+  });
+
   it('should be invalid when last name empty', () => {
     const lastName = component.form.get('lastName');
     lastName.setValue('');
