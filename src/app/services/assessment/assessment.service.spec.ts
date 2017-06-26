@@ -26,6 +26,14 @@ const mockError = {
   statusText: '500 Internal Server Error'
 };
 
+let mockAuthService = {
+    logout() {},
+    getHeaders() {},
+    login(username: string, password: string) {},
+    isLoggedIn() {},
+    getToken() {}
+  };
+
 function compareAssessments(response): void {
   expect(response.firstName).toBe(mockAssessment.assessments[0].firstName);
   expect(response.lastName).toBe(mockAssessment.assessments[0].lastName);
@@ -41,7 +49,7 @@ describe('AssessmentService', () => {
       providers: [AssessmentService,
         MockBackend,
         BaseRequestOptions,
-        AuthService,
+        { provide: AuthService, useValue: mockAuthService},
         {
           provide: Http,
           deps: [MockBackend, BaseRequestOptions],

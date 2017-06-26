@@ -1,14 +1,25 @@
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from './services/auth/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { AlertService } from './services/alert/alert.service';
 import { AlertComponent } from './alert/alert.component';
 import { TestBed, async, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  let fixture;
+  let component;
+  let mockAuthService = {
+    logout() { }
+  };
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
+
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -21,42 +32,56 @@ describe('AppComponent', () => {
         AlertComponent
       ],
       providers: [
-        AlertService
+        AlertService,
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: Router, useValue: mockRouter }
       ]
     }).compileComponents();
   }));
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
+  });
 
+  it('should create the app', async(() => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(app).toBeTruthy();
+      expect(component).toBeTruthy();
     });
 
   }));
 
   it(`should have as title 'CoDE: Collaborative Development Environment'`, fakeAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(app.title).toEqual('CoDE: Collaborative Development Environment');
+      expect(component.title).toEqual('CoDE: Collaborative Development Environment');
     });
 
   }));
 
   it(`should render the title 'CoDE: Collaborative Development Environment' in a h1 tag`, fakeAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(compiled.querySelector('#appTitle').textContent).toContain('CoDE: Collaborative Development Environment');
     });
-
   }));
+
+  it(`navigateTo should navigate to the various routes`, fakeAsync(() => {
+    component.navigateTo('/assessments');
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/assessments']);
+    component.navigateTo('/questions');
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/questions']);
+  }));
+
+  it(`logout should call AuthService.logout`, fakeAsync(() => {
+    const authService = fixture.debugElement.injector.get(AuthService);
+    spyOn(authService, 'logout').and.returnValue(Observable.of(true));
+    expect(authService.logout).toHaveBeenCalledTimes(0);
+    component.logout();
+    expect(authService.logout).toHaveBeenCalledTimes(1);
+  }));
+
 });

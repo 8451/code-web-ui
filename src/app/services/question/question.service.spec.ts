@@ -56,13 +56,20 @@ const mockError = {
    statusText: '404 Not Found'
   };
 
+let mockAuthService = {
+    logout() {},
+    getHeaders() {},
+    login(username: string, password: string) {},
+    isLoggedIn() {},
+    getToken() {}
+  };
 
 
 describe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        AuthService,
+        { provide: AuthService, useValue: mockAuthService},
         {
           provide: Http, useFactory: (
             backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
