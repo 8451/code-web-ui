@@ -1,12 +1,11 @@
+import { HttpModule } from '@angular/http';
 import { Assessment } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { AppModule } from '../../app.module';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
-
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 
 describe('InterviewAssessmentComponent', () => {
@@ -23,7 +22,9 @@ describe('InterviewAssessmentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule,
+      declarations: [InterviewAssessmentComponent],
+      imports: [
+        HttpModule,
         RouterTestingModule,
         FormsModule],
       providers: [AssessmentService,

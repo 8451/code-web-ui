@@ -1,12 +1,14 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '@angular/material';
+import { HttpModule } from '@angular/http';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { QuestionDetailsComponent } from './question-details.component';
-import { AppModule } from '../app.module';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 
 describe('QuestionDetailsComponent', () => {
@@ -18,12 +20,18 @@ describe('QuestionDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule,
+      declarations: [QuestionDetailsComponent],
+      imports: [
+        HttpModule,
         RouterTestingModule,
-        FormsModule],
+        ReactiveFormsModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        ],
       providers: [QuestionService,
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'new' }]) } },
-        { provide: Router, useValue: mockRouter }
+        { provide: Router, useValue: mockRouter },
+        AlertService,
       ]
     })
       .compileComponents();

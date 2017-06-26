@@ -1,3 +1,5 @@
+import { HttpModule } from '@angular/http';
+import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 
@@ -8,7 +10,6 @@ import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testi
 import { QuestionDashboardComponent } from './question-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
-import { AppModule } from '../app.module';
 import { routes } from '../app-routing.module';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
@@ -16,6 +17,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 describe('QuestionDashboardComponent', () => {
    let component: QuestionDashboardComponent;
    let fixture: ComponentFixture<QuestionDashboardComponent>;
+   const mockRouter = { navigate: jasmine.createSpy('navigate') };
    const questions: any[] = [
        {
            'id': 'id1',
@@ -54,13 +56,17 @@ describe('QuestionDashboardComponent', () => {
   let questionService: QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ QuestionDashboardComponent, QuestionListItemComponent ],
       imports: [
         BrowserAnimationsModule,
         MaterialModule,
-        AppModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpModule,
       ],
-      providers: [ QuestionService ]
+      providers: [
+        QuestionService,
+        { provide: Router, useValue: mockRouter }
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(QuestionDashboardComponent);
     component = fixture.debugElement.componentInstance;
@@ -69,7 +75,7 @@ describe('QuestionDashboardComponent', () => {
 
   it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
-  }), 10000);
+  }));
 
   it('question dashboard component should be populated with a list of questions', (done) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
@@ -81,6 +87,6 @@ describe('QuestionDashboardComponent', () => {
       expect(component.questions).toEqual(questions);
       done();
     });
-  }, 10000);
+  });
 
 });
