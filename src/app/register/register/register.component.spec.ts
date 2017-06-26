@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './../../app-routing.module';
-import { AppModule } from './../../app.module';
 import { NgForm, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 

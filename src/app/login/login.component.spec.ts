@@ -23,12 +23,10 @@ describe('LoginComponent', () => {
       declarations: [ LoginComponent ],
       imports: [
         ReactiveFormsModule,
-        MdInputModule,
-        FormsModule,
+        MaterialModule,
         HttpModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        MdCardModule
       ],
       providers: [
         AuthService,
