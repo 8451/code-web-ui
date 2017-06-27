@@ -16,7 +16,7 @@ describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
 
-  const user = {
+  const mockForm = {
     firstName: 'Test',
     lastName: 'Test',
     username: 'test@8451.com',
@@ -135,7 +135,7 @@ describe('RegisterComponent', () => {
     spyOn(mockService, 'createUser').and.returnValue(
       Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
 
-    component.form.setValue(user);
+    component.form.setValue(mockForm);
 
     component.onSubmitRegister();
 
