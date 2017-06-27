@@ -7,6 +7,9 @@ export function sameValue(control1Key: string, control2Key: string) {
         const control2 = group.controls[control2Key];
 
         if (control1.value !== control2.value) {
+            const mergedErrors = control1.errors || {};
+            mergedErrors['sameValue'] = true;
+            control1.setErrors(mergedErrors);
             return {
                 'sameValue': true
             };
