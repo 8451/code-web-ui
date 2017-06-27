@@ -10,20 +10,10 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { InterviewerComponent } from './interviewer.component';
 
-class MockRouter {
-  //public ne = new NavigationEnd(0, 'http://localhost:4200/login', 'http://localhost:4200/login');
-  public navigate = jasmine.createSpy('navigate');
-  public events = new Observable(observer => {
-    // observer.next(this.ne);
-    // observer.complete();
-  });
-}
 @Component({
   template: ''
 })
-class DummyComponent {
-  
-}
+class DummyComponent {  }
 
 describe('InterviewerComponent', () => {
   let component: InterviewerComponent;
@@ -31,8 +21,8 @@ describe('InterviewerComponent', () => {
   const mockAuthService = {
     logout() { }
   };
-  const mockRouter = { 
-    navigate: jasmine.createSpy('navigate'), 
+  const mockRouter = {
+    navigate: jasmine.createSpy('navigate'),
     events: new Observable()
   };
 
