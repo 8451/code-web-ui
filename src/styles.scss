@@ -4,8 +4,8 @@
 //@import '~md-theme.scss';
 @include mat-core();
 
-.errorSnack {
-    background-color: red !important;
+.error-snack {
+    background-color: mat-color($mat-red, 400) !important;
 }
 
 body {
