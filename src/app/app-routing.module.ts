@@ -14,33 +14,30 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/interview'
+    redirectTo: '/interview/assessments'
   },
   {
     path: 'interview',
     component: InterviewerComponent,
+    canActivate: [CanActivateAuthguard],
     children: [
       {
         path: '',
         redirectTo: 'assessments',
-        pathMatch: 'full',
-        canActivate: [CanActivateAuthguard]
+        pathMatch: 'full'
       },
       {
         path: 'questions',
-        component: QuestionDashboardComponent,
-        canActivate: [CanActivateAuthguard]
+        component: QuestionDashboardComponent
       },
       {
         path: 'question/new',
         pathMatch: 'full',
-        component: QuestionDetailsComponent,
-        canActivate: [CanActivateAuthguard]
+        component: QuestionDetailsComponent
       },
       {
         path: 'question/:id',
-        component: QuestionDetailsComponent,
-        canActivate: [CanActivateAuthguard]
+        component: QuestionDetailsComponent
       },
       {
         path: 'interviewAssessment/:guid',
@@ -48,8 +45,7 @@ export const routes: Routes = [
       },
       {
         path: 'assessments',
-        component: AssessmentListComponent,
-        canActivate: [CanActivateAuthguard]
+        component: AssessmentListComponent
       },
     ]
   },

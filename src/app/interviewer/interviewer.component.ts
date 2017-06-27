@@ -9,11 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterviewerComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
-
-  navigateTo(route: String) {
-    this.router.navigate([route], {relativeTo: this.route});
-  }
+  constructor(private authService: AuthService) { }
 
   logout(): void {
     this.authService.logout();
