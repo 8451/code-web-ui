@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-interview-assessment',
   templateUrl: './interview-assessment.component.html',
-  styleUrls: ['./interview-assessment.component.css']
+  styleUrls: ['./interview-assessment.component.scss']
 })
 export class InterviewAssessmentComponent implements OnInit {
 

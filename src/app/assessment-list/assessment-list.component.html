@@ -1,12 +1,14 @@
 <md-toolbar>
   <button md-raised-button color="primary" (click)="createAssessment()">Create New Assessment</button>
-  <span class="flex"></span>
-  <button md-raised-button type="button" color="accent" [disabled]="!selectedAssessment" (click)="startAssessment()">Start assessment</button>
 </md-toolbar>
-
-<md-list>
-  <md-list-item *ngFor="let assessment of assessments" class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
-    <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>    
-    <p md-line>{{assessment.email}}</p>
+<md-divider></md-divider>
+<md-list *ngFor="let assessment of assessments">
+  <md-list-item  class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
+    <div class="info">
+      <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
+      <p md-line>{{assessment.email}}</p>
+    </div>
+    <button md-raised-button *ngIf="assessment === selectedAssessment" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
   </md-list-item>
+  <md-divider></md-divider>
 </md-list>
