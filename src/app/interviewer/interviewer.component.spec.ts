@@ -1,10 +1,19 @@
+import { AssessmentListComponent } from './../assessment-list/assessment-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLinkActive } from '@angular/router';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { AuthService } from '../services/auth/auth.service';
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { InterviewerComponent } from './interviewer.component';
+
+@Component({
+  template: ''
+})
+class DummyComponent {  }
 
 describe('InterviewerComponent', () => {
   let component: InterviewerComponent;
@@ -12,17 +21,22 @@ describe('InterviewerComponent', () => {
   const mockAuthService = {
     logout() { }
   };
-  const mockRouter = { navigate: jasmine.createSpy('navigate') };
+  const mockRouter = {
+    navigate: jasmine.createSpy('navigate'),
+    events: new Observable()
+  };
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InterviewerComponent ],
+      declarations: [ InterviewerComponent, DummyComponent ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
-        { provide: Router, useValue: mockRouter },
-        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'interview'}])}}
+        Location
         ],
-      imports: [ RouterTestingModule ]
+      imports: [ RouterTestingModule.withRoutes([ {path: '', pathMatch: 'full', redirectTo: '/interview'},
+        {path: 'interview', component: InterviewerComponent, children: [{path: 'assessments', component: DummyComponent}]}
+        ]) ]
     })
     .compileComponents();
   }));
@@ -37,13 +51,14 @@ describe('InterviewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`navigateTo should navigate to the various routes`, fakeAsync(() => {
-    const route = fixture.debugElement.injector.get(ActivatedRoute);
-    component.navigateTo('/assessments');
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/assessments'], {relativeTo: route});
-    component.navigateTo('/questions');
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/questions'], {relativeTo: route});
-  }));
+  it('should navigate to the various routes', fakeAsync(() => {
+    const location = fixture.debugElement.injector.get(Location);
+    const link = fixture.debugElement.nativeElement.querySelector('#assessmentLink');
+    expect(link.getAttribute('href')).toBe('/interview/assessments');
+    link.click();
+    tick();
+    expect(location.path()).toBe('/interview/assessments');
+   }));
 
   it(`logout should call AuthService.logout`, fakeAsync(() => {
     const authService = fixture.debugElement.injector.get(AuthService);

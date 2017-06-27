@@ -59,7 +59,7 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     DialogComponent,

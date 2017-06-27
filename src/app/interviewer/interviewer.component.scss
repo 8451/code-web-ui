@@ -1,8 +1,11 @@
+@import '~@angular/material/theming';
 .logo {
     height: 36px;
     width: auto;
     display: inline-block;
 }
+
+$selected-color: mat-color($mat-deep-purple, 50);
 
 .app-nav {
     position: fixed;
@@ -21,4 +24,8 @@
 
 #logoutButton {
     margin-left: auto;
+}
+
+.selected {
+    background-color: $selected-color; 
 }
