@@ -1,3 +1,5 @@
+import { ResponseOptions, Response } from '@angular/http';
+import { AlertService } from './../../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
 import { UserService } from './../../services/user/user.service';
@@ -15,6 +17,14 @@ describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
 
+  const user = {
+    firstName: 'Test',
+    lastName: 'Test',
+    username: 'test@8451.com',
+    password: 'testPassword1',
+    confirmPassword: 'testPassword1'
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -29,7 +39,9 @@ describe('RegisterComponent', () => {
         createUser: function(user: User): Observable<User> {
           return null;
         }
-      }}],
+      }},
+      AlertService,
+      ],
     })
     .compileComponents();
   }));
@@ -116,5 +128,19 @@ describe('RegisterComponent', () => {
     passwordControl.setValue('123456+A');
     expect(passwordControl.valid).toBeTruthy();
   });
+
+  it('should display a toast when registering throws an error', async(() => {
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    const mockService = fixture.debugElement.injector.get(UserService);
+    spyOn(alertService, 'error');
+    spyOn(mockService, 'createUser').and.returnValue(
+      Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
+
+    component.form.setValue(user);
+
+    component.onSubmitRegister();
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
 
 });
