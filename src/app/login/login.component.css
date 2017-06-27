@@ -7,12 +7,13 @@ h4 {
 }
 
 .full-width {
-    width:50%;
+    width: 66%;
 }
 
 .centered-card {
-    width: 50%;
+    width: 33%;
     margin: auto;
+    margin-top: 50px;
 }
 
 .spacer {

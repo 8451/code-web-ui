@@ -1,22 +1,16 @@
-<md-card>
-  <md-card-content>
+<md-card id="register-card" md-raised-card class="centered-card">
+  <md-card-title>
     <h4>Register</h4>
+  </md-card-title>
+  <md-card-content>
     <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmitRegister()">
-      <table class="full-width" cellspacing="0">
-        <tr>
-          <td>
-            <md-input-container class="full-width">
-              <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
-            </md-input-container>
-          </td>
-          <td>
-            <md-input-container class="full-width">
-              <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
-            </md-input-container>
-          </td>
-        </tr>
-      </table>
-      <div>
+      <div class="spacer">
+        <md-input-container class="full-width">
+          <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
+        </md-input-container>
         <md-input-container class="full-width">
           <input mdInput placeholder="Email" required title="Email Address" formControlName="username">
           <md-error>
@@ -39,7 +33,7 @@
           </md-error>
         </md-input-container>
       </div>
-      <div>
+      <div class="centered-button">
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
       </div>
     </form>
