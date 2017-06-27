@@ -34,7 +34,7 @@
         </md-input-container>
         <md-input-container class="full-width">
           <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">
-          <md-error>
+          <md-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
             Passwords must match
           </md-error>
         </md-input-container>

@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert/alert.service';
 import { Router } from '@angular/router';
 import { UserService } from './../../services/user/user.service';
 import { User } from './../../domains/user';
@@ -18,7 +19,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
       private userService: UserService,
-      private router: Router) { }
+      private router: Router,
+      private alertService: AlertService
+      ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -41,7 +44,7 @@ export class RegisterComponent implements OnInit {
         Validators.required,
       ]]
     }, {
-      validator: sameValue('password', 'confirmPassword')
+      validator: sameValue('confirmPassword', 'password')
     });
   }
 
@@ -53,7 +56,7 @@ export class RegisterComponent implements OnInit {
     this.userService.createUser(user).subscribe(createdUser => {
       this.router.navigate(['/activate']);
     }, error => {
-      console.log(error);
+      this.alertService.error('Error creating account.');
     });
   }
 }
