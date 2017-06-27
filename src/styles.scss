@@ -1,11 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~@angular/material/theming';
-//@import '~md-theme.scss';
 @include mat-core();
 
 .error-snack {
     background-color: mat-color($mat-red, 400) !important;
+}
+
+.md-fab-bottom-right {
+  position: fixed !important;
+  bottom: 20px;
+  right: 20px;
 }
 
 body {

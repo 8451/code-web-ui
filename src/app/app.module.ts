@@ -8,7 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
-   MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule } from '@angular/material';
+  MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -59,7 +60,8 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MdIconModule
   ],
   entryComponents: [
     DialogComponent,
