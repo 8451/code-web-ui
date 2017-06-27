@@ -11,7 +11,7 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'app-question-details',
   templateUrl: './question-details.component.html',
-  styleUrls: ['./question-details.component.css']
+  styleUrls: ['./question-details.component.scss']
 })
 
 export class QuestionDetailsComponent implements OnInit {
