@@ -10,7 +10,7 @@
         <md-input-container>
             <input mdInput type="email" name="email" placeholder="Email"  formControlName="email" email required>
             <md-error *ngIf="form.controls['email'].hasError('email')">
-                Email must be valid
+                Must be a valid email address.
             </md-error>
         </md-input-container>
     </div>

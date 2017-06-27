@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
         Validators.required,
       ]]
     }, {
-      validator: sameValue('password', 'confirmPassword')
+      validator: sameValue('confirmPassword', 'password')
     });
   }
 
