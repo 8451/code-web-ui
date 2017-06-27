@@ -14,10 +14,6 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   let fixture;
   let component;
-  const mockAuthService = {
-    logout() { }
-  };
-  const mockRouter = { navigate: jasmine.createSpy('navigate') };
 
 
   beforeEach(async(() => {
@@ -31,11 +27,7 @@ describe('AppComponent', () => {
         AppComponent,
         AlertComponent
       ],
-      providers: [
-        AlertService,
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: Router, useValue: mockRouter }
-      ]
+      providers: [ AlertService ]
     }).compileComponents();
   }));
 
@@ -50,38 +42,6 @@ describe('AppComponent', () => {
       expect(component).toBeTruthy();
     });
 
-  }));
-
-  it(`should have as title 'CoDE: Collaborative Development Environment'`, fakeAsync(() => {
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(component.title).toEqual('CoDE: Collaborative Development Environment');
-    });
-
-  }));
-
-  it(`should render the title 'CoDE: Collaborative Development Environment' in a h1 tag`, fakeAsync(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(compiled.querySelector('#appTitle').textContent).toContain('CoDE: Collaborative Development Environment');
-    });
-  }));
-
-  it(`navigateTo should navigate to the various routes`, fakeAsync(() => {
-    component.navigateTo('/assessments');
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/assessments']);
-    component.navigateTo('/questions');
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/questions']);
-  }));
-
-  it(`logout should call AuthService.logout`, fakeAsync(() => {
-    const authService = fixture.debugElement.injector.get(AuthService);
-    spyOn(authService, 'logout').and.returnValue(Observable.of(true));
-    expect(authService.logout).toHaveBeenCalledTimes(0);
-    component.logout();
-    expect(authService.logout).toHaveBeenCalledTimes(1);
   }));
 
 });

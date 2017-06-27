@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
@@ -67,7 +67,8 @@ describe('QuestionDashboardComponent', () => {
       providers: [
         AuthService,
         QuestionService,
-        { provide: Router, useValue: mockRouter }
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'questions'}])}}
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(QuestionDashboardComponent);

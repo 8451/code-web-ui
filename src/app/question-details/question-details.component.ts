@@ -75,7 +75,7 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.router.navigate(['/questions']);
+    this.router.navigate(['../../questions'], { relativeTo: this.route});
   }
 
   submitQuestion(): void {
@@ -86,12 +86,12 @@ export class QuestionDetailsComponent implements OnInit {
     if (this.isNew) {
       this.questionService.createQuestion(question).subscribe(res => {
         this.alertService.info('Question Created!');
-        this.router.navigate(['/questions']);
+        this.navigateBack();
       });
     } else {
       this.questionService.updateQuestion(question).subscribe(res => {
         this.alertService.info('Question Saved!');
-        this.router.navigate(['/questions']);
+        this.navigateBack();
       });
     }
   }
@@ -104,7 +104,7 @@ export class QuestionDetailsComponent implements OnInit {
 
       if (result) {
         this.questionService.deleteQuestion(this.form.controls['id'].value).subscribe(res => {
-          this.router.navigate(['/questions']);
+          this.navigateBack();
         });
       }
     });

@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../services/question/question.service';
 import { Question } from '../domains/question';
@@ -13,7 +13,7 @@ export class QuestionDashboardComponent implements OnInit {
 
   questions: Question[];
 
-  constructor(private questionService: QuestionService, private router: Router) {
+  constructor(private questionService: QuestionService, private router: Router, private route: ActivatedRoute) {
 
    }
 
@@ -31,7 +31,7 @@ export class QuestionDashboardComponent implements OnInit {
   }
 
   goToAddQuestion(): void {
-    this.router.navigate(['/question/new']);
+    this.router.navigate(['../question/new'], { relativeTo: this.route});
   }
 
 }

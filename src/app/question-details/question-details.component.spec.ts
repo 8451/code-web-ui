@@ -124,8 +124,9 @@ describe('QuestionDetailsComponent', () => {
   });
 
   it('should navigate back to /questions', async(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
     component.navigateBack();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/questions']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../../questions'], {relativeTo: route});
   }));
 
   it('should call deleteQuestion when the delete button is pressed', async(() => {
