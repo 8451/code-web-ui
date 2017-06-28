@@ -1,0 +1,31 @@
+@import '~@angular/material/theming';
+.logo {
+    height: 36px;
+    width: auto;
+    display: inline-block;
+}
+
+$selected-color: mat-color($mat-deep-purple, 50);
+
+.app-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    display: flex;
+    z-index: 2;
+    background: white;
+    align-content: center;
+}
+
+.app-body {
+    margin-top: 2.5em;
+}
+
+#logoutButton {
+    margin-left: auto;
+}
+
+.selected {
+    background-color: $selected-color; 
+}

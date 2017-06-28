@@ -1,0 +1,8 @@
+<md-toolbar>
+  <button md-raised-button color="primary" (click)="goToAddQuestion()" >Create New Question</button>
+</md-toolbar>
+<md-divider></md-divider>
+<md-list *ngFor="let question of questions" class="question">
+    <app-question-list-item [question]="question"></app-question-list-item>
+    <md-divider></md-divider>
+</md-list>

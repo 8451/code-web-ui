@@ -1,0 +1,23 @@
+<md-card md-raised-card class="centered-card">
+  <md-card-title>
+    <h4>Login</h4>
+  </md-card-title>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
+      <div class="spacer">
+        <md-input-container class="full-width">
+          <input mdInput placeholder="Email" required title="Email" formControlName="username">
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
+        </md-input-container>
+      </div>
+      <div class="centered-button">
+        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
+      </div>
+    </form>
+    <div class="spacer">
+      or <a href="/register">register</a>
+    </div>
+  </md-card-content>
+</md-card>

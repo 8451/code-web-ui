@@ -1,0 +1,24 @@
+.flex {
+  flex: 1 1 auto;
+}
+
+.info {
+      width: 92%;
+}
+
+.selected {
+  color: #607D88;
+  background-color: #DDD;
+  left: .1em;
+}
+
+md-list {
+  padding: 0;
+}
+
+.assessment:hover {
+  cursor: pointer;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
