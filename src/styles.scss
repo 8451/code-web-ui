@@ -20,6 +20,26 @@ body {
     font-size: 16pt;
 }
 
+.flex-container {
+    display: flex;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.third-width {
+    width: 33%;
+}
+
+.two-third-width {
+    width: 66%;
+}
+
+.half-height {
+    height: 50%;
+}
+
 .mat-elevation-z0 {
     box-shadow: 0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)
 }

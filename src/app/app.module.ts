@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
    MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { ActivateComponent } from './register/activate/activate.component';
 import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
+import { CandidateComponent } from './candidate/candidate.component';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     ActivateComponent,
     LoginComponent,
     InterviewAssessmentComponent,
-    InterviewerComponent
+    InterviewerComponent,
+    CandidateComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   entryComponents: [
     DialogComponent,

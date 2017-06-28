@@ -1,0 +1,12 @@
+<form id="candidateForm" class="full-height" [formGroup]="form" fxLayout="column" fxLayoutAlign="space-around" (ngSubmit)="submitQuestion()">
+  <div fxLayout fxLayoutAlign="center" fxFlex="1 1 30%">
+    <md-input-container color="accent" fxFlex="66%">
+      <textarea mdInput rows="10" placeholder="Question Body" name="body" formControlName="body" readonly disabled></textarea>
+    </md-input-container>
+  </div>
+  <div fxLayout fxLayoutAlign="center" fxFlex="1 1 60%">
+  <md-input-container fxFlex="66%">
+    <textarea mdInput rows="20" placeholder="Question Answer" name="answer" formControlName="answer"></textarea>
+  </md-input-container>
+  </div>
+</form>
