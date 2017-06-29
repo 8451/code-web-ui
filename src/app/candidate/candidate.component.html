@@ -1,12 +1,5 @@
-<form id="candidateForm" class="full-height" [formGroup]="form" fxLayout="column" fxLayoutAlign="space-around" (ngSubmit)="submitQuestion()">
-  <!--<div fxLayout fxLayoutAlign="center" fxFlex="1 1 30%">
-    <md-input-container color="accent" fxFlex="66%">
-      <textarea mdInput rows="10" placeholder="Question" name="body" formControlName="body" readonly></textarea>
-    </md-input-container>
-  </div>-->
-  <div fxLayout fxLayoutAlign="center" fxFlex="1 1 90%">
-  <md-input-container fxFlex="66%">
-    <textarea class="answerField" mdInput rows="30" placeholder="Question" name="answer" formControlName="answer"></textarea>
+<form id="candidateForm" class="full-height" [formGroup]="form" (ngSubmit)="submitQuestion()">
+  <md-input-container id="answerContainer">
+    <textarea class="answerField" mdInput rows="40" placeholder="Question" name="answer" formControlName="answer"></textarea>
   </md-input-container>
-  </div>
 </form>

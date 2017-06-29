@@ -62,8 +62,7 @@ import { CandidateComponent } from './candidate/candidate.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule,
-    FlexLayoutModule
+    ReactiveFormsModule
   ],
   entryComponents: [
     DialogComponent,
