@@ -20,8 +20,6 @@ export class CandidateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      body: ['', [
-      ]],
       answer: ['', [
       ]]
     });
@@ -31,8 +29,7 @@ export class CandidateComponent implements OnInit, OnDestroy {
     });
 
     this.form.setValue({
-      body: 'This is a question body',
-      answer: 'This is most likely an incorrect answer'
+      answer: 'This is a question body\n\tTabbed Line'
     });
   }
 
