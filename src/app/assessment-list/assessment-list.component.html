@@ -1,6 +1,3 @@
-<md-toolbar>
-  <button md-raised-button color="primary" (click)="createAssessment()">Create New Assessment</button>
-</md-toolbar>
 <md-divider></md-divider>
 <md-list *ngFor="let assessment of assessments">
   <md-list-item  class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
@@ -12,3 +9,6 @@
   </md-list-item>
   <md-divider></md-divider>
 </md-list>
+<button md-fab class="md-fab-bottom-right" color="primary" (click)="createAssessment()">
+  <md-icon>add</md-icon>
+</button>

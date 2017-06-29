@@ -8,8 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
-   MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+          MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,7 +62,8 @@ import { CandidateComponent } from './candidate/candidate.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MdIconModule
   ],
   entryComponents: [
     DialogComponent,
