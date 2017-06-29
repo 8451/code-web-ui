@@ -1,4 +1,18 @@
-<p *ngIf="assessment">
-    This is an assessment for {{assessment.firstName}} {{assessment.lastName}}!
-    Contact them at {{assessment.email}}
-</p>
+<!--<p *ngIf="assessment">
+    This is an assessment for {{assessment.firstName}} {{assessment.lastName}}! Contact them at {{assessment.email}}
+</p>-->
+<md-sidenav-container>
+    <div class="full-width full-height">
+        <md-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" class="open-icon flex-right">menu</md-icon>
+    </div>
+    <md-sidenav #sidenav mode="side" opened="true" align="end">
+        <md-icon (click)="sidenav.toggle()">close</md-icon>
+        <md-list class="sidenav-list">
+            <div *ngFor="let question of questions" [class.selected]="selectedQuestion === question">
+                <app-question-list-item [question]="question" (click)="selectQuestion(question)"></app-question-list-item>
+            </div>
+        </md-list>
+        <button md-raised-button class="flex-down" color="primary">Select</button>
+        <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
+    </md-sidenav>
+</md-sidenav-container>

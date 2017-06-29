@@ -1,8 +1,8 @@
-<md-divider></md-divider>
-<md-list *ngFor="let question of questions" class="question">
+<md-list>
+  <div *ngFor="let question of questions" (click)="goToQuestionDetails(question)" class="selection">
     <app-question-list-item [question]="question"></app-question-list-item>
-    <md-divider></md-divider>
+  </div>
 </md-list>
 <button md-fab class="md-fab-bottom-right" color="primary" (click)="goToAddQuestion()">
- <md-icon>add</md-icon> 
+  <md-icon>add</md-icon> 
 </button>
