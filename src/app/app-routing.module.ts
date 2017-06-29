@@ -1,3 +1,4 @@
+import { CandidateComponent } from './candidate/candidate.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { LoginComponent } from './login/login.component';
@@ -15,6 +16,10 @@ export const routes: Routes = [
     path: '',
     pathMatch: 'full',
     redirectTo: '/interview/assessments'
+  },
+  {
+    path: 'candidate/:id',
+    component: CandidateComponent
   },
   {
     path: 'interview',

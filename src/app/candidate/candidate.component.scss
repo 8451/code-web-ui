@@ -1,0 +1,15 @@
+#candidateForm {
+    height: 100%;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+}
+
+#answerContainer {
+    flex: 0 1 67%;
+}
+
+.answerField {
+    font-family: monospace;
+    font-size: 14pt;
+}
