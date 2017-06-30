@@ -1,3 +1,5 @@
+import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
+import { StompService } from 'ng2-stomp-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -9,6 +11,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandidateComponent } from './candidate.component';
 
+const mockAssessmentWebSocketService = {
+  getNewQuestion(id: string) { return Observable.of({
+    title: 'title',
+    body: 'body',
+    questionResponseId: '1'
+  }); }
+};
+
 describe('CandidateComponent', () => {
   let component: CandidateComponent;
   let fixture: ComponentFixture<CandidateComponent>;
@@ -17,7 +27,9 @@ describe('CandidateComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CandidateComponent ],
       imports: [ ReactiveFormsModule, BrowserAnimationsModule, FlexLayoutModule, MaterialModule ],
-      providers: [ { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}} ]
+      providers: [ { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
+      { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService}
+      ]
     })
     .compileComponents();
   }));

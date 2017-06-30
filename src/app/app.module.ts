@@ -1,7 +1,9 @@
+import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
+import { StompService } from 'ng2-stomp-service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -75,7 +77,9 @@ import { CandidateComponent } from './candidate/candidate.component';
     AssessmentService,
     UserService,
     AuthService,
-    CanActivateAuthguard
+    AssessmentWebSocketService,
+    CanActivateAuthguard,
+    StompService
   ],
   bootstrap: [AppComponent]
 })
