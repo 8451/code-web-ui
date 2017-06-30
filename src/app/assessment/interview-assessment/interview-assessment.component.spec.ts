@@ -149,7 +149,8 @@ describe('InterviewAssessmentComponent', () => {
 
   it('should set sentQuestion', () => {
     const question = questions[0];
-    component.sendQuestion(question);
+    component.selectedQuestion = question;
+    component.sendQuestion();
     expect(component.sentQuestion).toBe(question);
   });
 

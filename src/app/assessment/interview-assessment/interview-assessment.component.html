@@ -15,7 +15,7 @@
                 <app-question-list-item [question]="question" (click)="selectQuestion(question)"></app-question-list-item>
             </div>
         </md-list>
-        <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion(selectedQuestion)">Select</button>
+        <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
         <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
     </md-sidenav>
 </md-sidenav-container>

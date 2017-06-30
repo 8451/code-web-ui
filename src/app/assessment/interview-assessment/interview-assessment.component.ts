@@ -1,3 +1,5 @@
+import { NewQuestionEvent } from './../../domains/events/web-socket-event';
+import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
 import { MdDialogRef, MdDialog } from '@angular/material';
@@ -29,7 +31,8 @@ export class InterviewAssessmentComponent implements OnInit {
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    // private assessmentWebSocketSerivce: AssessmentWebSocketService
     ) { }
 
   ngOnInit() {
@@ -61,7 +64,14 @@ export class InterviewAssessmentComponent implements OnInit {
     this.dialogRef.componentInstance.question = this.selectedQuestion;
   }
 
-  sendQuestion(question: Question): void {
-    this.sentQuestion = question;
+  sendQuestion(): void {
+    // const newQuestionEvent: NewQuestionEvent = {
+    //   timestamp: new Date(),
+    //   title: this.selectedQuestion.title,
+    //   body: this.selectedQuestion.body,
+    //   questionResponseId: null
+    // }
+    // this.assessmentWebSocketSerivce.sendNewQueston(this.assessment.interviewGuid, newQuestionEvent);
+    this.sentQuestion = this.selectedQuestion;
   }
 }
