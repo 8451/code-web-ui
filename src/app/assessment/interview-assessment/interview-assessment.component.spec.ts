@@ -1,3 +1,7 @@
+import { QuestionService } from './../../services/question/question.service';
+import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { QuestionListItemComponent } from './../../question-list-item/question-list-item.component';
 import { AuthService } from './../../services/auth/auth.service';
 import { HttpModule } from '@angular/http';
 import { Assessment } from './../../domains/assessment';
@@ -8,8 +12,9 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
+import { MaterialModule, MdIconModule, MdDialogModule, MdDialogRef, MdDialog, OverlayRef} from '@angular/material';
 
-describe('InterviewAssessmentComponent', () => {
+fdescribe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
   let fixture: ComponentFixture<InterviewAssessmentComponent>;
   const assessments: Assessment[] = [{
@@ -21,20 +26,38 @@ describe('InterviewAssessmentComponent', () => {
     active: false
   }];
 
+  class MdDialogRefMock {
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InterviewAssessmentComponent],
+      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent],
       imports: [
         HttpModule,
         RouterTestingModule,
-        FormsModule
+        FormsModule,
+        MdIconModule,
       ],
       providers: [
         AuthService,
         AssessmentService,
+        QuestionService,
+        MdDialog,
+        MdDialogModule,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
       ]
     })
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [QuestionInfoDialogComponent]
+        }
+      })
+      .overrideComponent(QuestionInfoDialogComponent, {
+        set: {
+          template: '<span>QuestionInfoDialogComponent</span>',
+          providers: []
+        }
+      })
       .compileComponents();
   }));
 

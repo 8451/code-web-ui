@@ -1,1 +1,4 @@
-<h3>{{question.title}}</h3>
+<div *ngIf="question">
+    <h5 class="question-title">{{question.title}}</h5>
+    <pre class="question-body">{{question.body}}</pre>
+</div>

@@ -1,5 +1,5 @@
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
-import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
+import { MdDialogRef, MdDialog } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService } from './../../services/question/question.service';
 
@@ -20,6 +20,7 @@ export class InterviewAssessmentComponent implements OnInit {
   private assessment: Assessment;
   dialogRef: MdDialogRef<QuestionInfoDialogComponent>;
   private selectedQuestion: Question;
+  private sentQuestion: Question;
   private questions: Question[];
 
   constructor(
@@ -53,8 +54,11 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   previewQuestion(): void {
-    const config = new MdDialogConfig();
-    this.dialogRef = this.dialog.open(QuestionInfoDialogComponent, config);
+    this.dialogRef = this.dialog.open(QuestionInfoDialogComponent);
     this.dialogRef.componentInstance.question = this.selectedQuestion;
+  }
+
+  sendQuestion(question: Question): void {
+    this.sentQuestion = question;
   }
 }
