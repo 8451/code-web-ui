@@ -11,7 +11,7 @@ export class AssessmentWebSocketService {
 
   socketUrl = '/api/v1/socket';
 
-  constructor(private stomp: StompService) {
+  constructor(public stomp: StompService) {
     stomp.configure({
       host: this.socketUrl,
       debug: true,

@@ -1,3 +1,4 @@
+import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { StompService } from 'ng2-stomp-service';
@@ -6,6 +7,13 @@ import { AssessmentWebSocketService } from './assessment-web-socket.service';
 
 const mockSubscription = {
   unsubscribe() {}
+};
+
+const mockNewQuestionEvent = {
+  title: 'title',
+  body: 'body',
+  questionResponseId: '12345',
+  timestamp: new Date(0)
 };
 
 const mockStomp = {
@@ -25,7 +33,24 @@ describe('AssessmentWebSocketService', () => {
   });
 
   it('should be created', fakeAsync(inject([AssessmentWebSocketService], (assessmentWebSocketService: AssessmentWebSocketService) => {
-    tick();
     expect(assessmentWebSocketService).toBeTruthy();
+  })));
+
+  it('should send connect event', fakeAsync(inject([AssessmentWebSocketService],
+    (assessmentWebSocketService: AssessmentWebSocketService) => {
+      spyOn(assessmentWebSocketService.stomp, 'send');
+      assessmentWebSocketService.sendConnectEvent('1234');
+      tick();
+      expect(assessmentWebSocketService.stomp.send).toHaveBeenCalled();
+      expect(assessmentWebSocketService.stomp.send).toHaveBeenCalledWith('/assessment/1234/connect',  jasmine.any(ConnectEvent));
+  })));
+
+  it('should get a new question', fakeAsync(inject([AssessmentWebSocketService],
+   (assessmentWebSocketService: AssessmentWebSocketService) => {
+      spyOn(assessmentWebSocketService.stomp, 'subscribe').and.returnValue(Observable.of(mockNewQuestionEvent));
+      const returnedQuestionObservable = assessmentWebSocketService.getNewQuestion('1234');
+      tick();
+      expect(assessmentWebSocketService.stomp.subscribe).toHaveBeenCalledWith('/topic/assessment/1234/new-question', jasmine.anything());
+      expect(returnedQuestionObservable).toBeTruthy();
   })));
 });
