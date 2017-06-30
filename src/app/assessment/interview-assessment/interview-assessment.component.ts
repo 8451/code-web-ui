@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { Question } from './../../domains/question';
@@ -19,15 +20,16 @@ export class InterviewAssessmentComponent implements OnInit {
 
   private assessment: Assessment;
   dialogRef: MdDialogRef<QuestionInfoDialogComponent>;
-  private selectedQuestion: Question;
-  private sentQuestion: Question;
-  private questions: Question[];
+  selectedQuestion: Question;
+  sentQuestion: Question;
+  questions: Question[];
 
   constructor(
     public dialog: MdDialog,
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private route: ActivatedRoute,
+    private alertService: AlertService
     ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class InterviewAssessmentComponent implements OnInit {
     this.questionService.getQuestions().subscribe(
       questions => this.questions = questions,
       error => {
+        this.alertService.error('Could not get questions');
         console.error('An error occurred in the question component', error);
       }
     );
