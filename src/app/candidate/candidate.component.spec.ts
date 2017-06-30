@@ -1,3 +1,5 @@
+import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
+import { StompService } from 'ng2-stomp-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
