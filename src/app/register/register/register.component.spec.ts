@@ -9,12 +9,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './../../app-routing.module';
 import { NgForm, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
 
   const mockForm = {
     firstName: 'Test',
@@ -34,7 +36,9 @@ describe('RegisterComponent', () => {
         BrowserAnimationsModule,
       ],
       declarations: [RegisterComponent],
-      providers: [{provide: UserService, useValue: {
+      providers: [
+        { provide: Router, useValue: mockRouter },
+        {provide: UserService, useValue: {
         createUser: function(user: User): Observable<User> {
           return null;
         }
@@ -104,9 +108,12 @@ describe('RegisterComponent', () => {
 
   it('call UserService create method', () => {
     const mockService = fixture.debugElement.injector.get(UserService);
-    spyOn(mockService, 'createUser');
+    spyOn(mockService, 'createUser').and.returnValue(Observable.of(component.form.value as User));
+
+    component.form.setValue(mockForm);
+
     component.onSubmitRegister();
-    expect(mockService.createUser);
+    expect(mockService.createUser).toHaveBeenCalled();
   });
 
   /*

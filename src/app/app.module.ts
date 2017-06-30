@@ -28,6 +28,7 @@ import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
 import { CandidateComponent } from './candidate/candidate.component';
+import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CandidateComponent } from './candidate/candidate.component';
     LoginComponent,
     InterviewAssessmentComponent,
     InterviewerComponent,
-    CandidateComponent
+    CandidateComponent,
+    CandidateAssessmentComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { QuestionAnswer } from './../domains/question-answer';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -8,35 +9,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   templateUrl: './candidate.component.html',
   styleUrls: ['./candidate.component.scss']
 })
-export class CandidateComponent implements OnInit, OnDestroy {
-  form: FormGroup;
-  id: string;
-  sub: Subscription;
+export class CandidateComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      answer: ['', [
-      ]]
-    });
-
-    this.sub = this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
-    });
-
-    this.form.setValue({
-      answer: 'This is a question body\n\tTabbed Line'
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
   }
 
 }

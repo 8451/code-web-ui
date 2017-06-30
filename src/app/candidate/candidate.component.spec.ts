@@ -6,8 +6,16 @@ import { ActivateComponent } from './../register/activate/activate.component';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Component } from '@angular/core';
 
 import { CandidateComponent } from './candidate.component';
+
+@Component({
+  template: ''
+})
+class DummyComponent {
+}
 
 describe('CandidateComponent', () => {
   let component: CandidateComponent;
@@ -15,8 +23,14 @@ describe('CandidateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandidateComponent ],
-      imports: [ ReactiveFormsModule, BrowserAnimationsModule, FlexLayoutModule, MaterialModule ],
+      declarations: [ CandidateComponent, DummyComponent ],
+      imports: [
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        RouterTestingModule.withRoutes([ {path: '', pathMatch: 'full', redirectTo: '/interview'},
+        {path: 'candidate', component: CandidateComponent, children: [{path: 'assessments', component: DummyComponent}]}
+        ])],
       providers: [ { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}} ]
     })
     .compileComponents();
