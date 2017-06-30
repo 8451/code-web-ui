@@ -1,7 +1,9 @@
+import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
+import { StompService } from 'ng2-stomp-service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +30,8 @@ import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
 import { QuestionInfoDialogComponent } from './question-info-dialog/question-info-dialog.component';
+import { CandidateComponent } from './candidate/candidate.component';
+import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 
 
 @NgModule({
@@ -45,7 +49,9 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
     LoginComponent,
     InterviewAssessmentComponent,
     InterviewerComponent,
-    QuestionInfoDialogComponent
+    QuestionInfoDialogComponent,
+    CandidateComponent,
+    CandidateAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +83,9 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
     AssessmentService,
     UserService,
     AuthService,
-    CanActivateAuthguard
+    AssessmentWebSocketService,
+    CanActivateAuthguard,
+    StompService
   ],
   bootstrap: [AppComponent]
 })
