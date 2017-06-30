@@ -43,7 +43,7 @@ function compareAssessments(response): void {
 }
 
 
-fdescribe('AssessmentService', () => {
+describe('AssessmentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AssessmentService,
