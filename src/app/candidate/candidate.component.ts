@@ -1,6 +1,6 @@
+import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { Observable } from 'rxjs/Rx';
 import { CandidateQuestion } from './../domains/candidateQuestion';
-import { CandidateService } from './../services/candidate/candidate.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -20,7 +20,7 @@ export class CandidateComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private candidateService: CandidateService
+    private assessmentWebSocketService: AssessmentWebSocketService
   ) { }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class CandidateComponent implements OnInit, OnDestroy {
 
     this.sub = this.route.params.switchMap((params: Params) => {
       this.id = params['id'];
-      return this.candidateService.getCandidateQuestion(this.id);
+      return this.assessmentWebSocketService.getCandidateQuestion(this.id);
     }).subscribe((candidateQuestion: CandidateQuestion) => {
       this.candidateQuestion = candidateQuestion;
       this.form.setValue({

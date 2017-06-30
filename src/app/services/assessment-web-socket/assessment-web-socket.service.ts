@@ -5,15 +5,15 @@ import { StompService } from 'ng2-stomp-service';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class CandidateService {
+export class AssessmentWebSocketService {
 
   subscription: Subscription;
   candidateQuestion: Subject<CandidateQuestion> = new Subject<CandidateQuestion>();
-  candidateServiceUrl = '/api/v1/socket';
+  socketUrl = '/api/v1/socket';
 
   constructor(private stomp: StompService) {
     stomp.configure({
-      host: this.candidateServiceUrl,
+      host: this.socketUrl,
       debug: true,
       queue: {'init': false}
     });
@@ -26,6 +26,7 @@ export class CandidateService {
 
    getCandidateQuestion(guid: string): Subject<CandidateQuestion> {
      this.stomp.after('init').then(() => {
+       console.log('Im in the after init promise');
        this.stomp.subscribe(`/topic/assessment/${guid}/connect`, (data) => {
          console.log(data);
        });

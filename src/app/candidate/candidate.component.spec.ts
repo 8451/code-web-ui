@@ -1,3 +1,4 @@
+import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { StompService } from 'ng2-stomp-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
@@ -9,9 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandidateComponent } from './candidate.component';
-import { CandidateService } from 'app/services/candidate/candidate.service';
 
-const mockCandidateService = {
+const mockAssessmentWebSocketService = {
   getCandidateQuestion(id: string) { return Observable.of({
     title: 'title',
     body: 'body',
@@ -28,7 +28,7 @@ describe('CandidateComponent', () => {
       declarations: [ CandidateComponent ],
       imports: [ ReactiveFormsModule, BrowserAnimationsModule, FlexLayoutModule, MaterialModule ],
       providers: [ { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
-      { provide: CandidateService, useValue: mockCandidateService}
+      { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService}
       ]
     })
     .compileComponents();

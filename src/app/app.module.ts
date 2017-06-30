@@ -1,4 +1,4 @@
-import { CandidateService } from './services/candidate/candidate.service';
+import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
@@ -77,7 +77,7 @@ import { CandidateComponent } from './candidate/candidate.component';
     AssessmentService,
     UserService,
     AuthService,
-    CandidateService,
+    AssessmentWebSocketService,
     CanActivateAuthguard,
     StompService
   ],
