@@ -12,7 +12,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CandidateComponent } from './candidate.component';
 
 const mockAssessmentWebSocketService = {
-  getCandidateQuestion(id: string) { return Observable.of({
+  getNewQuestion(id: string) { return Observable.of({
     title: 'title',
     body: 'body',
     questionResponseId: '1'

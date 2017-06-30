@@ -1,5 +1,4 @@
 import { Subscription } from 'rxjs/Subscription';
-import { CandidateQuestion } from './../../domains/candidateQuestion';
 import { Observable } from 'rxjs/Observable';
 import { StompService } from 'ng2-stomp-service';
 import { TestBed, inject, async, getTestBed, fakeAsync, tick } from '@angular/core/testing';
