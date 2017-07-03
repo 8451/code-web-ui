@@ -21,9 +21,12 @@ describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
   let fixture: ComponentFixture<InterviewAssessmentComponent>;
   let questionService: QuestionService;
+  let assessmentService: AssessmentService;
   let alertService: AlertService;
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
+  const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
   const assessments: Assessment[] = [{
-    id: null,
+    id: 'nullIDTEST',
     firstName: 'first',
     lastName: 'lastName',
     email: 'e@mail.com',
@@ -83,7 +86,8 @@ describe('InterviewAssessmentComponent', () => {
         QuestionService,
         MdDialog,
         AlertService,
-        { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
+        { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234HERE' }]) } },
+        { provide: Router, useValue: mockRouter}
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -103,6 +107,8 @@ describe('InterviewAssessmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InterviewAssessmentComponent);
     component = fixture.componentInstance;
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(this.assessments));
   });
 
   it('should be created', () => {
@@ -151,4 +157,58 @@ describe('InterviewAssessmentComponent', () => {
     expect(component.sentQuestion).toBe(questions[0]);
   });
 
+  it('endAssessment() should end the assessment and navigate', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../interview/assessments']);
+  }));
+
+  it('endAssessment() should not end if confirmation fails', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(false));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+  }));
+
+  it('endAssessment() should throw an error if it cannot end the assessment', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalled();
+  }));
 });

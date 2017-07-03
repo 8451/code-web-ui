@@ -57,7 +57,7 @@ describe('AssessmentListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentListComponent);
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(this.assesments));
+    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(this.assessments));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -83,7 +83,7 @@ describe('AssessmentListComponent', () => {
 
   it('should call startAssessment() which sets the selected assessment to active and navigates to interviewAssessment', fakeAsync(() => {
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assesments));
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assessments));
     const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(alertService, 'info');
     spyOn(alertService, 'error');

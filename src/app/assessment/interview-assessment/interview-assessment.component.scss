@@ -1,14 +1,35 @@
+.assessment-area {
+  padding-left: 1em;
+}
+
+button {
+  width: 49%;
+  color: #E6048D;
+}
+
+.editor {
+  resize: none;
+  width: 800px;
+  height: 400px;
+}
+
+.end-assessment {
+  margin-top: .5em;
+  width: 100%;
+}
+
 .flex-right {
   float: right;
+}
+
+.full-width {
+  width: 100%;
 }
 
 html, .full-height {
   height: 100%;
 }
 
-.full-width {
-  width: 100%;
-}
 
 md-sidenav-container {
   height: 100%;
@@ -20,18 +41,8 @@ md-icon {
   font-size: 48px;
 }
 
-button {
-  width: 49%;
-  color: #E6048D;
-}
-
 .open-icon {
     color: #E6048D;
-}
-
-.selected {
-  background-color: #DDD;
-  left: .1em;
 }
 
 .question-body {
@@ -50,12 +61,15 @@ button {
     padding: .5em;
 }
 
-.assessment-area {
-  padding-left: 1em;
+.selected {
+  background-color: #DDD;
+  left: .1em;
 }
 
-.editor {
-  resize: none;
-  width: 800px;
-  height: 400px;
-}
+//TODO
+// .sidenav-bottom {  
+// }
+
+//TODO
+// .flex-down {
+// }
