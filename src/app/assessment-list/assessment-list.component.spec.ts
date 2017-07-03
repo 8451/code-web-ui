@@ -10,8 +10,10 @@ import { AssessmentService } from './../services/assessment/assessment.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AssessmentListComponent } from './assessment-list.component';
-import { MdDialogModule, MdCardModule, MaterialModule, MdDialogRef,
-          MdInputModule, MdDialog, OverlayRef,  MdDialogContainer } from '@angular/material';
+import {
+  MdDialogModule, MdCardModule, MaterialModule, MdDialogRef,
+  MdInputModule, MdDialog, OverlayRef, MdDialogContainer
+} from '@angular/material';
 
 import { Assessment } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
@@ -20,7 +22,7 @@ import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-ass
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
-  const errorResponse = new Response(new ResponseOptions({status: 500, body: null}));
+  const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
   const assessments: Assessment[] = [{
     id: null,
@@ -33,23 +35,23 @@ describe('AssessmentListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssessmentListComponent, NewAssessmentDialogComponent ],
-      imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule ],
+      declarations: [AssessmentListComponent, NewAssessmentDialogComponent],
+      imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule],
       providers: [AuthService, AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter },
-      { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments'}])}} ]
+        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments' }]) } }]
     })
-    .overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [NewAssessmentDialogComponent]
-      }
-    })
-    .overrideComponent(NewAssessmentDialogComponent, {
-      set: {
-        template: '<span>NewAssessmentDialogComponent</span>',
-        providers: []
-      }
-    })
-    .compileComponents();
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [NewAssessmentDialogComponent]
+        }
+      })
+      .overrideComponent(NewAssessmentDialogComponent, {
+        set: {
+          template: '<span>NewAssessmentDialogComponent</span>',
+          providers: []
+        }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -105,5 +107,21 @@ describe('AssessmentListComponent', () => {
 
     expect(alertService.info).toHaveBeenCalledTimes(0);
     expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('should call resumeAssessment() which navigates to interviewAssessment', fakeAsync(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.resumeAssessment(assessments[0]);
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(
+      ['../interviewAssessment', assessments[0].interviewGuid],
+      { relativeTo: route }
+    );
   }));
 });

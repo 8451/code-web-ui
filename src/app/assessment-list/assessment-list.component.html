@@ -6,7 +6,8 @@
         <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
         <p md-line>{{assessment.email}}</p>
       </div>
-      <button md-raised-button *ngIf="assessment === selectedAssessment" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
+      <button md-raised-button *ngIf="assessment.active" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
+      <button md-raised-button *ngIf="assessment === selectedAssessment && !selectedAssessment.active" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
     </md-list-item>
     <md-divider></md-divider>
   </div>

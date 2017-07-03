@@ -121,7 +121,7 @@ describe('InterviewAssessmentComponent', () => {
   it('should display toast when error occurs in getQuestions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(
-      Observable.throw(new Response(new ResponseOptions({status: 500, body: null})))
+      Observable.throw(new Response(new ResponseOptions({ status: 500, body: null })))
     );
 
     alertService = fixture.debugElement.injector.get(AlertService);
@@ -132,26 +132,23 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should set selectedQuestion', () => {
-    const question = questions[0];
-    component.selectQuestion(question);
-    expect(component.selectedQuestion).toBe(question);
+    component.selectQuestion(questions[0]);
+    expect(component.selectedQuestion).toBe(questions[0]);
   });
 
   it('should open up a dialog', () => {
-    const question = questions[0];
-    component.selectedQuestion = question;
+    component.selectedQuestion = questions[0];
 
     component.previewQuestion();
     component.dialog.afterOpen.subscribe(data => {
-      expect(component.dialogRef.componentInstance.question).toBe(question);
+      expect(component.dialogRef.componentInstance.question).toBe(questions[0]);
     });
   });
 
   it('should set sentQuestion', () => {
-    const question = questions[0];
-    component.selectedQuestion = question;
+    component.selectedQuestion = questions[0];
     component.sendQuestion();
-    expect(component.sentQuestion).toBe(question);
+    expect(component.sentQuestion).toBe(questions[0]);
   });
 
 });
