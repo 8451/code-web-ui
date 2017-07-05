@@ -22,7 +22,21 @@ describe('CandidateAssessmentComponent', () => {
     body: 'body',
     questionResponseId: 'id',
     timestamp: new Date(0)
-  }
+  };
+
+  const mockStomp = {
+    configure(object: any) {},
+    startConnect() {return Promise.resolve(); },
+    done(queue: string) {},
+    after(queue: string) {return Promise.resolve(); },
+    subscribe(address: string, fun: (data: any) => void ) {},
+    send(data: any) {}
+  };
+
+  const mockAssessmentWebSocketService = {
+    sendNewQuestion(guid: string, newQuestion: NewQuestionEvent) {},
+    getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,8 +49,8 @@ describe('CandidateAssessmentComponent', () => {
       providers: [
       { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
       AlertService,
-      AssessmentWebSocketService,
-      StompService
+      { provide: StompService, useValue: mockStomp },
+      { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService}
        ]
     })
     .compileComponents();

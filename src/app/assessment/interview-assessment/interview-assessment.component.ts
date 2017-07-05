@@ -20,7 +20,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterviewAssessmentComponent implements OnInit {
 
-  private assessment: Assessment;
+  assessment: Assessment;
   dialogRef: MdDialogRef<QuestionInfoDialogComponent>;
   selectedQuestion: Question;
   sentQuestion: Question;
@@ -50,7 +50,6 @@ export class InterviewAssessmentComponent implements OnInit {
       questions => this.questions = questions,
       error => {
         this.alertService.error('Could not get questions');
-        console.error('An error occurred in the question component', error);
       }
     );
   }

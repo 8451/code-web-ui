@@ -1,3 +1,4 @@
+import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,6 +42,10 @@ describe('InterviewAssessmentComponent', () => {
     after(queue: string) {return Promise.resolve(); },
     subscribe(address: string, fun: (data: any) => void ) {},
     send(data: any) {}
+  };
+
+  const mockAssessmentWebSocketService = {
+    sendNewQuestion(guid: string, question: NewQuestionEvent) {}
   };
 
   const questions: any[] = [
@@ -97,8 +102,8 @@ describe('InterviewAssessmentComponent', () => {
         MdDialog,
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
-        AssessmentWebSocketService,
-        { provide: StompService, useValue: mockStomp }
+        { provide: StompService, useValue: mockStomp },
+        { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService },
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -160,13 +165,13 @@ describe('InterviewAssessmentComponent', () => {
     });
   });
 
-  it('should set sentQuestion', () => {
+  it('should set sentQuestion', inject([AssessmentWebSocketService],
+  (assessmentWebSocketService: AssessmentWebSocketService) => {
     component.selectedQuestion = questions[0];
-    const assessmentWebSocketService: AssessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    component.assessment = assessments[0];
     spyOn(assessmentWebSocketService, 'sendNewQuestion');
     component.sendQuestion();
     expect(component.sentQuestion).toBe(questions[0]);
     expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
-  });
-
+  }));
 });
