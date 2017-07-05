@@ -1,4 +1,4 @@
-<md-divider></md-divider>
+<h3 *ngIf="assessments && !assessments.length">No Assessments</h3>
 <md-list>
   <div *ngFor="let assessment of assessments">
     <md-list-item class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
