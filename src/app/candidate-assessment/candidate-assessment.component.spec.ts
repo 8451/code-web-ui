@@ -1,3 +1,4 @@
+import { AnswerQuestionEvent } from './../domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { AssessmentService } from './../services/assessment/assessment.service';
@@ -13,9 +14,10 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 
 import { CandidateAssessmentComponent } from './candidate-assessment.component';
 
-describe('CandidateAssessmentComponent', () => {
+fdescribe('CandidateAssessmentComponent', () => {
   let component: CandidateAssessmentComponent;
   let fixture: ComponentFixture<CandidateAssessmentComponent>;
+  let assessmentWebSocketService: AssessmentWebSocketService;
 
   const question: NewQuestionEvent = {
     title: 'title',
@@ -34,6 +36,7 @@ describe('CandidateAssessmentComponent', () => {
   };
 
   const mockAssessmentWebSocketService = {
+    answerQuestion(guid: string, answerQuestion: AnswerQuestionEvent) {},
     sendNewQuestion(guid: string, newQuestion: NewQuestionEvent) {},
     getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); }
   };
@@ -59,12 +62,38 @@ describe('CandidateAssessmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CandidateAssessmentComponent);
     component = fixture.componentInstance;
-    const assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentWebSocketService, 'getNewQuestion').and.returnValue(Observable.of(question));
     fixture.detectChanges();
   });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should send answer over websockets when submitted', () => {
+    spyOn(assessmentWebSocketService, 'answerQuestion');
+    component.form.setValue({
+      title: question.title,
+      body: question.body,
+      answer: question.body,
+      questionResponseId: question.questionResponseId
+    });
+    component.submitAnswer();
+    expect(assessmentWebSocketService.answerQuestion).toHaveBeenCalled();
+  });
+
+  it('should display a toast when submitted', () => {
+    spyOn(assessmentWebSocketService, 'answerQuestion');
+    const alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'info');
+    component.form.setValue({
+      title: question.title,
+      body: question.body,
+      answer: question.body,
+      questionResponseId: question.questionResponseId
+    });
+    component.submitAnswer();
+    expect(alertService.info).toHaveBeenCalled();
   });
 });
