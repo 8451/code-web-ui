@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 
 import { CandidateAssessmentComponent } from './candidate-assessment.component';
 
-fdescribe('CandidateAssessmentComponent', () => {
+describe('CandidateAssessmentComponent', () => {
   let component: CandidateAssessmentComponent;
   let fixture: ComponentFixture<CandidateAssessmentComponent>;
   let assessmentWebSocketService: AssessmentWebSocketService;
