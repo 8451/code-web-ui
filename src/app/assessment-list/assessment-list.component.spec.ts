@@ -15,7 +15,7 @@ import {
   MdInputModule, MdDialog, OverlayRef, MdDialogContainer
 } from '@angular/material';
 
-import { Assessment } from './../domains/assessment';
+import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
 
@@ -30,7 +30,8 @@ describe('AssessmentListComponent', () => {
     lastName: 'lastName',
     email: 'e@mail.com',
     interviewGuid: 'testGuid',
-    active: false
+    state: AssessmentStates.NOT_STARTED,
+    notes: 'notes'
   }];
 
   beforeEach(async(() => {
@@ -81,7 +82,8 @@ describe('AssessmentListComponent', () => {
     expect(component.createAssessment).toHaveBeenCalled();
   });
 
-  it('should call startAssessment() which sets the selected assessment to active and navigates to interviewAssessment', fakeAsync(() => {
+  it('should call startAssessment() which sets the selected assessment to AWAIT_EMAIL and navigates to interviewAssessment',
+   fakeAsync(() => {
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assesments));
     const alertService = fixture.debugElement.injector.get(AlertService);
