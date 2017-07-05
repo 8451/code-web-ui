@@ -64,6 +64,11 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     });
   }
 
+  resumeAssessment(assessment: Assessment): void {
+    this.alertService.info('Assessment resumed!');
+    this.router.navigate(['../interviewAssessment', assessment.interviewGuid], {relativeTo: this.route});
+  }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();

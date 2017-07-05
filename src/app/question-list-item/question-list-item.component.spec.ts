@@ -62,10 +62,10 @@ describe('QuestionListItemComponent', () => {
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
 
-      expect(compiled.querySelector('h4').textContent).toContain(question.title);
+      expect(compiled.querySelector('#questionTitle').textContent).toContain(question.title);
       // TODO
       // expect(compiled.querySelector('#modificationSubtitle').textContent).
       // toContain('Modified by ' + question.modifiedBy +' on ' + question.modifiedDate);
-      expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
+      // expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
     }));
 });

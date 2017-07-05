@@ -1,4 +1,21 @@
-<p *ngIf="assessment">
-    This is an assessment for {{assessment.firstName}} {{assessment.lastName}}!
-    Contact them at {{assessment.email}}
-</p>
+<md-sidenav-container>
+    <div class="full-width">
+        <md-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" class="open-icon flex-right">menu</md-icon>
+    </div>
+    <div class="assessment-area" *ngIf="sentQuestion">
+        <h5>{{sentQuestion.title}}</h5>
+        <textarea class="editor">{{sentQuestion.body}}</textarea>
+        <h6>Suggested Answer</h6>
+        <pre class="question-answer">{{sentQuestion.suggestedAnswer}}</pre>
+    </div>
+    <md-sidenav #sidenav mode="side" opened="true" align="end">
+        <md-icon (click)="sidenav.toggle()">close</md-icon>
+        <md-list class="sidenav-list">
+            <div *ngFor="let question of questions" [class.selected]="selectedQuestion === question">
+                <app-question-list-item [question]="question" (click)="selectQuestion(question)"></app-question-list-item>
+            </div>
+        </md-list>
+        <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
+        <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
+    </md-sidenav>
+</md-sidenav-container>

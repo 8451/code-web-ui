@@ -15,7 +15,7 @@ export class QuestionDashboardComponent implements OnInit {
 
   constructor(private questionService: QuestionService, private router: Router, private route: ActivatedRoute) {
 
-   }
+  }
 
   ngOnInit() {
     this.getQuestions();
@@ -31,7 +31,11 @@ export class QuestionDashboardComponent implements OnInit {
   }
 
   goToAddQuestion(): void {
-    this.router.navigate(['../question/new'], { relativeTo: this.route});
+    this.router.navigate(['../question/new'], { relativeTo: this.route });
+  }
+
+  goToQuestionDetails(question: Question): void {
+    this.router.navigate(['../question', question.id], { relativeTo: this.route });
   }
 
 }

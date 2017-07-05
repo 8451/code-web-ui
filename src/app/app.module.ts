@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
-          MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule
+  MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdSidenavModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +29,7 @@ import { ActivateComponent } from './register/activate/activate.component';
 import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
+import { QuestionInfoDialogComponent } from './question-info-dialog/question-info-dialog.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 
@@ -48,6 +49,7 @@ import { CandidateAssessmentComponent } from './candidate-assessment/candidate-a
     LoginComponent,
     InterviewAssessmentComponent,
     InterviewerComponent,
+    QuestionInfoDialogComponent,
     CandidateComponent,
     CandidateAssessmentComponent
   ],
@@ -67,12 +69,14 @@ import { CandidateAssessmentComponent } from './candidate-assessment/candidate-a
     MdSnackBarModule,
     MdDialogModule,
     ReactiveFormsModule,
-    MdIconModule
+    MdIconModule,
+    MdSidenavModule
   ],
   entryComponents: [
     DialogComponent,
     AlertComponent,
-    NewAssessmentDialogComponent
+    NewAssessmentDialogComponent,
+    QuestionInfoDialogComponent
   ],
   providers: [AlertService,
     QuestionService,
