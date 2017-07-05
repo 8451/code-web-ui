@@ -5,7 +5,7 @@ import { AssessmentService } from './../services/assessment/assessment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { Assessment } from './../domains/assessment';
+import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
 @Component({
@@ -19,6 +19,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   dialogRef: MdDialogRef<NewAssessmentDialogComponent>;
   subscription: Subscription;
   selectedAssessment: Assessment;
+  assessmentStates: any = AssessmentStates;
 
   constructor(
     public dialog: MdDialog,
@@ -54,7 +55,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   }
 
   startAssessment(): void {
-    this.selectedAssessment.active = true;
+    this.selectedAssessment.state = AssessmentStates.AWAIT_EMAIL;
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
       this.alertService.info('Assessment started!');

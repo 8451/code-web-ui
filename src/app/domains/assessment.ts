@@ -4,5 +4,14 @@ export class Assessment {
     lastName: string;
     email: string;
     interviewGuid: string;
-    active: boolean;
+    state: AssessmentStates;
+    notes: string;
 }
+
+export enum AssessmentStates {
+    NOT_STARTED,
+    AWAIT_EMAIL,
+    IN_PROGRESS,
+    NOTES,
+    CLOSED
+};

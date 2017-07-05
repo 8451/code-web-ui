@@ -1,5 +1,5 @@
 import { AuthService } from './../auth/auth.service';
-import { Assessment } from './../../domains/assessment';
+import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { Observable } from 'rxjs/Observable';
 import { TestBed, inject, fakeAsync, async, tick } from '@angular/core/testing';
 
@@ -15,7 +15,8 @@ const mockAssessment = {
       'lastName': 'lname',
       'email': 'e@mail.com',
       'interviewGuid': 'testGuid',
-      'active': false
+      'state': AssessmentStates.NOT_STARTED,
+      'notes': 'notes'
     }
   ]
 };
@@ -39,7 +40,7 @@ function compareAssessments(response): void {
   expect(response.lastName).toBe(mockAssessment.assessments[0].lastName);
   expect(response.email).toBe(mockAssessment.assessments[0].email);
   expect(response.interviewGuid).toBe(mockAssessment.assessments[0].interviewGuid);
-  expect(response.active).toBeFalsy();
+  expect(response.state).toBe(mockAssessment.assessments[0].state);
 }
 
 
