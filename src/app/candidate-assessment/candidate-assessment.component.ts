@@ -1,6 +1,7 @@
+import { AnswerQuestionEvent } from './../domains/events/web-socket-event';
+import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../services/alert/alert.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { QuestionAnswer } from './../domains/question-answer';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -15,12 +16,13 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
   form: FormGroup;
   assessmentId: string;
   sub: Subscription;
-  questionAnswer: QuestionAnswer;
+  questionAnswer: AnswerQuestionEvent;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private alertService: AlertService,
+    private assessmentWebSocketService: AssessmentWebSocketService
   ) { }
 
   ngOnInit() {
@@ -34,21 +36,24 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
 
     this.sub = this.route.params.subscribe((params: Params) => {
       this.assessmentId = params['id'];
+      this.assessmentWebSocketService.getNewQuestion(this.assessmentId).subscribe(data => {
+        this.form.setValue({
+          title: data.title,
+          body: data.body,
+          answer: data.body,
+          questionResponseId: data.questionResponseId
+        })
+      })
     });
-
-    this.form.controls['answer'].setValue('This is a test answer.');
-
-    // TODO subscribe to the websocket endpoint to get the QuestionAnswer
-    // TODO initialize the form with the QuestionAnswer
   }
 
   submitAnswer() {
     if (!this.form.valid) {
       return;
     }
-    const questionAnswer: QuestionAnswer = this.form.value as QuestionAnswer;
+    const questionAnswer: AnswerQuestionEvent = this.form.value as AnswerQuestionEvent;
 
-    // TODO submit the question to the websocket
+    this.assessmentWebSocketService.answerQuestion(this.assessmentId, questionAnswer);
     this.alertService.info('Question Submitted');
   }
 

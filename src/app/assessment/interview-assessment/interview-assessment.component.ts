@@ -32,7 +32,7 @@ export class InterviewAssessmentComponent implements OnInit {
     private questionService: QuestionService,
     private route: ActivatedRoute,
     private alertService: AlertService,
-    // private assessmentWebSocketSerivce: AssessmentWebSocketService
+    private assessmentWebSocketService: AssessmentWebSocketService
     ) { }
 
   ngOnInit() {
@@ -65,13 +65,13 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   sendQuestion(): void {
-    // const newQuestionEvent: NewQuestionEvent = {
-    //   timestamp: new Date(),
-    //   title: this.selectedQuestion.title,
-    //   body: this.selectedQuestion.body,
-    //   questionResponseId: null
-    // }
-    // this.assessmentWebSocketSerivce.sendNewQueston(this.assessment.interviewGuid, newQuestionEvent);
+    const newQuestionEvent: NewQuestionEvent = {
+      timestamp: new Date(),
+      title: this.selectedQuestion.title,
+      body: this.selectedQuestion.body,
+      questionResponseId: null
+    }
+    this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
   }
 }

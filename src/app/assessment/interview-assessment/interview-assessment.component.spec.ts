@@ -1,3 +1,5 @@
+import { StompService } from 'ng2-stomp-service';
+import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertService } from './../../services/alert/alert.service';
 import { Question } from './../../domains/question';
@@ -7,7 +9,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { QuestionListItemComponent } from './../../question-list-item/question-list-item.component';
 import { AuthService } from './../../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
-import { Assessment } from './../../domains/assessment';
+import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -28,8 +30,19 @@ describe('InterviewAssessmentComponent', () => {
     lastName: 'lastName',
     email: 'e@mail.com',
     interviewGuid: 'testGuid',
-    active: false
+    state: AssessmentStates.NOT_STARTED,
+    notes: 'notes'
   }];
+
+  const mockStomp = {
+    configure(object: any) {},
+    startConnect() {return Promise.resolve(); },
+    done(queue: string) {},
+    after(queue: string) {return Promise.resolve(); },
+    subscribe(address: string, fun: (data: any) => void ) {},
+    send(data: any) {}
+  };
+
   const questions: any[] = [
     {
       'id': 'id1',
@@ -84,6 +97,8 @@ describe('InterviewAssessmentComponent', () => {
         MdDialog,
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
+        AssessmentWebSocketService,
+        { provide: StompService, useValue: mockStomp }
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -147,8 +162,11 @@ describe('InterviewAssessmentComponent', () => {
 
   it('should set sentQuestion', () => {
     component.selectedQuestion = questions[0];
+    const assessmentWebSocketService: AssessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentWebSocketService, 'sendNewQuestion');
     component.sendQuestion();
     expect(component.sentQuestion).toBe(questions[0]);
+    expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
   });
 
 });
