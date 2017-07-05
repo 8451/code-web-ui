@@ -1,4 +1,3 @@
-import { QuestionAnswer } from './../domains/question-answer';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';

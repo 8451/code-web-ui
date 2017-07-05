@@ -1,6 +1,6 @@
 import { AlertService } from './../services/alert/alert.service';
 import { AssessmentService } from './../services/assessment/assessment.service';
-import { Assessment } from './../domains/assessment';
+import { Assessment, AssessmentStates } from './../domains/assessment';
 import { MdDialogRef } from '@angular/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -37,7 +37,10 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
       interviewGuid: [null, [
 
       ]],
-      active: [false, [
+      state: [AssessmentStates.NOT_STARTED, [
+
+      ]],
+      notes: ['', [
 
       ]]
     });

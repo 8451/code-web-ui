@@ -1,4 +1,4 @@
-<md-divider></md-divider>
+<h3 *ngIf="assessments && !assessments.length">No Assessments</h3>
 <md-list>
   <div *ngFor="let assessment of assessments">
     <md-list-item class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
@@ -6,8 +6,8 @@
         <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
         <p md-line>{{assessment.email}}</p>
       </div>
-      <button md-raised-button *ngIf="assessment.active" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
-      <button md-raised-button *ngIf="assessment === selectedAssessment && !selectedAssessment.active" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
+      <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
+      <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
     </md-list-item>
     <md-divider></md-divider>
   </div>

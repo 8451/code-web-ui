@@ -6,7 +6,7 @@ import { MdDialogRef, MdDialog } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService } from './../../services/question/question.service';
 
-import { Assessment } from './../../domains/assessment';
+import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -33,8 +33,8 @@ export class InterviewAssessmentComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertService,
-    // private assessmentWebSocketSerivce: AssessmentWebSocketService
-  ) { }
+    private assessmentWebSocketService: AssessmentWebSocketService
+    ) { }
 
   ngOnInit() {
     this.getQuestions();
@@ -68,7 +68,7 @@ export class InterviewAssessmentComponent implements OnInit {
       if (result) {
         // TODO
         // Change state to NOTES
-        this.assessment.active = false;
+        this.assessment.state = AssessmentStates.NOTES;
         this.assessmentService.updateAssessment(this.assessment).subscribe(
           res => {
             this.alertService.info('Assessment ended!');
@@ -98,13 +98,13 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   sendQuestion(): void {
-    // const newQuestionEvent: NewQuestionEvent = {
-    //   timestamp: new Date(),
-    //   title: this.selectedQuestion.title,
-    //   body: this.selectedQuestion.body,
-    //   questionResponseId: null
-    // }
-    // this.assessmentWebSocketSerivce.sendNewQueston(this.assessment.interviewGuid, newQuestionEvent);
+    const newQuestionEvent: NewQuestionEvent = {
+      timestamp: new Date(),
+      title: this.selectedQuestion.title,
+      body: this.selectedQuestion.body,
+      questionResponseId: null
+    };
+    this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
   }
 }
