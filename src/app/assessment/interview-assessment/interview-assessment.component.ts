@@ -42,9 +42,8 @@ export class InterviewAssessmentComponent implements OnInit {
 
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
-      this.route.params
-        .switchMap((params: Params) => this.assessmentService.getAssessmentByGuid(params['guid']))
-        .subscribe(assessment => {
+      this.route.params.switchMap((params: Params) =>
+        this.assessmentService.getAssessmentByGuid(params['guid'])).subscribe(assessment => {
           this.assessment = assessment;
           this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid).subscribe(event => {
             this.alertService.info('Candidate submitted answer');

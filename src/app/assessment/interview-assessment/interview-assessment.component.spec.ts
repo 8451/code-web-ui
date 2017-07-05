@@ -1,4 +1,4 @@
-import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +25,7 @@ describe('InterviewAssessmentComponent', () => {
   let fixture: ComponentFixture<InterviewAssessmentComponent>;
   let questionService: QuestionService;
   let assessmentService: AssessmentService;
+  let assessmentWebSocketService: AssessmentWebSocketService;
   let alertService: AlertService;
   let mockRouter = { navigate: jasmine.createSpy('navigate') };
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
@@ -48,7 +49,10 @@ describe('InterviewAssessmentComponent', () => {
   };
 
   const mockAssessmentWebSocketService = {
-    sendNewQuestion(guid: string, question: NewQuestionEvent) {}
+    sendNewQuestion(guid: string, question: NewQuestionEvent) {},
+    getAnsweredQuestion(guid: string): Observable<AnswerQuestionEvent> {
+      return new Observable<AnswerQuestionEvent>();
+    }
   };
 
   const questions: any[] = [
@@ -128,7 +132,9 @@ describe('InterviewAssessmentComponent', () => {
     fixture = TestBed.createComponent(InterviewAssessmentComponent);
     component = fixture.componentInstance;
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(this.assessments));
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
+    spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(Observable.of(assessments[0]));
   });
 
   afterEach(() => {
@@ -176,13 +182,13 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should set sentQuestion', inject([AssessmentWebSocketService],
-  (assessmentWebSocketService: AssessmentWebSocketService) => {
+  (injectedAssessmentWebSocketService: AssessmentWebSocketService) => {
     component.selectedQuestion = questions[0];
     component.assessment = assessments[0];
-    spyOn(assessmentWebSocketService, 'sendNewQuestion');
+    spyOn(injectedAssessmentWebSocketService, 'sendNewQuestion');
     component.sendQuestion();
     expect(component.sentQuestion).toBe(questions[0]);
-    expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
+    expect(injectedAssessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
   }));
 
   it('endAssessment() should end the assessment and navigate', async(() => {
