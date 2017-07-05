@@ -14,7 +14,7 @@ export class AssessmentWebSocketService {
   constructor(public stomp: StompService) {
     stomp.configure({
       host: this.socketUrl,
-      debug: true,
+      debug: false,
       queue: { 'init': false }
     });
 
@@ -50,7 +50,7 @@ export class AssessmentWebSocketService {
     return newQuestion;
   }
 
-  sendNewQueston(guid: string, question: NewQuestionEvent): void {
+  sendNewQuestion(guid: string, question: NewQuestionEvent): void {
     this.stomp.after('init').then(() => {
       this.stomp.send(`/assessment/${guid}/new-question`, question);
     });
