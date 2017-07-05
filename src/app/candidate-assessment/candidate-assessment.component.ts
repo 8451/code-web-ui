@@ -42,8 +42,8 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
           body: data.body,
           answer: data.body,
           questionResponseId: data.questionResponseId
-        })
-      })
+        });
+      });
     });
   }
 

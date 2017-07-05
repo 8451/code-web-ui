@@ -69,7 +69,7 @@ export class InterviewAssessmentComponent implements OnInit {
       title: this.selectedQuestion.title,
       body: this.selectedQuestion.body,
       questionResponseId: null
-    }
+    };
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
   }
