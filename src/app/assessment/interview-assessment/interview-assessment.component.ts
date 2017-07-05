@@ -12,7 +12,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 
-
 @Component({
   selector: 'app-interview-assessment',
   templateUrl: './interview-assessment.component.html',
@@ -66,8 +65,6 @@ export class InterviewAssessmentComponent implements OnInit {
       }
 
       if (result) {
-        // TODO
-        // Change state to NOTES
         this.assessment.state = AssessmentStates.NOTES;
         this.assessmentService.updateAssessment(this.assessment).subscribe(
           res => {
@@ -80,9 +77,8 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   saveNotes(notes: string): void {
-    // this.assessment.notes = notes;
-    // TODO
-    // Change state to CLOSED
+    this.assessment.notes = notes;
+    this.assessment.state = AssessmentStates.CLOSED;
     this.assessmentService.updateAssessment(this.assessment).subscribe(
       res => {
         this.alertService.info('Notes Saved!');

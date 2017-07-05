@@ -105,6 +105,7 @@ describe('InterviewAssessmentComponent', () => {
         MdDialog,
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
+        { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
         { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService },
       ]
