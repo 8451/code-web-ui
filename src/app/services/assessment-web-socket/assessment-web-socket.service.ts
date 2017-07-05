@@ -14,7 +14,7 @@ export class AssessmentWebSocketService {
   constructor(public stomp: StompService) {
     stomp.configure({
       host: this.socketUrl,
-      debug: false,
+      debug: true,
       queue: { 'init': false }
     });
 
