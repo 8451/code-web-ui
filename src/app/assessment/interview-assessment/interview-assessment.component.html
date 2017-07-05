@@ -2,11 +2,16 @@
     <div class="full-width">
         <md-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" class="open-icon flex-right">menu</md-icon>
     </div>
-    <div class="assessment-area" *ngIf="sentQuestion">
+    <div *ngIf="sentQuestion && assessment.active" class="assessment-area">
         <h5>{{sentQuestion.title}}</h5>
         <textarea class="editor">{{sentQuestion.body}}</textarea>
         <h6>Suggested Answer</h6>
         <pre class="question-answer">{{sentQuestion.suggestedAnswer}}</pre>
+    </div>
+    <div *ngIf="assessment && !assessment.active" class="notes-area flex-container">
+        <h5>Notes</h5>
+        <textarea #notes class="editor"></textarea>
+        <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
     <md-sidenav #sidenav mode="side" opened="true" align="end">
         <md-list class="sidenav-top">

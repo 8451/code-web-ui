@@ -38,8 +38,6 @@ export class InterviewAssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.getQuestions();
-
-
   }
 
   getQuestions(): void {
@@ -62,22 +60,36 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   endAssessment(): void {
-    this.assessment.active = false;
     const subs = this.alertService.confirmation('Are you sure you want to end the assessment?').subscribe(result => {
       if (subs) {
         subs.unsubscribe();
       }
 
       if (result) {
+        // TODO
+        // Change state to NOTES
+        this.assessment.active = false;
         this.assessmentService.updateAssessment(this.assessment).subscribe(
           res => {
-            this.alertService.info('Assessment closed!');
-            this.router.navigate(['../interview/assessments'], );
+            this.alertService.info('Assessment ended!');
           }, error => {
-            this.alertService.error('Unable to close assessment');
+            this.alertService.error('Unable to end assessment');
           });
       }
     });
+  }
+
+  saveNotes(notes: string): void {
+    // this.assessment.notes = notes;
+    // TODO
+    // Change state to CLOSED
+    this.assessmentService.updateAssessment(this.assessment).subscribe(
+      res => {
+        this.alertService.info('Notes Saved!');
+        this.router.navigate(['../interview/assessments'], );
+      }, error => {
+        this.alertService.error('Unable to save notes');
+      });
   }
 
   previewQuestion(): void {
