@@ -37,10 +37,10 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getQuestions();
-
     this.route.params
-      .switchMap((params: Params) => this.assessmentService.getAssessmentByGuid(params['guid']))
-      .subscribe(assessment => {
+      .switchMap((params: Params) => {
+        return this.assessmentService.getAssessmentByGuid(params['guid']);
+      }).subscribe(assessment => {
         this.assessment = assessment;
         this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
           .subscribe(event => this.candidateAnsweredQuestion(event));

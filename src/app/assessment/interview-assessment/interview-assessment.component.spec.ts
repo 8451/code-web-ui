@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs/Subject';
+import { AnswerQuestionEvent } from './../../domains/events/web-socket-event';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
@@ -14,7 +16,7 @@ import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
@@ -26,7 +28,7 @@ describe('InterviewAssessmentComponent', () => {
   let questionService: QuestionService;
   let alertService: AlertService;
   const assessments: Assessment[] = [{
-    id: null,
+    id: 'test',
     firstName: 'first',
     lastName: 'lastName',
     email: 'e@mail.com',
@@ -35,17 +37,36 @@ describe('InterviewAssessmentComponent', () => {
     notes: 'notes'
   }];
 
+  const answerEvent: AnswerQuestionEvent = {
+    title: 'ae_title1',
+    body: 'ae_body1',
+    answer: 'ae_answer1',
+    questionResponseId: 'ae_',
+    timestamp: new Date(),
+  };
+
+  const answerEventSubject = new Subject<AnswerQuestionEvent>();
+
   const mockStomp = {
-    configure(object: any) {},
-    startConnect() {return Promise.resolve(); },
-    done(queue: string) {},
-    after(queue: string) {return Promise.resolve(); },
-    subscribe(address: string, fun: (data: any) => void ) {},
-    send(data: any) {}
+    configure(object: any) { },
+    startConnect() { return Promise.resolve(); },
+    done(queue: string) { },
+    after(queue: string) { return Promise.resolve(); },
+    subscribe(address: string, fun: (data: any) => void) { },
+    send(data: any) { }
   };
 
   const mockAssessmentWebSocketService = {
-    sendNewQuestion(guid: string, question: NewQuestionEvent) {}
+    sendNewQuestion(guid: string, question: NewQuestionEvent) { },
+    getAnsweredQuestion(guid: string): Observable<AnswerQuestionEvent> {
+      return answerEventSubject;
+    },
+  };
+
+  const mockAssessmentService = {
+    getAssessmentByGuid(guid: string): Observable<Assessment> {
+      return Observable.of(assessments[0]);
+    }
   };
 
   const questions: any[] = [
@@ -82,6 +103,13 @@ describe('InterviewAssessmentComponent', () => {
 
   ];
 
+  const mockQuestionService = {
+    getQuestions(): Observable<Question[]> {
+      const castedQuestions: Question[] = questions;
+      return Observable.of(castedQuestions);
+    }
+  };
+
   class MdDialogRefMock {
   }
 
@@ -97,8 +125,8 @@ describe('InterviewAssessmentComponent', () => {
       ],
       providers: [
         AuthService,
-        AssessmentService,
-        QuestionService,
+        { provide: AssessmentService, useValue: mockAssessmentService },
+        { provide: QuestionService, useValue: mockQuestionService },
         MdDialog,
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
@@ -166,12 +194,21 @@ describe('InterviewAssessmentComponent', () => {
   });
 
   it('should set sentQuestion', inject([AssessmentWebSocketService],
-  (assessmentWebSocketService: AssessmentWebSocketService) => {
-    component.selectedQuestion = questions[0];
-    component.assessment = assessments[0];
-    spyOn(assessmentWebSocketService, 'sendNewQuestion');
+    (assessmentWebSocketService: AssessmentWebSocketService) => {
+      component.selectedQuestion = questions[0];
+      component.assessment = assessments[0];
+      spyOn(assessmentWebSocketService, 'sendNewQuestion');
+      component.sendQuestion();
+      expect(component.sentQuestion).toBe(questions[0]);
+      expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
+    }));
+
+  it('should update sentQuestion.body when answer received', fakeAsync(() => {
+    component.ngOnInit();
+    component.selectQuestion(questions[0]);
     component.sendQuestion();
-    expect(component.sentQuestion).toBe(questions[0]);
-    expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
+    answerEventSubject.next(answerEvent);
+    tick(); // make sure the callback for the answerEvent gets called.
+    expect(component.sentQuestion.body).toEqual(answerEvent.answer);
   }));
 });
