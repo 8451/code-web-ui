@@ -1,11 +1,47 @@
+.add-delete {
+    margin-top: .5em; 
+    margin-left: .5em;
+    margin-bottom: .5em;
+    position: sticky;
+    bottom: .5em;
+}
+
+.editor {
+  resize: none;
+  height: 20em;
+}
+
+.editor-container {
+  width: 66%;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
 
-.delete {
-    background-color: #ff0000
+.question-data {
+    width: 66%;
+    padding-left: 1em;
+    flex-direction: column;
 }
 
-.save {
-    background-color: #00cc00
+.question-content-container  {
+    flex-direction: row;
+    padding-top: 1em;
+}
+
+.question-body {
+    font-size: .6em;
+}
+
+.question-metadata {
+    width: 20%;
+}
+
+.question-suggested-answer {
+    font-size: .6em;
+}
+
+.question-title {
+    width: 33%;
 }
