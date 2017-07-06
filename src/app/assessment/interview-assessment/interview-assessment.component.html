@@ -14,7 +14,7 @@
         <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
     <md-sidenav #sidenav mode="side" opened="true" align="end">
-        <md-icon (click)="sidenav.toggle()">close</md-icon>
+        <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
         <div id="list-wrapper">
             <md-list class="sidenav-list">
                 <div *ngFor="let question of questions" [class.selected]="selectedQuestion === question">

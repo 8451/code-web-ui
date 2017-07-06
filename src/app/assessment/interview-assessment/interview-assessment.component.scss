@@ -7,6 +7,10 @@ button {
   color: #E6048D;
 }
 
+#close-icon {
+  cursor: pointer;
+}
+
 .editor {
   resize: none;
   width: 800px;
@@ -55,6 +59,7 @@ md-icon {
 
 .open-icon {
     color: #E6048D;
+    cursor: url(../../../assets/fry-cursor.png), auto;
 }
 
 .question-body {
