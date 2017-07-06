@@ -1,11 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="submitQuestion()">
 
-  <div class="flex-container add-delete">
-    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
-    <button md-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>
-    <button md-raised-button color="warn" type="button" *ngIf="isNew" (click)="navigateBack()">Cancel</button>
-  </div>
-
   <div class="question-content-container flex-container">
 
     <div class="question-data flex-container">
@@ -20,6 +14,7 @@
       <md-input-container class="editor-container">
         <textarea mdInput class="question-suggested-answer editor" placeholder="Suggested Answer" name="suggestedAnswer" formControlName="suggestedAnswer"></textarea>
       </md-input-container>
+
     </div>
 
     <md-card class="question-metadata">
@@ -56,6 +51,12 @@
       </md-card-content>
     </md-card>
 
+  </div>
+
+  <div class="flex-container add-delete">
+    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
+    <button md-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>
+    <button md-raised-button color="warn" type="button" *ngIf="isNew" (click)="navigateBack()">Cancel</button>
   </div>
 
 </form>
