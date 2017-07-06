@@ -32,6 +32,7 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
 import { QuestionInfoDialogComponent } from './question-info-dialog/question-info-dialog.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
+import { AnswerDialogComponent } from './assessment/answer-dialog/answer-dialog.component';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { CandidateAssessmentComponent } from './candidate-assessment/candidate-a
     InterviewerComponent,
     QuestionInfoDialogComponent,
     CandidateComponent,
-    CandidateAssessmentComponent
+    CandidateAssessmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +77,7 @@ import { CandidateAssessmentComponent } from './candidate-assessment/candidate-a
     DialogComponent,
     AlertComponent,
     NewAssessmentDialogComponent,
-    QuestionInfoDialogComponent
+    QuestionInfoDialogComponent,
   ],
   providers: [AlertService,
     QuestionService,

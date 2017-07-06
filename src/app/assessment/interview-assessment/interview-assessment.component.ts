@@ -1,4 +1,4 @@
-import { NewQuestionEvent } from './../../domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
@@ -9,7 +9,7 @@ import { QuestionService } from './../../services/question/question.service';
 import { Assessment } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 
 
@@ -18,14 +18,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './interview-assessment.component.html',
   styleUrls: ['./interview-assessment.component.scss']
 })
-export class InterviewAssessmentComponent implements OnInit {
+export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
   assessment: Assessment;
-  dialogRef: MdDialogRef<QuestionInfoDialogComponent>;
+  dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
   questions: Question[];
-  currentlyAwaitingAnswer = false;
 
   constructor(
     public dialog: MdDialog,
@@ -43,11 +42,12 @@ export class InterviewAssessmentComponent implements OnInit {
       .switchMap((params: Params) => this.assessmentService.getAssessmentByGuid(params['guid']))
       .subscribe(assessment => {
         this.assessment = assessment;
-        this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid).subscribe(event => {
-          this.alertService.info('Candidate submitted answer');
-          this.currentlyAwaitingAnswer = true;
-        });
+        this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
+          .subscribe(event => this.candidateAnsweredQuestion(event));
       });
+  }
+
+  ngOnDestroy() {
   }
 
   getQuestions(): void {
@@ -69,18 +69,17 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   sendQuestion(): void {
-    if (this.currentlyAwaitingAnswer) {
-      this.alertService.error('Candidate is currently answering question');
-      return;
-    }
     const newQuestionEvent: NewQuestionEvent = {
       timestamp: new Date(),
       title: this.selectedQuestion.title,
       body: this.selectedQuestion.body,
       questionResponseId: null
     };
-    this.currentlyAwaitingAnswer = true;
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
+  }
+
+  candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
+    this.sentQuestion.body = event.answer;
   }
 }
