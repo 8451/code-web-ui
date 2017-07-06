@@ -16,7 +16,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'interview/assessments'
+    redirectTo: 'login'
   },
   {
     path: 'candidate',
@@ -77,6 +77,10 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '**',
     component: LoginComponent
   }
 ];
