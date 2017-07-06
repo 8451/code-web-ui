@@ -14,18 +14,20 @@
         <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
     <md-sidenav #sidenav mode="side" opened="true" align="end">
-        <md-list class="sidenav-top">
-            <md-icon (click)="sidenav.toggle()">close</md-icon>
+        <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
+        <div id="list-wrapper">
             <md-list class="sidenav-list">
                 <div *ngFor="let question of questions" [class.selected]="selectedQuestion === question">
                     <app-question-list-item [question]="question" (click)="selectQuestion(question)"></app-question-list-item>
                 </div>
             </md-list>
-        </md-list>
-        <md-list class="sidenav-bottom">
-            <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
-            <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
-            <button md-raised-button class="end-assessment" color="warn" (click)="endAssessment()">End assessment</button>
-        </md-list>
+        </div>
+        <div id="button-wrapper">
+            <div>
+                <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
+                <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
+            </div>
+                <button md-raised-button class="end-assessment" color="warn" (click)="endAssessment()">End assessment</button>
+        </div>
     </md-sidenav>
 </md-sidenav-container>

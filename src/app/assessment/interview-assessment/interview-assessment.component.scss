@@ -7,6 +7,10 @@ button {
   color: #E6048D;
 }
 
+#close-icon {
+  cursor: pointer;
+}
+
 .editor {
   resize: none;
   width: 61.42em;
@@ -31,6 +35,12 @@ html, .full-height {
 }
 
 
+md-sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 md-sidenav-container {
   height: 100%;
 }
@@ -49,6 +59,7 @@ md-icon {
 
 .open-icon {
     color: #E6048D;
+    cursor: url(../../../assets/fry-cursor.png), auto;
 }
 
 .question-answer {
@@ -64,15 +75,39 @@ md-icon {
   margin-top: 1em;
 }
 
+.editor {
+  resize: none;
+  width: 800px;
+  height: 400px;
+}
+
+#list-wrapper {
+  overflow-y: scroll;
+}
+
+#button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  width: 100%;
+  flex-shrink: 0;
+  div {
+    display: flex;
+    width: 100%;
+  
+    button {
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+  }
+  button {
+    margin-top: 0px;
+    flex-shrink: 0;
+  }
+}
+
 .selected {
   background-color: #DDD;
   left: .1em;
 }
 
-//TODO
-// .sidenav-bottom {  
-// }
-
-//TODO
-// .flex-down {
-// }
