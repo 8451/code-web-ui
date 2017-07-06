@@ -44,6 +44,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
           questionResponseId: data.questionResponseId
         });
       });
+      this.assessmentWebSocketService.sendConnectEvent(this.assessmentId);
     });
   }
 

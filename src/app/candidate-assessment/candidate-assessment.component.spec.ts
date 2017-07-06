@@ -38,8 +38,9 @@ describe('CandidateAssessmentComponent', () => {
   const mockAssessmentWebSocketService = {
     answerQuestion(guid: string, answerQuestion: AnswerQuestionEvent) {},
     sendNewQuestion(guid: string, newQuestion: NewQuestionEvent) {},
-    getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); }
-  };
+    getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); },
+    sendConnectEvent(guid: string) {},
+};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
