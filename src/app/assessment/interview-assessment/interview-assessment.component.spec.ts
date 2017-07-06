@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
@@ -14,7 +15,7 @@ import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
@@ -30,7 +31,7 @@ describe('InterviewAssessmentComponent', () => {
   let mockRouter = { navigate: jasmine.createSpy('navigate') };
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
   const assessments: Assessment[] = [{
-    id: 'nullIDTEST',
+    id: 'test',
     firstName: 'first',
     lastName: 'lastName',
     email: 'e@mail.com',
@@ -41,20 +42,23 @@ describe('InterviewAssessmentComponent', () => {
     notes: 'notes'
   }];
 
-  const mockStomp = {
-    configure(object: any) {},
-    startConnect() {return Promise.resolve(); },
-    done(queue: string) {},
-    after(queue: string) {return Promise.resolve(); },
-    subscribe(address: string, fun: (data: any) => void ) {},
-    send(data: any) {}
+  const answerEvent: AnswerQuestionEvent = {
+    title: 'ae_title1',
+    body: 'ae_body1',
+    answer: 'ae_answer1',
+    questionResponseId: 'ae_',
+    timestamp: new Date(),
   };
 
-  const mockAssessmentWebSocketService = {
-    sendNewQuestion(guid: string, question: NewQuestionEvent) {},
-    getAnsweredQuestion(guid: string): Observable<AnswerQuestionEvent> {
-      return new Observable<AnswerQuestionEvent>();
-    }
+  let answerEventSubject = new Subject<AnswerQuestionEvent>();
+
+  const mockStomp = {
+    configure(object: any) { },
+    startConnect() { return Promise.resolve(); },
+    done(queue: string) { },
+    after(queue: string) { return Promise.resolve(); },
+    subscribe(address: string, fun: (data: any) => void) { },
+    send(data: any) { }
   };
 
   const questions: any[] = [
@@ -113,7 +117,7 @@ describe('InterviewAssessmentComponent', () => {
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
-        { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService },
+        AssessmentWebSocketService,
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -134,13 +138,15 @@ describe('InterviewAssessmentComponent', () => {
     fixture = TestBed.createComponent(InterviewAssessmentComponent);
     component = fixture.componentInstance;
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    questionService = fixture.debugElement.injector.get(QuestionService);
     assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
-    spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(Observable.of(assessments[0]));
+    spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(answerEventSubject);
   });
 
   afterEach(() => {
     mockRouter = { navigate: jasmine.createSpy('navigate') };
+    answerEventSubject = new Subject<AnswerQuestionEvent>();
   });
 
   it('should be created', async(() => {
@@ -148,7 +154,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should populate with a list of questions', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     component.getQuestions();
@@ -157,7 +162,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should display toast when error occurs in getQuestions', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(
       Observable.throw(new Response(new ResponseOptions({ status: 500, body: null })))
     );
@@ -184,7 +188,7 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should set sentQuestion', inject([AssessmentWebSocketService],
-  (injectedAssessmentWebSocketService: AssessmentWebSocketService) => {
+    (injectedAssessmentWebSocketService: AssessmentWebSocketService) => {
     component.selectedQuestion = questions[0];
     component.assessment = assessments[0];
     spyOn(injectedAssessmentWebSocketService, 'sendNewQuestion');
@@ -193,8 +197,20 @@ describe('InterviewAssessmentComponent', () => {
     expect(injectedAssessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
   }));
 
+  it('should update sentQuestion.body when answer received', fakeAsync((inject([AssessmentWebSocketService],
+  (injectedAssessmentWebSocketService: AssessmentWebSocketService) => {
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+    component.ngOnInit();
+    component.selectedQuestion = questions[0];
+    component.assessment = assessments[0];
+    spyOn(injectedAssessmentWebSocketService, 'sendNewQuestion');
+    component.sendQuestion();
+    answerEventSubject.next(answerEvent);
+    tick(); // make sure the callback for the answerEvent gets called.
+    expect(component.sentQuestion.body).toEqual(answerEvent.answer);
+  }))));
+
   it('endAssessment() should end the assessment and navigate', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
@@ -213,7 +229,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('endAssessment() should not end if confirmation fails', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
@@ -232,7 +247,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('endAssessment() should throw an error if it cannot end the assessment', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
@@ -251,7 +265,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('saveNotes() should save the notes and navigate', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
@@ -269,7 +282,6 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('saveNotes() should throw an error if it cannot save the notes', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
