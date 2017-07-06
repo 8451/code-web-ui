@@ -1,4 +1,4 @@
-import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,9 +24,13 @@ describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
   let fixture: ComponentFixture<InterviewAssessmentComponent>;
   let questionService: QuestionService;
+  let assessmentService: AssessmentService;
+  let assessmentWebSocketService: AssessmentWebSocketService;
   let alertService: AlertService;
+  let mockRouter = { navigate: jasmine.createSpy('navigate') };
+  const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
   const assessments: Assessment[] = [{
-    id: null,
+    id: 'nullIDTEST',
     firstName: 'first',
     lastName: 'lastName',
     email: 'e@mail.com',
@@ -45,7 +49,10 @@ describe('InterviewAssessmentComponent', () => {
   };
 
   const mockAssessmentWebSocketService = {
-    sendNewQuestion(guid: string, question: NewQuestionEvent) {}
+    sendNewQuestion(guid: string, question: NewQuestionEvent) {},
+    getAnsweredQuestion(guid: string): Observable<AnswerQuestionEvent> {
+      return new Observable<AnswerQuestionEvent>();
+    }
   };
 
   const questions: any[] = [
@@ -102,6 +109,7 @@ describe('InterviewAssessmentComponent', () => {
         MdDialog,
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
+        { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
         { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService },
       ]
@@ -123,11 +131,19 @@ describe('InterviewAssessmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InterviewAssessmentComponent);
     component = fixture.componentInstance;
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
+    spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(Observable.of(assessments[0]));
   });
 
-  it('should be created', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => {
+    mockRouter = { navigate: jasmine.createSpy('navigate') };
   });
+
+  it('should be created', async(() => {
+    expect(component).toBeTruthy();
+  }));
 
   it('should populate with a list of questions', async(() => {
     questionService = fixture.debugElement.injector.get(QuestionService);
@@ -151,27 +167,121 @@ describe('InterviewAssessmentComponent', () => {
     expect(alertService.error).toHaveBeenCalled();
   }));
 
-  it('should set selectedQuestion', () => {
+  it('should set selectedQuestion', async(() => {
     component.selectQuestion(questions[0]);
     expect(component.selectedQuestion).toBe(questions[0]);
-  });
+  }));
 
-  it('should open up a dialog', () => {
+  it('should open up a dialog', async(() => {
     component.selectedQuestion = questions[0];
 
     component.previewQuestion();
     component.dialog.afterOpen.subscribe(data => {
       expect(component.dialogRef.componentInstance.question).toBe(questions[0]);
     });
-  });
+  }));
 
   it('should set sentQuestion', inject([AssessmentWebSocketService],
-  (assessmentWebSocketService: AssessmentWebSocketService) => {
+  (injectedAssessmentWebSocketService: AssessmentWebSocketService) => {
     component.selectedQuestion = questions[0];
     component.assessment = assessments[0];
-    spyOn(assessmentWebSocketService, 'sendNewQuestion');
+    spyOn(injectedAssessmentWebSocketService, 'sendNewQuestion');
     component.sendQuestion();
     expect(component.sentQuestion).toBe(questions[0]);
-    expect(assessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
+    expect(injectedAssessmentWebSocketService.sendNewQuestion).toHaveBeenCalled();
+  }));
+
+  it('endAssessment() should end the assessment and navigate', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
+  }));
+
+  it('endAssessment() should not end if confirmation fails', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(false));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
+  }));
+
+  it('endAssessment() should throw an error if it cannot end the assessment', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.endAssessment();
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
+  }));
+
+  it('saveNotes() should save the notes and navigate', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(assessments[0]));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.saveNotes(assessments[0].notes);
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../interview/assessments']);
+  }));
+
+  it('saveNotes() should throw an error if it cannot save the notes', async(() => {
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+
+    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(alertService, 'info');
+    spyOn(alertService, 'error');
+
+    component.assessment = assessments[0];
+    component.saveNotes(assessments[0].notes);
+
+    expect(alertService.info).toHaveBeenCalledTimes(0);
+    expect(alertService.error).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
   }));
 });
