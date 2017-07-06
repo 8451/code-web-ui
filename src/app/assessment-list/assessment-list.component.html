@@ -6,8 +6,9 @@
         <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
         <p md-line>{{assessment.email}}</p>
       </div>
-      <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
-      <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
+      <p *ngIf="assessment.state === assessmentStates.CLOSED" class="completed-label">Completed on {{assessment.modifiedDate | date: "medium"}}</p>
+      <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS" class="assessment-button" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
+      <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="assessment-button" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
     </md-list-item>
     <md-divider></md-divider>
   </div>
