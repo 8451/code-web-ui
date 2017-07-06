@@ -25,6 +25,7 @@ export class InterviewAssessmentComponent implements OnInit {
   selectedQuestion: Question;
   sentQuestion: Question;
   questions: Question[];
+  currentlyAwaitingAnswer = false;
 
   constructor(
     public dialog: MdDialog,
@@ -34,7 +35,7 @@ export class InterviewAssessmentComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private assessmentWebSocketService: AssessmentWebSocketService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.getQuestions();
@@ -98,12 +99,17 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   sendQuestion(): void {
+    if (this.currentlyAwaitingAnswer) {
+      this.alertService.error('Candidate is currently answering question');
+      return;
+    }
     const newQuestionEvent: NewQuestionEvent = {
       timestamp: new Date(),
       title: this.selectedQuestion.title,
       body: this.selectedQuestion.body,
       questionResponseId: null
     };
+    this.currentlyAwaitingAnswer = true;
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
   }

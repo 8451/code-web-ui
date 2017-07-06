@@ -2,8 +2,21 @@
   flex: 1 1 auto;
 }
 
+.answer-field {
+  width: 100%;
+  height: 100%;
+  resize: none;
+}
+
+#answer-container {
+  font-size: 10pt;
+  width: 100%;
+  display: block;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
 form {
-  width: 66%;
+  width: 80%;
   margin: auto;
   margin-top: 50px;
     //You are welcome cutie ;)
