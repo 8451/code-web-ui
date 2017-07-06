@@ -25,6 +25,7 @@ export class InterviewAssessmentComponent implements OnInit {
   sentQuestion: Question;
   questions: Question[];
   currentlyAwaitingAnswer = false;
+  assessmentStates: any = AssessmentStates;
 
   constructor(
     public dialog: MdDialog,

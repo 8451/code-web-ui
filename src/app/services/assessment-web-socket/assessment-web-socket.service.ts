@@ -20,7 +20,6 @@ export class AssessmentWebSocketService {
 
     stomp.startConnect().then(() => {
       stomp.done('init');
-      console.log('connected');
     });
   }
 

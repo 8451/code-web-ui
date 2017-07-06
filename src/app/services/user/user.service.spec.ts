@@ -61,7 +61,6 @@ describe('UserService', () => {
       expect(user.lastName).toEqual(expectedUser.lastName, 'use lastName should match');
       expect(user.username).toEqual(expectedUser.username, 'user email should match');
     }, error => {
-      console.log(error);
     });
   })));
 });
