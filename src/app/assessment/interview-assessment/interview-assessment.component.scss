@@ -10,6 +10,12 @@ html, .full-height {
   width: 100%;
 }
 
+md-sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 md-sidenav-container {
   height: 100%;
 }
@@ -58,4 +64,13 @@ button {
   resize: none;
   width: 800px;
   height: 400px;
+}
+
+#button-wrapper {
+  display: flex;
+  align-self: flex-end;
+  width: 100%;
+  button {
+    flex-grow: 1;
+  }
 }
