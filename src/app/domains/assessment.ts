@@ -3,6 +3,8 @@ export class Assessment {
     firstName: string;
     lastName: string;
     email: string;
+    modifiedBy: string;
+    modifiedDate: Date;
     interviewGuid: string;
     state: AssessmentStates;
     notes: string;

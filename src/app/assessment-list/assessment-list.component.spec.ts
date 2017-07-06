@@ -30,6 +30,8 @@ describe('AssessmentListComponent', () => {
     lastName: 'lastName',
     email: 'e@mail.com',
     interviewGuid: 'testGuid',
+    modifiedBy: 'Test User',
+    modifiedDate: new Date(1),
     state: AssessmentStates.NOT_STARTED,
     notes: 'notes'
   }];

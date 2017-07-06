@@ -9,8 +9,8 @@ button {
 
 .editor {
   resize: none;
-  width: 800px;
-  height: 400px;
+  width: 61.42em;
+  height: 25.71em;
 }
 
 .end-assessment {
@@ -36,9 +36,9 @@ md-sidenav-container {
 }
 
 md-icon {
-  height: 48px;
-  width: 48px;
-  font-size: 48px;
+  font-size: 2.5em;
+  height: 1em;
+  width: 1em;
 }
 
 .notes-area {
@@ -51,24 +51,16 @@ md-icon {
     color: #E6048D;
 }
 
-.question-body {
-    white-space: pre-wrap;
-    width: 600px;
-    font-size: .6em;
-    border-left: .375em solid #E6048D;
-    padding: .5em;
-}
-
 .question-answer {
     white-space: pre-wrap;
-    width: 600px;
+    width: 61.42em;
     font-size: .6em;
     border-left: .375em solid #1384C5;
     padding: .5em;
 }
 
 .save-notes {
-  width: 200px;
+  width: 12.85em;
   margin-top: 1em;
 }
 
