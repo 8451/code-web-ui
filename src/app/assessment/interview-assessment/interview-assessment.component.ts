@@ -46,11 +46,11 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
+
       this.route.params.switchMap((params: Params) => {
         return this.assessmentService.getAssessmentByGuid(params['guid']);
-      }).subscribe(assessment => {
-        this.getAssessment(assessment);
-      });
+      }).subscribe(assessment => {this.getAssessment(assessment);});
+
       this.questions = questions;
     },
       error => {
