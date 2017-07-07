@@ -30,13 +30,17 @@ button {
   width: 100%;
 }
 
+.hide {
+  display: none;
+}
+
 html, .full-height {
   height: 100%;
 }
 
 
 md-sidenav {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
 }
