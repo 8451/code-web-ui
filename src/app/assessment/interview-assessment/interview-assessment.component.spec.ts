@@ -40,7 +40,8 @@ describe('InterviewAssessmentComponent', () => {
     modifiedBy: 'Test User',
     modifiedDate: new Date(1),
     state: AssessmentStates.NOT_STARTED,
-    notes: 'notes'
+    notes: 'notes',
+    questionAnswers: []
   }];
 
   const answerEvent: AnswerQuestionEvent = {

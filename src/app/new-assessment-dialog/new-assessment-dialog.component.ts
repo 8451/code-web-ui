@@ -42,7 +42,10 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
       ]],
       notes: ['', [
 
-      ]]
+      ]],
+      questionAnswers: [[], []],
+      modifiedBy: [null, []],
+      modifiedDate: [new Date(), []],
     });
   }
 
