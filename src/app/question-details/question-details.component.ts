@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Question } from './../domains/question';
 import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
@@ -5,7 +6,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { QuestionService } from '../services/question/question.service';
 import { AlertService } from '../services/alert/alert.service';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MdAutocompleteModule } from '@angular/material';
 import 'rxjs/add/operator/switchMap';
+
+
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
+
 
 
 @Component({
@@ -19,7 +26,61 @@ export class QuestionDetailsComponent implements OnInit {
   private id: string;
   isNew: boolean;
   form: FormGroup;
+  // languages: string[];
+  filteredLanguages: Observable<string[]>;
 
+  languages = [
+    'Alabama',
+    'Alaska',
+    'Arizona',
+    'Arkansas',
+    'California',
+    'Colorado',
+    'Connecticut',
+    'Delaware',
+    'Florida',
+    'Georgia',
+    'Hawaii',
+    'Idaho',
+    'Illinois',
+    'Indiana',
+    'Iowa',
+    'Kansas',
+    'Kentucky',
+    'Louisiana',
+    'Maine',
+    'Maryland',
+    'Massachusetts',
+    'Michigan',
+    'Minnesota',
+    'Mississippi',
+    'Missouri',
+    'Montana',
+    'Nebraska',
+    'Nevada',
+    'New Hampshire',
+    'New Jersey',
+    'New Mexico',
+    'New York',
+    'North Carolina',
+    'North Dakota',
+    'Ohio',
+    'Oklahoma',
+    'Oregon',
+    'Pennsylvania',
+    'Rhode Island',
+    'South Carolina',
+    'South Dakota',
+    'Tennessee',
+    'Texas',
+    'Utah',
+    'Vermont',
+    'Virginia',
+    'Washington',
+    'West Virginia',
+    'Wisconsin',
+    'Wyoming',
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +90,6 @@ export class QuestionDetailsComponent implements OnInit {
     private location: Location,
     private alertService: AlertService,
   ) { }
-
 
   ngOnInit(): void {
 
@@ -48,6 +108,8 @@ export class QuestionDetailsComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[1-5]$')
       ]],
+      language: ['', [
+      ]],
       createdBy: ['', []],
       createdDate: ['', []],
       modifiedBy: ['', []],
@@ -65,6 +127,7 @@ export class QuestionDetailsComponent implements OnInit {
             body: question.body,
             suggestedAnswer: question.suggestedAnswer,
             difficulty: question.difficulty,
+            language: question.language,
             createdBy: question.createdBy,
             createdDate: question.createdDate,
             modifiedBy: question.modifiedBy,
@@ -72,10 +135,14 @@ export class QuestionDetailsComponent implements OnInit {
           });
         });
     }
+
+    this.filteredLanguages = this.form.get('language').valueChanges
+      .startWith(null)
+      .map(name => this.filterLanguages(name));
   }
 
   navigateBack(): void {
-    this.router.navigate(['../../questions'], { relativeTo: this.route});
+    this.router.navigate(['../../questions'], { relativeTo: this.route });
   }
 
   submitQuestion(): void {
@@ -110,4 +177,14 @@ export class QuestionDetailsComponent implements OnInit {
     });
   }
 
+  getLanguages(): void {
+    this.questionService.getLanguages().subscribe(languages => {
+      this.languages = languages;
+    });
+  }
+
+  filterLanguages(val: string) {
+    return val ? this.languages.filter(s => s.toLowerCase().indexOf(val.toLowerCase()) === 0)
+      : this.languages;
+  }
 }

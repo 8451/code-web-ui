@@ -45,15 +45,15 @@ describe('QuestionDetailsComponent', () => {
     component = fixture.componentInstance;
     component.ngOnInit();
     const question = {
-      'id': 'id1',
-      'title': 'Title1',
-      'difficulty': 2,
-      'body': 'Body1',
-      'suggestedAnswer': 'SuggestedAnswer1',
-      'createdBy': 'createdBy1',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      id: 'id1',
+      title: 'Title1',
+      difficulty: 2,
+      body: 'Body1',
+      suggestedAnswer: 'SuggestedAnswer1',
+      createdBy: 'createdBy1',
+      createdDate: null,
+      modifiedBy: 'modifiedBy1',
+      modifiedDate: null
     };
   });
 
@@ -152,6 +152,7 @@ describe('QuestionDetailsComponent', () => {
       body: 'validBody',
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,
@@ -171,6 +172,7 @@ describe('QuestionDetailsComponent', () => {
       body: 'validBody',
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,
@@ -191,6 +193,7 @@ describe('QuestionDetailsComponent', () => {
       body: '', // This is an invalid body
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,

@@ -10,26 +10,28 @@ import { QuestionService } from './question.service';
 const mockQuestions = {
   'questions': [
     {
-      'id': 'id1',
-      'title': 'Title1',
-      'difficulty': 2,
-      'body': 'Body1',
-      'suggestedAnswer': 'SuggestedAnswer1',
-      'createdBy': 'createdBy1',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      id: 'id1',
+      title: 'Title1',
+      body: 'Body1',
+      difficulty: 1,
+      language: 'java',
+      suggestedAnswer: 'SuggestedAnswer1',
+      createdBy: 'createdBy1',
+      createdDate: null,
+      modifiedBy: 'modifiedBy1',
+      modifiedDate: null
     },
     {
-      'id': 'id2',
-      'title': 'Title2',
-      'difficulty': 3,
-      'body': 'Body2',
-      'suggestedAnswer': 'SuggestedAnswer2',
-      'createdBy': 'createdBy2',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy2',
-      'modifiedDate': null
+      id: 'id2',
+      title: 'Title2',
+      body: 'Body2',
+      difficulty: 2,
+      language: 'java',
+      suggestedAnswer: 'SuggestedAnswer2',
+      createdBy: 'createdBy2',
+      createdDate: null,
+      modifiedBy: 'modifiedBy2',
+      modifiedDate: null
     }
   ]
 };
@@ -37,15 +39,16 @@ const mockQuestions = {
 const mockQuestion = {
   'questions': [
     {
-      'id': 'id1',
-      'title': 'Title1',
-      'difficulty': 2,
-      'body': 'Body1',
-      'suggestedAnswer': 'SuggestedAnswer1',
-      'createdBy': 'createdBy1',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      id: 'id1',
+      title: 'Title1',
+      body: 'Body1',
+      difficulty: 1,
+      language: 'java',
+      suggestedAnswer: 'SuggestedAnswer1',
+      createdBy: 'createdBy1',
+      createdDate: null,
+      modifiedBy: 'modifiedBy1',
+      modifiedDate: null
     }
   ]
 };
@@ -100,8 +103,9 @@ describe('QuestionService', () => {
       expect(questions.length).toEqual(2, 'should contain 2 questions');
       expect(questions[0].id).toEqual(mockQuestions.questions[0].id, 'question id should match');
       expect(questions[0].title).toEqual(mockQuestions.questions[0].title, 'question title should match');
-      expect(questions[0].difficulty).toEqual(mockQuestions.questions[0].difficulty, 'question difficulty should match');
       expect(questions[0].body).toEqual(mockQuestions.questions[0].body, 'question body should match');
+      expect(questions[0].difficulty).toEqual(mockQuestions.questions[0].difficulty, 'question difficulty should match');
+      expect(questions[0].language).toEqual(mockQuestions.questions[0].language, 'question language should match');
       expect(questions[0].suggestedAnswer).toEqual(mockQuestions.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
       expect(questions[0].createdBy).toEqual(mockQuestions.questions[0].createdBy, 'question createdBy should match');
       expect(questions[0].createdDate).toEqual(mockQuestions.questions[0].createdDate, 'question createdDate should match');
@@ -110,8 +114,9 @@ describe('QuestionService', () => {
 
       expect(questions[1].id).toEqual(mockQuestions.questions[1].id, 'question id should match');
       expect(questions[1].title).toEqual(mockQuestions.questions[1].title, 'question title should match');
-      expect(questions[1].difficulty).toEqual(mockQuestions.questions[1].difficulty, 'question difficulty should match');
       expect(questions[1].body).toEqual(mockQuestions.questions[1].body, 'question body should match');
+      expect(questions[1].difficulty).toEqual(mockQuestions.questions[1].difficulty, 'question difficulty should match');
+      expect(questions[1].language).toEqual(mockQuestions.questions[1].language, 'question language should match');
       expect(questions[1].suggestedAnswer).toEqual(mockQuestions.questions[1].suggestedAnswer, 'question suggestedAnswer should match');
       expect(questions[1].createdBy).toEqual(mockQuestions.questions[1].createdBy, 'question createdBy should match');
       expect(questions[1].createdDate).toEqual(mockQuestions.questions[1].createdDate, 'question createdDate should match');
@@ -134,8 +139,9 @@ describe('QuestionService', () => {
 
       expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
       expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-      expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
       expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
+      expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
+      expect(question.language).toEqual(mockQuestion.questions[0].language, 'question language should match');
       expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
       expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
       expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');
@@ -159,8 +165,9 @@ describe('QuestionService', () => {
 
         expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
         expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
         expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
+        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
+        expect(question.language).toEqual(mockQuestion.questions[0].language, 'question language should match');
         expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
         expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
         expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');
@@ -185,8 +192,9 @@ describe('QuestionService', () => {
 
         expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
         expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
         expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
+        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
+        expect(question.language).toEqual(mockQuestion.questions[0].language, 'question language should match');
         expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
         expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
         expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');

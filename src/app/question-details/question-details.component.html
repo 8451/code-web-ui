@@ -32,6 +32,16 @@
             </md-input-container>
           </md-list-item>
           <md-list-item>
+            <md-input-container>
+              <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
+            </md-input-container>
+            <md-autocomplete #auto>
+              <md-option *ngFor="let language of languages" ngValue="language">
+                {{ language }}
+              </md-option>
+            </md-autocomplete>
+          </md-list-item>
+          <md-list-item>
             <h4 md-line>Modified by</h4>
             <p md-line>{{form.controls['modifiedBy'].value}}</p>
           </md-list-item>

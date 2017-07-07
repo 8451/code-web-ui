@@ -11,15 +11,16 @@ import { MaterialModule } from '@angular/material';
 
 describe('QuestionListItemComponent', () => {
   const question = {
-           'id': 'id1',
-           'title': 'Title1',
-           'body': 'Body1',
-           'suggestedAnswer': 'SuggestedAnswer1',
-           'difficulty': 5,
-           'createdBy': 'createdBy1',
-           'createdDate' : new Date(1),
-           'modifiedBy': 'modifiedBy1',
-           'modifiedDate': new Date(1)
+           id: 'id1',
+           title: 'Title1',
+           body: 'Body1',
+           suggestedAnswer: 'SuggestedAnswer1',
+           difficulty: 5,
+           language: 'java',
+           createdBy: 'createdBy1',
+           createdDate : new Date(1),
+           modifiedBy: 'modifiedBy1',
+           modifiedDate: new Date(1)
         };
   const mockRouter = {navigate: jasmine.createSpy('navigate')};
   let component: QuestionListItemComponent;
