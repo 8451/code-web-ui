@@ -85,11 +85,11 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
           this.assessment.state = AssessmentStates.NOTES;
 
           this.assessmentService.updateAssessment(this.assessment).subscribe(
-          res => {
-            this.alertService.info('Assessment ended!');
-          }, error => {
-            this.alertService.error('Unable to end assessment');
-          });
+            res => {
+              this.alertService.info('Assessment ended!');
+            }, error => {
+              this.alertService.error('Unable to end assessment');
+            });
         });
       }
     });
