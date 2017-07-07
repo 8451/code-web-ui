@@ -1,15 +1,16 @@
-import { AnswerQuestionEvent } from './../domains/events/web-socket-event';
+import { Subject } from 'rxjs/Subject';
+import { AnswerQuestionEvent, EndAssessmentEvent } from './../domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { CandidateAssessmentComponent } from './candidate-assessment.component';
@@ -26,6 +27,8 @@ describe('CandidateAssessmentComponent', () => {
     timestamp: new Date(0)
   };
 
+  const mockRouter = { navigate: jasmine.createSpy('navigate') };
+
   const mockStomp = {
     configure(object: any) {},
     startConnect() {return Promise.resolve(); },
@@ -39,8 +42,10 @@ describe('CandidateAssessmentComponent', () => {
     answerQuestion(guid: string, answerQuestion: AnswerQuestionEvent) {},
     sendNewQuestion(guid: string, newQuestion: NewQuestionEvent) {},
     getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); },
+    sendEndAssessment(guid: string, event: EndAssessmentEvent) {},
+    getEndAssessment(guid: string): Observable<EndAssessmentEvent> { return Observable.of(new EndAssessmentEvent()); },
     sendConnectEvent(guid: string) {},
-};
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,11 +56,12 @@ describe('CandidateAssessmentComponent', () => {
         MaterialModule,
       ],
       providers: [
-      { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
-      AlertService,
-      { provide: StompService, useValue: mockStomp },
-      { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService}
-       ]
+        { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
+        AlertService,
+        { provide: StompService, useValue: mockStomp },
+        { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService},
+        { provide: Router, useValue: mockRouter },
+      ]
     })
     .compileComponents();
   }));
@@ -97,4 +103,13 @@ describe('CandidateAssessmentComponent', () => {
     component.submitAnswer();
     expect(alertService.info).toHaveBeenCalled();
   });
+
+  it('should redirect to Thank You when ended', fakeAsync(() => {
+    const endEvent = new Subject<EndAssessmentEvent>();
+    spyOn(assessmentWebSocketService, 'getEndAssessment').and.returnValue(endEvent);
+    component.ngOnInit();
+    endEvent.next(new EndAssessmentEvent());
+    tick();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate/thank-you']);
+  }));
 });

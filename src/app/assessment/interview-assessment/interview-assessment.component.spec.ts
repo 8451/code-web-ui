@@ -40,7 +40,8 @@ describe('InterviewAssessmentComponent', () => {
     modifiedBy: 'Test User',
     modifiedDate: new Date(1),
     state: AssessmentStates.NOT_STARTED,
-    notes: 'notes'
+    notes: 'notes',
+    questionAnswers: []
   }];
 
   const answerEvent: AnswerQuestionEvent = {
@@ -226,6 +227,7 @@ describe('InterviewAssessmentComponent', () => {
 
     expect(alertService.info).toHaveBeenCalled();
     expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(assessmentService.getAssessmentByGuid).toHaveBeenCalled();
     expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
   }));
 

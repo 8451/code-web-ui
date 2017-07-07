@@ -10,15 +10,16 @@ import { MockBackend } from '@angular/http/testing';
 const mockAssessment = {
   'assessments': [
     {
-      id: 'test',
-      firstName: 'first',
-      lastName: 'lastName',
-      email: 'e@mail.com',
-      interviewGuid: 'testGuid',
-      modifiedBy: 'Test User',
-      modifiedDate: new Date(1),
-      state: AssessmentStates.NOT_STARTED,
-      notes: 'notes'
+      'id': 'null',
+      'firstName': 'fname',
+      'lastName': 'lname',
+      'email': 'e@mail.com',
+      'interviewGuid': 'testGuid',
+      'state': AssessmentStates.NOT_STARTED,
+      'notes': 'notes',
+      'modifiedBy': 'Test User',
+      'modifiedDate': new Date(1),
+      'questionAnswers': []
     }
   ]
 };
