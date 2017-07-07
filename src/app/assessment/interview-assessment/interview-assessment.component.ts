@@ -2,14 +2,14 @@ import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
-import { MdDialogRef, MdDialog } from '@angular/material';
+import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService } from './../../services/question/question.service';
 
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-interview-assessment',
@@ -18,6 +18,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
+  @ViewChild('sidenav') sidenav: MdSidenav;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
@@ -44,23 +45,26 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   }
 
   initializeWebSocket(): void {
-    this.getQuestions();
     this.route.params
       .switchMap((params: Params) => {
         return this.assessmentService.getAssessmentByGuid(params['guid']);
       }).subscribe(assessment => {
         this.assessment = assessment;
+        if (this.assessment.state !== this.assessmentStates.NOTES) {
+          document.getElementById('sidenavID').setAttribute('style', 'display: flex');
+        }
+        this.getQuestions();
         this.getConnectEvent(this.assessment.interviewGuid);
         this.getAnsweredQuestion(this.assessment.interviewGuid);
-        this.sendConectEvent(this.assessment.interviewGuid);
+        this.sendConnectEvent(this.assessment.interviewGuid);
       });
   }
 
   getAnsweredQuestion(guid: string): void {
     this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
-        .subscribe(event => {
-          this.candidateAnsweredQuestion(event);
-        });
+      .subscribe(event => {
+        this.candidateAnsweredQuestion(event);
+      });
   }
 
   getConnectEvent(guid: string) {
@@ -69,7 +73,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendConectEvent(guid: string) {
+  sendConnectEvent(guid: string) {
     this.assessmentWebSocketService.sendConnectEvent(guid);
   }
 
@@ -77,9 +81,9 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
     },
-    error => {
-      this.alertService.error('Could not get questions');
-    });
+      error => {
+        this.alertService.error('Could not get questions');
+      });
   }
 
   selectQuestion(question: Question): void {
@@ -106,6 +110,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
           this.assessmentService.updateAssessment(this.assessment).subscribe(
             res => {
               this.alertService.info('Assessment ended!');
+              this.sidenav.close();
             }, error => {
               this.alertService.error('Unable to end assessment');
             });

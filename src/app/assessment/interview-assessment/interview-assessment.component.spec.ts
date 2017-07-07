@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angu
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
-import { MaterialModule, MdDialog, MdDialogRef, OverlayRef } from '@angular/material';
+import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
 
 describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
@@ -315,7 +315,7 @@ describe('InterviewAssessmentComponent', () => {
 
   it('should send connect event', () => {
     spyOn(assessmentWebSocketService, 'sendConnectEvent');
-    component.sendConectEvent(assessments[0].interviewGuid);
+    component.sendConnectEvent(assessments[0].interviewGuid);
     expect(assessmentWebSocketService.sendConnectEvent).toHaveBeenCalled();
   });
 });
