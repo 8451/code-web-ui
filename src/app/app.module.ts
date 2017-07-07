@@ -32,6 +32,7 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
 import { QuestionInfoDialogComponent } from './question-info-dialog/question-info-dialog.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CandidateAssessmentComponent } from './candidate-assessment/candidate-a
     QuestionInfoDialogComponent,
     CandidateComponent,
     CandidateAssessmentComponent,
+    ThankYouComponent,
   ],
   imports: [
     BrowserModule,
