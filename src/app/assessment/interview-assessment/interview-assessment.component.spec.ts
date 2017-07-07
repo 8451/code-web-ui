@@ -22,7 +22,7 @@ import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } fr
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
 
-fdescribe('InterviewAssessmentComponent', () => {
+describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
   let fixture: ComponentFixture<InterviewAssessmentComponent>;
   let questionService: QuestionService;
