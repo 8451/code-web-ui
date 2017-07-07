@@ -51,7 +51,11 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
         return this.assessmentService.getAssessmentByGuid(params['guid']);
       }).subscribe(assessment => {
         this.assessment = assessment;
-        if (this.assessment.state !== this.assessmentStates.NOTES) {
+        if (this.assessment.state === AssessmentStates.CLOSED) {
+          this.router.navigate(['/interview/assessments']);
+          return;
+        }
+        if (this.assessment.state !== AssessmentStates.NOTES) {
           document.getElementById('sidenavID').setAttribute('style', 'display: flex');
         }
         this.getQuestions();
