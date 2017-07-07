@@ -24,6 +24,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   selectedQuestion: Question;
   sentQuestion: Question;
   questions: Question[];
+  questionBody: string;
 
   assessmentStates: any = AssessmentStates;
 
@@ -88,6 +89,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
   selectQuestion(question: Question): void {
     this.selectedQuestion = question;
+    this.questionBody = question.body;
   }
 
   endAssessment(): void {
@@ -148,6 +150,6 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   }
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
-    this.sentQuestion.body = event.answer;
+    this.questionBody = event.answer;
   }
 }
