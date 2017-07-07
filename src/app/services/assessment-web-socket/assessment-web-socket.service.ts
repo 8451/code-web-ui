@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { ConnectEvent, AnswerQuestionEvent } from './../../domains/events/web-socket-event';
+import { ConnectEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { StompService } from 'ng2-stomp-service';
@@ -71,6 +71,24 @@ export class AssessmentWebSocketService {
     });
 
     return answeredQuestion;
+  }
+
+  sendEndAssessment(guid: string, event: EndAssessmentEvent) {
+    this.stomp.after('init').then(() => {
+      this.stomp.send(`/assessment/${guid}/end-assessment`, event);
+    });
+  }
+
+  getEndAssessment(guid: string): Subject<EndAssessmentEvent> {
+    const assessmentEndedEvent: Subject<EndAssessmentEvent> = new Subject<EndAssessmentEvent>();
+
+    this.stomp.after('init').then(() => {
+      this.stomp.subscribe(`/topic/assessment/${guid}/end-assessment`, (event) => {
+        assessmentEndedEvent.next(event);
+      });
+    });
+
+    return assessmentEndedEvent;
   }
 
 }
