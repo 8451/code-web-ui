@@ -21,7 +21,7 @@ class MdDialogRefMock {
 describe('NewAssessmentDialogComponent', () => {
   let component: NewAssessmentDialogComponent;
   let fixture: ComponentFixture<NewAssessmentDialogComponent>;
-  const assessment: Assessment = {
+  const assessment = {
     id: null,
     firstName: 'first',
     lastName: 'lastName',

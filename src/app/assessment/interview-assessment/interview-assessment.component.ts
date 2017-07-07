@@ -38,35 +38,51 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getQuestions();
+    this.initializeWebSocket();
   }
 
   ngOnDestroy() {
   }
 
+  initializeWebSocket(): void {
+    this.getQuestions();
+    this.route.params
+      .switchMap((params: Params) => {
+        return this.assessmentService.getAssessmentByGuid(params['guid']);
+      }).subscribe(assessment => {
+        this.assessment = assessment;
+        if (this.assessment.state === this.assessmentStates.NOTES) {
+          this.sidenav.close();
+        }
+        this.getConnectEvent(this.assessment.interviewGuid);
+        this.getAnsweredQuestion(this.assessment.interviewGuid);
+        this.sendConnectEvent(this.assessment.interviewGuid);
+      });
+  }
+
+  getAnsweredQuestion(guid: string): void {
+    this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
+      .subscribe(event => {
+        this.candidateAnsweredQuestion(event);
+      });
+  }
+
+  getConnectEvent(guid: string) {
+    this.assessmentWebSocketService.getConnectEvent(guid).subscribe(event => {
+      this.alertService.info('New user connected');
+    });
+  }
+
+  sendConnectEvent(guid: string) {
+    this.assessmentWebSocketService.sendConnectEvent(guid);
+  }
+
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
-
-      this.route.params.switchMap((params: Params) => {
-        return this.assessmentService.getAssessmentByGuid(params['guid']);
-      }).subscribe(assessment => {this.getAssessment(assessment); });
-
       this.questions = questions;
     },
       error => {
         this.alertService.error('Could not get questions');
-      }
-    );
-  }
-
-  getAssessment(assessment: Assessment): void {
-    this.assessment = assessment;
-    if (this.assessment.state === this.assessmentStates.NOTES) {
-      this.sidenav.toggle();
-    }
-    this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
-      .subscribe(event => {
-        this.candidateAnsweredQuestion(event);
       });
   }
 
@@ -85,7 +101,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
         this.assessmentService.updateAssessment(this.assessment).subscribe(
           res => {
             this.alertService.info('Assessment ended!');
-            this.sidenav.toggle();
+            this.sidenav.close();
           }, error => {
             this.alertService.error('Unable to end assessment');
           });

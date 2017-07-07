@@ -1,3 +1,4 @@
+import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
@@ -298,4 +299,21 @@ fdescribe('InterviewAssessmentComponent', () => {
     expect(alertService.error).toHaveBeenCalled();
     expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
   }));
+
+  it('should display a toast when a new user connects', () => {
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+
+    spyOn(assessmentWebSocketService, 'getConnectEvent')
+      .and.returnValue(Observable.of(new ConnectEvent()));
+    spyOn(alertService, 'info');
+    component.getConnectEvent(assessments[0].interviewGuid);
+    expect(alertService.info).toHaveBeenCalled();
+  });
+
+  it('should send connect event', () => {
+    spyOn(assessmentWebSocketService, 'sendConnectEvent');
+    component.sendConnectEvent(assessments[0].interviewGuid);
+    expect(assessmentWebSocketService.sendConnectEvent).toHaveBeenCalled();
+  });
 });
