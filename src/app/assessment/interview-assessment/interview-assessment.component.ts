@@ -37,30 +37,49 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getQuestions();
+    this.initializeWebSocket();
   }
 
   ngOnDestroy() {
   }
 
+  initializeWebSocket(): void {
+    this.getQuestions();
+    this.route.params
+      .switchMap((params: Params) => {
+        return this.assessmentService.getAssessmentByGuid(params['guid']);
+      }).subscribe(assessment => {
+        this.assessment = assessment;
+        this.getConnectEvent(this.assessment.interviewGuid);
+        this.getAnsweredQuestion(this.assessment.interviewGuid);
+        this.sendConectEvent(this.assessment.interviewGuid);
+      });
+  }
+
+  getAnsweredQuestion(guid: string): void {
+    this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
+        .subscribe(event => {
+          this.candidateAnsweredQuestion(event);
+        });
+  }
+
+  getConnectEvent(guid: string) {
+    this.assessmentWebSocketService.getConnectEvent(guid).subscribe(event => {
+      this.alertService.info('New user connected');
+    });
+  }
+
+  sendConectEvent(guid: string) {
+    this.assessmentWebSocketService.sendConnectEvent(guid);
+  }
+
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
-      this.route.params
-        .switchMap((params: Params) => {
-          return this.assessmentService.getAssessmentByGuid(params['guid']);
-        }).subscribe(assessment => {
-          this.assessment = assessment;
-          this.assessmentWebSocketService.getAnsweredQuestion(this.assessment.interviewGuid)
-            .subscribe(event => {
-              this.candidateAnsweredQuestion(event);
-            });
-        });
       this.questions = questions;
     },
-      error => {
-        this.alertService.error('Could not get questions');
-      }
-    );
+    error => {
+      this.alertService.error('Could not get questions');
+    });
   }
 
   selectQuestion(question: Question): void {

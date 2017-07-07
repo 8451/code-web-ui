@@ -17,8 +17,8 @@ const mockAssessment = {
       'interviewGuid': 'testGuid',
       'state': AssessmentStates.NOT_STARTED,
       'notes': 'notes',
-      'modifiedBy': 'test',
-      'modifiedDate': new Date(),
+      'modifiedBy': 'Test User',
+      'modifiedDate': new Date(1),
       'questionAnswers': []
     }
   ]

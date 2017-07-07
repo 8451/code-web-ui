@@ -45,10 +45,10 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
           questionResponseId: data.questionResponseId
         });
       });
-
       this.assessmentWebSocketService.getEndAssessment(this.assessmentId).subscribe(end => {
         this.router.navigate(['/candidate/thank-you']);
       });
+      this.assessmentWebSocketService.sendConnectEvent(this.assessmentId);
     });
   }
 
