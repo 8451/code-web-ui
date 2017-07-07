@@ -1,3 +1,4 @@
+import { AssessmentStateResponse, AssessmentStates } from './../domains/assessment';
 import { Subject } from 'rxjs/Subject';
 import { AnswerQuestionEvent, EndAssessmentEvent } from './../domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
@@ -19,6 +20,8 @@ describe('CandidateAssessmentComponent', () => {
   let component: CandidateAssessmentComponent;
   let fixture: ComponentFixture<CandidateAssessmentComponent>;
   let assessmentWebSocketService: AssessmentWebSocketService;
+  let assessmentService: AssessmentService;
+  let spy: any;
 
   const question: NewQuestionEvent = {
     title: 'title',
@@ -27,7 +30,13 @@ describe('CandidateAssessmentComponent', () => {
     timestamp: new Date(0)
   };
 
-  const mockRouter = { navigate: jasmine.createSpy('navigate') };
+  const mockAssessmentService = {
+    getAssessmentStateByGuid(guid: string): Observable<AssessmentStateResponse> {
+      return Observable.of({state: AssessmentStates.IN_PROGRESS});
+    }
+  };
+
+  const mockRouter = { navigate: spy = jasmine.createSpy('navigate') };
 
   const mockStomp = {
     configure(object: any) {},
@@ -38,14 +47,7 @@ describe('CandidateAssessmentComponent', () => {
     send(data: any) {}
   };
 
-  const mockAssessmentWebSocketService = {
-    answerQuestion(guid: string, answerQuestion: AnswerQuestionEvent) {},
-    sendNewQuestion(guid: string, newQuestion: NewQuestionEvent) {},
-    getNewQuestion(guid: string): Observable<NewQuestionEvent> { return Observable.of(question); },
-    sendEndAssessment(guid: string, event: EndAssessmentEvent) {},
-    getEndAssessment(guid: string): Observable<EndAssessmentEvent> { return Observable.of(new EndAssessmentEvent()); },
-    sendConnectEvent(guid: string) {},
-  };
+  let endAssessmentSubject = new Subject<EndAssessmentEvent>();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -59,8 +61,9 @@ describe('CandidateAssessmentComponent', () => {
         { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
         AlertService,
         { provide: StompService, useValue: mockStomp },
-        { provide: AssessmentWebSocketService, useValue: mockAssessmentWebSocketService},
+        AssessmentWebSocketService,
         { provide: Router, useValue: mockRouter },
+        { provide: AssessmentService, useValue: mockAssessmentService}
       ]
     })
     .compileComponents();
@@ -71,7 +74,13 @@ describe('CandidateAssessmentComponent', () => {
     component = fixture.componentInstance;
     assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentWebSocketService, 'getNewQuestion').and.returnValue(Observable.of(question));
+    spyOn(assessmentWebSocketService, 'getEndAssessment').and.returnValue(endAssessmentSubject);
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    endAssessmentSubject = new Subject<EndAssessmentEvent>();
+    spy.calls.reset();
   });
 
   it('should be created', () => {
@@ -105,10 +114,16 @@ describe('CandidateAssessmentComponent', () => {
   });
 
   it('should redirect to Thank You when ended', fakeAsync(() => {
-    const endEvent = new Subject<EndAssessmentEvent>();
-    spyOn(assessmentWebSocketService, 'getEndAssessment').and.returnValue(endEvent);
     component.ngOnInit();
-    endEvent.next(new EndAssessmentEvent());
+    endAssessmentSubject.next(new EndAssessmentEvent());
+    tick();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate/thank-you']);
+  }));
+
+  it('should redirect to Thank You when assessment is not in progress', fakeAsync(() => {
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'getAssessmentStateByGuid').and.returnValue(Observable.of({state: AssessmentStates.CLOSED}));
+    component.ngOnInit();
     tick();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate/thank-you']);
   }));

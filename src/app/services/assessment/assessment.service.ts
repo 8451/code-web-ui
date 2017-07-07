@@ -1,5 +1,5 @@
 import { AuthService } from './../auth/auth.service';
-import { Assessment } from './../../domains/assessment';
+import { Assessment,  AssessmentStateResponse } from './../../domains/assessment';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -20,6 +20,12 @@ export class AssessmentService {
   getAssessmentByGuid(guid: string): Observable<Assessment> {
     return this.http.get(`${this.assessmentsUrl}/${guid}`, {headers: this.authService.getHeaders()})
       .map(res => res.json().assessments[0])
+      .catch(this.handleError);
+  }
+
+  getAssessmentStateByGuid(guid: string): Observable<AssessmentStateResponse> {
+    return this.http.get(`${this.assessmentsUrl}/${guid}/status`)
+      .map(res => res.json())
       .catch(this.handleError);
   }
 

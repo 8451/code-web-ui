@@ -23,6 +23,10 @@ export const routes: Routes = [
     component: CandidateComponent,
     children: [
       {
+        path: 'thank-you',
+        component: LoginComponent
+      },
+      {
         path: ':id',
         component: CandidateAssessmentComponent
       },
