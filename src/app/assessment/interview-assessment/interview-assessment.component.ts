@@ -93,6 +93,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
       }
 
       if (result) {
+
         const endEvent = new EndAssessmentEvent();
         endEvent.timestamp = new Date();
 
@@ -102,7 +103,6 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
         this.assessmentService.getAssessmentByGuid(this.assessment.interviewGuid).subscribe(assessment => {
           this.assessment = assessment;
           this.assessment.state = AssessmentStates.NOTES;
-
           this.assessmentService.updateAssessment(this.assessment).subscribe(
             res => {
               this.alertService.info('Assessment ended!');

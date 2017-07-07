@@ -227,6 +227,7 @@ describe('InterviewAssessmentComponent', () => {
 
     expect(alertService.info).toHaveBeenCalled();
     expect(alertService.error).toHaveBeenCalledTimes(0);
+    expect(assessmentService.getAssessmentByGuid).toHaveBeenCalled();
     expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
   }));
 
