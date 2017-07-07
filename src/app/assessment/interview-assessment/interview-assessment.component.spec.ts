@@ -209,7 +209,7 @@ describe('InterviewAssessmentComponent', () => {
     component.sendQuestion();
     answerEventSubject.next(answerEvent);
     tick(); // make sure the callback for the answerEvent gets called.
-    expect(component.sentQuestion.body).toEqual(answerEvent.answer);
+    expect(component.questionBody).toEqual(answerEvent.answer);
   }))));
 
   it('endAssessment() should end the assessment and navigate', async(() => {
