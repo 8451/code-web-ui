@@ -46,7 +46,7 @@ describe('CandidateAssessmentComponent', () => {
     getEndAssessment(guid: string): Observable<EndAssessmentEvent> { return Observable.of(new EndAssessmentEvent()); },
     sendConnectEvent(guid: string) {},
   };
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CandidateAssessmentComponent ],
