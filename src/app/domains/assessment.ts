@@ -19,3 +19,7 @@ export enum AssessmentStates {
     NOTES,
     CLOSED
 };
+
+export class AssessmentStateResponse {
+    state: AssessmentStates;
+}
