@@ -127,4 +127,15 @@ describe('CandidateAssessmentComponent', () => {
     tick();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate/thank-you']);
   }));
+
+  fit('should send answer on keyup', fakeAsync(() => {
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentWebSocketService, 'answerQuestion');
+    spyOn(component, 'sendAnswer');
+    component.ngOnInit();
+    component.answerKeystroke();
+    tick();
+    expect(component.sendAnswer).toHaveBeenCalled();
+    expect(assessmentWebSocketService.answerQuestion).toHaveBeenCalled();
+  }));
 });
