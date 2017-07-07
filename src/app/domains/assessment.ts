@@ -1,3 +1,4 @@
+import { QuestionAnswer } from './question-answer';
 export class Assessment {
     id: string;
     firstName: string;
@@ -8,6 +9,7 @@ export class Assessment {
     interviewGuid: string;
     state: AssessmentStates;
     notes: string;
+    questionAnswers: QuestionAnswer[];
 }
 
 export enum AssessmentStates {

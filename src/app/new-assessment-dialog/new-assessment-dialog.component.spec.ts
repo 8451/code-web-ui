@@ -28,7 +28,10 @@ describe('NewAssessmentDialogComponent', () => {
     email: 'e@mail.com',
     interviewGuid: 'testGuid',
     state: AssessmentStates.NOT_STARTED,
-    notes: 'notes'
+    notes: 'notes',
+    questionAnswers: [],
+    modifiedBy: 'test',
+    modifiedDate: new Date()
   };
   const mockAuthService = {
     logout() {},

@@ -16,7 +16,10 @@ const mockAssessment = {
       'email': 'e@mail.com',
       'interviewGuid': 'testGuid',
       'state': AssessmentStates.NOT_STARTED,
-      'notes': 'notes'
+      'notes': 'notes',
+      'modifiedBy': 'test',
+      'modifiedDate': new Date(),
+      'questionAnswers': []
     }
   ]
 };

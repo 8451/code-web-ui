@@ -1,4 +1,4 @@
-import { NewQuestionEvent, AnswerQuestionEvent } from './../../domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
@@ -74,13 +74,23 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
       }
 
       if (result) {
-        this.assessment.state = AssessmentStates.NOTES;
-        this.assessmentService.updateAssessment(this.assessment).subscribe(
+        const endEvent = new EndAssessmentEvent();
+        endEvent.timestamp = new Date();
+
+        this.assessmentWebSocketService.sendEndAssessment(this.assessment.interviewGuid, endEvent);
+
+        // refresh the current assessment before saving to get all their answers.
+        this.assessmentService.getAssessmentByGuid(this.assessment.interviewGuid).subscribe(assessment => {
+          this.assessment = assessment;
+          this.assessment.state = AssessmentStates.NOTES;
+
+          this.assessmentService.updateAssessment(this.assessment).subscribe(
           res => {
             this.alertService.info('Assessment ended!');
           }, error => {
             this.alertService.error('Unable to end assessment');
           });
+        });
       }
     });
   }

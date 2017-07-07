@@ -1,7 +1,7 @@
 import { AnswerQuestionEvent } from './../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../services/alert/alert.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -22,7 +22,8 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private assessmentWebSocketService: AssessmentWebSocketService
+    private assessmentWebSocketService: AssessmentWebSocketService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -43,6 +44,10 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
           answer: data.body,
           questionResponseId: data.questionResponseId
         });
+      });
+
+      this.assessmentWebSocketService.getEndAssessment(this.assessmentId).subscribe(end => {
+        this.router.navigate(['/candidate/thank-you']);
       });
     });
   }
