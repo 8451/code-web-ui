@@ -13,7 +13,7 @@
         <textarea #notes class="editor"></textarea>
         <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
-    <md-sidenav #sidenav mode="side" opened="true" align="end">
+    <md-sidenav #sidenav id="sidenavID" mode="side" opened="true" align="end">
         <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
         <div id="list-wrapper">
             <md-list class="sidenav-list">

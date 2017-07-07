@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { NewQuestionEvent, AnswerQuestionEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
@@ -45,15 +46,15 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   }
 
   initializeWebSocket(): void {
-    this.getQuestions();
     this.route.params
       .switchMap((params: Params) => {
         return this.assessmentService.getAssessmentByGuid(params['guid']);
       }).subscribe(assessment => {
         this.assessment = assessment;
-        if (this.assessment.state === this.assessmentStates.NOTES) {
-          this.sidenav.close();
+        if (this.assessment.state !== this.assessmentStates.NOTES) {
+          document.getElementById('sidenavID').setAttribute('style', 'display: flex');
         }
+        this.getQuestions();
         this.getConnectEvent(this.assessment.interviewGuid);
         this.getAnsweredQuestion(this.assessment.interviewGuid);
         this.sendConnectEvent(this.assessment.interviewGuid);
