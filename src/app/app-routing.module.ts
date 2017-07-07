@@ -1,3 +1,4 @@
+import { ThankYouComponent } from './thank-you/thank-you.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
@@ -22,6 +23,10 @@ export const routes: Routes = [
     path: 'candidate',
     component: CandidateComponent,
     children: [
+      {
+        path: 'thank-you',
+        component: ThankYouComponent,
+      },
       {
         path: ':id',
         component: CandidateAssessmentComponent
