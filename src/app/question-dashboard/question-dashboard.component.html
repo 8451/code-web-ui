@@ -6,3 +6,9 @@
 <button md-fab class="md-fab-bottom-right" color="primary" (click)="goToAddQuestion()">
   <md-icon>add</md-icon> 
 </button>
+
+<md-paginator [length]="totalQuestions"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+</md-paginator>

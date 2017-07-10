@@ -1,3 +1,4 @@
+import { QuestionResponse } from './../domains/question-response';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule } from '@angular/http';
 import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
@@ -53,6 +54,11 @@ describe('QuestionDashboardComponent', () => {
 
   ];
 
+  const mockQuestionResponse: QuestionResponse = {
+    questions: this.questions,
+    paginationTotalElements: this.questions.length
+  };
+
   const question = {
     'id': 'id1',
     'title': 'Title1',
@@ -94,7 +100,7 @@ describe('QuestionDashboardComponent', () => {
 
   it('question dashboard component should be populated with a list of questions', (done) => {
     questionService = fixture.debugElement.injector.get(QuestionService);
-    spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
+    spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(questions));
     component.ngOnInit();
 
     fixture.whenStable().then(() => {

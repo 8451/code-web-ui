@@ -1,10 +1,10 @@
+import { AssessmentResponse } from './../domains/assessment-response';
+import { AssessmentService } from './../services/assessment/assessment.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { AssessmentService } from './../services/assessment/assessment.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialog, MdDialogRef, PageEvent } from '@angular/material';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef, MdPaginator, PageEvent } from '@angular/material';
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
@@ -26,7 +26,16 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [5, 10, 25, 100];
 
   // MdPaginator Output
-  pageEvent: PageEvent;
+  _pageEvent: PageEvent;
+
+  set pageEvent(pageEvent: PageEvent) {
+    this._pageEvent = pageEvent;
+    this.getAssessments();
+  }
+
+  get pageEvent(): PageEvent {
+    return this._pageEvent;
+  }
 
   constructor(
     public dialog: MdDialog,
@@ -41,10 +50,20 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   }
 
   getAssessments() {
-    this.assessmentService.getPageableAssessments(this.pageEvent.pageIndex, this.pageEvent.pageSize, 'lastName').subscribe(res => {
-      this.assessments = res.assessments;
-      this.totalAssessments = res.paginationTotalElements;
-    });
+    if (this._pageEvent) {
+      this.assessmentService.getPageableAssessments(this.pageEvent.pageIndex, this.pageEvent.pageSize, 'lastName').subscribe(res => {
+        this.setAssessments(res);
+      });
+    } else {
+      this.assessmentService.getPageableAssessments(0, this.pageSize, 'lastName').subscribe(res => {
+        this.setAssessments(res);
+      });
+    }
+  }
+
+  setAssessments(assessmentResponse: AssessmentResponse) {
+    this.assessments = assessmentResponse.assessments;
+    this.totalAssessments = assessmentResponse.paginationTotalElements;
   }
 
   createAssessment(): void {

@@ -15,13 +15,11 @@
     <md-divider></md-divider>
   </div>
 </md-list>
-
+<button md-fab class="md-fab-bottom-right" color="primary" (click)="createAssessment()">
+  <md-icon>add</md-icon>
+</button>
 <md-paginator [length]="totalAssessments"
               [pageSize]="pageSize"
               [pageSizeOptions]="pageSizeOptions"
               (page)="pageEvent = $event">
 </md-paginator>
-
-<button md-fab class="md-fab-bottom-right" color="primary" (click)="createAssessment()">
-  <md-icon>add</md-icon>
-</button>

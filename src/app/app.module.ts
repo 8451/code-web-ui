@@ -73,7 +73,7 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     ReactiveFormsModule,
     MdIconModule,
     MdSidenavModule,
-    MdPaginatorModule
+    MdPaginatorModule,
   ],
   entryComponents: [
     DialogComponent,

@@ -84,7 +84,7 @@ const mockAuthService = {
   };
 
 
-fdescribe('QuestionService', () => {
+describe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

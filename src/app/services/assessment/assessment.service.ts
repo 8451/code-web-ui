@@ -24,7 +24,10 @@ export class AssessmentService {
     searchParams.set('size', size.toString());
     searchParams.set('property', property);
 
-    return this.http.get(this.assessmentsUrl, {search: searchParams})
+    return this.http.get(this.assessmentsUrl, {
+      search: searchParams,
+      headers: this.authService.getHeaders()
+    })
       .map(res => res.json())
       .catch(this.handleError);
   }

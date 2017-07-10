@@ -26,7 +26,10 @@ export class QuestionService {
     searchParams.set('size', size.toString());
     searchParams.set('property', property);
 
-    return this.http.get(this.questionsUrl, {search: searchParams})
+    return this.http.get(this.questionsUrl, {
+        search: searchParams,
+        headers: this.authService.getHeaders()
+      })
       .map(res => res.json())
       .catch(this.handleError);
   }

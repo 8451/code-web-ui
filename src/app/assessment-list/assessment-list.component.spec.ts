@@ -1,3 +1,4 @@
+import { AssessmentResponse } from './../domains/assessment-response';
 import { AuthService } from './../services/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from './../services/alert/alert.service';
@@ -37,10 +38,15 @@ describe('AssessmentListComponent', () => {
     questionAnswers: []
   }];
 
+  const mockAssesmentResponse: AssessmentResponse = {
+    assessments: this.assessments,
+    paginationTotalElements: this.assessments.length
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AssessmentListComponent, NewAssessmentDialogComponent],
-      imports: [MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule],
+      imports: [MaterialModule, MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule],
       providers: [AuthService, AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments' }]) } }]
     })
@@ -62,6 +68,7 @@ describe('AssessmentListComponent', () => {
     fixture = TestBed.createComponent(AssessmentListComponent);
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(this.assessments));
+    spyOn(assessmentService, 'getPageableAssessments').and.returnValue(Observable.of(this.assessments));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
