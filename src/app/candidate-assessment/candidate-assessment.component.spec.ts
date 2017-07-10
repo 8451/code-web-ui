@@ -127,4 +127,16 @@ describe('CandidateAssessmentComponent', () => {
     tick();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate/thank-you']);
   }));
+
+  it('should send answer on keyup', fakeAsync(() => {
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentWebSocketService, 'answerQuestion');
+    spyOn(component, 'sendAnswer').and.callThrough();
+    component.ngOnInit();
+    component.answerKeystroke();
+    // Delay needed to account for debounce
+    tick(500);
+    expect(component.sendAnswer).toHaveBeenCalled();
+    expect(assessmentWebSocketService.answerQuestion).toHaveBeenCalled();
+  }));
 });
