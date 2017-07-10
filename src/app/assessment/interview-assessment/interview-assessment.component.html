@@ -4,7 +4,7 @@
     </div>
     <div *ngIf="sentQuestion && assessment.state === assessmentStates.IN_PROGRESS" class="assessment-area">
         <h5>{{sentQuestion.title}}</h5>
-        <textarea class="editor">{{questionBody}}</textarea>
+        <textarea class="editor" readonly>{{questionBody}}</textarea>
         <h6>Suggested Answer</h6>
         <pre class="question-answer">{{sentQuestion.suggestedAnswer}}</pre>
     </div>
