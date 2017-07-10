@@ -26,6 +26,7 @@ describe('CandidateAssessmentComponent', () => {
   const question: NewQuestionEvent = {
     title: 'title',
     body: 'body',
+    language: 'language',
     questionResponseId: 'id',
     timestamp: new Date(0)
   };
@@ -92,6 +93,7 @@ describe('CandidateAssessmentComponent', () => {
     component.form.setValue({
       title: question.title,
       body: question.body,
+      language: question.language,
       answer: question.body,
       questionResponseId: question.questionResponseId
     });
@@ -106,6 +108,7 @@ describe('CandidateAssessmentComponent', () => {
     component.form.setValue({
       title: question.title,
       body: question.body,
+      language: question.language,
       answer: question.body,
       questionResponseId: question.questionResponseId
     });

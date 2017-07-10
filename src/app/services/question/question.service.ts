@@ -43,6 +43,11 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
+  getLanguages(): Observable<string[]> {
+    return this.http.get(`${this.questionsUrl}/languages`, {headers: this.authService.getHeaders()})
+    .map(res => res.json().languages)
+    .catch(this.handleError);
+  }
   handleError (error: Response | any): Observable<string> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);

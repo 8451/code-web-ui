@@ -56,8 +56,8 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = this.formBuilder.group({
       title: ['', []],
-      body: ['', [
-      ]],
+      body: ['', []],
+      language: ['', []],
       answer: ['', []],
       questionResponseId: ['', []]
     });
@@ -68,6 +68,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
       this.form.setValue({
         title: data.title,
         body: data.body,
+        language: data.language,
         answer: data.body,
         questionResponseId: data.questionResponseId
       });

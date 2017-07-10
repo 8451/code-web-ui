@@ -146,6 +146,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
     const newQuestionEvent: NewQuestionEvent = {
       timestamp: new Date(),
       title: this.selectedQuestion.title,
+      language: this.selectedQuestion.language,
       body: this.selectedQuestion.body,
       questionResponseId: null
     };
