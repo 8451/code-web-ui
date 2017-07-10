@@ -19,6 +19,14 @@ describe('QuestionDetailsComponent', () => {
   let fixture: ComponentFixture<QuestionDetailsComponent>;
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
 
+  const mockLanguages = {
+    languages: [
+      'Java',
+      'Perl',
+      'Ruby'
+    ]
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [QuestionDetailsComponent],
@@ -43,12 +51,15 @@ describe('QuestionDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionDetailsComponent);
     component = fixture.componentInstance;
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(mockLanguages.languages));
     component.ngOnInit();
     const question = {
       id: 'id1',
       title: 'Title1',
       difficulty: 2,
       body: 'Body1',
+      language: 'Java',
       suggestedAnswer: 'SuggestedAnswer1',
       createdBy: 'createdBy1',
       createdDate: null,
@@ -130,7 +141,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should call deleteQuestion when the delete button is pressed', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     alertService = fixture.debugElement.injector.get(AlertService);
 
     spyOn(questionService, 'deleteQuestion').and.returnValue(Observable.of(true));
@@ -144,7 +154,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should call createQuestion if a new question is submitted', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
       id: 'validID',
@@ -164,7 +173,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should call updateQuestion if an existing question is submitted', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
       id: 'validID',
@@ -184,7 +192,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should return without calling anything if the form is invalid', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
     spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
@@ -194,6 +201,27 @@ describe('QuestionDetailsComponent', () => {
       suggestedAnswer: '',
       difficulty: 3,
       language: 'Java',
+      createdBy: null,
+      createdDate: null,
+      modifiedBy: null,
+      modifiedDate: null
+    });
+    component.isNew = false;
+    component.submitQuestion();
+    expect(questionService.updateQuestion).toHaveBeenCalledTimes(0);
+    expect(questionService.createQuestion).toHaveBeenCalledTimes(0);
+  }));
+
+  it('should return without calling if the language is invalid', async(() => {
+    spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
+    spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
+    component.form.setValue({
+      id: 'validID',
+      title: 'validTitle',
+      body: '', // This is an invalid body
+      suggestedAnswer: '',
+      difficulty: 3,
+      language: 'Schwifty',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,

@@ -44,7 +44,7 @@ export class QuestionService {
   }
 
   getLanguages(): Observable<string[]> {
-    return this.http.get(`${this.questionsUrl}/languages`)
+    return this.http.get(`${this.questionsUrl}/languages`, {headers: this.authService.getHeaders()})
     .map(res => res.json().languages)
     .catch(this.handleError);
   }

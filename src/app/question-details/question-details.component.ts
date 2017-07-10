@@ -12,6 +12,7 @@ import 'rxjs/add/operator/switchMap';
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import { valueIn } from 'app/validators';
 
 
 
@@ -26,61 +27,9 @@ export class QuestionDetailsComponent implements OnInit {
   private id: string;
   isNew: boolean;
   form: FormGroup;
-  // languages: string[];
+  languages: string[];
   filteredLanguages: Observable<string[]>;
 
-  languages = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
-  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -92,7 +41,19 @@ export class QuestionDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.questionService.getLanguages().subscribe(languages => {
+      this.languages = languages;
 
+      this.initForm();
+
+      this.filteredLanguages = this.form.get('language').valueChanges
+        .startWith(null)
+        .map(name => this.filterLanguages(name));
+
+    });
+  }
+
+  private initForm() {
     this.form = this.formBuilder.group({
       id: [null, [
       ]],
@@ -109,6 +70,8 @@ export class QuestionDetailsComponent implements OnInit {
         Validators.pattern('^[1-5]$')
       ]],
       language: ['', [
+        Validators.required,
+        valueIn(this.languages)
       ]],
       createdBy: ['', []],
       createdDate: ['', []],
@@ -116,6 +79,10 @@ export class QuestionDetailsComponent implements OnInit {
       modifiedDate: ['', []],
     });
 
+    this.fillForm();
+  }
+
+  fillForm() {
     this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
     if (!this.isNew) {
       this.route.params
@@ -135,10 +102,6 @@ export class QuestionDetailsComponent implements OnInit {
           });
         });
     }
-
-    this.filteredLanguages = this.form.get('language').valueChanges
-      .startWith(null)
-      .map(name => this.filterLanguages(name));
   }
 
   navigateBack(): void {
@@ -174,12 +137,6 @@ export class QuestionDetailsComponent implements OnInit {
           this.navigateBack();
         });
       }
-    });
-  }
-
-  getLanguages(): void {
-    this.questionService.getLanguages().subscribe(languages => {
-      this.languages = languages;
     });
   }
 
