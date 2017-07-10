@@ -1,3 +1,4 @@
+import { AceEditorModule } from 'ng2-ace-editor';
 import { AssessmentStateResponse, AssessmentStates } from './../domains/assessment';
 import { Subject } from 'rxjs/Subject';
 import { AnswerQuestionEvent, EndAssessmentEvent } from './../domains/events/web-socket-event';
@@ -56,6 +57,7 @@ describe('CandidateAssessmentComponent', () => {
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
+        AceEditorModule,
       ],
       providers: [
         { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},

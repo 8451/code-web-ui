@@ -6,7 +6,7 @@ import { AlertService } from './../services/alert/alert.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AssessmentStates } from 'app/domains/assessment';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import 'rxjs/add/operator/debounceTime';
@@ -18,13 +18,12 @@ import 'rxjs/add/operator/distinctUntilChanged';
   styleUrls: ['./candidate-assessment.component.scss']
 })
 
-export class CandidateAssessmentComponent implements OnInit, OnDestroy {
+export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterViewInit {
   form: FormGroup;
   assessmentId: string;
   sub: Subscription;
   questionAnswer: AnswerQuestionEvent;
-  randomAnswer = 'this is a random answer';
-  mode: string;
+  mode = 'java';
   @ViewChild(AceEditorComponent) aceEditor;
   private updatedAnswers: Subject<AnswerQuestionEvent> = new Subject<AnswerQuestionEvent>();
 
@@ -88,6 +87,12 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
     this.updatedAnswers.next(this.form.value as AnswerQuestionEvent);
   }
 
+ ngAfterViewInit() {
+   this.aceEditor.getEditor().setOptions({
+    showPrintMargin: false,
+   });
+ }
+
   submitAnswer() {
     this.sendAnswer();
     this.alertService.info('Question Submitted');
@@ -101,12 +106,6 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
     const questionAnswer: AnswerQuestionEvent = this.form.value as AnswerQuestionEvent;
 
     this.assessmentWebSocketService.answerQuestion(this.assessmentId, questionAnswer);
-  }
-
-  changeMode() {
-    console.log('called change mode');
-    console.log(this.aceEditor);
-    this.mode = 'javascript';
   }
 
   ngOnDestroy() {
