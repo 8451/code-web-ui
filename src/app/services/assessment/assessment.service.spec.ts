@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { TestBed, inject, fakeAsync, async, tick } from '@angular/core/testing';
 
 import { AssessmentService } from './assessment.service';
-import { Headers, Http, BaseRequestOptions, XHRBackend, ResponseOptions, Response } from '@angular/http';
+import { Headers, Http, BaseRequestOptions, XHRBackend, ResponseOptions, Response, URLSearchParams } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 const mockAssessment = {
@@ -22,6 +22,24 @@ const mockAssessment = {
       'questionAnswers': []
     }
   ]
+};
+
+const mockAssessmentResponse = {
+  assessments: [
+    {
+      'id': 'null',
+      'firstName': 'fname',
+      'lastName': 'lname',
+      'email': 'e@mail.com',
+      'interviewGuid': 'testGuid',
+      'state': AssessmentStates.NOT_STARTED,
+      'notes': 'notes',
+      'modifiedBy': 'Test User',
+      'modifiedDate': new Date(1),
+      'questionAnswers': []
+    }
+  ],
+  paginationTotalElements: 1
 };
 
 const mockError = {
@@ -79,6 +97,20 @@ describe('AssessmentService', () => {
     assessmentService.getAssessments().subscribe(res => {
       expect(res.length).toBe(1, 'should contain 1 assessment');
       compareAssessments(res[0]);
+    });
+  })));
+
+  it('getPageableAssessments() should return an assesment-response', fakeAsync(inject([Http, MockBackend, AuthService],
+  (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+    mockBackend.connections.subscribe(connection => {
+      const response = new ResponseOptions({ body: mockAssessmentResponse });
+      connection.mockRespond(new Response(response));
+    });
+    const assessmentService = new AssessmentService(http, authService);
+    assessmentService.getPageableAssessments(0, 20, 'lastName').subscribe(res => {
+      expect(res.assessments.length).toBe(1, 'should contain 1 assessment');
+      expect(res.paginationTotalElements).toBe(1, 'should have 1 element total');
+      compareAssessments(res.assessments[0]);
     });
   })));
 

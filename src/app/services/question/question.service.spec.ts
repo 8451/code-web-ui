@@ -1,7 +1,9 @@
+import { QuestionResponse } from './../../domains/question-response';
 import { AuthService } from './../auth/auth.service';
 import { Question } from './../../domains/question';
 import { Observable } from 'rxjs/Observable';
-import { HttpModule, Http, Response, ResponseOptions, XHRBackend, ConnectionBackend, BaseRequestOptions } from '@angular/http';
+import { HttpModule, Http, Response, ResponseOptions, XHRBackend, ConnectionBackend, BaseRequestOptions, 
+  URLSearchParams } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TestBed, inject, fakeAsync, async } from '@angular/core/testing';
 
@@ -50,6 +52,23 @@ const mockQuestion = {
   ]
 };
 
+const mockQuestionResponse: QuestionResponse = {
+  questions: [
+    {
+      'id': 'id1',
+      'title': 'Title1',
+      'difficulty': 2,
+      'body': 'Body1',
+      'suggestedAnswer': 'SuggestedAnswer1',
+      'createdBy': 'createdBy1',
+      'createdDate': null,
+      'modifiedBy': 'modifiedBy1',
+      'modifiedDate': null
+    }
+  ],
+  paginationTotalElements: 1
+};
+
 const mockError = {
    body: {'statusText': 'error'},
    status: 404,
@@ -65,7 +84,7 @@ const mockAuthService = {
   };
 
 
-describe('QuestionService', () => {
+fdescribe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -98,25 +117,24 @@ describe('QuestionService', () => {
     });
     questionService.getQuestions().subscribe((questions: Question[]) => {
       expect(questions.length).toEqual(2, 'should contain 2 questions');
-      expect(questions[0].id).toEqual(mockQuestions.questions[0].id, 'question id should match');
-      expect(questions[0].title).toEqual(mockQuestions.questions[0].title, 'question title should match');
-      expect(questions[0].difficulty).toEqual(mockQuestions.questions[0].difficulty, 'question difficulty should match');
-      expect(questions[0].body).toEqual(mockQuestions.questions[0].body, 'question body should match');
-      expect(questions[0].suggestedAnswer).toEqual(mockQuestions.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
-      expect(questions[0].createdBy).toEqual(mockQuestions.questions[0].createdBy, 'question createdBy should match');
-      expect(questions[0].createdDate).toEqual(mockQuestions.questions[0].createdDate, 'question createdDate should match');
-      expect(questions[0].modifiedBy).toEqual(mockQuestions.questions[0].modifiedBy, 'question modifiedBy should match');
-      expect(questions[0].modifiedDate).toEqual(mockQuestions.questions[0].modifiedDate, 'question modifiedDate should match');
+      compareQuestions(mockQuestions.questions[0], questions[0]);
+      compareQuestions(mockQuestions.questions[1], questions[1]);
+    });
+  })));
 
-      expect(questions[1].id).toEqual(mockQuestions.questions[1].id, 'question id should match');
-      expect(questions[1].title).toEqual(mockQuestions.questions[1].title, 'question title should match');
-      expect(questions[1].difficulty).toEqual(mockQuestions.questions[1].difficulty, 'question difficulty should match');
-      expect(questions[1].body).toEqual(mockQuestions.questions[1].body, 'question body should match');
-      expect(questions[1].suggestedAnswer).toEqual(mockQuestions.questions[1].suggestedAnswer, 'question suggestedAnswer should match');
-      expect(questions[1].createdBy).toEqual(mockQuestions.questions[1].createdBy, 'question createdBy should match');
-      expect(questions[1].createdDate).toEqual(mockQuestions.questions[1].createdDate, 'question createdDate should match');
-      expect(questions[1].modifiedBy).toEqual(mockQuestions.questions[1].modifiedBy, 'question modifiedBy should match');
-      expect(questions[1].modifiedDate).toEqual(mockQuestions.questions[1].modifiedDate, 'question modifiedDate should match');
+  it('getPageableQuestions() should return a question-response', fakeAsync(inject([Http, MockBackend, AuthService],
+  (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+    const questionService = new QuestionService(http, authService);
+
+    mockBackend.connections.subscribe(connection => {
+      const response = new ResponseOptions({ body: mockQuestionResponse });
+      connection.mockRespond(new Response(response));
+    });
+
+    questionService.getPageableQuestions(0, 20, 'title').subscribe((questionResponse: QuestionResponse) => {
+      expect(questionResponse.paginationTotalElements).toBe(1, 'should have 1 total elements');
+      expect(questionResponse.questions.length).toBe(1, 'should have 1 question in list');
+      compareQuestions(mockQuestionResponse.questions[0], questionResponse.questions[0]);
     });
   })));
 
@@ -132,15 +150,7 @@ describe('QuestionService', () => {
 
     questionService.getQuestion(mockQuestion.questions[0].id).subscribe((question: Question) => {
 
-      expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
-      expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-      expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
-      expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
-      expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
-      expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
-      expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');
-      expect(question.modifiedBy).toEqual(mockQuestion.questions[0].modifiedBy, 'question modifiedBy should match');
-      expect(question.modifiedDate).toEqual(mockQuestion.questions[0].modifiedDate, 'question modifiedDate should match');
+      compareQuestions(mockQuestion.questions[0], question);
     });
   })));
 
@@ -156,16 +166,7 @@ describe('QuestionService', () => {
       });
 
       questionService.createQuestion(mockQuestion.questions[0]).subscribe((question: Question) => {
-
-        expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
-        expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
-        expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
-        expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
-        expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
-        expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');
-        expect(question.modifiedBy).toEqual(mockQuestion.questions[0].modifiedBy, 'question modifiedBy should match');
-        expect(question.modifiedDate).toEqual(mockQuestion.questions[0].modifiedDate, 'question modifiedDate should match');
+        compareQuestions(mockQuestion.questions[0], question);
       });
     })));
 
@@ -182,16 +183,7 @@ describe('QuestionService', () => {
       });
 
       questionService.updateQuestion(mockQuestion.questions[0]).subscribe((question: Question) => {
-
-        expect(question.id).toEqual(mockQuestion.questions[0].id, 'question id should match');
-        expect(question.title).toEqual(mockQuestion.questions[0].title, 'question title should match');
-        expect(question.difficulty).toEqual(mockQuestion.questions[0].difficulty, 'question difficulty should match');
-        expect(question.body).toEqual(mockQuestion.questions[0].body, 'question body should match');
-        expect(question.suggestedAnswer).toEqual(mockQuestion.questions[0].suggestedAnswer, 'question suggestedAnswer should match');
-        expect(question.createdBy).toEqual(mockQuestion.questions[0].createdBy, 'question createdBy should match');
-        expect(question.createdDate).toEqual(mockQuestion.questions[0].createdDate, 'question createdDate should match');
-        expect(question.modifiedBy).toEqual(mockQuestion.questions[0].modifiedBy, 'question modifiedBy should match');
-        expect(question.modifiedDate).toEqual(mockQuestion.questions[0].modifiedDate, 'question modifiedDate should match');
+        compareQuestions(mockQuestion.questions[0], question);
       });
     })));
 
@@ -222,5 +214,17 @@ describe('QuestionService', () => {
         () => { }, error => expect(error).toBe('404 Not Found')
       );
     })));
+
+  function compareQuestions(expectedQuestion: Question, actualQuestion: Question): void {
+    expect(expectedQuestion.id).toEqual(actualQuestion.id, 'question id should match');
+    expect(expectedQuestion.title).toEqual(actualQuestion.title, 'question title should match');
+    expect(expectedQuestion.difficulty).toEqual(actualQuestion.difficulty, 'question difficulty should match');
+    expect(expectedQuestion.body).toEqual(actualQuestion.body, 'question body should match');
+    expect(expectedQuestion.suggestedAnswer).toEqual(actualQuestion.suggestedAnswer, 'question suggestedAnswer should match');
+    expect(expectedQuestion.createdBy).toEqual(actualQuestion.createdBy, 'question createdBy should match');
+    expect(expectedQuestion.createdDate).toEqual(actualQuestion.createdDate, 'question createdDate should match');
+    expect(expectedQuestion.modifiedBy).toEqual(actualQuestion.modifiedBy, 'question modifiedBy should match');
+    expect(expectedQuestion.modifiedDate).toEqual(actualQuestion.modifiedDate, 'question modifiedDate should match');
+  };
 
 });

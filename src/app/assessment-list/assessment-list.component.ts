@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef, PageEvent } from '@angular/material';
 
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
@@ -21,6 +21,13 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   selectedAssessment: Assessment;
   assessmentStates: any = AssessmentStates;
 
+  totalAssessments = 100;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+
+  // MdPaginator Output
+  pageEvent: PageEvent;
+
   constructor(
     public dialog: MdDialog,
     private assessmentService: AssessmentService,
@@ -34,8 +41,9 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   }
 
   getAssessments() {
-    this.assessmentService.getAssessments().subscribe(res => {
-      this.assessments = res;
+    this.assessmentService.getPageableAssessments(this.pageEvent.pageIndex, this.pageEvent.pageSize, 'lastName').subscribe(res => {
+      this.assessments = res.assessments;
+      this.totalAssessments = res.paginationTotalElements;
     });
   }
 
