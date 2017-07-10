@@ -8,3 +8,6 @@
     <textarea class="answer-field" mdInput rows="15" placeholder="Question" name="answer" formControlName="answer"></textarea>
   </md-input-container>
 </form>
+<ace-editor id="ace-editor" [(text)]="randomAnswer" [mode]="mode"></ace-editor>
+<pre>{{mode | json}}</pre>
+<button (click)="changeMode()">Change language</button>

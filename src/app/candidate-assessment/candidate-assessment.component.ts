@@ -5,8 +5,9 @@ import { AlertService } from './../services/alert/alert.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AssessmentStates } from 'app/domains/assessment';
+import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 
 @Component({
   selector: 'app-candidate-assessment',
@@ -19,6 +20,9 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
   assessmentId: string;
   sub: Subscription;
   questionAnswer: AnswerQuestionEvent;
+  randomAnswer = 'this is a random answer';
+  mode: string;
+  @ViewChild(AceEditorComponent) aceEditor;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,7 +63,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
         this.router.navigate(['/candidate/thank-you']);
       });
     });
-  }
+ }
 
   submitAnswer() {
     if (!this.form.valid) {
@@ -69,6 +73,12 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy {
 
     this.assessmentWebSocketService.answerQuestion(this.assessmentId, questionAnswer);
     this.alertService.info('Question Submitted');
+  }
+
+  changeMode() {
+    console.log('called change mode');
+    console.log(this.aceEditor);
+    this.mode = 'javascript';
   }
 
   ngOnDestroy() {

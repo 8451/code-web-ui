@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
   MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdSidenavModule
 } from '@angular/material';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -71,7 +72,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     MdDialogModule,
     ReactiveFormsModule,
     MdIconModule,
-    MdSidenavModule
+    MdSidenavModule,
+    AceEditorModule,
   ],
   entryComponents: [
     DialogComponent,
