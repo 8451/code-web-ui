@@ -5,6 +5,6 @@
 
 <form id="candidate-form" class="full-height" [formGroup]="form" (ngSubmit)="submitAnswer()">
   <md-input-container id="answer-container">
-    <textarea class="answer-field" mdInput rows="15" placeholder="Question" name="answer" formControlName="answer"></textarea>
+    <textarea class="answer-field" mdInput rows="15" placeholder="Question" name="answer" formControlName="answer" (keyup)="answerKeystroke()"></textarea>
   </md-input-container>
 </form>
