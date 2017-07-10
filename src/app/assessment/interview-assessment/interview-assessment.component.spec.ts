@@ -47,6 +47,7 @@ describe('InterviewAssessmentComponent', () => {
   const answerEvent: AnswerQuestionEvent = {
     title: 'ae_title1',
     body: 'ae_body1',
+    language: 'ae_language1',
     answer: 'ae_answer1',
     questionResponseId: 'ae_',
     timestamp: new Date(),

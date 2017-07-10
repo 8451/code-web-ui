@@ -12,6 +12,7 @@ const mockSubscription = {
 const mockNewQuestionEvent = {
   title: 'title',
   body: 'body',
+  language: 'language',
   questionResponseId: '12345',
   timestamp: new Date(0)
 };
@@ -19,6 +20,7 @@ const mockNewQuestionEvent = {
 const mockAnswerQuestionEvent: AnswerQuestionEvent = {
   title: 'title',
   body: 'body',
+  language: 'language',
   answer: 'answer',
   questionResponseId: '12345',
   timestamp: new Date(0)

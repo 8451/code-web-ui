@@ -95,7 +95,7 @@ function compareQuestions(actual, expected): void {
   expect(actual.modifiedDate).toEqual(expected.modifiedDate, 'question modifiedDate should match');
 }
 
-fdescribe('QuestionService', () => {
+describe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
