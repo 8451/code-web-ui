@@ -1,3 +1,4 @@
+import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
@@ -9,22 +10,25 @@ import { QuestionService } from './../../services/question/question.service';
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-interview-assessment',
   templateUrl: './interview-assessment.component.html',
   styleUrls: ['./interview-assessment.component.scss']
 })
-export class InterviewAssessmentComponent implements OnInit, OnDestroy {
+export class InterviewAssessmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild(AceEditorComponent) aceEditor;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
   questions: Question[];
   questionBody: string;
+  mode = 'java';
+  editorOptions: any = {showPrintMargin: false, wrap: true};
 
   assessmentStates: any = AssessmentStates;
 
@@ -41,6 +45,9 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initializeWebSocket();
   }
+
+ ngAfterViewInit() {
+ }
 
   ngOnDestroy() {
   }
@@ -93,7 +100,6 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
 
   selectQuestion(question: Question): void {
     this.selectedQuestion = question;
-    this.questionBody = question.body;
   }
 
   endAssessment(): void {
@@ -152,6 +158,8 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy {
     };
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
+    this.questionBody = this.sentQuestion.body;
+    this.mode = this.selectedQuestion.language.toLowerCase();
   }
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
