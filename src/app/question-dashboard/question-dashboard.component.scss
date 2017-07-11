@@ -1,3 +1,8 @@
 md-list {
   padding: 0;
 }
+
+md-paginator {
+  display: flex;
+  justify-content: flex-start;
+}

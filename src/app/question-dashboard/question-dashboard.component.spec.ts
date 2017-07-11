@@ -1,3 +1,4 @@
+import { QuestionResponse } from './../domains/question-response';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule } from '@angular/http';
 import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
@@ -59,6 +60,11 @@ describe('QuestionDashboardComponent', () => {
 
   ];
 
+  const mockQuestionResponse: QuestionResponse = {
+    questions: questions,
+    paginationTotalElements: questions.length
+  };
+
   const question = {
     id: 'id1',
     title: 'Title1',
@@ -92,22 +98,31 @@ describe('QuestionDashboardComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(QuestionDashboardComponent);
     component = fixture.debugElement.componentInstance;
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(mockQuestionResponse));
   }));
-
 
   it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
   }));
 
   it('question dashboard component should be populated with a list of questions', (done) => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
-    spy = spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
-    component.ngOnInit();
-
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(component.questions).toEqual(questions);
       done();
     });
   });
+
+  it('should call goToAddQuestion() and navigate to creating a new question', fakeAsync(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    component.goToAddQuestion();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../question/new'], { relativeTo: route });
+  }));
+
+  it('should call goToQuestionDetails() and navigate to viewing question details', fakeAsync(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    component.goToQuestionDetails(question);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../question', question.id], { relativeTo: route });
+  }));
 });

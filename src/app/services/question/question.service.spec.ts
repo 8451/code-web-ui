@@ -1,14 +1,18 @@
+import { QuestionResponse } from './../../domains/question-response';
 import { AuthService } from './../auth/auth.service';
 import { Question } from './../../domains/question';
 import { Observable } from 'rxjs/Observable';
-import { HttpModule, Http, Response, ResponseOptions, XHRBackend, ConnectionBackend, BaseRequestOptions } from '@angular/http';
+import {
+  HttpModule, Http, Response, ResponseOptions, XHRBackend, ConnectionBackend, BaseRequestOptions,
+  URLSearchParams
+} from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TestBed, inject, fakeAsync, async } from '@angular/core/testing';
 
 import { QuestionService } from './question.service';
 
 const mockQuestions = {
-  'questions': [
+  questions: [
     {
       id: 'id1',
       title: 'Title1',
@@ -37,7 +41,7 @@ const mockQuestions = {
 };
 
 const mockQuestion = {
-  'questions': [
+  questions: [
     {
       id: 'id1',
       title: 'Title1',
@@ -51,6 +55,11 @@ const mockQuestion = {
       modifiedDate: null
     }
   ]
+};
+
+const mockQuestionResponse: QuestionResponse = {
+  questions: mockQuestions.questions,
+  paginationTotalElements: mockQuestions.questions.length
 };
 
 const mockLanguages = {
@@ -135,6 +144,22 @@ describe('QuestionService', () => {
             compareQuestions(questions[i], mockQuestions.questions[i]);
           }
         }
+      });
+    })));
+
+  it('getPageableQuestions() should return a question-response', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const questionService = new QuestionService(http, authService);
+
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockQuestionResponse });
+        connection.mockRespond(new Response(response));
+      });
+
+      questionService.getPageableQuestions(0, 20, 'title').subscribe((questionResponse: QuestionResponse) => {
+        expect(questionResponse.paginationTotalElements).toBe(mockQuestions.questions.length, 'should have 2 total elements');
+        expect(questionResponse.questions.length).toBe(mockQuestions.questions.length, 'should have 2 question in list');
+        compareQuestions(mockQuestionResponse.questions[0], questionResponse.questions[0]);
       });
     })));
 

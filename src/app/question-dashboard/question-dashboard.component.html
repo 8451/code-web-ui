@@ -1,3 +1,8 @@
+<md-paginator [length]="totalQuestions"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+</md-paginator>
 <md-list>
   <div *ngFor="let question of questions" (click)="goToQuestionDetails(question)" class="selection">
     <app-question-list-item [question]="question"></app-question-list-item>

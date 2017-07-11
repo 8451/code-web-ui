@@ -1,7 +1,8 @@
+import { AssessmentResponse } from './../../domains/assessment-response';
 import { AuthService } from './../auth/auth.service';
 import { Assessment,  AssessmentStateResponse } from './../../domains/assessment';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -14,6 +15,20 @@ export class AssessmentService {
   getAssessments(): Observable<Assessment[]> {
     return this.http.get(this.assessmentsUrl, {headers: this.authService.getHeaders()})
       .map(res => res.json().assessments)
+      .catch(this.handleError);
+  }
+
+  getPageableAssessments(page: number, size: number, property: string): Observable<AssessmentResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+
+    return this.http.get(this.assessmentsUrl, {
+      search: searchParams,
+      headers: this.authService.getHeaders()
+    })
+      .map(res => res.json())
       .catch(this.handleError);
   }
 
