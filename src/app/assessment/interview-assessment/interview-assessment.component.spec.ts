@@ -1,3 +1,4 @@
+import { AceEditorModule } from 'ng2-ace-editor';
 import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
@@ -109,7 +110,8 @@ describe('InterviewAssessmentComponent', () => {
         RouterTestingModule,
         FormsModule,
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        AceEditorModule,
       ],
       providers: [
         AuthService,

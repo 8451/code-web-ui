@@ -1,3 +1,4 @@
+import { AceEditorModule } from 'ng2-ace-editor/ng2-ace-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
@@ -36,6 +37,7 @@ describe('QuestionDetailsComponent', () => {
         ReactiveFormsModule,
         MaterialModule,
         BrowserAnimationsModule,
+        AceEditorModule,
         ],
       providers: [
         QuestionService,
