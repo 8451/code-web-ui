@@ -1,5 +1,6 @@
-import { AceEditorModule } from 'ng2-ace-editor/ng2-ace-editor';
+import { AceEditorModule, AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component, Input } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { QuestionDetailsComponent } from './question-details.component';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
@@ -38,7 +39,7 @@ describe('QuestionDetailsComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         AceEditorModule,
-        ],
+      ],
       providers: [
         QuestionService,
         AuthService,
@@ -47,6 +48,13 @@ describe('QuestionDetailsComponent', () => {
         AlertService,
       ]
     })
+      // .overrideComponent(AceEditorComponent, {
+      //   set: {
+      //     template: '<p>editor</p>',
+      //     providers: [],
+      //     inputs: ['mode', 'options']
+      //   }
+      // })
       .compileComponents();
   }));
 
@@ -139,19 +147,17 @@ describe('QuestionDetailsComponent', () => {
   it('should navigate back to /questions', async(() => {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
     component.navigateBack();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['../../questions'], {relativeTo: route});
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../../questions'], { relativeTo: route });
   }));
 
-  it('should call deleteQuestion when the delete button is pressed', async(() => {
+  it('should call deleteQuestion when the delete button is pressed', fakeAsync(() => {
     alertService = fixture.debugElement.injector.get(AlertService);
 
     spyOn(questionService, 'deleteQuestion').and.returnValue(Observable.of(true));
     spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
 
-    fixture.detectChanges();
     component.form.controls['id'].setValue('testID');
     component.deleteQuestion();
-    fixture.detectChanges();
     expect(questionService.deleteQuestion).toHaveBeenCalledWith('testID');
   }));
 
