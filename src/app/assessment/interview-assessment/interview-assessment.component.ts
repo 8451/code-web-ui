@@ -5,7 +5,7 @@ import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
 import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
-import { QuestionService } from './../../services/question/question.service';
+import { QuestionService, editorTranslator } from './../../services/question/question.service';
 
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
@@ -159,7 +159,7 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy, AfterVie
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
     this.questionBody = this.sentQuestion.body;
-    this.mode = this.selectedQuestion.language.toLowerCase();
+    this.mode = editorTranslator(this.selectedQuestion.language);
   }
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {

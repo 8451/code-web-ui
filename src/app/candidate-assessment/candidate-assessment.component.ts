@@ -11,6 +11,7 @@ import { AssessmentStates } from 'app/domains/assessment';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { editorTranslator } from 'app/services/question/question.service';
 
 @Component({
   selector: 'app-candidate-assessment',
@@ -75,6 +76,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
         answer: data.body,
         questionResponseId: data.questionResponseId
       });
+      this.mode = editorTranslator(data.language);
     });
   }
 
