@@ -1,6 +1,7 @@
+import { QuestionResponse } from './../../domains/question-response';
 import { AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Question } from './../../domains/question';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,6 +17,20 @@ export class QuestionService {
   getQuestions(): Observable<Question[]> {
     return this.http.get(this.questionsUrl, {headers: this.authService.getHeaders()})
       .map(res => res.json().questions)
+      .catch(this.handleError);
+  }
+
+  getPageableQuestions(page: number, size: number, property: string): Observable<QuestionResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+
+    return this.http.get(this.questionsUrl, {
+        search: searchParams,
+        headers: this.authService.getHeaders()
+      })
+      .map(res => res.json())
       .catch(this.handleError);
   }
 

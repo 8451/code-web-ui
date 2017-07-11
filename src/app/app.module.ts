@@ -9,8 +9,19 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
-  MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdSidenavModule, MdAutocompleteModule
+import {
+  MdButtonModule,
+  MdCardModule,
+  MdListModule,
+  MdToolbarModule,
+  MdGridListModule,
+  MdInputModule,
+  MdSnackBarModule,
+  MdDialogModule,
+  MdIconModule,
+  MdSidenavModule,
+  MdAutocompleteModule,
+  MdPaginatorModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -74,7 +85,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     MdIconModule,
     MdSidenavModule,
     AceEditorModule,
-    MdAutocompleteModule
+    MdPaginatorModule,
+    MdAutocompleteModule,
   ],
   entryComponents: [
     DialogComponent,
