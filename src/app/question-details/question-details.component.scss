@@ -1,35 +1,43 @@
 .add-delete {
-    margin-top: .5em; 
-    margin-left: .5em;
-    margin-bottom: .5em;
-    position: sticky;
-    bottom: .5em;
+    margin-left: 1em;
+    margin-top: 0.25em;
+    flex-shrink: 0;
+}
+
+#answer-editor {
+    flex-grow: 1;
+}
+
+#body-editor {
+    flex-grow: 4;
 }
 
 .difficulty {
     width: 50%;
 }
 
-.editor {
-  resize: none;
-  height: 20em;
-}
-
 .editor-container {
-  width: 66%;
+  width: 80%;
+  flex-basis: 10em;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
+form {
+    height: 99%;
+}
+
+h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
 .language {
     width: 50%;
 }
 
-md-list-item {
+.language-item {
     margin-top: 1.5em;
 }
+
 
 .question-data {
     width: 66%;
@@ -40,6 +48,7 @@ md-list-item {
 .question-content-container  {
     flex-direction: row;
     padding-top: 1em;
+    flex-grow: 1;
 }
 
 .question-body {
@@ -55,5 +64,5 @@ md-list-item {
 }
 
 .question-title {
-    width: 33%;
+    width: 50%;
 }

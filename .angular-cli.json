@@ -21,7 +21,18 @@
       "styles": [
         "styles.scss"
       ],
-      "scripts": [],
+      "scripts": ["../node_modules/ace-builds/src-min/ace.js",
+                  "../node_modules/ace-builds/src-min/mode-sql.js",
+                  "../node_modules/ace-builds/src-min/mode-python.js",
+                  "../node_modules/ace-builds/src-min/mode-csharp.js",
+                  "../node_modules/ace-builds/src-min/mode-c_cpp.js",
+                  "../node_modules/ace-builds/src-min/mode-powershell.js",
+                  "../node_modules/ace-builds/src-min/mode-sh.js",
+                  "../node_modules/ace-builds/src-min/mode-typescript.js",
+                  "../node_modules/ace-builds/src-min/mode-ruby.js",
+                  "../node_modules/ace-builds/src-min/mode-php.js",
+                  "../node_modules/ace-builds/src-min/mode-scala.js",
+                  "../node_modules/ace-builds/src-min/mode-java.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

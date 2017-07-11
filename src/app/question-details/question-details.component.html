@@ -1,20 +1,16 @@
-<form [formGroup]="form" (ngSubmit)="submitQuestion()" *ngIf="form">
+<form [formGroup]="form" (ngSubmit)="submitQuestion()" class="flex-container-column" *ngIf="form">
 
   <div class="question-content-container flex-container">
 
     <div class="question-data flex-container">
       <md-input-container class="question-title">
-        <input mdInput placeholder="Question Title" name="title" formControlName="title" required>
+        <input mdInput placeholder="Question Title" maxlength="50" name="title" formControlName="title" required>
       </md-input-container>
-
-      <md-input-container class="editor-container">
-        <textarea mdInput class="question-body editor" placeholder="Question Body" name="body" formControlName="body" required></textarea>
-      </md-input-container>
-
-      <md-input-container class="editor-container">
-        <textarea mdInput class="question-suggested-answer editor" placeholder="Suggested Answer" name="suggestedAnswer" formControlName="suggestedAnswer"></textarea>
-      </md-input-container>
-
+      <h6>Question Body</h6>
+      <ace-editor id="body-editor" class="editor-container" name="body" formControlName="body" [mode]="mode" [options]="editorOptions" required></ace-editor>
+      <h6>Suggested Answer</h6>
+      <ace-editor id="answer-editor" class="editor-container" name="suggestedAnswer" formControlName="suggestedAnswer" [mode]="mode" [options]="editorOptions"
+        required></ace-editor>
     </div>
 
     <md-card class="question-metadata">
@@ -31,7 +27,7 @@
               </md-error>
             </md-input-container>
           </md-list-item>
-          <md-list-item>
+          <md-list-item class="language-item">
             <md-input-container class="language">
               <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
             </md-input-container>
@@ -62,7 +58,6 @@
     </md-card>
 
   </div>
-
   <div class="flex-container add-delete">
     <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
     <button md-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>

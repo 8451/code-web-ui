@@ -69,3 +69,24 @@ export class QuestionService {
   }
 
 }
+
+export function editorTranslator(serviceValue: string): string {
+  const languages = {
+    'SQL': 'sql',
+    'Python2': 'python',
+    'Python3': 'python',
+    'C#': 'csharp',
+    'C': 'c_cpp',
+    'C++': 'c_cpp',
+    'Powershell': 'powershell',
+    'Bash': 'sh',
+    'Javascript': 'javascript',
+    'Typescript': 'typescript',
+    'Ruby': 'ruby',
+    'PHP': 'php',
+    'Scala': 'scala',
+    'Java': 'java'
+  };
+
+  return languages[serviceValue];
+}

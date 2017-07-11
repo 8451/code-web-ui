@@ -23,6 +23,7 @@ import {
   MdAutocompleteModule,
   MdPaginatorModule
 } from '@angular/material';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,8 +84,9 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     ReactiveFormsModule,
     MdIconModule,
     MdSidenavModule,
+    AceEditorModule,
     MdPaginatorModule,
-    MdAutocompleteModule
+    MdAutocompleteModule,
   ],
   entryComponents: [
     DialogComponent,
