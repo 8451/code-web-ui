@@ -47,8 +47,15 @@ describe('AssessmentListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AssessmentListComponent, NewAssessmentDialogComponent],
       imports: [MaterialModule, MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule],
-      providers: [AuthService, AssessmentService, MdDialog, AlertService, FormBuilder, { provide: Router, useValue: mockRouter },
-        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments' }]) } }]
+      providers: [
+        AuthService,
+        AssessmentService,
+        MdDialog,
+        AlertService,
+        FormBuilder,
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments' }]) } }
+      ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
         set: {
@@ -86,26 +93,26 @@ describe('AssessmentListComponent', () => {
   }));
 
   it('should call createAssessment when the button is clicked', () => {
-    const button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector('.md-fab-bottom-right');
     spyOn(component, 'createAssessment');
     button.click();
     expect(component.createAssessment).toHaveBeenCalled();
   });
 
   it('should call startAssessment() which sets the selected assessment to AWAIT_EMAIL and navigates to interviewAssessment',
-   fakeAsync(() => {
-    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assessments));
-    const alertService = fixture.debugElement.injector.get(AlertService);
-    spyOn(alertService, 'info');
-    spyOn(alertService, 'error');
+    fakeAsync(() => {
+      const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+      spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assessments));
+      const alertService = fixture.debugElement.injector.get(AlertService);
+      spyOn(alertService, 'info');
+      spyOn(alertService, 'error');
 
-    component.selectedAssessment = assessments[0];
-    component.startAssessment();
+      component.selectedAssessment = assessments[0];
+      component.startAssessment();
 
-    expect(alertService.info).toHaveBeenCalled();
-    expect(alertService.error).toHaveBeenCalledTimes(0);
-  }));
+      expect(alertService.info).toHaveBeenCalled();
+      expect(alertService.error).toHaveBeenCalledTimes(0);
+    }));
 
   it('should call the alertService when starting an assessment fails', fakeAsync(() => {
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);

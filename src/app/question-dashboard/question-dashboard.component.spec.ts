@@ -93,9 +93,7 @@ describe('QuestionDashboardComponent', () => {
     component = fixture.debugElement.componentInstance;
     questionService = fixture.debugElement.injector.get(QuestionService);
     spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(mockQuestionResponse));
-    // component.ngOnInit();
   }));
-
 
   it('should create the question dashboard component', async(() => {
     expect(component).toBeTruthy();
@@ -108,4 +106,16 @@ describe('QuestionDashboardComponent', () => {
       done();
     });
   });
+
+  it('should call goToAddQuestion() and navigate to creating a new question', fakeAsync(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    component.goToAddQuestion();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../question/new'], { relativeTo: route });
+  }));
+
+  it('should call goToQuestionDetails() and navigate to viewing question details', fakeAsync(() => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    component.goToQuestionDetails(question);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../question', question.id], { relativeTo: route });
+  }));
 });
