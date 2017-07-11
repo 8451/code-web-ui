@@ -25,7 +25,6 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
 
-  // MdPaginator Output
   _pageEvent: PageEvent;
 
   set pageEvent(pageEvent: PageEvent) {
@@ -43,22 +42,23 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     private router: Router,
     private alertService: AlertService,
     private route: ActivatedRoute
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.getAssessments();
   }
 
   getAssessments() {
+    let pageIndex = 0;
+    let pageSize = this.pageSize;
     if (this._pageEvent) {
-      this.assessmentService.getPageableAssessments(this.pageEvent.pageIndex, this.pageEvent.pageSize, 'lastName').subscribe(res => {
-        this.setAssessments(res);
-      });
-    } else {
-      this.assessmentService.getPageableAssessments(0, this.pageSize, 'lastName').subscribe(res => {
-        this.setAssessments(res);
-      });
+      pageIndex = this.pageEvent.pageIndex;
+      pageSize = this.pageEvent.pageSize;
     }
+
+    this.assessmentService.getPageableAssessments(pageIndex, pageSize, 'lastName').subscribe(res => {
+      this.setAssessments(res);
+    });
   }
 
   setAssessments(assessmentResponse: AssessmentResponse) {
@@ -85,16 +85,16 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.selectedAssessment.state = AssessmentStates.AWAIT_EMAIL;
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
-      this.alertService.info('Assessment started!');
-      this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], {relativeTo: this.route});
-    }, error => {
-      this.alertService.error('Unable to start assessment');
-    });
+        this.alertService.info('Assessment started!');
+        this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
+      }, error => {
+        this.alertService.error('Unable to start assessment');
+      });
   }
 
   resumeAssessment(assessment: Assessment): void {
     this.alertService.info('Assessment resumed!');
-    this.router.navigate(['../interviewAssessment', assessment.interviewGuid], {relativeTo: this.route});
+    this.router.navigate(['../interviewAssessment', assessment.interviewGuid], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

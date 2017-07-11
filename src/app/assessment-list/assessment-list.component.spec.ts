@@ -20,7 +20,7 @@ import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
 
-fdescribe('AssessmentListComponent', () => {
+describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));

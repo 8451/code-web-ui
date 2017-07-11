@@ -55,8 +55,8 @@ describe('QuestionDashboardComponent', () => {
   ];
 
   const mockQuestionResponse: QuestionResponse = {
-    questions: this.questions,
-    paginationTotalElements: this.questions.length
+    questions: questions,
+    paginationTotalElements: questions.length
   };
 
   const question = {
@@ -91,6 +91,9 @@ describe('QuestionDashboardComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(QuestionDashboardComponent);
     component = fixture.debugElement.componentInstance;
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(mockQuestionResponse));
+    // component.ngOnInit();
   }));
 
 
@@ -99,10 +102,6 @@ describe('QuestionDashboardComponent', () => {
   }));
 
   it('question dashboard component should be populated with a list of questions', (done) => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
-    spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(questions));
-    component.ngOnInit();
-
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(component.questions).toEqual(questions);
