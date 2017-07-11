@@ -11,7 +11,17 @@ export function sameValue(control1Key: string, control2Key: string) {
             mergedErrors['sameValue'] = true;
             control1.setErrors(mergedErrors);
             return {
-                'sameValue': true
+                'sameValue': true // Error occurred
+            };
+        }
+    };
+}
+
+export function valueIn(validValues: any[]) {
+    return (control: FormControl): {[key: string]: any} => {
+        if (validValues.indexOf(control.value) < 0) {
+            return {
+                'valueIn': true // Error occurred
             };
         }
     };

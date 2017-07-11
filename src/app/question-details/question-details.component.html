@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitQuestion()">
+<form [formGroup]="form" (ngSubmit)="submitQuestion()" *ngIf="form">
 
   <div class="question-content-container flex-container">
 
@@ -24,12 +24,22 @@
       <md-card-content>
         <md-list>
           <md-list-item>
-            <md-input-container>
+            <md-input-container class="difficulty">
               <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
               <md-error>
                 Choose a difficulty between 1-5
               </md-error>
             </md-input-container>
+          </md-list-item>
+          <md-list-item>
+            <md-input-container class="language">
+              <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
+            </md-input-container>
+            <md-autocomplete #auto="mdAutocomplete">
+              <md-option *ngFor="let language of filteredLanguages | async" [value]="language">
+                {{ language }}
+              </md-option>
+            </md-autocomplete>
           </md-list-item>
           <md-list-item>
             <h4 md-line>Modified by</h4>

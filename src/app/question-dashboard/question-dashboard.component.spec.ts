@@ -22,34 +22,40 @@ describe('QuestionDashboardComponent', () => {
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
   const questions: any[] = [
     {
-      'id': 'id1',
-      'title': 'Title1',
-      'body': 'Body1',
-      'suggestedAnswer': 'SuggestedAnswer1',
-      'createdBy': 'createdBy1',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      id: 'id1',
+      title: 'Title1',
+      body: 'Body1',
+      suggestedAnswer: 'SuggestedAnswer1',
+      difficulty: 1,
+      language: 'java',
+      createdBy: 'createdBy1',
+      createdDate: null,
+      modifiedBy: 'modifiedBy1',
+      modifiedDate: null
     },
     {
-      'id': 'id2',
-      'title': 'Title2',
-      'body': 'Body2',
-      'suggestedAnswer': 'SuggestedAnswer2',
-      'createdBy': 'createdBy2',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy2',
-      'modifiedDate': null
+      id: 'id2',
+      title: 'Title2',
+      body: 'Body2',
+      suggestedAnswer: 'SuggestedAnswer2',
+      difficulty: 2,
+      language: 'java',
+      createdBy: 'createdBy2',
+      createdDate: null,
+      modifiedBy: 'modifiedBy2',
+      modifiedDate: null
     },
     {
-      'id': 'id3',
-      'title': 'Title3',
-      'body': 'Body3',
-      'suggestedAnswer': 'SuggestedAnswer3',
-      'createdBy': 'createdBy3',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy3',
-      'modifiedDate': null
+      id: 'id3',
+      title: 'Title3',
+      body: 'Body3',
+      suggestedAnswer: 'SuggestedAnswer3',
+      difficulty: 3,
+      language: 'java',
+      createdBy: 'createdBy3',
+      createdDate: null,
+      modifiedBy: 'modifiedBy3',
+      modifiedDate: null
     }
 
   ];
@@ -60,15 +66,16 @@ describe('QuestionDashboardComponent', () => {
   };
 
   const question = {
-    'id': 'id1',
-    'title': 'Title1',
-    'body': 'Body1',
-    'suggestedAnswer': 'SuggestedAnswer1',
-    'difficulty': 5,
-    'createdBy': 'createdBy1',
-    'createdDate': new Date(1),
-    'modifiedBy': 'modifiedBy1',
-    'modifiedDate': new Date(1)
+    id: 'id1',
+    title: 'Title1',
+    body: 'Body1',
+    suggestedAnswer: 'SuggestedAnswer1',
+    difficulty: 5,
+    language: 'java',
+    createdBy: 'createdBy1',
+    createdDate: new Date(1),
+    modifiedBy: 'modifiedBy1',
+    modifiedDate: new Date(1)
   };
 
   let spy: any;

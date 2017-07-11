@@ -6,6 +6,10 @@
     bottom: .5em;
 }
 
+.difficulty {
+    width: 50%;
+}
+
 .editor {
   resize: none;
   height: 20em;
@@ -17,6 +21,14 @@
 
 .example-spacer {
   flex: 1 1 auto;
+}
+
+.language {
+    width: 50%;
+}
+
+md-list-item {
+    margin-top: 1.5em;
 }
 
 .question-data {
