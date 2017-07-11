@@ -10,14 +10,14 @@ import { QuestionService, editorTranslator } from './../../services/question/que
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-interview-assessment',
   templateUrl: './interview-assessment.component.html',
   styleUrls: ['./interview-assessment.component.scss']
 })
-export class InterviewAssessmentComponent implements OnInit, OnDestroy, AfterViewInit {
+export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
@@ -44,12 +44,6 @@ export class InterviewAssessmentComponent implements OnInit, OnDestroy, AfterVie
 
   ngOnInit() {
     this.initializeWebSocket();
-  }
-
- ngAfterViewInit() {
- }
-
-  ngOnDestroy() {
   }
 
   initializeWebSocket(): void {

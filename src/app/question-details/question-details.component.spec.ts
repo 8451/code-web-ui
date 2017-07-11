@@ -48,13 +48,6 @@ describe('QuestionDetailsComponent', () => {
         AlertService,
       ]
     })
-      // .overrideComponent(AceEditorComponent, {
-      //   set: {
-      //     template: '<p>editor</p>',
-      //     providers: [],
-      //     inputs: ['mode', 'options']
-      //   }
-      // })
       .compileComponents();
   }));
 

@@ -21,7 +21,7 @@
         <md-list>
           <md-list-item>
             <md-input-container class="difficulty">
-              <input mdInput (change)="onLanguageChange($event)" placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
+              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
               <md-error>
                 Choose a difficulty between 1-5
               </md-error>
@@ -29,7 +29,7 @@
           </md-list-item>
           <md-list-item class="language-item">
             <md-input-container class="language">
-              <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language" (change)="onLanguageChange()">
+              <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
             </md-input-container>
             <md-autocomplete #auto="mdAutocomplete">
               <md-option *ngFor="let language of filteredLanguages | async" [value]="language">
