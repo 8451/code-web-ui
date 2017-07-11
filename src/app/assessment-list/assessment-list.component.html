@@ -1,4 +1,9 @@
 <h3 *ngIf="assessments && !assessments.length">No Assessments</h3>
+<md-paginator [length]="totalAssessments"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+</md-paginator>
 <md-list>
   <div *ngFor="let assessment of assessments">
     <md-list-item class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
@@ -18,8 +23,3 @@
 <button md-fab class="md-fab-bottom-right" color="primary" (click)="createAssessment()">
   <md-icon>add</md-icon>
 </button>
-<md-paginator [length]="totalAssessments"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="pageSizeOptions"
-              (page)="pageEvent = $event">
-</md-paginator>

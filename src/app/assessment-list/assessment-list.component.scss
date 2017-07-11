@@ -42,5 +42,6 @@ md-list {
 }
 
 md-paginator {
-  float: left;
+  display: flex;
+  justify-content: flex-start;
 }

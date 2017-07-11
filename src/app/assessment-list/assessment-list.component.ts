@@ -56,7 +56,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
       pageSize = this.pageEvent.pageSize;
     }
 
-    this.assessmentService.getPageableAssessments(pageIndex, pageSize, 'lastName').subscribe(res => {
+    this.assessmentService.getPageableAssessments(pageIndex, pageSize, 'createdDate').subscribe(res => {
       this.setAssessments(res);
     });
   }
