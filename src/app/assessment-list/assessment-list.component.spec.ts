@@ -20,7 +20,7 @@ import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
 
-describe('AssessmentListComponent', () => {
+fdescribe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
@@ -39,8 +39,8 @@ describe('AssessmentListComponent', () => {
   }];
 
   const mockAssesmentResponse: AssessmentResponse = {
-    assessments: this.assessments,
-    paginationTotalElements: this.assessments.length
+    assessments: assessments,
+    paginationTotalElements: assessments.length
   };
 
   beforeEach(async(() => {
@@ -67,15 +67,15 @@ describe('AssessmentListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentListComponent);
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(this.assessments));
-    spyOn(assessmentService, 'getPageableAssessments').and.returnValue(Observable.of(this.assessments));
+    spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(assessments));
+    spyOn(assessmentService, 'getPageableAssessments').and.returnValue(Observable.of(mockAssesmentResponse));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should be created', async(() => {
     expect(component).toBeTruthy();
-  });
+  }));
 
   it('should open a dialog when create assessment is called', fakeAsync(() => {
     spyOn(component, 'updateList');
