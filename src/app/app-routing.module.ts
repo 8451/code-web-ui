@@ -1,3 +1,4 @@
+import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { CandidateComponent } from './candidate/candidate.component';
@@ -57,13 +58,17 @@ export const routes: Routes = [
         component: QuestionDetailsComponent
       },
       {
-        path: 'interviewAssessment/:guid',
+        path: 'interview-assessment/:guid',
         component: InterviewAssessmentComponent
       },
       {
         path: 'assessments',
         component: AssessmentListComponent
       },
+      {
+        path: 'assessment/:guid',
+        component: AssessmentDetailsComponent
+      }
     ]
   },
   {

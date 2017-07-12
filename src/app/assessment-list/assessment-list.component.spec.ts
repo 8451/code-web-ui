@@ -128,7 +128,7 @@ describe('AssessmentListComponent', () => {
     expect(alertService.error).toHaveBeenCalled();
   }));
 
-  it('should call resumeAssessment() which navigates to interviewAssessment', fakeAsync(() => {
+  it('should call resumeAssessment() which navigates to interview-assessment', fakeAsync(() => {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
     const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(alertService, 'info');
@@ -139,7 +139,7 @@ describe('AssessmentListComponent', () => {
     expect(alertService.info).toHaveBeenCalled();
     expect(alertService.error).toHaveBeenCalledTimes(0);
     expect(mockRouter.navigate).toHaveBeenCalledWith(
-      ['../interviewAssessment', assessments[0].interviewGuid],
+      ['../interview-assessment', assessments[0].interviewGuid],
       { relativeTo: route }
     );
   }));
