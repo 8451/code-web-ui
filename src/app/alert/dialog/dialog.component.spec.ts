@@ -13,8 +13,9 @@ describe('DialogComponent', () => {
   let component: DialogComponent;
   let fixture: ComponentFixture<DialogComponent>;
   const alert: Alert<any> = {
-    'type': AlertType.INFO,
-    'message': 'Alert!',
+    type: AlertType.INFO,
+    message: 'Alert!',
+    duration: 5000
   };
 
   beforeEach(async(() => {
