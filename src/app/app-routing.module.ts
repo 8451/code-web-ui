@@ -1,3 +1,4 @@
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { CandidateComponent } from './candidate/candidate.component';
@@ -63,6 +64,10 @@ export const routes: Routes = [
       {
         path: 'assessments',
         component: AssessmentListComponent
+      },
+      {
+        path: 'manage-users',
+        component: ManageUsersComponent
       },
     ]
   },

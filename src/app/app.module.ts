@@ -45,6 +45,7 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     CandidateComponent,
     CandidateAssessmentComponent,
     ThankYouComponent,
+    ManageUsersComponent,
   ],
   imports: [
     BrowserModule,
