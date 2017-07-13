@@ -1,0 +1,8 @@
+<h3 *ngIf="!assessment">Assessment not found</h3>
+<div *ngIf="assessment">
+  <div class="assessment-container flex-container">
+    <div class="assessment-header flex-container">
+      <b>Name:</b> {{assessment.firstName}} {{assessment.lastName}}
+    </div>
+  </div>
+</div>
