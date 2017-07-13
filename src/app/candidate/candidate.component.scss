@@ -1,0 +1,64 @@
+@import '~@angular/material/theming';
+
+#candidateForm {
+    height: 100%;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+}
+
+#answerContainer {
+    flex: 0 1 67%;
+}
+
+.app-header {
+    padding-left: 1rem;
+    vertical-align: middle;
+}
+
+.app-header h1 {
+    padding: 0;
+    margin: .5rem 0 0 0;
+}
+.answerField {
+    font-family: monospace;
+    font-size: 14pt;
+}
+
+$nav-bar-height: 2.5em;
+
+.logo {
+    height: $nav-bar-height;
+    width: auto;
+    display: inline-block;
+}
+
+$selected-color: mat-color($mat-deep-purple, 50);
+
+.app-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    display: flex;
+    z-index: 2;
+    background-image: linear-gradient(45deg, #008fca, #ec008b);
+    color: white;
+    align-content: center;
+    height: $nav-bar-height;
+}
+.body-wrapper {
+    padding-top: $nav-bar-height;
+    box-sizing: border-box;
+    height: 100%;
+}
+.app-body {
+    overflow-y: auto;
+    height: 100%; 
+    margin: auto;
+}
+
+.negative {
+  padding: .1em;
+  box-sizing: border-box;
+}

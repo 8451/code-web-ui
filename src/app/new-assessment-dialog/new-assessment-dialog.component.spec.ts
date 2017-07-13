@@ -11,7 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MdDialogRef, MdInputModule, MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssessmentService } from './../services/assessment/assessment.service';
-import { Assessment } from './../domains/assessment';
+import { Assessment, AssessmentStates } from './../domains/assessment';
 import { Observable } from 'rxjs/Observable';
 
 class MdDialogRefMock {
@@ -21,13 +21,17 @@ class MdDialogRefMock {
 describe('NewAssessmentDialogComponent', () => {
   let component: NewAssessmentDialogComponent;
   let fixture: ComponentFixture<NewAssessmentDialogComponent>;
-  const assessment: Assessment = {
+  const assessment = {
     id: null,
     firstName: 'first',
     lastName: 'lastName',
     email: 'e@mail.com',
     interviewGuid: 'testGuid',
-    active: false
+    state: AssessmentStates.NOT_STARTED,
+    notes: 'notes',
+    questionAnswers: [],
+    modifiedBy: 'test',
+    modifiedDate: new Date()
   };
   const mockAuthService = {
     logout() {},

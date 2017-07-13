@@ -11,15 +11,16 @@ import { MaterialModule } from '@angular/material';
 
 describe('QuestionListItemComponent', () => {
   const question = {
-           'id': 'id1',
-           'title': 'Title1',
-           'body': 'Body1',
-           'suggestedAnswer': 'SuggestedAnswer1',
-           'difficulty': 5,
-           'createdBy': 'createdBy1',
-           'createdDate' : new Date(1),
-           'modifiedBy': 'modifiedBy1',
-           'modifiedDate': new Date(1)
+           id: 'id1',
+           title: 'Title1',
+           body: 'Body1',
+           suggestedAnswer: 'SuggestedAnswer1',
+           difficulty: 5,
+           language: 'java',
+           createdBy: 'createdBy1',
+           createdDate : new Date(1),
+           modifiedBy: 'modifiedBy1',
+           modifiedDate: new Date(1)
         };
   const mockRouter = {navigate: jasmine.createSpy('navigate')};
   let component: QuestionListItemComponent;
@@ -62,10 +63,10 @@ describe('QuestionListItemComponent', () => {
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
 
-      expect(compiled.querySelector('h4').textContent).toContain(question.title);
+      expect(compiled.querySelector('#questionTitle').textContent).toContain(question.title);
       // TODO
       // expect(compiled.querySelector('#modificationSubtitle').textContent).
       // toContain('Modified by ' + question.modifiedBy +' on ' + question.modifiedDate);
-      expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
+      // expect(compiled.querySelector('#difficultySubtitle').textContent).toContain('Difficulty: ' + question.difficulty);
     }));
 });

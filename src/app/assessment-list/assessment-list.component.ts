@@ -1,11 +1,11 @@
+import { AssessmentResponse } from './../domains/assessment-response';
+import { AssessmentService } from './../services/assessment/assessment.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { AssessmentService } from './../services/assessment/assessment.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
-
-import { Assessment } from './../domains/assessment';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef, MdPaginator, PageEvent } from '@angular/material';
+import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
 @Component({
@@ -19,6 +19,22 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   dialogRef: MdDialogRef<NewAssessmentDialogComponent>;
   subscription: Subscription;
   selectedAssessment: Assessment;
+  assessmentStates: any = AssessmentStates;
+
+  totalAssessments = 100;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+
+  _pageEvent: PageEvent;
+
+  set pageEvent(pageEvent: PageEvent) {
+    this._pageEvent = pageEvent;
+    this.getAssessments();
+  }
+
+  get pageEvent(): PageEvent {
+    return this._pageEvent;
+  }
 
   constructor(
     public dialog: MdDialog,
@@ -26,16 +42,28 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     private router: Router,
     private alertService: AlertService,
     private route: ActivatedRoute
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.getAssessments();
   }
 
   getAssessments() {
-    this.assessmentService.getAssessments().subscribe(res => {
-      this.assessments = res;
+    let pageIndex = 0;
+    let pageSize = this.pageSize;
+    if (this._pageEvent) {
+      pageIndex = this.pageEvent.pageIndex;
+      pageSize = this.pageEvent.pageSize;
+    }
+
+    this.assessmentService.getPageableAssessments(pageIndex, pageSize, 'createdDate').subscribe(res => {
+      this.setAssessments(res);
     });
+  }
+
+  setAssessments(assessmentResponse: AssessmentResponse) {
+    this.assessments = assessmentResponse.assessments;
+    this.totalAssessments = assessmentResponse.paginationTotalElements;
   }
 
   createAssessment(): void {
@@ -54,14 +82,19 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   }
 
   startAssessment(): void {
-    this.selectedAssessment.active = true;
+    this.selectedAssessment.state = AssessmentStates.AWAIT_EMAIL;
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
-      this.alertService.info('Assessment started!');
-      this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], {relativeTo: this.route});
-    }, error => {
-      this.alertService.error('Unable to start assessment');
-    });
+        this.alertService.info('Assessment started!');
+        this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
+      }, error => {
+        this.alertService.error('Unable to start assessment');
+      });
+  }
+
+  resumeAssessment(assessment: Assessment): void {
+    this.alertService.info('Assessment resumed!');
+    this.router.navigate(['../interviewAssessment', assessment.interviewGuid], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

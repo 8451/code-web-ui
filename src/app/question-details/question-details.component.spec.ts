@@ -1,4 +1,6 @@
+import { AceEditorModule, AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component, Input } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
@@ -7,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
 import { Question } from './../domains/question';
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { QuestionDetailsComponent } from './question-details.component';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
@@ -19,6 +21,14 @@ describe('QuestionDetailsComponent', () => {
   let fixture: ComponentFixture<QuestionDetailsComponent>;
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
 
+  const mockLanguages = {
+    languages: [
+      'Java',
+      'Perl',
+      'Ruby'
+    ]
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [QuestionDetailsComponent],
@@ -28,7 +38,8 @@ describe('QuestionDetailsComponent', () => {
         ReactiveFormsModule,
         MaterialModule,
         BrowserAnimationsModule,
-        ],
+        AceEditorModule,
+      ],
       providers: [
         QuestionService,
         AuthService,
@@ -43,17 +54,20 @@ describe('QuestionDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionDetailsComponent);
     component = fixture.componentInstance;
+    questionService = fixture.debugElement.injector.get(QuestionService);
+    spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(mockLanguages.languages));
     component.ngOnInit();
     const question = {
-      'id': 'id1',
-      'title': 'Title1',
-      'difficulty': 2,
-      'body': 'Body1',
-      'suggestedAnswer': 'SuggestedAnswer1',
-      'createdBy': 'createdBy1',
-      'createdDate': null,
-      'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      id: 'id1',
+      title: 'Title1',
+      difficulty: 2,
+      body: 'Body1',
+      language: 'Java',
+      suggestedAnswer: 'SuggestedAnswer1',
+      createdBy: 'createdBy1',
+      createdDate: null,
+      modifiedBy: 'modifiedBy1',
+      modifiedDate: null
     };
   });
 
@@ -126,25 +140,21 @@ describe('QuestionDetailsComponent', () => {
   it('should navigate back to /questions', async(() => {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
     component.navigateBack();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['../../questions'], {relativeTo: route});
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../../questions'], { relativeTo: route });
   }));
 
-  it('should call deleteQuestion when the delete button is pressed', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
+  it('should call deleteQuestion when the delete button is pressed', fakeAsync(() => {
     alertService = fixture.debugElement.injector.get(AlertService);
 
     spyOn(questionService, 'deleteQuestion').and.returnValue(Observable.of(true));
     spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
 
-    fixture.detectChanges();
     component.form.controls['id'].setValue('testID');
     component.deleteQuestion();
-    fixture.detectChanges();
     expect(questionService.deleteQuestion).toHaveBeenCalledWith('testID');
   }));
 
   it('should call createQuestion if a new question is submitted', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
       id: 'validID',
@@ -152,6 +162,7 @@ describe('QuestionDetailsComponent', () => {
       body: 'validBody',
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,
@@ -163,7 +174,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should call updateQuestion if an existing question is submitted', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
       id: 'validID',
@@ -171,6 +181,7 @@ describe('QuestionDetailsComponent', () => {
       body: 'validBody',
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,
@@ -182,7 +193,6 @@ describe('QuestionDetailsComponent', () => {
   }));
 
   it('should return without calling anything if the form is invalid', async(() => {
-    questionService = fixture.debugElement.injector.get(QuestionService);
     spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
     spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
     component.form.setValue({
@@ -191,6 +201,28 @@ describe('QuestionDetailsComponent', () => {
       body: '', // This is an invalid body
       suggestedAnswer: '',
       difficulty: 3,
+      language: 'Java',
+      createdBy: null,
+      createdDate: null,
+      modifiedBy: null,
+      modifiedDate: null
+    });
+    component.isNew = false;
+    component.submitQuestion();
+    expect(questionService.updateQuestion).toHaveBeenCalledTimes(0);
+    expect(questionService.createQuestion).toHaveBeenCalledTimes(0);
+  }));
+
+  it('should return without calling if the language is invalid', async(() => {
+    spyOn(questionService, 'updateQuestion').and.returnValue(Observable.of(this.question));
+    spyOn(questionService, 'createQuestion').and.returnValue(Observable.of(this.question));
+    component.form.setValue({
+      id: 'validID',
+      title: 'validTitle',
+      body: '', // This is an invalid body
+      suggestedAnswer: '',
+      difficulty: 3,
+      language: 'Schwifty',
       createdBy: null,
       createdDate: null,
       modifiedBy: null,

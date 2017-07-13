@@ -1,3 +1,21 @@
+.info {
+      width: 92%;
+}
+
+.question:hover {
+  cursor: pointer;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+// .selected>md-list-item {
+//     color: #607D88;
+//   background-color: #DDD;
+//   left: .1em;
+// }
+
 md-list-item {
-    margin-bottom: 10px;
+    padding-top: .64em;
+    padding-bottom: .64em;
 }

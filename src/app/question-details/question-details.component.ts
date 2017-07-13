@@ -1,11 +1,20 @@
+import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
+import { Observable } from 'rxjs/Observable';
 import { Question } from './../domains/question';
-import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { QuestionService } from '../services/question/question.service';
+import { QuestionService, editorTranslator } from '../services/question/question.service';
 import { AlertService } from '../services/alert/alert.service';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MdAutocompleteModule } from '@angular/material';
 import 'rxjs/add/operator/switchMap';
+
+
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
+import { valueIn } from 'app/validators';
+
 
 
 @Component({
@@ -19,6 +28,13 @@ export class QuestionDetailsComponent implements OnInit {
   private id: string;
   isNew: boolean;
   form: FormGroup;
+  languages: string[];
+  filteredLanguages: Observable<string[]>;
+  mode = 'javascript';
+  editorOptions = {
+    showPrintMargin: false,
+    wrap: true
+  };
 
 
   constructor(
@@ -30,9 +46,20 @@ export class QuestionDetailsComponent implements OnInit {
     private alertService: AlertService,
   ) { }
 
-
   ngOnInit(): void {
+    this.questionService.getLanguages().subscribe(languages => {
+      this.languages = languages;
 
+      this.initForm();
+
+      this.filteredLanguages = this.form.get('language').valueChanges
+        .startWith(null)
+        .map(name => this.filterLanguages(name));
+
+    });
+  }
+
+  private initForm() {
     this.form = this.formBuilder.group({
       id: [null, [
       ]],
@@ -48,12 +75,20 @@ export class QuestionDetailsComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[1-5]$')
       ]],
+      language: ['', [
+        Validators.required,
+        valueIn(this.languages)
+      ]],
       createdBy: ['', []],
       createdDate: ['', []],
       modifiedBy: ['', []],
       modifiedDate: ['', []],
     });
 
+    this.fillForm();
+  }
+
+  fillForm() {
     this.route.url.subscribe(segments => this.isNew = segments[segments.length - 1].path === 'new');
     if (!this.isNew) {
       this.route.params
@@ -65,6 +100,7 @@ export class QuestionDetailsComponent implements OnInit {
             body: question.body,
             suggestedAnswer: question.suggestedAnswer,
             difficulty: question.difficulty,
+            language: question.language,
             createdBy: question.createdBy,
             createdDate: question.createdDate,
             modifiedBy: question.modifiedBy,
@@ -75,7 +111,7 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.router.navigate(['../../questions'], { relativeTo: this.route});
+    this.router.navigate(['../../questions'], { relativeTo: this.route });
   }
 
   submitQuestion(): void {
@@ -110,4 +146,17 @@ export class QuestionDetailsComponent implements OnInit {
     });
   }
 
+  filterLanguages(val: string) {
+    this.onLanguageChange();
+    return val ? this.languages.filter(s => s.toLowerCase().indexOf(val.toLowerCase()) === 0)
+      : this.languages;
+  }
+
+  onLanguageChange() {
+    const language = this.form.get('language').value;
+    const editorLanguage = editorTranslator(language);
+    if (editorLanguage) {
+      this.mode = editorLanguage;
+    }
+  }
 }

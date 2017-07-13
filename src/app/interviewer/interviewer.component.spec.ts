@@ -54,7 +54,7 @@ describe('InterviewerComponent', () => {
   it('should navigate to the various routes', fakeAsync(() => {
     const location = fixture.debugElement.injector.get(Location);
     const link = fixture.debugElement.nativeElement.querySelector('#assessmentLink');
-    expect(link.getAttribute('href')).toBe('/interview/assessments');
+    expect(link.getAttribute('ng-reflect-router-link')).toBe('/interview/assessments');
     link.click();
     tick();
     expect(location.path()).toBe('/interview/assessments');

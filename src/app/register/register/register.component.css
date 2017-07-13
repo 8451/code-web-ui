@@ -13,10 +13,10 @@ h4 {
 .centered-card {
     width: 33%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 3.21em;
 }
 
 .spacer {
-    margin-top:10px;
+    margin-top: .64em;
     text-align: center;
 }

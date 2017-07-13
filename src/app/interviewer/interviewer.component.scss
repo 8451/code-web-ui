@@ -1,6 +1,9 @@
 @import '~@angular/material/theming';
+
+$nav-bar-height: 2.5em;
+
 .logo {
-    height: 36px;
+    height: $nav-bar-height;
     width: auto;
     display: inline-block;
 }
@@ -14,18 +17,26 @@ $selected-color: mat-color($mat-deep-purple, 50);
     width: 100% !important;
     display: flex;
     z-index: 2;
-    background: white;
+    background-image: linear-gradient(45deg, #008fca, #ec008b);
+    color: white;
     align-content: center;
+    height: $nav-bar-height;
 }
-
+.body-wrapper {
+    padding-top: $nav-bar-height;
+    box-sizing: border-box;
+    height: 100%;
+}
 .app-body {
-    margin-top: 2.5em;
+    overflow-y: auto;
+    height: 100%; 
 }
 
 #logoutButton {
     margin-left: auto;
 }
 
-.selected {
-    background-color: $selected-color; 
+button.selected {
+    border-bottom: .321em solid white;
+    border-radius: 0;
 }

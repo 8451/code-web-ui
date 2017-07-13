@@ -1,0 +1,41 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.candidate-assessment-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-field {
+  width: 100%;
+  height: 100%;
+  resize: none;
+}
+
+#answer-container {
+  font-size: 10pt;
+  width: 100%;
+  display: block;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+form {
+  width: 100%;
+  flex: 1 1 100%;
+}
+
+#ace-editor {
+  height: 100%;
+  width: 100%;
+}
+
+md-toolbar {
+   background: #272822;
+}
+ 
+ .question-title {
+   color: white;
+}
+

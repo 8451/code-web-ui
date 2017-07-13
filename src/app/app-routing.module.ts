@@ -1,3 +1,6 @@
+import { ThankYouComponent } from './thank-you/thank-you.component';
+import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
+import { CandidateComponent } from './candidate/candidate.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { LoginComponent } from './login/login.component';
@@ -14,7 +17,21 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/interview/assessments'
+    redirectTo: 'login'
+  },
+  {
+    path: 'candidate',
+    component: CandidateComponent,
+    children: [
+      {
+        path: 'thank-you',
+        component: ThankYouComponent,
+      },
+      {
+        path: ':id',
+        component: CandidateAssessmentComponent
+      },
+    ]
   },
   {
     path: 'interview',
@@ -65,6 +82,10 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '**',
     component: LoginComponent
   }
 ];

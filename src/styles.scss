@@ -1,16 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~@angular/material/theming';
-//@import '~md-theme.scss';
 @include mat-core();
 
 .error-snack {
     background-color: mat-color($mat-red, 400) !important;
 }
 
-body {
+.md-fab-bottom-right {
+  position: fixed !important;
+  bottom: 20px;
+  right: 20px;
+}
+
+html {
+    min-height: 100%;
     height: 100%;
+}
+body {
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 100%;
     margin: 0px;
+    font-family: Helvetica;
+    font-size: 16pt;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.third-width {
+    width: 33%;
+}
+
+.two-third-width {
+    width: 66%;
+}
+
+.half-height {
+    height: 50%;
 }
 
 .mat-elevation-z0 {

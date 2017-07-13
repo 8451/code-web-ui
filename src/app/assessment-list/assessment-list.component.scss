@@ -1,9 +1,19 @@
-.flex {
-  flex: 1 1 auto;
+.assessment-button {
+  margin-left: 5em;
+  width: 11.25em;
+  position: relative;
+  right: 0px;
 }
 
-.info {
-      width: 92%;
+.completed-label {
+  font-size: .9em;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.flex {
+  flex: 1 1 auto;
 }
 
 .selected {
@@ -12,8 +22,11 @@
   left: .1em;
 }
 
-md-list {
-  padding: 0;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .assessment:hover {
@@ -21,4 +34,14 @@ md-list {
   color: #607D8B;
   background-color: #DDD;
   left: .1em;
+}
+
+md-list {
+  padding: 0;
+  margin-bottom: 4em;
+}
+
+md-paginator {
+  display: flex;
+  justify-content: flex-start;
 }

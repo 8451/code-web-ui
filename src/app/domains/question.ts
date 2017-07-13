@@ -3,6 +3,7 @@ export class Question {
     public title: string;
     public body: string;
     public difficulty: number;
+    public language: string;
     public suggestedAnswer: string;
     public createdBy: string;
     public createdDate: Date;

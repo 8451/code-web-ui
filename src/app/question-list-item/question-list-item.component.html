@@ -1,7 +1,10 @@
-<md-list-item (click)="goToQuestionDetails()">
+<md-list-item class="question">
   <div class="info">
-    <h4 md-line>{{question.title}}</h4>
-    <p md-line id="modificationSubtitle">Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}</p>
-    <p md-line id="difficultySubtitle">Difficulty: {{question.difficulty}}</p>
+    <h4 md-line id="questionTitle">{{question.title}}</h4>
+    <p md-line id="subtitle">
+      Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}
+      <br> Difficulty: {{question.difficulty}}
+    </p>
   </div>
 </md-list-item>
+<md-divider></md-divider>

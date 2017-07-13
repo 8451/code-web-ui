@@ -1,14 +1,29 @@
+import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
+import { StompService } from 'ng2-stomp-service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCardModule, MdListModule, MdToolbarModule,
-   MdGridListModule, MdInputModule, MdSnackBarModule, MdDialogModule } from '@angular/material';
+import {
+  MdButtonModule,
+  MdCardModule,
+  MdListModule,
+  MdToolbarModule,
+  MdGridListModule,
+  MdInputModule,
+  MdSnackBarModule,
+  MdDialogModule,
+  MdIconModule,
+  MdSidenavModule,
+  MdAutocompleteModule,
+  MdPaginatorModule
+} from '@angular/material';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +41,10 @@ import { ActivateComponent } from './register/activate/activate.component';
 import { LoginComponent } from './login/login.component';
 import { InterviewAssessmentComponent } from './assessment/interview-assessment/interview-assessment.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
-
+import { QuestionInfoDialogComponent } from './question-info-dialog/question-info-dialog.component';
+import { CandidateComponent } from './candidate/candidate.component';
+import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +60,11 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     ActivateComponent,
     LoginComponent,
     InterviewAssessmentComponent,
-    InterviewerComponent
+    InterviewerComponent,
+    QuestionInfoDialogComponent,
+    CandidateComponent,
+    CandidateAssessmentComponent,
+    ThankYouComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,19 +81,27 @@ import { InterviewerComponent } from './interviewer/interviewer.component';
     MdInputModule,
     MdSnackBarModule,
     MdDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MdIconModule,
+    MdSidenavModule,
+    AceEditorModule,
+    MdPaginatorModule,
+    MdAutocompleteModule,
   ],
   entryComponents: [
     DialogComponent,
     AlertComponent,
-    NewAssessmentDialogComponent
+    NewAssessmentDialogComponent,
+    QuestionInfoDialogComponent,
   ],
   providers: [AlertService,
     QuestionService,
     AssessmentService,
     UserService,
     AuthService,
-    CanActivateAuthguard
+    AssessmentWebSocketService,
+    CanActivateAuthguard,
+    StompService
   ],
   bootstrap: [AppComponent]
 })
