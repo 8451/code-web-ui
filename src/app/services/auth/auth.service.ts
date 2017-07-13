@@ -1,3 +1,4 @@
+import { User } from './../../domains/user';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers } from '@angular/http';
@@ -20,11 +21,11 @@ export class AuthService {
 
   login(username: string, password: string): Observable<boolean> {
     return this.http.post(this.authService,
-      {username: username, password: password})
+      { username: username, password: password })
       .map(res => {
         const token = res.json() && res.json().token;
         if (token) {
-          localStorage.setItem('currentUser', JSON.stringify({username: username, token: token}));
+          localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
           return true;
         } else {
           return false;
