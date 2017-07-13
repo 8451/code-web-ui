@@ -66,7 +66,7 @@ export const routes: Routes = [
         component: AssessmentListComponent
       },
       {
-        path: 'account/:id',
+        path: 'account',
         component: AccountComponent
       },
     ]

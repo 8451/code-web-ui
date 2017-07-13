@@ -21,7 +21,6 @@ export class AccountComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    // private route: ActivatedRoute,
     private alertService: AlertService,
   ) { }
 
