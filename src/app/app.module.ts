@@ -21,7 +21,9 @@ import {
   MdIconModule,
   MdSidenavModule,
   MdAutocompleteModule,
-  MdPaginatorModule
+  MdPaginatorModule,
+  MdExpansionModule,
+  MdChipsModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -89,6 +91,8 @@ import { AssessmentDetailsComponent } from './assessment/assessment-details/asse
     AceEditorModule,
     MdPaginatorModule,
     MdAutocompleteModule,
+    MdExpansionModule,
+    MdChipsModule
   ],
   entryComponents: [
     DialogComponent,

@@ -1,8 +1,40 @@
 <h3 *ngIf="!assessment">Assessment not found</h3>
-<div *ngIf="assessment">
-  <div class="assessment-container flex-container">
-    <div class="assessment-header flex-container">
-      <b>Name:</b> {{assessment.firstName}} {{assessment.lastName}}
+<div *ngIf="assessment" class="assessment-container flex-container">
+  <!--<div class="assessment-content flex-container">-->
+    <div class="candidate-details flex-container">
+      <md-card>
+        <md-card-title>
+          {{assessment.firstName}} {{assessment.lastName}}
+        </md-card-title>
+        <md-card-subtitle>
+          {{assessment.email}}
+        </md-card-subtitle>
+        <md-card-content>
+          <h3>Notes</h3>
+          <md-input-container class="notes-input-container">
+            <textarea mdInput [(ngModel)]="assessment.notes" class="notes-textarea"></textarea>
+          </md-input-container>
+        </md-card-content>
+        <md-card-actions>
+          <button md-button color="primary" type="submit" (click)="saveAssessment()">Save</button>
+        </md-card-actions>
+      </md-card>
+    </div>
+    <div class="assessment-question-answers">
+      <md-accordion *ngIf="assessment" [displayMode]="displayMode" [multi]="multi" class="question-answer-accordion">
+        <md-expansion-panel *ngFor="let questionAnswer of filteredQuestionAnswers | async; let isFirst = first" [expanded]="isFirst" class="question-answer-panel">
+          <md-expansion-panel-header class="flex-container">{{questionAnswer.title}}
+            <md-chip-list *ngIf="questionAnswer.language">
+              <md-chip [style.backgroundColor]="getColor(questionAnswer.language)" selected="true">
+                {{questionAnswer.language}}
+              </md-chip>
+            </md-chip-list>
+          </md-expansion-panel-header>
+          <h5>Question</h5>
+          <ace-editor class="editor question-border" [theme]="'sqlserver'" [(text)]="questionAnswer.body" [mode]="getMode(questionAnswer.language)" [options]="editorOptions" [readOnly]="true"></ace-editor>
+          <h5>Answer</h5>
+          <ace-editor class="editor answer-border" [theme]="'sqlserver'" [(text)]="questionAnswer.answer" [mode]="getMode(questionAnswer.language)" [options]="editorOptions" [readOnly]="true"></ace-editor>
+        </md-expansion-panel>
+      </md-accordion>
     </div>
   </div>
-</div>

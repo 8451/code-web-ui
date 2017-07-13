@@ -1,3 +1,6 @@
+import { editorTranslator, languageColor } from 'app/services/question/question.service';
+import { QuestionAnswer } from './../../domains/question-answer';
+import { Observable } from 'rxjs/Observable';
 import { AlertService } from './../../services/alert/alert.service';
 import { AssessmentStates } from 'app/domains/assessment';
 import { Assessment } from './../../domains/assessment';
@@ -8,11 +11,16 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-assessment-details',
   templateUrl: './assessment-details.component.html',
-  styleUrls: ['./assessment-details.component.css']
+  styleUrls: ['./assessment-details.component.scss']
 })
 export class AssessmentDetailsComponent implements OnInit {
 
   assessment: Assessment;
+  displayMode: String = 'collapsed';
+  multi = false;
+  filteredQuestionAnswers: Observable<QuestionAnswer[]>;
+  mode = 'javascript';
+  editorOptions: any = {showPrintMargin: false, wrap: true};
 
   constructor(
     private assessmentService: AssessmentService,
@@ -29,6 +37,7 @@ export class AssessmentDetailsComponent implements OnInit {
       return this.assessmentService.getAssessmentByGuid(params['guid']);
     }).subscribe(assessment => {
       this.assessment = assessment;
+      this.filteredQuestionAnswers = Observable.of(this.assessment.questionAnswers.filter(item => item.title));
       if (this.assessment.state !== AssessmentStates.NOTES && this.assessment.state !== AssessmentStates.CLOSED) {
         this.router.navigate(['/interview/assessments']);
         return;
@@ -42,6 +51,14 @@ export class AssessmentDetailsComponent implements OnInit {
       this.assessment = res;
       this.alertService.info('Assessment updated!');
     }, error => this.alertService.error('Assessment failed to save.'));
+  }
+
+  getMode(language: string) {
+    return editorTranslator(language);
+  }
+
+  getColor(language: string) {
+    return languageColor(language);
   }
 
 }

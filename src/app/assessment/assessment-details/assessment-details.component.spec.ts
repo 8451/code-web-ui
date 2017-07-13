@@ -1,3 +1,5 @@
+import { AceEditorModule } from 'ng2-ace-editor';
+import { FormsModule } from '@angular/forms';
 import { AlertService } from './../../services/alert/alert.service';
 import { AuthService } from './../../services/auth/auth.service';
 import { AssessmentStates } from 'app/domains/assessment';
@@ -12,11 +14,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentDetailsComponent } from './assessment-details.component';
 
-fdescribe('AssessmentDetailsComponent', () => {
+describe('AssessmentDetailsComponent', () => {
   let component: AssessmentDetailsComponent;
   let fixture: ComponentFixture<AssessmentDetailsComponent>;
   let mockRouter = { navigate: jasmine.createSpy('navigate') };
-  let alertService: AlertService ;
+  let alertService: AlertService;
   let assessmentService: AssessmentService;
 
   const mockAssessment = {
@@ -39,7 +41,9 @@ fdescribe('AssessmentDetailsComponent', () => {
         HttpModule,
         RouterTestingModule,
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FormsModule,
+        AceEditorModule
       ],
       providers: [
         AssessmentService,
@@ -102,4 +106,14 @@ fdescribe('AssessmentDetailsComponent', () => {
 
     expect(alertService.error).toHaveBeenCalled();
   }));
+
+  it('should return the correct mode when calling getMode', () => {
+    const mode = component.getMode('Python3');
+    expect(mode).toBe('python');
+  });
+
+  it('should return the correct color when calling getColor', () => {
+    const mode = component.getColor('Python3');
+    expect(mode).toBe('#3572A5');
+  });
 });
