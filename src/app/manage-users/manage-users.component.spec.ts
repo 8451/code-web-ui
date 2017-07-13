@@ -1,3 +1,4 @@
+import { MaterialModule } from '@angular/material';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -31,7 +32,8 @@ describe('ManageUsersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ManageUsersComponent],
       imports: [
-        HttpModule
+        HttpModule,
+        MaterialModule
       ],
       providers: [
         UserService,
