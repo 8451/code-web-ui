@@ -8,13 +8,13 @@ import { QuestionInfoDialogComponent } from './../../question-info-dialog/questi
 import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService, editorTranslator } from './../../services/question/question.service';
-
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-interview-assessment',
@@ -25,14 +25,15 @@ export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
-  @ViewChild('languageField') languageField: ElementRef;
+  form: FormGroup;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
   languages: string[];
-  filteredLanguages = new Subject<string[]>();
+  language: string;
   filteredQuestions = new Subject<Question[]>();
+  filteredLanguages: Observable<string[]>;
   questions: Question[];
   questionBody: string;
   mode = 'java';
@@ -42,6 +43,7 @@ export class InterviewAssessmentComponent implements OnInit {
 
   constructor(
     public dialog: MdDialog,
+    private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private router: Router,
@@ -53,7 +55,18 @@ export class InterviewAssessmentComponent implements OnInit {
   ngOnInit() {
     this.initializeWebSocket();
     this.questionService.getLanguages().subscribe(languages => {
-      this.languages = languages;
+      this.languages = languages
+      this.initForm();
+    });
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      language: ['', []],
+    });
+
+    this.filteredLanguages = this.form.get('language').valueChanges.startWith(null).map(language => {
+      return this.filterLanguages(language);
     });
   }
 
@@ -172,8 +185,15 @@ export class InterviewAssessmentComponent implements OnInit {
     this.questionBody = event.answer;
   }
 
-  filterQuestions(val: string) {
-    this.filteredLanguages.next(this.languages.filter(s => s.toLowerCase().indexOf(val.toLowerCase()) === 0));
-    this.filteredQuestions.next(this.questions.filter(q => q.language.toLowerCase().indexOf(val.toLowerCase()) === 0));
+  filterLanguages(val: string): string[] {
+    if (this.questions) {
+      this.filteredQuestions.next(this.questions.filter(q => {
+        return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0 || !val;
+      }));
+    }
+
+    return val ? this.languages.filter(s => {
+      return s.toLowerCase().indexOf(val.toLowerCase()) === 0 || !val;
+    }) : this.languages;
   }
 }

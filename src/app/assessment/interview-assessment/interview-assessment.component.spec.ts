@@ -74,7 +74,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy1',
       'createdDate': null,
       'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Java',
     },
     {
       'id': 'id2',
@@ -84,7 +85,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy2',
       'createdDate': null,
       'modifiedBy': 'modifiedBy2',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Scala',
     },
     {
       'id': 'id3',
@@ -94,9 +96,9 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy3',
       'createdDate': null,
       'modifiedBy': 'modifiedBy3',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'C#'
     }
-
   ];
 
   class MdDialogRefMock {
@@ -112,6 +114,7 @@ describe('InterviewAssessmentComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         AceEditorModule,
+        ReactiveFormsModule,
       ],
       providers: [
         AuthService,
@@ -123,6 +126,7 @@ describe('InterviewAssessmentComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
         AssessmentWebSocketService,
+        FormBuilder,
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -147,6 +151,7 @@ describe('InterviewAssessmentComponent', () => {
     assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
     spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(answerEventSubject);
+    spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(['Java', 'Python']));
   });
 
   afterEach(() => {
@@ -321,4 +326,9 @@ describe('InterviewAssessmentComponent', () => {
     component.sendConnectEvent(assessments[0].interviewGuid);
     expect(assessmentWebSocketService.sendConnectEvent).toHaveBeenCalled();
   });
+
+  it('should call questionService.getLanguages()', async(() => {
+    component.ngOnInit();
+    expect(questionService.getLanguages).toHaveBeenCalled();
+  }));
 });

@@ -38,11 +38,17 @@ html, .full-height {
   height: 100%;
 }
 
+.language {
+  font-size:12pt;
+  align-self: flex-start;
+  flex-grow:1;
+}
 
 md-sidenav {
   display: none;
   flex-direction: column;
   justify-content: space-between;
+  width:25em;
 }
 
 md-sidenav-container {
@@ -79,8 +85,18 @@ md-icon {
   margin-top: 1em;
 }
 
+#title-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: .25em;
+  padding-top: .25em;
+  box-sizing: border-box;
+  flex-shrink:  0;
+}
+
 #list-wrapper {
   overflow-y: scroll;
+  flex-grow:1;
 }
 
 #button-wrapper {
@@ -92,7 +108,7 @@ md-icon {
   div {
     display: flex;
     width: 100%;
-  
+
     button {
       flex-grow: 1;
       flex-shrink: 0;

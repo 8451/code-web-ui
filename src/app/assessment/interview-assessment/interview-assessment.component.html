@@ -14,17 +14,19 @@
         <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
     <md-sidenav #sidenav id="sidenavID" mode="side" opened="true" align="end">
-        <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
-        <md-list-item class="language-item">
+        <div id="title-wrapper">
+          <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
+          <form [formGroup]="form" *ngIf="form">
             <md-input-container class="language">
-              <input mdInput #languageField placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" (keyup)="filterQuestions(languageField.value)" (change)="filterQuestions(languageField.value)">
+              <input mdInput #languageField placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
             </md-input-container>
             <md-autocomplete #auto="mdAutocomplete">
               <md-option *ngFor="let language of filteredLanguages | async" [value]="language">
                 {{ language }}
               </md-option>
             </md-autocomplete>
-          </md-list-item>
+          </form>
+        </div>
         <div id="list-wrapper">
             <md-list class="sidenav-list">
                 <div *ngFor="let question of filteredQuestions | async" [class.selected]="selectedQuestion === question">
