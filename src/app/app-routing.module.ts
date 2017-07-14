@@ -66,7 +66,7 @@ export const routes: Routes = [
         component: AssessmentListComponent
       },
       {
-        path: 'manage-users',
+        path: 'users',
         component: ManageUsersComponent
       },
     ]
