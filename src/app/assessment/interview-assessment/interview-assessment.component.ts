@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
@@ -10,7 +12,9 @@ import { QuestionService, editorTranslator } from './../../services/question/que
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
+
+import 'rxjs/add/operator/startWith';
 
 @Component({
   selector: 'app-interview-assessment',
@@ -21,14 +25,18 @@ export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
+  @ViewChild('languageField') languageField: ElementRef;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
+  languages: string[];
+  filteredLanguages = new Subject<string[]>();
+  filteredQuestions = new Subject<Question[]>();
   questions: Question[];
   questionBody: string;
   mode = 'java';
-  editorOptions: any = {showPrintMargin: false, wrap: true};
+  editorOptions: any = { showPrintMargin: false, wrap: true };
 
   assessmentStates: any = AssessmentStates;
 
@@ -44,6 +52,9 @@ export class InterviewAssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.initializeWebSocket();
+    this.questionService.getLanguages().subscribe(languages => {
+      this.languages = languages;
+    });
   }
 
   initializeWebSocket(): void {
@@ -86,6 +97,7 @@ export class InterviewAssessmentComponent implements OnInit {
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
+      this.filteredQuestions.next(questions);
     },
       error => {
         this.alertService.error('Could not get questions');
@@ -158,5 +170,10 @@ export class InterviewAssessmentComponent implements OnInit {
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
     this.questionBody = event.answer;
+  }
+
+  filterQuestions(val: string) {
+    this.filteredLanguages.next(this.languages.filter(s => s.toLowerCase().indexOf(val.toLowerCase()) === 0));
+    this.filteredQuestions.next(this.questions.filter(q => q.language.toLowerCase().indexOf(val.toLowerCase()) === 0));
   }
 }
