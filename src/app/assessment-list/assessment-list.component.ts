@@ -86,7 +86,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.assessmentService.updateAssessment(this.selectedAssessment).subscribe(
       res => {
         this.alertService.info('Assessment started!');
-        this.router.navigate(['../interviewAssessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
+        this.router.navigate(['../interview-assessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
       }, error => {
         this.alertService.error('Unable to start assessment');
       });
@@ -94,7 +94,11 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
 
   resumeAssessment(assessment: Assessment): void {
     this.alertService.info('Assessment resumed!');
-    this.router.navigate(['../interviewAssessment', assessment.interviewGuid], { relativeTo: this.route });
+    this.router.navigate(['../interview-assessment', assessment.interviewGuid], { relativeTo: this.route });
+  }
+
+  viewAssessment(): void {
+    this.router.navigate(['../assessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

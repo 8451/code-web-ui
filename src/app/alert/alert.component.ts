@@ -30,7 +30,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   openInfoSnackBar(alert: Alert<any>, action: string) {
     this.snackBar.open(alert.message, action, {
-      duration: 2000,
+      duration: alert.duration,
     });
   }
 
@@ -45,7 +45,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   openErrorSnackBar(alert: Alert<any>, action: string) {
     this.snackBar.open(alert.message, action, {
-      duration: 5000, extraClasses: ['error-snack']
+      duration: alert.duration, extraClasses: ['error-snack']
     });
   }
 
