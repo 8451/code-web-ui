@@ -55,7 +55,7 @@ export class InterviewAssessmentComponent implements OnInit {
   ngOnInit() {
     this.initializeWebSocket();
     this.questionService.getLanguages().subscribe(languages => {
-      this.languages = languages
+      this.languages = languages;
       this.initForm();
     });
   }
