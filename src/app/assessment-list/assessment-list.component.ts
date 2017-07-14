@@ -97,6 +97,10 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.router.navigate(['../interview-assessment', assessment.interviewGuid], { relativeTo: this.route });
   }
 
+  viewAssessment(): void {
+    this.router.navigate(['../assessment', this.selectedAssessment.interviewGuid], { relativeTo: this.route });
+  }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();

@@ -20,6 +20,9 @@ describe('AssessmentDetailsComponent', () => {
   let mockRouter = { navigate: jasmine.createSpy('navigate') };
   let alertService: AlertService;
   let assessmentService: AssessmentService;
+  const mockAuthService = {
+    logout() { }
+  };
 
   const mockAssessment = {
     id: 'test',
@@ -47,7 +50,7 @@ describe('AssessmentDetailsComponent', () => {
       ],
       providers: [
         AssessmentService,
-        AuthService,
+        { provide: AuthService, useValue: mockAuthService },
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter }

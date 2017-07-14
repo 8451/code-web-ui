@@ -143,4 +143,12 @@ describe('AssessmentListComponent', () => {
       { relativeTo: route }
     );
   }));
+
+  it('should call viewAssessment() which navigates to the assessment-details', () => {
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    component.selectedAssessment = assessments[0];
+    component.viewAssessment();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['../assessment', assessments[0].interviewGuid], { relativeTo: route });
+  });
 });

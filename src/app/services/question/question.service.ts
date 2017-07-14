@@ -92,7 +92,7 @@ export function editorTranslator(serviceValue: string): string {
   return obj ? obj.editorName : 'java';
 }
 
-export function languageColor(serviceValue: string): string{
+export function languageColor(serviceValue: string): string {
   const obj = languages[serviceValue];
   return obj ? obj.color : 'black';
 }
