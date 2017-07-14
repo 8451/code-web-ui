@@ -54,7 +54,7 @@ describe('ManageUsersComponent', () => {
     component = fixture.componentInstance;
     userService = fixture.debugElement.injector.get(UserService);
     alertService = fixture.debugElement.injector.get(AlertService);
-    
+
     mockUsers = [{
       id: 'id1',
       firstName: 'First Name',
@@ -126,7 +126,7 @@ describe('ManageUsersComponent', () => {
     component.deleteUser();
 
     expect(alertService.info).toHaveBeenCalled();
-    expect(userService.getUsers).toHaveBeenCalled();
+    expect(userService.deleteUser).toHaveBeenCalled();
     expect(component.selectedUser).toBeNull();
   }));
 
@@ -154,5 +154,15 @@ describe('ManageUsersComponent', () => {
   it('should call userService.getPageableUsers when getUsers is called', async(() => {
     component.getUsers();
     expect(userService.getPageableUsers).toHaveBeenCalled();
+  }));
+
+  it('should call getUsers() when pageEvent is set', async(() => {
+    spyOn(component, 'getUsers');
+    component.pageEvent = null;
+    expect(component.getUsers).toHaveBeenCalled();
+  }));
+
+  it('should return _pageEvent when get pageEvent is called', async(() => {
+    expect(component.pageEvent).toBe(component._pageEvent);
   }));
 });
