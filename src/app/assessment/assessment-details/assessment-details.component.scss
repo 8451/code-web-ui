@@ -1,11 +1,6 @@
 .assessment-container {
     flex-direction: row;
-    // flex-wrap: wrap;
     margin: 1em;
-}
-
-.assessment-content {
-    flex-direction: row;
 }
 
 .assessment-question-answers {
@@ -18,24 +13,10 @@
     width: 33%;
 }
 
-#candidate-email {
-    margin: 0;
-    font-size: .75em;
-}
-
-#candidate-name {
-    margin: 0;
-}
-
 .editor {
   resize: none;
   width: 75em;
   height: 25em;
-}
-
-.editor-container {
-  flex-basis: 10em;
-  height:15em;
 }
 
 md-chip {
@@ -54,10 +35,6 @@ md-chip-list {
 .notes-textarea {
     resize: none;
     height: 25em;
-}
-
-pre { 
-    white-space: pre-wrap;
 }
 
 .question-border {
