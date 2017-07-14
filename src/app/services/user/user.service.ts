@@ -1,8 +1,9 @@
+import { UserResponse } from './../../domains/user-response';
 import { AuthService } from './../auth/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,20 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get(this.userService, { headers: this.authService.getHeaders() })
       .map(res => res.json().users).catch(this.handleError);
+  }
+
+  getPageableUsers(page: number, size: number, property: string): Observable<UserResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+
+    return this.http.get(this.userService, {
+      search: searchParams,
+      headers: this.authService.getHeaders()
+    })
+      .map(res => res.json())
+      .catch(this.handleError);
   }
 
   createUser(user: User): Observable<User> {

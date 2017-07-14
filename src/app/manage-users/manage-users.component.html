@@ -1,3 +1,6 @@
+<md-paginator [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+</md-paginator>
+
 <md-list>
   <div *ngFor="let user of users">
     <md-list-item (click)="selectUser(user)" class="list-item" [class.selected]="user === selectedUser">

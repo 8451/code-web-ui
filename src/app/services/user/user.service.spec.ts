@@ -37,6 +37,11 @@ const mockUser = {
   ]
 };
 
+const mockUserResponse = {
+  users: mockUser.users,
+  paginationTotalElements: mockUser.users.length
+};
+
 const errorResponse = new Response(new ResponseOptions({ status: 400 }));
 
 const mockAuthService = {
@@ -122,4 +127,19 @@ describe('UserService', () => {
       });
     }
   )));
+
+  it('should set the users and totalUsers fields when setUsers is called', async(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        const response = new ResponseOptions({ body: mockUserResponse});
+        connection.mockRespond(new Response(response));
+      });
+
+      userService.getPageableUsers(0, 20, 'lastName').subscribe(res => {
+        expect(res.users.length).toBe(mockUserResponse.users.length);
+        expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
+      });
+  })));
 });

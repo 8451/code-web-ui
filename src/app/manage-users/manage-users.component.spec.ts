@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserResponse } from './../domains/user-response';
 import { MaterialModule } from '@angular/material';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
@@ -19,6 +21,8 @@ describe('ManageUsersComponent', () => {
 
   let mockUsers: User[];
 
+  let mockUserResponse: UserResponse;
+
   const mockAuthService = {
     logout() { },
     getHeaders() { },
@@ -33,7 +37,8 @@ describe('ManageUsersComponent', () => {
       declarations: [ManageUsersComponent],
       imports: [
         HttpModule,
-        MaterialModule
+        MaterialModule,
+        BrowserAnimationsModule
       ],
       providers: [
         UserService,
@@ -49,8 +54,7 @@ describe('ManageUsersComponent', () => {
     component = fixture.componentInstance;
     userService = fixture.debugElement.injector.get(UserService);
     alertService = fixture.debugElement.injector.get(AlertService);
-    spyOn(userService, 'getUsers').and.returnValue(Observable.of(mockUsers));
-
+    
     mockUsers = [{
       id: 'id1',
       firstName: 'First Name',
@@ -73,6 +77,15 @@ describe('ManageUsersComponent', () => {
       password: '123456',
     }];
 
+    mockUserResponse = {
+      users: mockUsers,
+      paginationTotalElements: mockUsers.length
+    };
+
+    spyOn(userService, 'getUsers').and.returnValue(Observable.of(mockUsers));
+    spyOn(userService, 'getPageableUsers').and.returnValue(Observable.of(mockUserResponse));
+
+
     fixture.detectChanges();
   });
 
@@ -84,6 +97,13 @@ describe('ManageUsersComponent', () => {
     component.selectUser(mockUsers[0]);
     expect(component.selectedUser).toBe(mockUsers[0]);
   });
+
+  it('should set the users and totalElements when setUsers is called', async(() => {
+    component.setUsers(mockUserResponse);
+
+    expect(component.users.length).toBe(mockUsers.length);
+    expect(component.totalUsers).toBe(mockUserResponse.paginationTotalElements);
+  }));
 
   it('should call userService.deleteUser() when deleteUser()', async(() => {
     spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
@@ -129,5 +149,10 @@ describe('ManageUsersComponent', () => {
     component.deleteUser();
 
     expect(userService.deleteUser).toHaveBeenCalledTimes(0);
+  }));
+
+  it('should call userService.getPageableUsers when getUsers is called', async(() => {
+    component.getUsers();
+    expect(userService.getPageableUsers).toHaveBeenCalled();
   }));
 });
