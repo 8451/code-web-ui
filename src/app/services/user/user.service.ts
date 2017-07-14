@@ -22,7 +22,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.put(this.userService, user)
+    return this.http.put(this.userService, user, { headers: this.authService.getHeaders() })
       .map(res => res.json().users[0])
       .catch(this.handleError);
   }

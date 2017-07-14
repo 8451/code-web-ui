@@ -15,6 +15,7 @@ import { passwordValid, sameValue } from 'app/validators';
 export class AccountComponent implements OnInit {
 
   confirmPassword: string;
+  currentUser: User;
   form: FormGroup;
 
   constructor(
@@ -57,6 +58,7 @@ export class AccountComponent implements OnInit {
   fillForm() {
     this.userService.getActiveUser()
       .subscribe(user => {
+        this.currentUser = user;
         this.form.setValue({
           firstName: user.firstName,
           lastName: user.lastName,
@@ -71,8 +73,11 @@ export class AccountComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    const user = this.form.value as User;
-    this.userService.updateUser(user).subscribe(updatedUser => {
+    this.currentUser.firstName = this.form.controls['firstName'].value;
+    this.currentUser.lastName = this.form.controls['lastName'].value;
+    this.currentUser.username = this.form.controls['username'].value;
+    this.currentUser.password = this.form.controls['password'].value;
+    this.userService.updateUser(this.currentUser).subscribe(updatedUser => {
       this.alertService.info('Account updated');
       this.router.navigate(['/account']);
     }, error => {
