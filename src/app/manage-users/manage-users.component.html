@@ -4,7 +4,7 @@
 <md-list>
   <div *ngFor="let user of users">
     <md-list-item (click)="selectUser(user)" class="list-item" [class.selected]="user === selectedUser">
-      <h4 md-line>{{user.firstName}} {{user.lastName}}</h4>
+      <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
       <p md-line>{{user.username}}</p>
       <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
     </md-list-item>

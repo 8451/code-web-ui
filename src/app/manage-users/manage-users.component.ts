@@ -54,10 +54,6 @@ export class ManageUsersComponent implements OnInit {
           res => this.setUsers(res),
           error => console.error('error getting questions.')
         );
-
-    this.userService.getUsers().subscribe(res => {
-      this.users = res;
-    });
   }
 
   setUsers(users: UserResponse) {
