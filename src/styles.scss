@@ -150,3 +150,16 @@ body {
 .mat-elevation-z24 {
     box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)
 }
+
+.list-item:hover {
+  cursor: pointer;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+.selected {
+  color: #607D88;
+  background-color: #DDD;
+  left: .1em;
+}
