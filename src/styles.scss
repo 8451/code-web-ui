@@ -3,6 +3,10 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
+.answer-border {
+    border-left: .375em solid #1384C5;
+}
+
 .error-snack {
     background-color: mat-color($mat-red, 400) !important;
 }
@@ -167,4 +171,8 @@ md-paginator {
   color: #607D88;
   background-color: #DDD;
   left: .1em;
+}
+
+.question-border {
+    border-left: .375em solid #E8028C;
 }

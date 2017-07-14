@@ -1,4 +1,5 @@
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { CandidateComponent } from './candidate/candidate.component';
@@ -58,7 +59,7 @@ export const routes: Routes = [
         component: QuestionDetailsComponent
       },
       {
-        path: 'interviewAssessment/:guid',
+        path: 'interview-assessment/:guid',
         component: InterviewAssessmentComponent
       },
       {
@@ -69,6 +70,10 @@ export const routes: Routes = [
         path: 'users',
         component: ManageUsersComponent
       },
+      {
+        path: 'assessment/:guid',
+        component: AssessmentDetailsComponent
+      }
     ]
   },
   {
