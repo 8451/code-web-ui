@@ -90,7 +90,7 @@ describe('InterviewerComponent', () => {
     expect(authService.logout).toHaveBeenCalledTimes(1);
   }));
 
-  it(`editAccount() should call AuthService.getMe and navigate to account page`, fakeAsync(() => {
+  it(`editAccount() should to account page`, fakeAsync(() => {
     spyOn(authService, 'logout').and.returnValue(Observable.of(false));
     spyOn(mockRouter, 'navigate');
 
