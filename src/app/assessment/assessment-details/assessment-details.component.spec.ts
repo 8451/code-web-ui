@@ -13,6 +13,7 @@ import { AssessmentService } from './../../services/assessment/assessment.servic
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentDetailsComponent } from './assessment-details.component';
+import { LanguageChipComponent } from '../../language-chip/language-chip.component';
 
 describe('AssessmentDetailsComponent', () => {
   let component: AssessmentDetailsComponent;
@@ -39,14 +40,14 @@ describe('AssessmentDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AssessmentDetailsComponent],
+      declarations: [AssessmentDetailsComponent, LanguageChipComponent],
       imports: [
         HttpModule,
         RouterTestingModule,
         MaterialModule,
         BrowserAnimationsModule,
         FormsModule,
-        AceEditorModule
+        AceEditorModule,
       ],
       providers: [
         AssessmentService,

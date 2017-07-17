@@ -188,7 +188,12 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   filterQuestions(val: string): Question[] {
+    const useExactMatch = this.languages && this.languages.indexOf(val) > -1;
     return val ? this.questions.filter(q => {
+      if (useExactMatch) {
+        return q.language.toLowerCase() === val.toLowerCase();
+      }
+
       return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0;
     }) : this.questions;
   }

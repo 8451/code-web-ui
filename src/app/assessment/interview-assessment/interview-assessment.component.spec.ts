@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, Form
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
+import { LanguageChipComponent } from 'app/language-chip/language-chip.component';
 
 describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
@@ -108,7 +109,8 @@ describe('InterviewAssessmentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent],
+      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent,
+        LanguageChipComponent],
       imports: [
         HttpModule,
         RouterTestingModule,

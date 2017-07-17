@@ -48,6 +48,7 @@ import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
+import { LanguageChipComponent } from './language-chip/language-chip.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { AssessmentDetailsComponent } from './assessment/assessment-details/asse
     CandidateAssessmentComponent,
     ThankYouComponent,
     AssessmentDetailsComponent,
+    LanguageChipComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,9 @@
 <md-list-item class="question">
   <div class="info">
-    <h4 md-line id="questionTitle">{{question.title}}</h4>
+    <div class="flex-container centered-flex-container">
+      <h4 md-line id="questionTitle">{{question.title}}</h4>
+      <app-language-chip [language]="question.language"></app-language-chip>
+    </div>
     <p md-line id="subtitle">
       Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}
       <br> Difficulty: {{question.difficulty}}
