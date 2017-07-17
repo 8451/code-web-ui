@@ -17,17 +17,26 @@
             Must have a valid 84.51 email address
           </md-error>
         </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
-          <md-error *ngIf="form.controls['password'].hasError('minlength')">
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="Current Password" required title="Current Password" formControlName="currentPassword">
+          <md-error *ngIf="form.controls['currentPassword'].hasError('minlength')">
             Password must have at least 8 characters
           </md-error>
-          <md-error *ngIf="form.controls['password'].hasError('passwordValid')">
+          <md-error *ngIf="form.controls['currentPassword'].hasError('passwordValid')">
             Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
           </md-error>
         </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="New Password" required title="New Password" formControlName="newPassword">
+          <md-error *ngIf="form.controls['newPassword'].hasError('minlength')">
+            Password must have at least 8 characters
+          </md-error>
+          <md-error *ngIf="form.controls['newPassword'].hasError('passwordValid')">
+            Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
+          </md-error>
+        </md-input-container>
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="Re-Type New Password" required title="Confirm Password" formControlName="confirmPassword">
           <md-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
             Passwords must match
           </md-error>
@@ -35,6 +44,7 @@
       </div>
       <div class="centered-button">
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
+        <button *ngIf="!canChangePassword" md-raised-button type="button" (click)="changePassword()">Change password</button>
       </div>
     </form>
   </md-card-content>

@@ -1,3 +1,4 @@
+import { UserVerification } from './../../domains/user-verification';
 import { AuthService } from './../auth/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
@@ -23,6 +24,12 @@ export class UserService {
 
   updateUser(user: User): Observable<User> {
     return this.http.put(this.userService, user, { headers: this.authService.getHeaders() })
+      .map(res => res.json().users[0])
+      .catch(this.handleError);
+  }
+
+  updateUserAndPassword(verifiedUser: UserVerification): Observable<User> {
+    return this.http.put(`${this.userService}/password`, verifiedUser, { headers: this.authService.getHeaders() })
       .map(res => res.json().users[0])
       .catch(this.handleError);
   }

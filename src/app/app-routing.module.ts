@@ -70,6 +70,7 @@ export const routes: Routes = [
         path: 'account',
         component: AccountComponent
       },
+      {
         path: 'assessment/:guid',
         component: AssessmentDetailsComponent
       }

@@ -54,7 +54,7 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('createUser() should create and return user', fakeAsync(inject([Http, MockBackend],
+  it('createUser() should create and return user', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const userService = new UserService(http, authService);
 
@@ -77,7 +77,7 @@ describe('UserService', () => {
       });
     })));
 
-  it('updateUser() should update and return user', fakeAsync(inject([Http, MockBackend],
+  it('updateUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const userService = new UserService(http, authService);
 
