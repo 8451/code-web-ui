@@ -99,7 +99,7 @@ describe('InterviewAssessmentComponent', () => {
       'createdDate': null,
       'modifiedBy': 'modifiedBy3',
       'modifiedDate': null,
-      'language': 'C#'
+      'language': 'C#',
     }
   ];
 
