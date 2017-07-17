@@ -65,6 +65,8 @@ describe('InterviewAssessmentComponent', () => {
     send(data: any) { }
   };
 
+  const languages = ['Java', 'Scala', 'C#'];
+
   const questions: any[] = [
     {
       'id': 'id1',
@@ -152,6 +154,7 @@ describe('InterviewAssessmentComponent', () => {
     spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
     spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(answerEventSubject);
     spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(['Java', 'Python']));
+    component.initForm();
   });
 
   afterEach(() => {
@@ -331,4 +334,24 @@ describe('InterviewAssessmentComponent', () => {
     component.ngOnInit();
     expect(questionService.getLanguages).toHaveBeenCalled();
   }));
+
+  it('filterQuestions() returns questions with language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions('j').length).toEqual(1);
+  });
+
+  it('filterQuestions() returns all questions with no language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions(null).length).toEqual(3);
+  });
+
+  it('filterLanguages() returns languages that match', () => {
+    component.languages = languages;
+    expect(component.filterLanguages('j').length).toEqual(1);
+  });
+
+  it('filterLanguages returns full list when no language', () => {
+    component.languages = languages;
+    expect(component.filterLanguages(null).length).toEqual(3);
+  });
 });

@@ -32,7 +32,7 @@ export class InterviewAssessmentComponent implements OnInit {
   sentQuestion: Question;
   languages: string[];
   language: string;
-  filteredQuestions = new Subject<Question[]>();
+  filteredQuestions: Observable<Question[]>;
   filteredLanguages: Observable<string[]>;
   questions: Question[];
   questionBody: string;
@@ -66,7 +66,7 @@ export class InterviewAssessmentComponent implements OnInit {
     });
 
     this.filteredLanguages = this.form.get('language').valueChanges.startWith(null).map(language => {
-      return this.filterLanguages(language);
+        return this.filterLanguages(language);
     });
   }
 
@@ -110,11 +110,13 @@ export class InterviewAssessmentComponent implements OnInit {
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
-      this.filteredQuestions.next(questions);
-    },
-      error => {
-        this.alertService.error('Could not get questions');
+      this.filteredQuestions = this.form.get('language').valueChanges.startWith(null).map(language => {
+        return this.filterQuestions(language);
       });
+    },
+    error => {
+      this.alertService.error('Could not get questions');
+    });
   }
 
   selectQuestion(question: Question): void {
@@ -185,15 +187,15 @@ export class InterviewAssessmentComponent implements OnInit {
     this.questionBody = event.answer;
   }
 
-  filterLanguages(val: string): string[] {
-    if (this.questions) {
-      this.filteredQuestions.next(this.questions.filter(q => {
-        return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0 || !val;
-      }));
-    }
+  filterQuestions(val: string): Question[] {
+    return val ? this.questions.filter(q => {
+      return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0;
+    }) : this.questions;
+  }
 
+  filterLanguages(val: string): string[] {
     return val ? this.languages.filter(s => {
-      return s.toLowerCase().indexOf(val.toLowerCase()) === 0 || !val;
+      return s.toLowerCase().indexOf(val.toLowerCase()) === 0;
     }) : this.languages;
   }
 }
