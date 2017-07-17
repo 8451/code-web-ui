@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Http, BaseRequestOptions, ConnectionBackend, RequestMethod, ResponseOptions, Response } from '@angular/http';
@@ -22,6 +23,14 @@ describe('ActivateComponent', () => {
     params: Observable.from([{ 'guid': '1234' }])
   };
 
+  const mockAuthService = {
+    logout() {},
+    getHeaders() {},
+    login(username: string, password: string) {},
+    isLoggedIn() {},
+    getToken() {}
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ActivateComponent],
@@ -44,7 +53,8 @@ describe('ActivateComponent', () => {
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter },
         UserService,
-        AlertService
+        AlertService,
+        { provide: AuthService, useValue: mockAuthService }
       ]
     })
       .compileComponents();

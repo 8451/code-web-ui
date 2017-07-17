@@ -6,7 +6,7 @@
 </md-paginator>
 <md-list>
   <div *ngFor="let assessment of assessments">
-    <md-list-item class="assessment" [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
+    <md-list-item [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
       <div class="wrapper">
       <div class="info">
         <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
