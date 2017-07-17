@@ -173,6 +173,19 @@ md-list-item.selected {
   left: .1em;
 }
 
+md-chip {
+  margin-left: 1em;
+}
+
+md-chip-list {
+  display: flex;
+  align-items: center;
+}
+
+app-language-chip {
+  display: flex;
+}
+
 .question-border {
     border-left: .375em solid #E8028C;
 }

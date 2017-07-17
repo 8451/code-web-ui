@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Question } from '../domains/question';
 import { Router, ActivatedRoute } from '@angular/router';
+import { languageColor } from '../services/question/question.service';
 
 @Component({
   selector: 'app-question-list-item',

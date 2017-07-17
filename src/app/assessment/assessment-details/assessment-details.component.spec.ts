@@ -13,6 +13,7 @@ import { AssessmentService } from './../../services/assessment/assessment.servic
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentDetailsComponent } from './assessment-details.component';
+import { LanguageChipComponent } from '../../language-chip/language-chip.component';
 
 describe('AssessmentDetailsComponent', () => {
   let component: AssessmentDetailsComponent;
@@ -39,14 +40,14 @@ describe('AssessmentDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AssessmentDetailsComponent],
+      declarations: [AssessmentDetailsComponent, LanguageChipComponent],
       imports: [
         HttpModule,
         RouterTestingModule,
         MaterialModule,
         BrowserAnimationsModule,
         FormsModule,
-        AceEditorModule
+        AceEditorModule,
       ],
       providers: [
         AssessmentService,
@@ -113,10 +114,5 @@ describe('AssessmentDetailsComponent', () => {
   it('should return the correct mode when calling getMode', () => {
     const mode = component.getMode('Python3');
     expect(mode).toBe('python');
-  });
-
-  it('should return the correct color when calling getColor', () => {
-    const mode = component.getColor('Python3');
-    expect(mode).toBe('#3572A5');
   });
 });

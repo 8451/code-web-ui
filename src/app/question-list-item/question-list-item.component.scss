@@ -1,8 +1,24 @@
+.centered-flex-container {
+  align-items: center;
+}
+
 .info {
-      width: 92%;
+  width: 92%;
 }
 
 md-list-item {
-    padding-top: .64em;
-    padding-bottom: .64em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  box-sizing: border-box;
+}
+
+.question:hover {
+  cursor: pointer;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+#questionTitle {
+  margin: 0;
 }
