@@ -20,7 +20,7 @@ export class AssessmentDetailsComponent implements OnInit {
   multi = false;
   filteredQuestionAnswers: Observable<QuestionAnswer[]>;
   mode = 'javascript';
-  editorOptions: any = {showPrintMargin: false, wrap: true};
+  editorOptions: any = {showPrintMargin: false, wrap: true, maxLines: 20};
 
   constructor(
     private assessmentService: AssessmentService,
