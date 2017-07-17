@@ -341,8 +341,8 @@ describe('InterviewAssessmentComponent', () => {
     spyOn(alertService, 'error');
     component.getPasteEvent(assessments[0].interviewGuid);
     expect(alertService.error).toHaveBeenCalled();
-  });  
-  
+  });
+
   it('should call questionService.getLanguages()', async(() => {
     component.ngOnInit();
     expect(questionService.getLanguages).toHaveBeenCalled();
