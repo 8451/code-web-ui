@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
@@ -6,11 +8,13 @@ import { QuestionInfoDialogComponent } from './../../question-info-dialog/questi
 import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService, editorTranslator } from './../../services/question/question.service';
-
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-interview-assessment',
@@ -21,19 +25,25 @@ export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
+  form: FormGroup;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
+  languages: string[];
+  language: string;
+  filteredQuestions: Observable<Question[]>;
+  filteredLanguages: Observable<string[]>;
   questions: Question[];
   questionBody: string;
   mode = 'java';
-  editorOptions: any = {showPrintMargin: false, wrap: true};
+  editorOptions: any = { showPrintMargin: false, wrap: true };
 
   assessmentStates: any = AssessmentStates;
 
   constructor(
     public dialog: MdDialog,
+    private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private router: Router,
@@ -44,6 +54,20 @@ export class InterviewAssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.initializeWebSocket();
+    this.questionService.getLanguages().subscribe(languages => {
+      this.languages = languages;
+      this.initForm();
+    });
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      language: ['', []],
+    });
+
+    this.filteredLanguages = this.form.get('language').valueChanges.startWith(null).map(language => {
+        return this.filterLanguages(language);
+    });
   }
 
   initializeWebSocket(): void {
@@ -93,10 +117,13 @@ export class InterviewAssessmentComponent implements OnInit {
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
-    },
-      error => {
-        this.alertService.error('Could not get questions');
+      this.filteredQuestions = this.form.get('language').valueChanges.startWith(null).map(language => {
+        return this.filterQuestions(language);
       });
+    },
+    error => {
+      this.alertService.error('Could not get questions');
+    });
   }
 
   selectQuestion(question: Question): void {
@@ -165,5 +192,22 @@ export class InterviewAssessmentComponent implements OnInit {
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
     this.questionBody = event.answer;
+  }
+
+  filterQuestions(val: string): Question[] {
+    const useExactMatch = this.languages && this.languages.indexOf(val) > -1;
+    return val ? this.questions.filter(q => {
+      if (useExactMatch) {
+        return q.language.toLowerCase() === val.toLowerCase();
+      }
+
+      return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0;
+    }) : this.questions;
+  }
+
+  filterLanguages(val: string): string[] {
+    return val ? this.languages.filter(s => {
+      return s.toLowerCase().indexOf(val.toLowerCase()) === 0;
+    }) : this.languages;
   }
 }

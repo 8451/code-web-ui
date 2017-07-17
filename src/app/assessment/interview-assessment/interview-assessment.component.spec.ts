@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, Form
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
+import { LanguageChipComponent } from 'app/language-chip/language-chip.component';
 
 describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
@@ -65,6 +66,8 @@ describe('InterviewAssessmentComponent', () => {
     send(data: any) { }
   };
 
+  const languages = ['Java', 'Scala', 'C#'];
+
   const questions: any[] = [
     {
       'id': 'id1',
@@ -74,7 +77,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy1',
       'createdDate': null,
       'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Java',
     },
     {
       'id': 'id2',
@@ -84,7 +88,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy2',
       'createdDate': null,
       'modifiedBy': 'modifiedBy2',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Scala',
     },
     {
       'id': 'id3',
@@ -94,9 +99,9 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy3',
       'createdDate': null,
       'modifiedBy': 'modifiedBy3',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'C#',
     }
-
   ];
 
   class MdDialogRefMock {
@@ -104,7 +109,8 @@ describe('InterviewAssessmentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent],
+      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent,
+        LanguageChipComponent],
       imports: [
         HttpModule,
         RouterTestingModule,
@@ -112,6 +118,7 @@ describe('InterviewAssessmentComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         AceEditorModule,
+        ReactiveFormsModule,
       ],
       providers: [
         AuthService,
@@ -123,6 +130,7 @@ describe('InterviewAssessmentComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
         AssessmentWebSocketService,
+        FormBuilder,
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -147,6 +155,8 @@ describe('InterviewAssessmentComponent', () => {
     assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
     spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(answerEventSubject);
+    spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(['Java', 'Python']));
+    component.initForm();
   });
 
   afterEach(() => {
@@ -331,5 +341,30 @@ describe('InterviewAssessmentComponent', () => {
     spyOn(alertService, 'error');
     component.getPasteEvent(assessments[0].interviewGuid);
     expect(alertService.error).toHaveBeenCalled();
+  });  
+  
+  it('should call questionService.getLanguages()', async(() => {
+    component.ngOnInit();
+    expect(questionService.getLanguages).toHaveBeenCalled();
+  }));
+
+  it('filterQuestions() returns questions with language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions('j').length).toEqual(1);
+  });
+
+  it('filterQuestions() returns all questions with no language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions(null).length).toEqual(3);
+  });
+
+  it('filterLanguages() returns languages that match', () => {
+    component.languages = languages;
+    expect(component.filterLanguages('j').length).toEqual(1);
+  });
+
+  it('filterLanguages returns full list when no language', () => {
+    component.languages = languages;
+    expect(component.filterLanguages(null).length).toEqual(3);
   });
 });

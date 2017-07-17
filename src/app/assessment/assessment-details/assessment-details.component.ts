@@ -57,8 +57,4 @@ export class AssessmentDetailsComponent implements OnInit {
     return editorTranslator(language);
   }
 
-  getColor(language: string) {
-    return languageColor(language);
-  }
-
 }
