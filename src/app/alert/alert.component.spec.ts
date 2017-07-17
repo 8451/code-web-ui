@@ -10,12 +10,14 @@ describe('AlertComponent', () => {
   let component: AlertComponent;
   let fixture: ComponentFixture<AlertComponent>;
   const infoAlert: Alert<any> = {
-    'type': AlertType.INFO,
-    'message': 'Info Alert!',
+    type: AlertType.INFO,
+    message: 'Info Alert!',
+    duration: 5000
   };
   const confirmationAlert: Alert<any> = {
-    'type': AlertType.CONFIRMATION,
-    'message': 'Info Alert!',
+    type: AlertType.CONFIRMATION,
+    message: 'Confirmation Alert!',
+    duration: 5000
   };
 
   beforeEach(async(() => {

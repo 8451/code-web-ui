@@ -1,0 +1,37 @@
+.assessment-container {
+    flex-direction: row;
+    margin: 1em;
+}
+
+.assessment-question-answers {
+    padding-left: 1em;
+    flex-grow: 1;
+}
+
+.candidate-details {
+    flex-direction: column;
+    width: 33%;
+}
+
+.editor {
+  resize: none;
+  width: 90%;
+}
+
+md-chip {
+    margin-left: 1em;
+}
+
+md-chip-list {
+    display: flex;
+    align-items: center;
+}
+
+.notes-input-container {
+    width: 100%;
+}
+
+.notes-textarea {
+    resize: none;
+    height: 25em;
+}

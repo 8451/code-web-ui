@@ -93,6 +93,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
  ngAfterViewInit() {
    this.aceEditor.getEditor().setOptions({
     showPrintMargin: false,
+    wrap: true
    });
  }
 

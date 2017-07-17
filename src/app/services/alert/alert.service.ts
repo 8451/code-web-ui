@@ -14,27 +14,30 @@ export class AlertService {
     return this.message;
   }
 
-  info(message: string) {
+  info(message: string, duration: number = 5000) {
     this.message.next({
       type: AlertType.INFO,
-      message: message
+      message: message,
+      duration: duration
     });
   }
 
-  error(message: string) {
+  error(message: string, duration: number = 5000) {
     this.message.next({
       type: AlertType.ERROR,
-      message: message
+      message: message,
+      duration: duration
     });
   }
 
-  confirmation(message: string): Observable<boolean> {
+  confirmation(message: string, duration: number = 5000): Observable<boolean> {
     const subject = new Subject<boolean>();
 
     this.message.next({
       type: AlertType.CONFIRMATION,
       message: message,
-      result: subject
+      result: subject,
+      duration: duration
     });
 
     return subject;

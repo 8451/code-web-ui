@@ -21,7 +21,9 @@ import {
   MdIconModule,
   MdSidenavModule,
   MdAutocompleteModule,
-  MdPaginatorModule
+  MdPaginatorModule,
+  MdExpansionModule,
+  MdChipsModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -45,6 +47,7 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
+import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,7 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     CandidateComponent,
     CandidateAssessmentComponent,
     ThankYouComponent,
+    AssessmentDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +91,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     AceEditorModule,
     MdPaginatorModule,
     MdAutocompleteModule,
+    MdExpansionModule,
+    MdChipsModule
   ],
   entryComponents: [
     DialogComponent,
