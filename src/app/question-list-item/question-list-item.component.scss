@@ -1,5 +1,15 @@
+.centered-flex-container {
+  align-items: center;
+}
+
 .info {
-      width: 92%;
+  width: 92%;
+}
+
+md-list-item {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  box-sizing: border-box;
 }
 
 .question:hover {
@@ -9,13 +19,6 @@
   left: .1em;
 }
 
-// .selected>md-list-item {
-//     color: #607D88;
-//   background-color: #DDD;
-//   left: .1em;
-// }
-
-md-list-item {
-    padding-top: .64em;
-    padding-bottom: .64em;
+#questionTitle {
+  margin: 0;
 }

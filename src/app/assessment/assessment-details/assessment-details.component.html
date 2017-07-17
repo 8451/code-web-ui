@@ -24,11 +24,7 @@
       <md-expansion-panel *ngFor="let questionAnswer of filteredQuestionAnswers | async; let isFirst = first" [expanded]="isFirst"
         class="question-answer-panel">
         <md-expansion-panel-header class="flex-container">{{questionAnswer.title}}
-          <md-chip-list *ngIf="questionAnswer.language">
-            <md-chip [style.backgroundColor]="getColor(questionAnswer.language)" selected="true">
-              {{questionAnswer.language}}
-            </md-chip>
-          </md-chip-list>
+          <app-language-chip [language]="questionAnswer.language"></app-language-chip>
         </md-expansion-panel-header>
         <h5>Question</h5>
         <ace-editor class="editor question-border" [theme]="'sqlserver'" [(text)]="questionAnswer.body" [mode]="getMode(questionAnswer.language)"

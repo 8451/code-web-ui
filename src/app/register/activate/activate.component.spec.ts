@@ -24,12 +24,12 @@ describe('ActivateComponent', () => {
   };
 
   const mockAuthService = {
-  logout() { },
-  getHeaders() { },
-  login(username: string, password: string) { },
-  isLoggedIn() { },
-  getToken() { }
-};
+    logout() { },
+    getHeaders() { },
+    login(username: string, password: string) { },
+    isLoggedIn() { },
+    getToken() { }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,7 +54,8 @@ describe('ActivateComponent', () => {
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter },
         UserService,
-        AlertService
+        AlertService,
+        { provide: AuthService, useValue: mockAuthService }
       ]
     })
       .compileComponents();
@@ -84,29 +85,31 @@ describe('ActivateComponent', () => {
   it('activate() should call activateUser and perform a get using activationCode',
     fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
       const userService = fixture.debugElement.injector.get(UserService);
-      spyOn(userService, 'activateUser').and.returnValue(Observable.of(new Response(new ResponseOptions({status: 200, body: null}))));
+      spyOn(userService, 'activateUser').and.returnValue(Observable.of(new Response(new ResponseOptions({ status: 200, body: null }))));
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Get && connection.request.url.endsWith('1234')) {
           const response = new ResponseOptions({ status: 200 });
           connection.mockRespond(new Response(response));
-      }});
+        }
+      });
       component.activate();
       expect(userService.activateUser).toHaveBeenCalledWith(component.activationCode);
     })));
 
-    it('activate() should call alertService when activateUser returns an error',
+  it('activate() should call alertService when activateUser returns an error',
     fakeAsync(inject([Http, MockBackend], (http: Http, mockBackend: MockBackend) => {
       const userService = fixture.debugElement.injector.get(UserService);
       const alertService = fixture.debugElement.injector.get(AlertService);
-      spyOn(userService, 'activateUser').and.returnValue(Observable.throw(new Response(new ResponseOptions({status: 500, body: null}))));
+      spyOn(userService, 'activateUser').and.returnValue(Observable.throw(new Response(new ResponseOptions({ status: 500, body: null }))));
       spyOn(alertService, 'error');
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Get && connection.request.url.endsWith('1234')) {
           const response = new ResponseOptions({ status: 500 });
           connection.mockRespond(new Response(response));
-      }});
+        }
+      });
       component.activate();
       expect(userService.activateUser).toHaveBeenCalledWith(component.activationCode);
       expect(alertService.error).toHaveBeenCalled();

@@ -1,0 +1,13 @@
+<md-paginator [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+</md-paginator>
+
+<md-list>
+  <div *ngFor="let user of users">
+    <md-list-item (click)="selectUser(user)" [class.selected]="user === selectedUser">
+      <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
+      <p md-line>{{user.username}}</p>
+      <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
+    </md-list-item>
+    <md-divider></md-divider>
+  </div>
+</md-list>

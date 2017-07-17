@@ -1,7 +1,8 @@
 import { AuthService } from './../auth/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 import { Question } from './../../domains/question';
 import { Subject } from 'rxjs/Subject';
-import { TestBed, inject, fakeAsync } from '@angular/core/testing';
+import { TestBed, inject, fakeAsync, async } from '@angular/core/testing';
 import {
   HttpModule, Http, Response, ResponseOptions,
   XHRBackend, ConnectionBackend, BaseRequestOptions, Connection, RequestMethod
@@ -19,8 +20,29 @@ const mockUser = {
       username: 'test@test.com',
       password: '123456',
     },
+    {
+      id: 'id2',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      username: 'test@test.com',
+      password: '123456',
+    },
+    {
+      id: 'id3',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      username: 'test@test.com',
+      password: '123456',
+    }
   ]
 };
+
+const mockUserResponse = {
+  users: mockUser.users,
+  paginationTotalElements: mockUser.users.length
+};
+
+const errorResponse = new Response(new ResponseOptions({ status: 400 }));
 
 const mockAuthService = {
   logout() { },
@@ -29,8 +51,6 @@ const mockAuthService = {
   isLoggedIn() { },
   getToken() { }
 };
-
-const errorResponse = new Response(new ResponseOptions({ status: 400 }));
 
 describe('UserService', () => {
   beforeEach(() => {
@@ -46,6 +66,7 @@ describe('UserService', () => {
         MockBackend,
         BaseRequestOptions,
         UserService,
+        { provide: AuthService, useValue: mockAuthService }
       ]
     });
   });
@@ -100,6 +121,36 @@ describe('UserService', () => {
       });
     })));
 
+  it('should get a list of users when getUsers', async(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        const response = new ResponseOptions({ body: mockUser });
+        connection.mockRespond(new Response(response));
+      });
+
+      userService.getUsers().subscribe(users => {
+        expect(users.length).toBe(mockUser.users.length);
+      });
+    }
+  )));
+
+  it('should delete a user when deleteUser is called', async(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        const response = new ResponseOptions({ body: mockUser });
+        connection.mockRespond(new Response(response));
+      });
+
+      userService.deleteUser(mockUser.users[0].id).subscribe(res => {
+        expect(res).toBe(true);
+      });
+    }
+  )));
+
   it('getActiveUser() should return the current user', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const userService = new UserService(http, authService);
@@ -120,6 +171,21 @@ describe('UserService', () => {
         expect(user.lastName).toEqual(expectedUser.lastName, 'use lastName should match');
         expect(user.username).toEqual(expectedUser.username, 'user email should match');
       }, error => {
+      });
+    })));
+
+  it('should set the users and totalUsers fields when setUsers is called', async(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        const response = new ResponseOptions({ body: mockUserResponse });
+        connection.mockRespond(new Response(response));
+      });
+
+      userService.getPageableUsers(0, 20, 'lastName').subscribe(res => {
+        expect(res.users.length).toBe(mockUserResponse.users.length);
+        expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
       });
     })));
 });

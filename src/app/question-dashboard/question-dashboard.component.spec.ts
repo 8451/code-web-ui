@@ -13,6 +13,7 @@ import { QuestionDashboardComponent } from './question-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { routes } from '../app-routing.module';
+import { LanguageChipComponent } from '../language-chip/language-chip.component';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
@@ -82,7 +83,7 @@ describe('QuestionDashboardComponent', () => {
   let questionService: QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuestionDashboardComponent, QuestionListItemComponent],
+      declarations: [QuestionDashboardComponent, QuestionListItemComponent, LanguageChipComponent],
       imports: [
         BrowserAnimationsModule,
         MaterialModule,

@@ -1,4 +1,5 @@
 import { AccountComponent } from './account/account.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
@@ -67,13 +68,17 @@ export const routes: Routes = [
         component: AssessmentListComponent
       },
       {
+        path: 'assessment/:guid',
+        component: AssessmentDetailsComponent
+      },
+      {
         path: 'account',
         component: AccountComponent
       },
       {
-        path: 'assessment/:guid',
-        component: AssessmentDetailsComponent
-      }
+        path: 'users',
+        component: ManageUsersComponent
+      },
     ]
   },
   {
