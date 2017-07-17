@@ -160,15 +160,15 @@ md-paginator {
   justify-content: flex-start !important;
 }
 
-.list-item:hover {
+md-list-item:hover {
   cursor: pointer;
-  color: #607D8B;
+  color: #607D8B !important;
   background-color: #DDD;
   left: .1em;
 }
 
-.selected {
-  color: #607D88;
+md-list-item.selected {
+  color: #607D88 !important;
   background-color: #DDD;
   left: .1em;
 }
