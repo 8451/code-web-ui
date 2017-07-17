@@ -112,6 +112,10 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
     this.assessmentWebSocketService.answerQuestion(this.assessmentId, questionAnswer);
   }
 
+  sendPaste() {
+    this.assessmentWebSocketService.sendPasteEvent(this.assessmentId);
+  }
+
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();

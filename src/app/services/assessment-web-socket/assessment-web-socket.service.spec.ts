@@ -1,4 +1,4 @@
-import { ConnectEvent, NewQuestionEvent, AnswerQuestionEvent } from './../../domains/events/web-socket-event';
+import { ConnectEvent, NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from './../../domains/events/web-socket-event';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { StompService } from 'ng2-stomp-service';
@@ -27,6 +27,10 @@ const mockAnswerQuestionEvent: AnswerQuestionEvent = {
 };
 
 const mockConnectEvent = {
+  timestamp: new Date(0)
+};
+
+const mockPasteEvent: PasteEvent = {
   timestamp: new Date(0)
 };
 
@@ -101,5 +105,23 @@ describe('AssessmentWebSocketService', () => {
       tick();
       expect(assessmentWebSocketService.stomp.subscribe).toHaveBeenCalledWith('/topic/assessment/1234/answer-question', jasmine.anything());
       expect(returnedAnswerObservable).toBeTruthy();
+    })));
+
+  it('should send paste event', fakeAsync(inject([AssessmentWebSocketService],
+    (assessmentWebSocketService: AssessmentWebSocketService) => {
+      spyOn(assessmentWebSocketService.stomp, 'send');
+      assessmentWebSocketService.sendPasteEvent('1234');
+      tick();
+      expect(assessmentWebSocketService.stomp.send).toHaveBeenCalled();
+      expect(assessmentWebSocketService.stomp.send).toHaveBeenCalledWith('/assessment/1234/paste', jasmine.any(PasteEvent));
+    })));
+
+  it('should get paste event', fakeAsync(inject([AssessmentWebSocketService],
+    (assessmentWebSocketService: AssessmentWebSocketService) => {
+      spyOn(assessmentWebSocketService.stomp, 'subscribe').and.returnValue(Observable.of(mockPasteEvent));
+      const returnedPasteObservable = assessmentWebSocketService.getPasteEvent('1234');
+      tick();
+      expect(assessmentWebSocketService.stomp.subscribe).toHaveBeenCalled();
+      expect(returnedPasteObservable).toBeTruthy();
     })));
 });
