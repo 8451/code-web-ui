@@ -89,14 +89,4 @@ describe('InterviewerComponent', () => {
     component.logout();
     expect(authService.logout).toHaveBeenCalledTimes(1);
   }));
-
-  it(`editAccount() should navigate to account page`, fakeAsync(() => {
-    spyOn(authService, 'logout').and.returnValue(Observable.of(false));
-    spyOn(mockRouter, 'navigate');
-
-    component.editAccount();
-
-    expect(authService.logout).toHaveBeenCalledTimes(0);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview/account']);
-  }));
 });
