@@ -115,9 +115,4 @@ describe('AssessmentDetailsComponent', () => {
     const mode = component.getMode('Python3');
     expect(mode).toBe('python');
   });
-
-  it('should return the correct color when calling getColor', () => {
-    const mode = component.getColor('Python3');
-    expect(mode).toBe('#3572A5');
-  });
 });

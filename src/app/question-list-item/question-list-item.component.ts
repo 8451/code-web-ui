@@ -15,8 +15,4 @@ export class QuestionListItemComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  getColor(language: string) {
-    return languageColor(language);
-  }
 }
