@@ -47,6 +47,7 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { LanguageChipComponent } from './language-chip/language-chip.component';
 
@@ -69,6 +70,7 @@ import { LanguageChipComponent } from './language-chip/language-chip.component';
     CandidateComponent,
     CandidateAssessmentComponent,
     ThankYouComponent,
+    ManageUsersComponent,
     AssessmentDetailsComponent,
     LanguageChipComponent,
   ],
