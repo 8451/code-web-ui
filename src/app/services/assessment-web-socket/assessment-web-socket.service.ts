@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { StompService } from 'ng2-stomp-service';
 import { Injectable } from '@angular/core';
-import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
+import { NewQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
 
 @Injectable()
 export class AssessmentWebSocketService {
@@ -89,6 +89,22 @@ export class AssessmentWebSocketService {
     });
 
     return assessmentEndedEvent;
+  }
+
+  sendPasteEvent(guid: string) {
+    this.stomp.after('init').then(() => {
+      this.stomp.send(`/assessment/${guid}/paste`, new PasteEvent());
+    });
+  }
+
+  getPasteEvent(guid: string): Observable<PasteEvent> {
+    const paste: Subject<PasteEvent> = new Subject<PasteEvent>();
+    this.stomp.after('init').then(() => {
+      this.stomp.subscribe(`/topic/assessment/${guid}/paste`, (data) => {
+        paste.next(data);
+      });
+    });
+    return paste;
   }
 
 }

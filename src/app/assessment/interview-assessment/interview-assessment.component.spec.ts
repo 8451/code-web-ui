@@ -1,7 +1,7 @@
 import { AceEditorModule } from 'ng2-ace-editor';
 import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
-import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -169,6 +169,7 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should populate with a list of questions', async(() => {
+    component.assessment = assessments[0];
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     component.getQuestions();
@@ -330,6 +331,17 @@ describe('InterviewAssessmentComponent', () => {
     spyOn(assessmentWebSocketService, 'sendConnectEvent');
     component.sendConnectEvent(assessments[0].interviewGuid);
     expect(assessmentWebSocketService.sendConnectEvent).toHaveBeenCalled();
+  });
+
+  it('should display a toast when a user pastes', () => {
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+
+    spyOn(assessmentWebSocketService, 'getPasteEvent')
+      .and.returnValue(Observable.of(new PasteEvent()));
+    spyOn(alertService, 'error');
+    component.getPasteEvent(assessments[0].interviewGuid);
+    expect(alertService.error).toHaveBeenCalled();
   });
 
   it('should call questionService.getLanguages()', async(() => {

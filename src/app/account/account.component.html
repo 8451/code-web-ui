@@ -1,0 +1,51 @@
+<md-card id="register-card" md-raised-card class="centered-card">
+  <md-card-title>
+    <h4>Account Information</h4>
+  </md-card-title>
+  <md-card-content>
+    <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmitUpdate()">
+      <div class="spacer">
+        <md-input-container class="full-width">
+          <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
+        </md-input-container>
+        <md-input-container class="full-width">
+          <input mdInput placeholder="Email" required title="Email Address" formControlName="username">
+          <md-error>
+            Must have a valid 84.51 email address
+          </md-error>
+        </md-input-container>
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="Current Password" required title="Current Password" formControlName="currentPassword">
+          <md-error *ngIf="form.controls['currentPassword'].hasError('minlength')">
+            Password must have at least 8 characters
+          </md-error>
+          <md-error *ngIf="form.controls['currentPassword'].hasError('passwordValid')">
+            Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
+          </md-error>
+        </md-input-container>
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="New Password" required title="New Password" formControlName="newPassword">
+          <md-error *ngIf="form.controls['newPassword'].hasError('minlength')">
+            Password must have at least 8 characters
+          </md-error>
+          <md-error *ngIf="form.controls['newPassword'].hasError('passwordValid')">
+            Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
+          </md-error>
+        </md-input-container>
+        <md-input-container *ngIf="canChangePassword" class="full-width">
+          <input mdInput type="password" placeholder="Re-Type New Password" required title="Confirm Password" formControlName="confirmPassword">
+          <md-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
+            Passwords must match
+          </md-error>
+        </md-input-container>
+      </div>
+      <div class="centered-button">
+        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
+        <button *ngIf="!canChangePassword" md-raised-button type="button" (click)="changePassword()">Change password</button>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>

@@ -1,8 +1,9 @@
 <nav class="app-nav mat-elevation-z3">
   <img src="../../assets/CoDE-logo.PNG" class="logo"/>
-    <button id="assessmentLink" md-button [routerLink]="['/interview/assessments']" [routerLinkActive]="['selected']">Assessments</button>
-    <button id="questionsLink" md-button [routerLink]="['/interview/questions']" [routerLinkActive]="['selected']">Questions</button>
-    <button id="usersLink" md-button [routerLink]="['/interview/users']" [routerLinkActive]="['selected']">Users</button>
+    <button md-button id="assessmentLink" [routerLink]="['/interview/assessments']" [routerLinkActive]="['selected']">Assessments</button>
+    <button md-button id="questionsLink" [routerLink]="['/interview/questions']" [routerLinkActive]="['selected']">Questions</button>
+    <button md-button id="usersLink"  [routerLink]="['/interview/users']" [routerLinkActive]="['selected']">Users</button>
+    <button md-button id="accountButton" [routerLink]="['/interview/account']" [routerLinkActive]="['selected']">Account</button>
     <button md-button id="logoutButton" (click)="logout()">Logout</button>
 </nav>
 <div class="body-wrapper">

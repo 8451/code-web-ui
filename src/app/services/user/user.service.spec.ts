@@ -1,3 +1,5 @@
+import { User } from './../../domains/user';
+import { UserVerification } from './../../domains/user-verification';
 import { AuthService } from './../auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Question } from './../../domains/question';
@@ -52,10 +54,18 @@ const mockAuthService = {
   getToken() { }
 };
 
+function compareUsers(actual: User, expected: User): void {
+  expect(actual.id).toEqual(expected.id, 'user firstName should match');
+  expect(actual.firstName).toEqual(expected.firstName, 'user firstName should match');
+  expect(actual.lastName).toEqual(expected.lastName, 'use lastName should match');
+  expect(actual.username).toEqual(expected.username, 'user email should match');
+}
+
 describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        { provide: AuthService, useValue: mockAuthService },
         {
           provide: Http, useFactory: (
             backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
@@ -88,11 +98,48 @@ describe('UserService', () => {
       });
 
       userService.createUser(mockUser.users[0]).subscribe(user => {
-        const expectedUser = mockUser.users[0];
-        expect(user.id).toEqual(expectedUser.id, 'user firstName should match');
-        expect(user.firstName).toEqual(expectedUser.firstName, 'user firstName should match');
-        expect(user.lastName).toEqual(expectedUser.lastName, 'use lastName should match');
-        expect(user.username).toEqual(expectedUser.username, 'user email should match');
+        compareUsers(user, mockUser.users[0]);
+      }, error => {
+      });
+    }
+  )));
+
+  it('updateUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        if (connection.request.method === RequestMethod.Put) {
+          const response = new ResponseOptions({ body: mockUser });
+          connection.mockRespond(new Response(response));
+        } else {
+          connection.mockRespond(errorResponse);
+        }
+      });
+
+      userService.updateUser(mockUser.users[0]).subscribe(user => {
+        compareUsers(user, mockUser.users[0]);
+      }, error => {
+      });
+    }
+  )));
+
+  it('updateUserAndPassword() should update user and password and return user', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        if (connection.request.method === RequestMethod.Put) {
+          const response = new ResponseOptions({ body: mockUser });
+          connection.mockRespond(new Response(response));
+        } else {
+          connection.mockRespond(errorResponse);
+        }
+      });
+
+      const verifiedUser = new UserVerification(mockUser.users[0], 'validPassword1!');
+      userService.updateUserAndPassword(verifiedUser).subscribe(user => {
+        compareUsers(user, mockUser.users[0]);
       }, error => {
       });
     }
@@ -118,7 +165,7 @@ describe('UserService', () => {
       const userService = new UserService(http, authService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
-        const response = new ResponseOptions({ body: true });
+        const response = new ResponseOptions({ body: mockUser });
         connection.mockRespond(new Response(response));
       });
 
@@ -128,12 +175,32 @@ describe('UserService', () => {
     }
   )));
 
+  it('getActiveUser() should return the current user', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        if (connection.request.method === RequestMethod.Get && connection.request.url.endsWith('activeUser')) {
+          const response = new ResponseOptions({ body: mockUser });
+          connection.mockRespond(new Response(response));
+        } else {
+          connection.mockRespond(errorResponse);
+        }
+      });
+
+      userService.getActiveUser().subscribe(user => {
+        compareUsers(user, mockUser.users[0]);
+      }, error => {
+      });
+    }
+  )));
+
   it('should set the users and totalUsers fields when setUsers is called', async(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const userService = new UserService(http, authService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
-        const response = new ResponseOptions({ body: mockUserResponse});
+        const response = new ResponseOptions({ body: mockUserResponse });
         connection.mockRespond(new Response(response));
       });
 
@@ -141,5 +208,6 @@ describe('UserService', () => {
         expect(res.users.length).toBe(mockUserResponse.users.length);
         expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
       });
-  })));
+    }
+  )));
 });
