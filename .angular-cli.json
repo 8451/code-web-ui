@@ -9,7 +9,8 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "web.config"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -50,7 +51,7 @@
     {
       "project": "src/tsconfig.app.json",
       "exclude": "**/node_modules/**/*.ts"
-      
+
     },
     {
       "project": "src/tsconfig.spec.json",
