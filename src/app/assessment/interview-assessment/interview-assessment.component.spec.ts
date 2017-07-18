@@ -390,16 +390,16 @@ describe('InterviewAssessmentComponent', () => {
   it('calls updateSentQuestion when resuming an assessment', () => {
     component.assessment = assessments[0];
     component.assessment.state = AssessmentStates.IN_PROGRESS;
-    component.assessment.questionAnswers = [answerEvent];
+    component.assessment.questionAnswers = [questionAnswer];
     spyOn(component, 'updateSentQuestion');
     component.getCurrentQuestion();
-    expect(component.updateSentQuestion).toHaveBeenCalledWith(answerEvent);
+    expect(component.updateSentQuestion).toHaveBeenCalledWith(questionAnswer);
   });
 
   it('does not call updateSentQuestion when resuming if assessment not in progress', () => {
     component.assessment = assessments[0];
     component.assessment.state = AssessmentStates.NOT_STARTED;
-    component.assessment.questionAnswers = [answerEvent];
+    component.assessment.questionAnswers = [questionAnswer];
     spyOn(component, 'updateSentQuestion');
     component.getCurrentQuestion();
     expect(component.updateSentQuestion).toHaveBeenCalledTimes(0);
