@@ -1,3 +1,4 @@
+import { QuestionAnswer } from './../../domains/question-answer';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
@@ -47,10 +48,27 @@ describe('InterviewAssessmentComponent', () => {
   }];
 
   const answerEvent: AnswerQuestionEvent = {
-    title: 'ae_title1',
-    body: 'ae_body1',
-    language: 'ae_language1',
-    answer: 'ae_answer1',
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
+    answer: 'Answer1',
+    questionResponseId: 'ae_',
+    timestamp: new Date(),
+  };
+
+  const questionAnswer: QuestionAnswer = {
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
+    answer: 'Answer1',
+    questionResponseId: 'ae_',
+
+   };
+
+  const newQuestionEvent: NewQuestionEvent = {
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
     questionResponseId: 'ae_',
     timestamp: new Date(),
   };
@@ -169,6 +187,7 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should populate with a list of questions', async(() => {
+    component.assessment = assessments[0];
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     component.getQuestions();
@@ -366,5 +385,55 @@ describe('InterviewAssessmentComponent', () => {
   it('filterLanguages returns full list when no language', () => {
     component.languages = languages;
     expect(component.filterLanguages(null).length).toEqual(3);
+  });
+
+  it('calls updateSentQuestion when resuming an assessment', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.IN_PROGRESS;
+    component.assessment.questionAnswers = [questionAnswer];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledWith(questionAnswer);
+  });
+
+  it('does not call updateSentQuestion when resuming if assessment not in progress', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.NOT_STARTED;
+    component.assessment.questionAnswers = [questionAnswer];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledTimes(0);
+  });
+
+  it('does not call updateSentQuestion when resuming if questionAnswers is empty', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.IN_PROGRESS;
+    component.assessment.questionAnswers = [];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledTimes(0);
+  });
+
+  it('updateSentQuestion should set sentQuestion if there is a match', () => {
+    component.questions = questions;
+    component.updateSentQuestion(questionAnswer);
+    expect(component.sentQuestion).toBe(questions[0]);
+    expect(component.questionBody).toBe(questionAnswer.answer);
+  });
+
+  it('updateSentQuestion should not set sentQuestion if there is not a match', () => {
+    component.questions = questions;
+    const wrongAnswer = questionAnswer;
+    wrongAnswer.title = 'wrong_title';
+    component.updateSentQuestion(wrongAnswer);
+    expect(component.sentQuestion).toBeUndefined();
+    expect(component.questionBody).toBeUndefined();
+  });
+
+  it('updateSentQuestion should use body if param is NewQuestionEvent', () => {
+    component.questions = questions;
+    component.updateSentQuestion(newQuestionEvent);
+    expect(component.sentQuestion).toBe(questions[0]);
+    expect(component.questionBody).toBe(newQuestionEvent.body);
   });
 });
