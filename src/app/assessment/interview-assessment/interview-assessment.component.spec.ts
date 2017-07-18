@@ -63,7 +63,7 @@ describe('InterviewAssessmentComponent', () => {
     answer: 'Answer1',
     questionResponseId: 'ae_',
 
-   }
+   };
 
   const newQuestionEvent: NewQuestionEvent = {
     title: 'Title1',
