@@ -5,6 +5,7 @@ export class WebSocketEvent {
 export class ConnectEvent extends WebSocketEvent {};
 export class DisconnectEvent extends WebSocketEvent {};
 export class EndAssessmentEvent extends WebSocketEvent {};
+export class PasteEvent extends WebSocketEvent {};
 
 export class NewQuestionEvent extends WebSocketEvent {
     title: string;

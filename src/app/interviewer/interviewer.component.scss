@@ -2,13 +2,16 @@
 
 $nav-bar-height: 2.5em;
 
-.logo {
-    height: $nav-bar-height;
-    width: auto;
-    display: inline-block;
+$selected-color: mat-color($mat-deep-purple, 50);
+
+#accountButton {
+    margin-left: auto;
 }
 
-$selected-color: mat-color($mat-deep-purple, 50);
+.app-body {
+    overflow-y: auto;
+    height: 100%; 
+}
 
 .app-nav {
     position: fixed;
@@ -22,21 +25,20 @@ $selected-color: mat-color($mat-deep-purple, 50);
     align-content: center;
     height: $nav-bar-height;
 }
+
 .body-wrapper {
     padding-top: $nav-bar-height;
     box-sizing: border-box;
     height: 100%;
 }
-.app-body {
-    overflow-y: auto;
-    height: 100%; 
-}
-
-#logoutButton {
-    margin-left: auto;
-}
 
 button.selected {
     border-bottom: .321em solid white;
     border-radius: 0;
+}
+
+.logo {
+    height: $nav-bar-height;
+    width: auto;
+    display: inline-block;
 }

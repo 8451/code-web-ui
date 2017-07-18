@@ -85,6 +85,7 @@ export class InterviewAssessmentComponent implements OnInit {
         }
         this.getQuestions();
         this.getConnectEvent(this.assessment.interviewGuid);
+        this.getPasteEvent(this.assessment.interviewGuid);
         this.getAnsweredQuestion(this.assessment.interviewGuid);
         this.sendConnectEvent(this.assessment.interviewGuid);
       });
@@ -105,6 +106,12 @@ export class InterviewAssessmentComponent implements OnInit {
 
   sendConnectEvent(guid: string) {
     this.assessmentWebSocketService.sendConnectEvent(guid);
+  }
+
+  getPasteEvent(guid: string) {
+    this.assessmentWebSocketService.getPasteEvent(guid).subscribe(event => {
+      this.alertService.error('User has pasted!');
+    });
   }
 
   getQuestions(): void {
