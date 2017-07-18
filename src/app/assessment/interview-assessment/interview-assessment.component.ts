@@ -151,6 +151,7 @@ export class InterviewAssessmentComponent implements OnInit {
         this.sentQuestion = currentQuestion;
         this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
           (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
+        this.mode = editorTranslator(currentQuestion.language);
       }
   }
 
