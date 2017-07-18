@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { User } from './../domains/user';
 import { AuthService } from '../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterviewerComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   logout(): void {
     this.authService.logout();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
