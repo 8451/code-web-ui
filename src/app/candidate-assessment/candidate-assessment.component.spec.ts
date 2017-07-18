@@ -144,4 +144,11 @@ describe('CandidateAssessmentComponent', () => {
     expect(component.sendAnswer).toHaveBeenCalled();
     expect(assessmentWebSocketService.answerQuestion).toHaveBeenCalled();
   }));
+
+  it('should send paste event when pasting', fakeAsync(() => {
+    assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
+    spyOn(assessmentWebSocketService, 'sendPasteEvent');
+    component.sendPasteEvent();
+    expect(assessmentWebSocketService.sendPasteEvent).toHaveBeenCalled();
+  }));
 });
