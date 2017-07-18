@@ -1,3 +1,4 @@
+import { QuestionAnswer } from './../../domains/question-answer';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
@@ -86,6 +87,7 @@ export class InterviewAssessmentComponent implements OnInit {
         this.getQuestions();
         this.getConnectEvent(this.assessment.interviewGuid);
         this.getAnsweredQuestion(this.assessment.interviewGuid);
+        this.getNewQuestionEvent(this.assessment.interviewGuid);
         this.sendConnectEvent(this.assessment.interviewGuid);
       });
   }
@@ -107,9 +109,16 @@ export class InterviewAssessmentComponent implements OnInit {
     this.assessmentWebSocketService.sendConnectEvent(guid);
   }
 
+  getNewQuestionEvent(guid: string) {
+    this.assessmentWebSocketService.getNewQuestion(guid).subscribe(event => {
+      this.updateSentQuestion(event);
+    });
+  }
+
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
+      this.getCurrentQuestion();
       this.filteredQuestions = this.form.get('language').valueChanges.startWith(null).map(language => {
         return this.filterQuestions(language);
       });
@@ -117,6 +126,24 @@ export class InterviewAssessmentComponent implements OnInit {
     error => {
       this.alertService.error('Could not get questions');
     });
+  }
+
+  private getCurrentQuestion() {
+    if (this.assessment.questionAnswers.length > 0 && this.assessment.state === AssessmentStates.IN_PROGRESS) {
+      const latestQuestionAnswer = this.assessment.questionAnswers[this.assessment.questionAnswers.length - 1];
+      this.updateSentQuestion(latestQuestionAnswer);
+    }
+  }
+
+  private updateSentQuestion(latestQuestionAnswer: QuestionAnswer | NewQuestionEvent) {
+      const currentQuestion = this.questions.find((question) => {
+        return question.title === latestQuestionAnswer.title && question.language === latestQuestionAnswer.language;
+      });
+      if (currentQuestion) {
+        this.sentQuestion = currentQuestion;
+        this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
+          (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
+      }
   }
 
   selectQuestion(question: Question): void {
