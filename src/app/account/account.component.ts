@@ -80,14 +80,14 @@ export class AccountComponent implements OnInit, OnDestroy {
 
       this.userService.updateUserAndPassword(verifiedUser).subscribe(updatedUser => {
         this.alertService.info('Account password updated');
-        this.router.navigate(['/account']);
+        this.router.navigate(['/login']);
       }, error => {
         this.alertService.error('Error updating account password.');
       });
     } else {
       this.userService.updateUser(this.currentUser).subscribe(updatedUser => {
         this.alertService.info('Account updated');
-        this.router.navigate(['/account']);
+        this.router.navigate(['/interview/account']);
       }, error => {
         this.alertService.error('Error updating account.');
       });
