@@ -28,9 +28,14 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    document.body.style.backgroundImage = 'url(../../assets/magenta-blue.jpg)';
     this.canChangePassword = false;
     this.formInit();
     this.fillForm();
+  }
+
+  ngOnDestroy() {
+    document.body.style.backgroundImage = 'none';
   }
 
   formInit() {
