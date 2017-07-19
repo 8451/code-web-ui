@@ -113,7 +113,7 @@ describe('AccountComponent', () => {
     expect(userService.updateUser).toHaveBeenCalledWith(mockUser.users[0]);
     expect(alertService.info).toHaveBeenCalledTimes(1);
     expect(alertService.error).toHaveBeenCalledTimes(0);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/account']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview/account']);
   });
 
   it('onSubmitUpdate() should display an error when updating fails', () => {
@@ -172,7 +172,7 @@ describe('AccountComponent', () => {
     expect(userService.updateUserAndPassword).toHaveBeenCalledWith(verifiedUser);
     expect(alertService.info).toHaveBeenCalledTimes(1);
     expect(alertService.error).toHaveBeenCalledTimes(0);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/account']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('onSubmitUpdate() should display an error when updating password fails', () => {
