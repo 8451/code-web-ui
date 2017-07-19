@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
@@ -101,7 +102,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: LoginComponent
+    component: NotFoundComponent
   }
 ];
 
