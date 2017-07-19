@@ -1,0 +1,53 @@
+.centered-card {
+    width: 33%;
+    margin: auto;
+    margin-top: 3.21em;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(164, 151, 141, .3);
+}
+
+.logo {
+    width: 16.5%;
+}
+
+.login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 66%;
+    md-card-content {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.right-spacer {
+    margin: 0;
+    width: 16.5%;
+}
+
+.spacer {
+    margin-top: .64em;
+}
+
+.title-contents {
+    flex-direction: row;
+}
+
+.title-text {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.pic {
+    height: 50%;
+}

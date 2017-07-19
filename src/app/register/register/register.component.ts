@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { UserService } from './../../services/user/user.service';
 import { User } from './../../domains/user';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { sameValue, passwordValid } from '../../validators';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   user = new User();
   confirmPassword: string;
@@ -24,6 +24,11 @@ export class RegisterComponent implements OnInit {
       ) { }
 
   ngOnInit() {
+    document.body.style.backgroundImage = 'url(../../assets/magenta-orange.jpg)';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
     this.form = this.fb.group({
       firstName: ['', [
         Validators.required,
@@ -46,6 +51,10 @@ export class RegisterComponent implements OnInit {
     }, {
       validator: sameValue('confirmPassword', 'password')
     });
+  }
+
+  ngOnDestroy() {
+    document.body.style.backgroundImage = 'none';
   }
 
   onSubmitRegister() {
