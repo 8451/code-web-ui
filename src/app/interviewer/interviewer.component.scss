@@ -4,10 +4,6 @@ $nav-bar-height: 2.5em;
 
 $selected-color: mat-color($mat-deep-purple, 50);
 
-#accountButton {
-    margin-left: auto;
-}
-
 .app-body {
     overflow-y: auto;
     height: 100%; 
@@ -19,6 +15,7 @@ $selected-color: mat-color($mat-deep-purple, 50);
     left: 0;
     width: 100% !important;
     display: flex;
+    justify-content: space-between;
     z-index: 2;
     background-image: linear-gradient(45deg, #008fca, #ec008b);
     color: white;
@@ -35,10 +32,4 @@ $selected-color: mat-color($mat-deep-purple, 50);
 button.selected {
     border-bottom: .321em solid white;
     border-radius: 0;
-}
-
-.logo {
-    height: $nav-bar-height;
-    width: auto;
-    display: inline-block;
 }
