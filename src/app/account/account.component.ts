@@ -5,7 +5,7 @@ import { AlertService } from './../services/alert/alert.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { UserService } from './../services/user/user.service';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { passwordValid, sameValue } from 'app/validators';
 
 @Component({
@@ -13,7 +13,7 @@ import { passwordValid, sameValue } from 'app/validators';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
 
   confirmPassword: string;
   currentUser: User;
