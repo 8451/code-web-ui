@@ -1,3 +1,4 @@
+import { QuestionAnswer } from './../../domains/question-answer';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
@@ -53,10 +54,17 @@ export class InterviewAssessmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initializeWebSocket();
-    this.questionService.getLanguages().subscribe(languages => {
-      this.languages = languages;
+    Observable.zip(this.questionService.getLanguages(), this.getAssessment()).subscribe((data) => {
+      this.languages = data[0];
+      this.assessment = data[1];
       this.initForm();
+      this.initializeWebSocket();
+    }, err => console.error(err));
+  }
+
+  private getAssessment(): Observable<Assessment> {
+    return this.route.params.switchMap((params: Params) => {
+      return this.assessmentService.getAssessmentByGuid(params['guid']);
     });
   }
 
@@ -71,24 +79,19 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   initializeWebSocket(): void {
-    this.route.params
-      .switchMap((params: Params) => {
-        return this.assessmentService.getAssessmentByGuid(params['guid']);
-      }).subscribe(assessment => {
-        this.assessment = assessment;
-        if (this.assessment.state === AssessmentStates.CLOSED) {
-          this.router.navigate(['/interview/assessments']);
-          return;
-        }
-        if (this.assessment.state !== AssessmentStates.NOTES) {
-          document.getElementById('sidenavID').setAttribute('style', 'display: flex');
-        }
-        this.getQuestions();
-        this.getConnectEvent(this.assessment.interviewGuid);
-        this.getPasteEvent(this.assessment.interviewGuid);
-        this.getAnsweredQuestion(this.assessment.interviewGuid);
-        this.sendConnectEvent(this.assessment.interviewGuid);
-      });
+    if (this.assessment.state === AssessmentStates.CLOSED) {
+      this.router.navigate(['/interview/assessments']);
+      return;
+    }
+    if (this.assessment.state !== AssessmentStates.NOTES) {
+      document.getElementById('sidenavID').setAttribute('style', 'display: flex');
+    }
+    this.getQuestions();
+    this.getConnectEvent(this.assessment.interviewGuid);
+    this.getPasteEvent(this.assessment.interviewGuid);
+    this.getAnsweredQuestion(this.assessment.interviewGuid);
+    this.getNewQuestionEvent(this.assessment.interviewGuid);
+    this.sendConnectEvent(this.assessment.interviewGuid);
   }
 
   getAnsweredQuestion(guid: string): void {
@@ -108,6 +111,12 @@ export class InterviewAssessmentComponent implements OnInit {
     this.assessmentWebSocketService.sendConnectEvent(guid);
   }
 
+  getNewQuestionEvent(guid: string) {
+    this.assessmentWebSocketService.getNewQuestion(guid).subscribe(event => {
+      this.updateSentQuestion(event);
+    });
+  }
+
   getPasteEvent(guid: string) {
     this.assessmentWebSocketService.getPasteEvent(guid).subscribe(event => {
       this.alertService.error('User has pasted!');
@@ -117,6 +126,7 @@ export class InterviewAssessmentComponent implements OnInit {
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
+      this.getCurrentQuestion();
       this.filteredQuestions = this.form.get('language').valueChanges.startWith(null).map(language => {
         return this.filterQuestions(language);
       });
@@ -124,6 +134,25 @@ export class InterviewAssessmentComponent implements OnInit {
     error => {
       this.alertService.error('Could not get questions');
     });
+  }
+
+  getCurrentQuestion() {
+    if (this.assessment.questionAnswers.length > 0 && this.assessment.state === AssessmentStates.IN_PROGRESS) {
+      const latestQuestionAnswer = this.assessment.questionAnswers[this.assessment.questionAnswers.length - 1];
+      this.updateSentQuestion(latestQuestionAnswer);
+    }
+  }
+
+  updateSentQuestion(latestQuestionAnswer: QuestionAnswer | NewQuestionEvent) {
+      const currentQuestion = this.questions.find((question) => {
+        return question.title === latestQuestionAnswer.title && question.language === latestQuestionAnswer.language;
+      });
+      if (currentQuestion) {
+        this.sentQuestion = currentQuestion;
+        this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
+          (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
+        this.mode = editorTranslator(currentQuestion.language);
+      }
   }
 
   selectQuestion(question: Question): void {
