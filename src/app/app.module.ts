@@ -51,6 +51,7 @@ import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { LanguageChipComponent } from './language-chip/language-chip.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { LanguageChipComponent } from './language-chip/language-chip.component';
     ManageUsersComponent,
     AssessmentDetailsComponent,
     LanguageChipComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

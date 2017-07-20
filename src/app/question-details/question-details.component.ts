@@ -30,7 +30,7 @@ export class QuestionDetailsComponent implements OnInit {
   form: FormGroup;
   languages: string[];
   filteredLanguages: Observable<string[]>;
-  mode = 'javascript';
+  mode = 'java';
   editorOptions = {
     showPrintMargin: false,
     wrap: true
