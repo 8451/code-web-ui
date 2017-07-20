@@ -4,11 +4,16 @@
 <md-list>
   <div *ngFor="let user of users">
     <md-list-item (click)="selectUser(user)" [class.selected]="user === selectedUser">
-      <div class="info">
-        <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
-        <p md-line>{{user.username}}</p>
+      <div class="wrapper">
+        <div>
+          <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
+          <p md-line>{{user.username}}</p>
+        </div>
+        <div>
+          <button md-raised-button *ngIf="user.locked" (click)="unlockUser()" color="primary">Unlock Account</button>
+          <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
+        </div>
       </div>
-      <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
     </md-list-item>
     <md-divider></md-divider>
   </div>
