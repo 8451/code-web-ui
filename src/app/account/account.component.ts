@@ -86,7 +86,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.alertService.info('Account password updated');
         this.router.navigate(['/login']);
       }, error => {
-        if (error === 'Forbidden') {
+        if (error === 'Unauthorized') {
           this.alertService.error('Currrent username or password is invalid');
           this.form.controls['currentPassword'].setValue('');
         } else {
