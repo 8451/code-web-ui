@@ -82,7 +82,12 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.alertService.info('Account password updated');
         this.router.navigate(['/login']);
       }, error => {
-        this.alertService.error('Error updating account password.');
+        if (error === 'Forbidden') {
+          this.alertService.error('Currrent username or password is invalid');
+          this.form.controls['currentPassword'].setValue('');
+        } else {
+          this.alertService.error('Error updating account password');
+        }
       });
     } else {
       this.userService.updateUser(this.currentUser).subscribe(updatedUser => {
@@ -94,7 +99,7 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.router.navigate(['/interview/account']);
         }
       }, error => {
-        this.alertService.error('Error updating account.');
+        this.alertService.error('Error updating account');
       });
     }
   }
