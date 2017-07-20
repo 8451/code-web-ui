@@ -23,7 +23,8 @@ import {
   MdAutocompleteModule,
   MdPaginatorModule,
   MdExpansionModule,
-  MdChipsModule
+  MdChipsModule,
+  MdSlideToggleModule,
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -100,7 +101,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MdPaginatorModule,
     MdAutocompleteModule,
     MdExpansionModule,
-    MdChipsModule
+    MdChipsModule,
+    MdSlideToggleModule
   ],
   entryComponents: [
     DialogComponent,

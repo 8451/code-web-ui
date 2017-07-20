@@ -63,6 +63,12 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  unlockUser(user: User): Observable<User> {
+    return this.http.put(`${this.userService}/unlock`, user, { headers: this.authService.getHeaders() })
+      .map(res => res.json().users[0])
+      .catch(this.handleError);
+  }
+
   getActiveUser(): Observable<User> {
     return this.http.get(`${this.userService}/activeUser`, { headers: this.authService.getHeaders() })
       .map(res => res.json().users[0])

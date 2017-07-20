@@ -79,4 +79,18 @@ export class ManageUsersComponent implements OnInit {
     });
   }
 
+  unlockUser() {
+    this.alertService.confirmation('Are you sure you want to unlock this user?').subscribe(confirmation => {
+      if (confirmation) {
+        this.selectedUser.locked = false;
+        this.userService.unlockUser(this.selectedUser).subscribe(res => {
+          this.selectedUser = res;
+          this.alertService.info('User unlocked');
+        }, error => {
+          this.alertService.error('Error unlocking user');
+        });
+      }
+    });
+  }
+
 }
