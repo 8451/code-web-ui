@@ -11,7 +11,7 @@ import { sameValue, passwordValid } from '../../validators';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit {
 
   user = new User();
   confirmPassword: string;
@@ -24,11 +24,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ) { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'url(../../assets/magenta-orange.jpg)';
-    document.body.style.backgroundPosition = 'center center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundSize = 'cover';
     this.form = this.fb.group({
       firstName: ['', [
         Validators.required,
@@ -51,10 +46,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, {
       validator: sameValue('confirmPassword', 'password')
     });
-  }
-
-  ngOnDestroy() {
-    document.body.style.backgroundImage = 'none';
   }
 
   onSubmitRegister() {

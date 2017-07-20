@@ -1,9 +1,9 @@
-<md-card md-raised-card class="centered-card flex-container">
+<div class="flex-container">
   <div class="logo">
   </div>
   <div class="login-body">
     <md-card-title class="title-text two-third-width">
-        <img src="../../assets/CoDE-negative-logo.png" class="full-width half-height"/>
+      <img src="../../assets/CoDE-negative-logo.png" class="full-width half-height" />
     </md-card-title>
     <md-card-content class="full-width">
       <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
@@ -19,11 +19,8 @@
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
         </div>
       </form>
-      <div class="spacer register">
-        or <a href="/register">register</a>
-      </div>
     </md-card-content>
   </div>
   <div class="right-spacer">
   </div>
-</md-card>
+</div>

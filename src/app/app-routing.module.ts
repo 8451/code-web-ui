@@ -1,3 +1,4 @@
+import { GatewayComponent } from './gateway/gateway.component';
 import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
@@ -97,11 +98,11 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: GatewayComponent
   },
   {
     path: '**',
-    component: LoginComponent
+    component: GatewayComponent
   }
 ];
 

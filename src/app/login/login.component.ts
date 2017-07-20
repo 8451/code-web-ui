@@ -11,7 +11,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   form: FormGroup;
 
@@ -22,11 +22,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'url(../../assets/magenta-orange.jpg)';
-    document.body.style.backgroundPosition = 'center center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundSize = 'cover';
     this.authService.logout();
     this.form = this.fb.group({
       username: ['', [
@@ -36,10 +31,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required
       ]]
     });
-  }
-
-  ngOnDestroy() {
-    document.body.style.backgroundImage = 'none';
   }
 
   onSubmitLogin() {
