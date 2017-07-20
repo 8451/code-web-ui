@@ -87,7 +87,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     } else {
       this.userService.updateUser(this.currentUser).subscribe(updatedUser => {
         if (this.form.get('username').dirty) {
-          this.alertService.info('Account updated. Please sign-in with new username')
+          this.alertService.info('Account updated. Please sign-in with new username');
           this.router.navigate(['/login']);
         } else {
           this.alertService.info('Account updated');
