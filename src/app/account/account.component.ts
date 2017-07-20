@@ -29,6 +29,10 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     document.body.style.backgroundImage = 'url(../../assets/magenta-blue.jpg)';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
     this.canChangePassword = false;
     this.formInit();
     this.fillForm();
