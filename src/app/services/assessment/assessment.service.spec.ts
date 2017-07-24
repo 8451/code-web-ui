@@ -107,7 +107,7 @@ describe('AssessmentService', () => {
         connection.mockRespond(new Response(response));
       });
       const assessmentService = new AssessmentService(http, authService);
-      assessmentService.getPageableAssessments(0, 20, 'lastName').subscribe(res => {
+      assessmentService.searchAssessments(0, 20, 'lastName', '').subscribe(res => {
         expect(res.assessments.length).toBe(1, 'should contain 1 assessment');
         expect(res.paginationTotalElements).toBe(1, 'should have 1 element total');
         compareAssessments(res.assessments[0]);
@@ -121,7 +121,7 @@ describe('AssessmentService', () => {
         connection.mockRespond(new Response(response));
       });
       const assessmentService = new AssessmentService(http, authService);
-      assessmentService.searchAssessments(0, 20, 'lastName', 'keyword').subscribe(res => {
+      assessmentService.searchAssessments(0, 20, 'lastName', 'searchString').subscribe(res => {
         expect(res.assessments.length).toBe(mockAssessmentResponse.assessments.length, 'should contain 1 assessment');
         expect(res.paginationTotalElements).toBe(mockAssessmentResponse.paginationTotalElements, 'should have 1 element total');
         compareAssessments(res.assessments[0]);

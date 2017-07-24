@@ -18,31 +18,14 @@ export class AssessmentService {
       .catch(this.handleError);
   }
 
-  getPageableAssessments(page: number, size: number, property: string): Observable<AssessmentResponse> {
+  searchAssessments(page: number, size: number, property: string, searchString: string): Observable<AssessmentResponse> {
     const searchParams: URLSearchParams = new URLSearchParams();
     searchParams.set('page', page.toString());
     searchParams.set('size', size.toString());
     searchParams.set('property', property);
+    searchParams.set('searchString', searchString);
 
-    return this.http.get(this.assessmentsUrl, {
-      search: searchParams,
-      headers: this.authService.getHeaders()
-    })
-      .map(res => res.json())
-      .catch(this.handleError);
-  }
-
-  searchAssessments(page: number, size: number, property: string, keyword: string): Observable<AssessmentResponse> {
-    const searchParams: URLSearchParams = new URLSearchParams();
-    searchParams.set('page', page.toString());
-    searchParams.set('size', size.toString());
-    searchParams.set('property', property);
-    searchParams.set('keyword', keyword);
-
-    return this.http.get(this.assessmentsUrl, {
-      search: searchParams,
-      headers: this.authService.getHeaders()
-    })
+    return this.http.get(`${this.assessmentsUrl}/search`, {search: searchParams, headers: this.authService.getHeaders()})
       .map(res => res.json())
       .catch(this.handleError);
   }

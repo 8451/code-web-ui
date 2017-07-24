@@ -18,8 +18,8 @@ export class ManageUsersComponent implements OnInit {
   totalUsers = 100;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
+  searchString = '';
 
-  // MdPaginator Output
   _pageEvent: PageEvent;
 
   set pageEvent(pageEvent: PageEvent) {
@@ -48,12 +48,18 @@ export class ManageUsersComponent implements OnInit {
       pageSize = this.pageEvent.pageSize;
     }
 
-    this.userService.
-        getPageableUsers(index, pageSize, 'lastName')
-        .subscribe(
-          res => this.setUsers(res),
-          error => console.error('error getting questions.')
-        );
+    this.userService.searchUsers(index, pageSize, 'lastName', this.searchString).subscribe(res => {
+      this.setUsers(res);
+    }, error => {
+      console.error('error getting questions.');
+    });
+  }
+
+  searchUser(searchString: string) {
+    this.searchString = searchString;
+    this.userService.searchUsers(0, this.pageSize, 'lastName', searchString).subscribe(res => {
+      this.setUsers(res);
+    });
   }
 
   setUsers(users: UserResponse) {

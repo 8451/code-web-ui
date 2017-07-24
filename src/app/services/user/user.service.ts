@@ -21,28 +21,14 @@ export class UserService {
       .map(res => res.json().users).catch(this.handleError);
   }
 
-  getPageableUsers(page: number, size: number, property: string): Observable<UserResponse> {
+  searchUsers(page: number, size: number, property: string, searchString: string): Observable<UserResponse> {
     const searchParams: URLSearchParams = new URLSearchParams();
     searchParams.set('page', page.toString());
     searchParams.set('size', size.toString());
     searchParams.set('property', property);
+    searchParams.set('searchString', searchString);
 
-    return this.http.get(this.userService, {
-      search: searchParams,
-      headers: this.authService.getHeaders()
-    })
-      .map(res => res.json())
-      .catch(this.handleError);
-  }
-
-  searchUsers(page: number, size: number, property: string, searchField: string): Observable<UserResponse> {
-    const searchParams: URLSearchParams = new URLSearchParams();
-    searchParams.set('page', page.toString());
-    searchParams.set('size', size.toString());
-    searchParams.set('property', property);
-    searchParams.set('searchField', searchField);
-
-    return this.http.get(this.userService, {
+    return this.http.get(`${this.userService}/search`, {
       search: searchParams,
       headers: this.authService.getHeaders()
     })
@@ -90,7 +76,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  handleError(error: Response | any): Observable<string> {
+  handleError(error: Response | any): Observable<any> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);
   }

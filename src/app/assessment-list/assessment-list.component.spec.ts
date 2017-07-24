@@ -75,7 +75,7 @@ describe('AssessmentListComponent', () => {
     fixture = TestBed.createComponent(AssessmentListComponent);
     const assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(assessments));
-    spyOn(assessmentService, 'getPageableAssessments').and.returnValue(Observable.of(mockAssesmentResponse));
+    spyOn(assessmentService, 'searchAssessments').and.returnValue(Observable.of(mockAssesmentResponse));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

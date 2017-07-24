@@ -83,7 +83,7 @@ describe('ManageUsersComponent', () => {
     };
 
     spyOn(userService, 'getUsers').and.returnValue(Observable.of(mockUsers));
-    spyOn(userService, 'getPageableUsers').and.returnValue(Observable.of(mockUserResponse));
+    spyOn(userService, 'searchUsers').and.returnValue(Observable.of(mockUserResponse));
 
 
     fixture.detectChanges();
@@ -185,9 +185,9 @@ describe('ManageUsersComponent', () => {
     expect(userService.unlockUser).toHaveBeenCalledTimes(0);
   }));
 
-  it('should call userService.getPageableUsers when getUsers is called', async(() => {
+  it('should call userService. when getUsers is called', async(() => {
     component.getUsers();
-    expect(userService.getPageableUsers).toHaveBeenCalled();
+    expect(userService.searchUsers).toHaveBeenCalled();
   }));
 
   it('should call getUsers() when pageEvent is set', async(() => {
@@ -198,5 +198,10 @@ describe('ManageUsersComponent', () => {
 
   it('should return _pageEvent when get pageEvent is called', async(() => {
     expect(component.pageEvent).toBe(component._pageEvent);
+  }));
+
+  it('should call searchUser()', async(() => {
+    component.searchUser('');
+    expect(userService.searchUsers).toHaveBeenCalledWith(0, component.pageSize, 'lastName', '');
   }));
 });
