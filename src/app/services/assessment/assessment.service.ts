@@ -1,6 +1,6 @@
 import { AssessmentResponse } from './../../domains/assessment-response';
 import { AuthService } from './../auth/auth.service';
-import { Assessment,  AssessmentStateResponse } from './../../domains/assessment';
+import { Assessment, AssessmentStateResponse } from './../../domains/assessment';
 import { Injectable } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ export class AssessmentService {
   constructor(private http: Http, private authService: AuthService) { }
 
   getAssessments(): Observable<Assessment[]> {
-    return this.http.get(this.assessmentsUrl, {headers: this.authService.getHeaders()})
+    return this.http.get(this.assessmentsUrl, { headers: this.authService.getHeaders() })
       .map(res => res.json().assessments)
       .catch(this.handleError);
   }
@@ -32,8 +32,23 @@ export class AssessmentService {
       .catch(this.handleError);
   }
 
+  searchAssessments(page: number, size: number, property: string, keyword: string): Observable<AssessmentResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+    searchParams.set('keyword', keyword);
+
+    return this.http.get(this.assessmentsUrl, {
+      search: searchParams,
+      headers: this.authService.getHeaders()
+    })
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
   getAssessmentByGuid(guid: string): Observable<Assessment> {
-    return this.http.get(`${this.assessmentsUrl}/${guid}`, {headers: this.authService.getHeaders()})
+    return this.http.get(`${this.assessmentsUrl}/${guid}`, { headers: this.authService.getHeaders() })
       .map(res => res.json().assessments[0])
       .catch(this.handleError);
   }
@@ -45,18 +60,18 @@ export class AssessmentService {
   }
 
   createAssessment(assessment: Assessment): Observable<Assessment> {
-    return this.http.post(`${this.assessmentsUrl}`, assessment, {headers: this.authService.getHeaders()})
+    return this.http.post(`${this.assessmentsUrl}`, assessment, { headers: this.authService.getHeaders() })
       .map(res => res.json().assessments[0])
       .catch(this.handleError);
   }
 
   updateAssessment(assessment: Assessment): Observable<Assessment> {
-    return this.http.put(`${this.assessmentsUrl}`, assessment, {headers: this.authService.getHeaders()})
+    return this.http.put(`${this.assessmentsUrl}`, assessment, { headers: this.authService.getHeaders() })
       .map(res => res.json().assessments[0])
       .catch(this.handleError);
   }
 
-  handleError (error: Response | any): Observable<string> {
+  handleError(error: Response | any): Observable<string> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);
   }

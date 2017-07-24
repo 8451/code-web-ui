@@ -49,12 +49,12 @@ const mockError = {
 };
 
 const mockAuthService = {
-    logout() {},
-    getHeaders() {},
-    login(username: string, password: string) {},
-    isLoggedIn() {},
-    getToken() {}
-  };
+  logout() { },
+  getHeaders() { },
+  login(username: string, password: string) { },
+  isLoggedIn() { },
+  getToken() { }
+};
 
 function compareAssessments(response): void {
   expect(response.firstName).toBe(mockAssessment.assessments[0].firstName);
@@ -71,7 +71,7 @@ describe('AssessmentService', () => {
       providers: [AssessmentService,
         MockBackend,
         BaseRequestOptions,
-        { provide: AuthService, useValue: mockAuthService},
+        { provide: AuthService, useValue: mockAuthService },
         {
           provide: Http,
           deps: [MockBackend, BaseRequestOptions],
@@ -89,79 +89,93 @@ describe('AssessmentService', () => {
 
   it('getAssessments() should return assessment', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessment });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    assessmentService.getAssessments().subscribe(res => {
-      expect(res.length).toBe(1, 'should contain 1 assessment');
-      compareAssessments(res[0]);
-    });
-  })));
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessment });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.getAssessments().subscribe(res => {
+        expect(res.length).toBe(1, 'should contain 1 assessment');
+        compareAssessments(res[0]);
+      });
+    })));
 
   it('getPageableAssessments() should return an assesment-response', fakeAsync(inject([Http, MockBackend, AuthService],
-  (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessmentResponse });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    assessmentService.getPageableAssessments(0, 20, 'lastName').subscribe(res => {
-      expect(res.assessments.length).toBe(1, 'should contain 1 assessment');
-      expect(res.paginationTotalElements).toBe(1, 'should have 1 element total');
-      compareAssessments(res.assessments[0]);
-    });
-  })));
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessmentResponse });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.getPageableAssessments(0, 20, 'lastName').subscribe(res => {
+        expect(res.assessments.length).toBe(1, 'should contain 1 assessment');
+        expect(res.paginationTotalElements).toBe(1, 'should have 1 element total');
+        compareAssessments(res.assessments[0]);
+      });
+    })));
+
+  it('searchAssessments() should return an assesment-response', fakeAsync(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessmentResponse });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.searchAssessments(0, 20, 'lastName', 'keyword').subscribe(res => {
+        expect(res.assessments.length).toBe(mockAssessmentResponse.assessments.length, 'should contain 1 assessment');
+        expect(res.paginationTotalElements).toBe(mockAssessmentResponse.paginationTotalElements, 'should have 1 element total');
+        compareAssessments(res.assessments[0]);
+      });
+    })));
 
   it('createAssessment() should return assessment', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessment });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    assessmentService.createAssessment(mockAssessment.assessments[0]).subscribe(res => {
-      compareAssessments(res);
-    });
-  })));
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessment });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.createAssessment(mockAssessment.assessments[0]).subscribe(res => {
+        compareAssessments(res);
+      });
+    })));
 
   it('getAssessmentByGuid() should update an assessment', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessment });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    assessmentService.getAssessmentByGuid(mockAssessment.assessments[0].interviewGuid).subscribe(res => {
-      compareAssessments(res);
-    });
-  })));
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessment });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.getAssessmentByGuid(mockAssessment.assessments[0].interviewGuid).subscribe(res => {
+        compareAssessments(res);
+      });
+    })));
 
   it('updateAssessment() should update an assessment', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessment });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    assessmentService.updateAssessment(mockAssessment.assessments[0]).subscribe(res => {
-      compareAssessments(res);
-    });
-  })));
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessment });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      assessmentService.updateAssessment(mockAssessment.assessments[0]).subscribe(res => {
+        compareAssessments(res);
+      });
+    })));
 
   it('handleError() should handle any http error', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-    mockBackend.connections.subscribe(connection => {
-      const response = new ResponseOptions({ body: mockAssessment });
-      connection.mockRespond(new Response(response));
-    });
-    const assessmentService = new AssessmentService(http, authService);
-    const errorResponse = new ResponseOptions(mockError);
+      mockBackend.connections.subscribe(connection => {
+        const response = new ResponseOptions({ body: mockAssessment });
+        connection.mockRespond(new Response(response));
+      });
+      const assessmentService = new AssessmentService(http, authService);
+      const errorResponse = new ResponseOptions(mockError);
 
-    assessmentService.handleError(new Response(errorResponse)).subscribe(
-      () => { }, error => expect(error).toBe(mockError.statusText));
-  })));
+      assessmentService.handleError(new Response(errorResponse)).subscribe(
+        () => { }, error => expect(error).toBe(mockError.statusText));
+    })));
 
 
 
