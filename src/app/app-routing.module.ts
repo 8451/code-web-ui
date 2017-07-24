@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { GatewayComponent } from './gateway/gateway.component';
+=======
+import { NotFoundComponent } from './not-found/not-found.component';
+>>>>>>> develop
 import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
@@ -102,7 +106,11 @@ export const routes: Routes = [
   },
   {
     path: '**',
+<<<<<<< HEAD
     component: GatewayComponent
+=======
+    component: NotFoundComponent
+>>>>>>> develop
   }
 ];
 
