@@ -151,6 +151,40 @@ describe('ManageUsersComponent', () => {
     expect(userService.deleteUser).toHaveBeenCalledTimes(0);
   }));
 
+  it('should display a toast when unlockUser is success', async(() => {
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(userService, 'unlockUser').and.returnValue(Observable.of(mockUsers[0]));
+    spyOn(alertService, 'info');
+    component.selectedUser = mockUsers[0];
+    const usersLength = mockUsers.length;
+
+    component.unlockUser();
+
+    expect(alertService.info).toHaveBeenCalled();
+    expect(userService.unlockUser).toHaveBeenCalled();
+  }));
+
+  it('should display an error toast when unlockUser throws error', async(() => {
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(true));
+    spyOn(userService, 'unlockUser').and.returnValue(Observable.throw(errorResponse));
+    spyOn(alertService, 'error');
+    component.selectedUser = mockUsers[0];
+
+    component.unlockUser();
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('should do nothing when confirmation is false', async(() => {
+    spyOn(alertService, 'confirmation').and.returnValue(Observable.of(false));
+    spyOn(userService, 'unlockUser').and.returnValue(Observable.of(mockUsers[0]));
+    component.selectedUser = mockUsers[0];
+
+    component.unlockUser();
+
+    expect(userService.unlockUser).toHaveBeenCalledTimes(0);
+  }));
+
   it('should call userService.getPageableUsers when getUsers is called', async(() => {
     component.getUsers();
     expect(userService.getPageableUsers).toHaveBeenCalled();

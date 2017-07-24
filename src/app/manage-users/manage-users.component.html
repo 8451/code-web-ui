@@ -1,15 +1,22 @@
-<md-paginator [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
-</md-paginator>
+<div class="flex-container-column full-height">
+  <md-paginator [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+  </md-paginator>
 
-<md-list>
-  <div *ngFor="let user of users">
-    <md-list-item (click)="selectUser(user)" [class.selected]="user === selectedUser">
-      <div class="info">
-        <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
-        <p md-line>{{user.username}}</p>
-      </div>
-      <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
-    </md-list-item>
-    <md-divider></md-divider>
-  </div>
-</md-list>
+  <md-list class="flex-100">
+    <div *ngFor="let user of users">
+      <md-list-item (click)="selectUser(user)" [class.selected]="user === selectedUser">
+        <div class="wrapper">
+          <div>
+            <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
+            <p md-line>{{user.username}}</p>
+          </div>
+          <div>
+            <button md-raised-button *ngIf="user.locked" (click)="unlockUser()" color="primary">Unlock Account</button>
+            <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
+          </div>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+    </div>
+  </md-list>
+</div>
