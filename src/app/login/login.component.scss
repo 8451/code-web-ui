@@ -1,4 +1,8 @@
-.logo {
+.centered-button {
+    justify-content: center;
+}
+
+.left-spacer {
     width: 16.5%;
 }
 
@@ -7,17 +11,10 @@
     flex-direction: column;
     align-items: center;
     width: 66%;
-    md-card-content {
-        align-self: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    }
+}
+
+.pic {
+    height: 50%;
 }
 
 .right-spacer {
@@ -33,8 +30,4 @@
     display: flex;
     justify-content: center;
     text-align: center;
-}
-
-.pic {
-    height: 50%;
 }

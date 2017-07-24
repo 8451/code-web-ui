@@ -1,0 +1,53 @@
+button {
+    color: white;
+}
+
+.centered-card {
+    width: 100%;
+    margin-top: 3.21em;
+    background-color: rgba(164, 151, 141, .3);
+    height: 22em;
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+}
+
+.component-wrapper {
+    position: relative;
+    width: 40%;
+    margin: 3rem auto;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+
+.gateway-buttons {
+    display: flex;
+    justify-content: center;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #665E57;
+}
+
+label {
+    color: white;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease; 
+    cursor: pointer;
+    margin-left: .5em;
+}
+
+label:hover {
+    color: #fcbabb;
+    letter-spacing: .1em;
+}
+
+.login-component {
+    justify-content: center;
+    height: 100%;
+}
