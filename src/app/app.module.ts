@@ -23,7 +23,8 @@ import {
   MdAutocompleteModule,
   MdPaginatorModule,
   MdExpansionModule,
-  MdChipsModule
+  MdChipsModule,
+  MdSlideToggleModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -52,6 +53,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { LanguageChipComponent } from './language-chip/language-chip.component';
 import { GatewayComponent } from './gateway/gateway.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,7 @@ import { GatewayComponent } from './gateway/gateway.component';
     AssessmentDetailsComponent,
     LanguageChipComponent,
     GatewayComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +103,8 @@ import { GatewayComponent } from './gateway/gateway.component';
     MdPaginatorModule,
     MdAutocompleteModule,
     MdExpansionModule,
-    MdChipsModule
+    MdChipsModule,
+    MdSlideToggleModule
   ],
   entryComponents: [
     DialogComponent,
