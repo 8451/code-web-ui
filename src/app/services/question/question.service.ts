@@ -34,6 +34,22 @@ export class QuestionService {
       .catch(this.handleError);
   }
 
+  searchQuestions(page: number, size: number, property: string, searchField: string): Observable<QuestionResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+    searchParams.set('searchField', searchField);
+
+    return this.http.get(this.questionsUrl, {
+        search: searchParams,
+        headers: this.authService.getHeaders()
+      })
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+
   getQuestion(id: string): Observable<Question> {
     return this.http.get(`${this.questionsUrl}/${id}`, {headers: this.authService.getHeaders()})
       .map(res => res.json().questions[0])

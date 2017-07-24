@@ -35,6 +35,21 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  searchUsers(page: number, size: number, property: string, searchField: string): Observable<UserResponse> {
+    const searchParams: URLSearchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('size', size.toString());
+    searchParams.set('property', property);
+    searchParams.set('searchField', searchField);
+
+    return this.http.get(this.userService, {
+      search: searchParams,
+      headers: this.authService.getHeaders()
+    })
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post(this.userService, user)
       .map(res => res.json().users[0])

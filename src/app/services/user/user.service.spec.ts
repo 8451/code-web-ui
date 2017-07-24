@@ -230,4 +230,20 @@ describe('UserService', () => {
       });
     }
   )));
+
+  it('searchUsers() should return a list of users', async(inject([Http, MockBackend, AuthService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
+      const userService = new UserService(http, authService);
+
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        const response = new ResponseOptions({ body: mockUserResponse });
+        connection.mockRespond(new Response(response));
+      });
+
+      userService.searchUsers(0, 20, 'lastName', 'search').subscribe(res => {
+        expect(res.users.length).toBe(mockUserResponse.users.length);
+        expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
+      });
+    }
+  )));
 });
