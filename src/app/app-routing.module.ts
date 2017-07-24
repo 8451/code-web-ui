@@ -1,4 +1,5 @@
 import { NotFoundComponent } from './not-found/not-found.component';
+import { GatewayComponent } from './gateway/gateway.component';
 import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
@@ -14,7 +15,6 @@ import { RegisterComponent } from './register/register/register.component';
 import { AssessmentListComponent } from './assessment-list/assessment-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 export const routes: Routes = [
@@ -98,7 +98,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: GatewayComponent
   },
   {
     path: '**',
