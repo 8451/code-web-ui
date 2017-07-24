@@ -151,4 +151,13 @@ describe('AssessmentListComponent', () => {
 
     expect(mockRouter.navigate).toHaveBeenCalledWith(['../assessment', assessments[0].interviewGuid], { relativeTo: route });
   });
+
+  it('should call assessmentService.exportCsv() when exportCsv() is called', () => {
+    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'exportCsv');
+
+    component.exportCsv();
+
+    expect(assessmentService.exportCsv).toHaveBeenCalled();
+  });
 });
