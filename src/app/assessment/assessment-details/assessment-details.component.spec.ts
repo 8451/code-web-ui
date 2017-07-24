@@ -14,6 +14,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentDetailsComponent } from './assessment-details.component';
 import { LanguageChipComponent } from '../../language-chip/language-chip.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 describe('AssessmentDetailsComponent', () => {
   let component: AssessmentDetailsComponent;
@@ -48,6 +49,7 @@ describe('AssessmentDetailsComponent', () => {
         BrowserAnimationsModule,
         FormsModule,
         AceEditorModule,
+        StarRatingModule.forRoot(),
       ],
       providers: [
         AssessmentService,

@@ -53,6 +53,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
 import { LanguageChipComponent } from './language-chip/language-chip.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MdAutocompleteModule,
     MdExpansionModule,
     MdChipsModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
+    StarRatingModule.forRoot(),
   ],
   entryComponents: [
     DialogComponent,
