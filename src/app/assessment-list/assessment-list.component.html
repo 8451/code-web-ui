@@ -1,6 +1,9 @@
 <h3 *ngIf="assessments && !assessments.length">No Assessments</h3>
-<md-paginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
-</md-paginator>
+<div class="flex-container">
+  <md-paginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+  </md-paginator>
+  <button md-button color="primary" (click)="exportCsv()">Export</button>
+</div>
 <md-list>
   <div *ngFor="let assessment of assessments">
     <md-list-item [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
