@@ -13,7 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { CandidateAssessmentComponent } from './candidate-assessment.component';
 
@@ -56,7 +56,6 @@ describe('CandidateAssessmentComponent', () => {
       declarations: [ CandidateAssessmentComponent ],
       imports: [
         ReactiveFormsModule,
-        FormsModule,
         BrowserAnimationsModule,
         MaterialModule,
         AceEditorModule,
@@ -152,16 +151,4 @@ describe('CandidateAssessmentComponent', () => {
     component.sendPasteEvent();
     expect(assessmentWebSocketService.sendPasteEvent).toHaveBeenCalled();
   }));
-
-  it('should set the theme to dark when toggle is not checked', () => {
-    component.theme.toggle = false;
-    component.setTheme();
-    expect(component.theme.name).toBe('monokai');
-  });
-
-  it('should set the theme to light when toggle is checked', () => {
-    component.theme.toggle = true;
-    component.setTheme();
-    expect(component.theme.name).toBe('sqlserver');
-  });
 });

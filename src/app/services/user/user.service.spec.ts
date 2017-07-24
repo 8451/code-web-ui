@@ -21,7 +21,6 @@ const mockUser = {
       lastName: 'Last Name',
       username: 'test@test.com',
       password: '123456',
-      locked: false,
     },
     {
       id: 'id2',
@@ -124,25 +123,6 @@ describe('UserService', () => {
       });
     }
   )));
-
-  it('unlockUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService],
-   (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
-
-      mockBackend.connections.subscribe((connection: MockConnection) => {
-        if (connection.request.method === RequestMethod.Put) {
-          const response = new ResponseOptions({ body: mockUser });
-          connection.mockRespond(new Response(response));
-        } else {
-          connection.mockRespond(errorResponse);
-        }
-      });
-
-      userService.unlockUser(mockUser.users[0]).subscribe(user => {
-        compareUsers(user, mockUser.users[0]);
-      }, error => {
-      });
-   })));
 
   it('updateUserAndPassword() should update user and password and return user', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {

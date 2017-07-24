@@ -4,5 +4,4 @@ export class User {
     lastName: string;
     username: string;
     password: string;
-    locked?: boolean;
 }

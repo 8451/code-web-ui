@@ -1,10 +1,10 @@
 <nav class="app-nav mat-elevation-z3">
-  <div class="navigation-content-left">
+  <div class="navigation-content-right">
     <button md-button id="assessmentLink" class="full-height" [routerLink]="['/interview/assessments']" [routerLinkActive]="['selected']">Assessments</button>
     <button md-button id="questionsLink" class="full-height" [routerLink]="['/interview/questions']" [routerLinkActive]="['selected']">Questions</button>
     <button md-button id="usersLink" class="full-height" [routerLink]="['/interview/users']" [routerLinkActive]="['selected']">Users</button>
   </div>
-  <img src="../../assets/CoDE-negative-logo.png">   
+  <div class="navigation-content-middle"></div>
   <div class="navigation-content-right">
     <button md-button id="accountButton" class="full-height" [routerLink]="['/interview/account']" [routerLinkActive]="['selected']">Account</button>
     <button md-button id="logoutButton" class="full-height" (click)="logout()">Logout</button>

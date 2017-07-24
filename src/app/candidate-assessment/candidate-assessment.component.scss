@@ -17,7 +17,6 @@
 #answer-container {
   font-size: 10pt;
   width: 100%;
-  flex: 1 1 100%;
   display: block;
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
@@ -32,17 +31,11 @@ form {
   width: 100%;
 }
 
-md-toolbar.dark {
-  background: #272822;
-  color: white;
-}
-
-md-toolbar.light {
-  color: purple;
+md-toolbar {
+   background: #272822;
 }
  
-md-slide-toggle {
-  margin: 1em;
+ .question-title {
+   color: white;
 }
-
 

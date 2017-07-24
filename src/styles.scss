@@ -174,11 +174,7 @@ body {
 md-paginator {
   display: flex !important;
   justify-content: flex-start !important;
-  background-color: #f7f7f7 !important;
 }
- md-list {
-     overflow-y: auto;
- }
 
 md-list-item:hover {
   cursor: pointer;
@@ -208,8 +204,4 @@ app-language-chip {
 
 .question-border {
     border-left: .375em solid #E8028C;
-}
-
-.list-spacer {
-    height: 4em;
 }

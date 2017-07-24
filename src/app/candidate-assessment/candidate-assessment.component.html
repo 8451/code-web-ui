@@ -1,14 +1,11 @@
 <div class="candidate-assessment-wrapper">
-  <md-toolbar [ngClass]="{'light': theme.toggle, 'dark': !theme.toggle}">
+  <md-toolbar>
     <h3 class="question-title">{{form.controls['title'].value}}</h3>
     <span class="example-spacer"></span>
-    <md-slide-toggle [(ngModel)]="theme.toggle"  [color]="'primary'" (change)="setTheme()">
-      <span>{{theme.toggle ? 'Light' : 'Dark'}}</span>
-    </md-slide-toggle>
     <button md-raised-button color="primary" (click)="submitAnswer()" type="submit" [disabled]="!form.valid">Submit</button>
   </md-toolbar>
 
-  <form id="candidate-form" [formGroup]="form" (ngSubmit)="submitAnswer()">
-    <ace-editor id="ace-editor" [mode]="mode" [theme]="theme.name" name="answer" formControlName="answer" (keyup)="answerKeystroke()" (paste)="sendPasteEvent()"></ace-editor>
+  <form id="candidate-form" class="full-height" [formGroup]="form" (ngSubmit)="submitAnswer()">
+    <ace-editor id="ace-editor" [mode]="mode" name="answer" formControlName="answer" (keyup)="answerKeystroke()" (paste)="sendPasteEvent()"></ace-editor>
   </form>
 </div>

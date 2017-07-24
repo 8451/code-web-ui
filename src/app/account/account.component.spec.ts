@@ -116,25 +116,6 @@ describe('AccountComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview/account']);
   });
 
-  it('onSubmitUpdate() should redirect to login when the form is valid and username is dirty', () => {
-    component.form.setValue({
-      firstName: mockUser.users[0].firstName,
-      lastName: mockUser.users[0].lastName,
-      username: mockUser.users[0].username,
-    });
-    component.form.get('username').markAsDirty();
-    spyOn(userService, 'updateUser').and.returnValue(Observable.of(mockUser.users[0]));
-    spyOn(alertService, 'info');
-    spyOn(alertService, 'error');
-
-    component.onSubmitUpdate();
-
-    expect(userService.updateUser).toHaveBeenCalledWith(mockUser.users[0]);
-    expect(alertService.info).toHaveBeenCalledTimes(1);
-    expect(alertService.error).toHaveBeenCalledTimes(0);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
-  });
-
   it('onSubmitUpdate() should display an error when updating fails', () => {
     component.form.setValue({
       firstName: mockUser.users[0].firstName,
