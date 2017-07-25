@@ -226,3 +226,10 @@ app-language-chip {
 .search-icon {
   margin-right: .3em;
 }
+star-rating-comp div:focus {
+  outline: none;
+}
+
+md-chip-list *:focus {
+  outline: none;
+}

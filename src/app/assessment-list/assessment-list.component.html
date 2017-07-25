@@ -17,17 +17,17 @@
     <div *ngFor="let assessment of assessments">
       <md-list-item [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
         <div class="wrapper">
-          <div class="info">
-            <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
-            <p md-line>{{assessment.email}}</p>
+          <div class="list-item-left">
+            <div class="info">
+              <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
+              <p md-line>{{assessment.email}}</p>
+            </div>
+            <star-rating-comp starType="svg" [rating]="assessment.rating" readOnly="true"></star-rating-comp>
           </div>
           <p *ngIf="assessment.state === assessmentStates.CLOSED && assessment !== selectedAssessment" class="completed-label">Completed on {{assessment.modifiedDate | date: "short"}}</p>
-          <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES"
-            class="assessment-button" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
-          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED"
-            class="assessment-button" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
-          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED"
-            class="assessment-button" type="button" color="primary" (click)="viewAssessment()">View assessment</button>
+          <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="assessment-button" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
+          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="assessment-button" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
+          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="assessment-button" type="button" color="primary" (click)="viewAssessment()">View assessment</button>
         </div>
       </md-list-item>
       <md-divider></md-divider>

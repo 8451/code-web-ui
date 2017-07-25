@@ -26,3 +26,13 @@ md-list {
   align-items: center;
   width: 100%;
 }
+
+.list-item-left {
+  display: flex;
+  align-items: center;
+  flex-basis:50%;
+}
+
+.info {
+  flex-basis:45%;
+}

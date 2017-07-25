@@ -18,6 +18,7 @@ import {
 
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
@@ -52,7 +53,8 @@ describe('AssessmentListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AssessmentListComponent, NewAssessmentDialogComponent],
-      imports: [MaterialModule, MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule],
+      imports: [MaterialModule, MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule,
+        StarRatingModule.forRoot()],
       providers: [
         AuthService,
         AssessmentService,
