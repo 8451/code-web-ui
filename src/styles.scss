@@ -213,3 +213,11 @@ app-language-chip {
 .list-spacer {
     height: 4em;
 }
+
+star-rating-comp div:focus {
+  outline: none;
+}
+
+md-chip-list *:focus {
+  outline: none;
+}

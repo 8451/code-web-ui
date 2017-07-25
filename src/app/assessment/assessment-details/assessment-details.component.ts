@@ -7,6 +7,7 @@ import { Assessment } from './../../domains/assessment';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { Component, OnInit } from '@angular/core';
+import { IStarRatingOnRatingChangeEven } from 'angular-star-rating';
 
 @Component({
   selector: 'app-assessment-details',
@@ -55,6 +56,10 @@ export class AssessmentDetailsComponent implements OnInit {
 
   getMode(language: string) {
     return editorTranslator(language);
+  }
+
+  onRatingChange($event: IStarRatingOnRatingChangeEven) {
+    this.assessment.rating = $event.rating;
   }
 
 }

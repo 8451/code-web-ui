@@ -10,6 +10,7 @@ export class Assessment {
     state: AssessmentStates;
     notes: string;
     questionAnswers: QuestionAnswer[];
+    rating?: number;
 }
 
 export enum AssessmentStates {

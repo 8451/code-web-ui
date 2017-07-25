@@ -239,4 +239,8 @@ export class InterviewAssessmentComponent implements OnInit {
       return s.toLowerCase().indexOf(val.toLowerCase()) === 0;
     }) : this.languages;
   }
+
+  onRatingChange($event) {
+    this.assessment.rating = $event.rating;
+  }
 }

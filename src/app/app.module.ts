@@ -54,6 +54,7 @@ import { AssessmentDetailsComponent } from './assessment/assessment-details/asse
 import { LanguageChipComponent } from './language-chip/language-chip.component';
 import { GatewayComponent } from './gateway/gateway.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MdAutocompleteModule,
     MdExpansionModule,
     MdChipsModule,
-    MdSlideToggleModule
+    MdSlideToggleModule,
+    StarRatingModule.forRoot(),
   ],
   entryComponents: [
     DialogComponent,

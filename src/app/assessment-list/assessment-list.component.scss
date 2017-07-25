@@ -31,3 +31,17 @@ md-list {
   justify-content: space-between;
   background-color: #f7f7f7;
 }
+
+star-rating-comp {
+   justify-self: flex-start;
+ }
+
+.list-item-left {
+  display: flex;
+  align-items: center;
+  flex-basis:50%;
+}
+
+.info {
+  flex-basis:45%;
+}
