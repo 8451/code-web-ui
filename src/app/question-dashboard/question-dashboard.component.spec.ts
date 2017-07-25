@@ -1,7 +1,7 @@
 import { AlertService } from './../services/alert/alert.service';
 import { QuestionResponse } from './../domains/question-response';
 import { AuthService } from './../services/auth/auth.service';
-import { HttpModule, ResponseOptions } from '@angular/http';
+import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
