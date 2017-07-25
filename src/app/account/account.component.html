@@ -19,12 +19,6 @@
         </md-input-container>
         <md-input-container *ngIf="canChangePassword" class="full-width">
           <input mdInput type="password" placeholder="Current Password" required title="Current Password" formControlName="currentPassword">
-          <md-error *ngIf="form.controls['currentPassword'].hasError('minlength')">
-            Password must have at least 8 characters
-          </md-error>
-          <md-error *ngIf="form.controls['currentPassword'].hasError('passwordValid')">
-            Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
-          </md-error>
         </md-input-container>
         <md-input-container *ngIf="canChangePassword" class="full-width">
           <input mdInput type="password" placeholder="New Password" required title="New Password" formControlName="newPassword">
