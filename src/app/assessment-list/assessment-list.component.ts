@@ -3,7 +3,7 @@ import { AssessmentService } from './../services/assessment/assessment.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef, MdPaginator, PageEvent } from '@angular/material';
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
@@ -20,6 +20,8 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   selectedAssessment: Assessment;
   assessmentStates: any = AssessmentStates;
+  searchString = '';
+  @ViewChild('assessmentPaginator') paginator: MdPaginator;
 
   totalAssessments = 100;
   pageSize = 10;
@@ -50,13 +52,12 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
 
   getAssessments() {
     let pageIndex = 0;
-    let pageSize = this.pageSize;
     if (this._pageEvent) {
       pageIndex = this.pageEvent.pageIndex;
-      pageSize = this.pageEvent.pageSize;
+      this.pageSize = this.pageEvent.pageSize;
     }
 
-    this.assessmentService.getPageableAssessments(pageIndex, pageSize, 'createdDate').subscribe(res => {
+    this.assessmentService.searchAssessments(pageIndex, this.pageSize, 'createdDate', this.searchString).subscribe(res => {
       this.setAssessments(res);
     });
   }
@@ -75,8 +76,8 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.selectedAssessment = assessment;
   }
 
-  updateList(): void {
-    this.subscription = this.dialogRef.afterClosed().subscribe(() => {
+  private updateList(): void {
+    this.subscription = this.dialogRef.afterClosed().subscribe(res => {
       this.getAssessments();
     });
   }
@@ -90,6 +91,18 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
       }, error => {
         this.alertService.error('Unable to start assessment');
       });
+  }
+
+  searchAssessment(searchString: string): void {
+    this.searchString = searchString;
+    let pageSize = this.pageSize;
+    if (this._pageEvent) {
+      pageSize = this.pageEvent.pageSize;
+    }
+    this.assessmentService.searchAssessments(0, this.pageSize, 'createdDate', searchString).subscribe(res => {
+      this.setAssessments(res);
+      this.paginator.pageIndex = 0;
+    });
   }
 
   resumeAssessment(assessment: Assessment): void {

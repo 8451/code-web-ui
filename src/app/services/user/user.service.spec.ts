@@ -215,7 +215,7 @@ describe('UserService', () => {
     }
   )));
 
-  it('should set the users and totalUsers fields when setUsers is called', async(inject([Http, MockBackend, AuthService],
+  it('searchUsers() should return a list of users', async(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const userService = new UserService(http, authService);
 
@@ -224,7 +224,7 @@ describe('UserService', () => {
         connection.mockRespond(new Response(response));
       });
 
-      userService.getPageableUsers(0, 20, 'lastName').subscribe(res => {
+      userService.searchUsers(0, 20, 'lastName', '').subscribe(res => {
         expect(res.users.length).toBe(mockUserResponse.users.length);
         expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
       });

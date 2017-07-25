@@ -72,7 +72,7 @@ const mockLanguages = {
     'JavaScript',
     'Scala',
     'Kotlin',
-    'BrainF*ck',
+    'BrainF**k',
     'C++'
   ]
 };
@@ -147,7 +147,7 @@ describe('QuestionService', () => {
       });
     })));
 
-  it('getPageableQuestions() should return a question-response', fakeAsync(inject([Http, MockBackend, AuthService],
+    it('searchQuestions() should return a question-response', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {
       const questionService = new QuestionService(http, authService);
 
@@ -156,13 +156,12 @@ describe('QuestionService', () => {
         connection.mockRespond(new Response(response));
       });
 
-      questionService.getPageableQuestions(0, 20, 'title').subscribe((questionResponse: QuestionResponse) => {
+      questionService.searchQuestions(0, 20, 'title', 'search').subscribe((questionResponse: QuestionResponse) => {
         expect(questionResponse.paginationTotalElements).toBe(mockQuestions.questions.length, 'should have 2 total elements');
         expect(questionResponse.questions.length).toBe(mockQuestions.questions.length, 'should have 2 question in list');
         compareQuestions(mockQuestionResponse.questions[0], questionResponse.questions[0]);
       });
     })));
-
 
   it('getQuestion() should return a question', fakeAsync(inject([Http, MockBackend, AuthService],
     (http: Http, mockBackend: MockBackend, authService: AuthService) => {

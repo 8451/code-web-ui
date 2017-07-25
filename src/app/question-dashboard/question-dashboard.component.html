@@ -1,9 +1,17 @@
 <div class="flex-container-column full-height">
-  <md-paginator [length]="totalQuestions"
-                [pageSize]="pageSize"
-                [pageSizeOptions]="pageSizeOptions"
-                (page)="pageEvent = $event">
-  </md-paginator>
+  <div class="flex-container paging-and-search">
+    <div class="one-third-width full-height flex-container">
+      <md-paginator #questionPaginator [length]="totalQuestions" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      </md-paginator>
+    </div>
+    <div class="search-box one-third-width full-height flex-container">
+      <md-input-container floatPlaceholder="never">
+        <md-icon mdPrefix class="search-icon">search</md-icon>
+        <input #search mdInput placeholder="Search" (keyup.enter)="searchQuestion(search.value)">
+      </md-input-container>
+    </div>
+  </div>
+  <h3 *ngIf="questions && !questions.length">No Questions</h3>
   <md-list>
     <div *ngFor="let question of questions" (click)="goToQuestionDetails(question)" class="selection">
       <app-question-list-item [question]="question"></app-question-list-item>

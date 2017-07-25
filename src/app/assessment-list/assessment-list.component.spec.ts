@@ -13,19 +13,19 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { AssessmentListComponent } from './assessment-list.component';
 import {
   MdDialogModule, MdCardModule, MaterialModule, MdDialogRef,
-  MdInputModule, MdDialog, OverlayRef, MdDialogContainer
+  MdInputModule, MdDialog, OverlayRef, MdDialogContainer, PageEvent, ScrollStrategy
 } from '@angular/material';
 
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 import { StarRatingModule } from 'angular-star-rating';
 
-
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
   let fixture: ComponentFixture<AssessmentListComponent>;
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
+  let assessmentService;
   const assessments: Assessment[] = [{
     id: null,
     firstName: 'first',
@@ -38,6 +38,12 @@ describe('AssessmentListComponent', () => {
     notes: 'notes',
     questionAnswers: []
   }];
+
+  const mockPageEvent: PageEvent = {
+    pageIndex: 1,
+    pageSize: 5,
+    length: 15,
+  };
 
   const mockAssesmentResponse: AssessmentResponse = {
     assessments: assessments,
@@ -52,7 +58,6 @@ describe('AssessmentListComponent', () => {
       providers: [
         AuthService,
         AssessmentService,
-        MdDialog,
         AlertService,
         FormBuilder,
         { provide: Router, useValue: mockRouter },
@@ -75,9 +80,9 @@ describe('AssessmentListComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentListComponent);
-    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'getAssessments').and.returnValue(Observable.of(assessments));
-    spyOn(assessmentService, 'getPageableAssessments').and.returnValue(Observable.of(mockAssesmentResponse));
+    spyOn(assessmentService, 'searchAssessments').and.returnValue(Observable.of(mockAssesmentResponse));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -86,24 +91,16 @@ describe('AssessmentListComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should open a dialog when create assessment is called', fakeAsync(() => {
-    spyOn(component, 'updateList');
-    component.createAssessment();
-    fixture.detectChanges();
-    tick();
-    expect(component.updateList).toHaveBeenCalled();
-  }));
-
-  it('should call createAssessment when the button is clicked', () => {
+  it('should call createAssessment when the button is clicked and update list after close', fakeAsync(() => {
     const button = fixture.debugElement.nativeElement.querySelector('.md-fab-bottom-right');
-    spyOn(component, 'createAssessment');
+    spyOn(component, 'createAssessment').and.callThrough();
     button.click();
+
     expect(component.createAssessment).toHaveBeenCalled();
-  });
+  }));
 
   it('should call startAssessment() which sets the selected assessment to AWAIT_EMAIL and navigates to interviewAssessment',
     fakeAsync(() => {
-      const assessmentService = fixture.debugElement.injector.get(AssessmentService);
       spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assessments));
       const alertService = fixture.debugElement.injector.get(AlertService);
       spyOn(alertService, 'info');
@@ -117,7 +114,6 @@ describe('AssessmentListComponent', () => {
     }));
 
   it('should call the alertService when starting an assessment fails', fakeAsync(() => {
-    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.throw(this.errorResponse));
     const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(alertService, 'info');
@@ -154,8 +150,26 @@ describe('AssessmentListComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['../assessment', assessments[0].interviewGuid], { relativeTo: route });
   });
 
+  it('searchAssessment() should call searchAssessments and navigate to the first page of the results', fakeAsync(() => {
+    component.searchAssessment('');
+    expect(assessmentService.searchAssessments).toHaveBeenCalled();
+    expect(component.paginator.pageIndex).toEqual(0);
+  }));
+
+  it('a new page event should navigate to a new page of results', fakeAsync(() => {
+    component.searchAssessment('');
+    component.pageEvent = mockPageEvent;
+    expect(assessmentService.searchAssessments).toHaveBeenCalled();
+    expect(component.pageEvent.pageIndex).toEqual(1);
+  }));
+
+  it('selectAssessment() should update the selectedAssessment', fakeAsync(() => {
+    component.selectAssessment(assessments[0]);
+    expect(component.selectedAssessment).toEqual(assessments[0]);
+  }));
+
   it('should call assessmentService.exportCsv() when exportCsv() is called', () => {
-    const assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
     spyOn(assessmentService, 'exportCsv');
 
     component.exportCsv();

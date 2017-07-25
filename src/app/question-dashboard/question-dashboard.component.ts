@@ -1,7 +1,8 @@
+import { AlertService } from './../services/alert/alert.service';
 import { QuestionResponse } from './../domains/question-response';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MdPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '../services/question/question.service';
 import { Question } from '../domains/question';
 
@@ -14,12 +15,13 @@ import { Question } from '../domains/question';
 export class QuestionDashboardComponent implements OnInit {
 
   questions: Question[];
+  @ViewChild('questionPaginator') paginator: MdPaginator;
 
   totalQuestions = 100;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
+  searchString = '';
 
-  // MdPaginator Output
   _pageEvent: PageEvent;
 
   set pageEvent(pageEvent: PageEvent) {
@@ -31,9 +33,11 @@ export class QuestionDashboardComponent implements OnInit {
     return this._pageEvent;
   }
 
-  constructor(private questionService: QuestionService, private router: Router, private route: ActivatedRoute) {
-
-  }
+  constructor(
+    private questionService: QuestionService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.getQuestions();
@@ -47,12 +51,21 @@ export class QuestionDashboardComponent implements OnInit {
       pageSize = this.pageEvent.pageSize;
     }
 
-    this.questionService.
-        getPageableQuestions(index, pageSize, 'title')
-        .subscribe(
-          res => this.setQuestions(res),
-          error => console.error('error getting questions.')
-        );
+    this.questionService.searchQuestions(index, pageSize, 'title', this.searchString).subscribe(res => {
+      this.setQuestions(res);
+    }, error => {
+      this.alertService.error('Error getting questions');
+    });
+  }
+
+  searchQuestion(searchString: string): void {
+    this.searchString = searchString;
+    this.questionService.searchQuestions(0, this.pageSize, 'title', this.searchString).subscribe(res => {
+      this.setQuestions(res);
+      this.paginator.pageIndex = 0;
+    }, error => {
+      this.alertService.error('Error getting questions');
+    });
   }
 
   setQuestions(questionResponse: QuestionResponse): void {

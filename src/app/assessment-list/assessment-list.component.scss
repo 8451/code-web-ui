@@ -16,25 +16,16 @@
   flex: 1 1 auto;
 }
 
+md-list {
+  padding: 0;
+}
+
 .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-
-md-list {
-  padding: 0;
-}
-
-.flex-container {
-  justify-content: space-between;
-  background-color: #f7f7f7;
-}
-
-star-rating-comp {
-   justify-self: flex-start;
- }
 
 .list-item-left {
   display: flex;
