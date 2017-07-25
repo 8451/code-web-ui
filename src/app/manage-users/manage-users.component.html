@@ -1,0 +1,33 @@
+<div class="flex-container-column full-height">
+  <div class="flex-container paging-and-search">
+    <div class="one-third-width full-height flex-container">
+      <md-paginator #userPaginator [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      </md-paginator>
+    </div>
+    <div class="search-box one-third-width full-height flex-container">
+      <md-input-container floatPlaceholder="never">
+        <md-icon mdPrefix class="search-icon">search</md-icon>
+        <input #search mdInput placeholder="Search" (keyup.enter)="searchUser(search.value)">
+      </md-input-container>
+    </div>
+  </div>
+  <h3 *ngIf="users && !users.length">No Users</h3>
+
+  <md-list class="flex-100">
+    <div *ngFor="let user of users">
+      <md-list-item (click)="selectUser(user)" [class.selected]="user === selectedUser">
+        <div class="wrapper">
+          <div>
+            <h4 md-line>{{user.lastName}}, {{user.firstName}}</h4>
+            <p md-line>{{user.username}}</p>
+          </div>
+          <div>
+            <button md-raised-button *ngIf="user.locked" (click)="unlockUser()" color="primary">Unlock Account</button>
+            <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
+          </div>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+    </div>
+  </md-list>
+</div>

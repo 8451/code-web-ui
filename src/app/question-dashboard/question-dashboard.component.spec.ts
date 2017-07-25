@@ -1,6 +1,7 @@
+import { AlertService } from './../services/alert/alert.service';
 import { QuestionResponse } from './../domains/question-response';
 import { AuthService } from './../services/auth/auth.service';
-import { HttpModule } from '@angular/http';
+import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { QuestionListItemComponent } from './../question-list-item/question-list-item.component';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from './../services/question/question.service';
@@ -11,14 +12,16 @@ import { async, fakeAsync, ComponentFixture, TestBed, inject } from '@angular/co
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, PageEvent } from '@angular/material';
 import { routes } from '../app-routing.module';
+import { LanguageChipComponent } from '../language-chip/language-chip.component';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
 describe('QuestionDashboardComponent', () => {
   let component: QuestionDashboardComponent;
   let fixture: ComponentFixture<QuestionDashboardComponent>;
+  let alertService: AlertService;
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
   const questions: any[] = [
     {
@@ -60,9 +63,17 @@ describe('QuestionDashboardComponent', () => {
 
   ];
 
+  const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
+
   const mockQuestionResponse: QuestionResponse = {
     questions: questions,
     paginationTotalElements: questions.length
+  };
+
+  const mockPageEvent: PageEvent = {
+    pageIndex: 1,
+    pageSize: 5,
+    length: 15,
   };
 
   const question = {
@@ -78,11 +89,11 @@ describe('QuestionDashboardComponent', () => {
     modifiedDate: new Date(1)
   };
 
-  let spy: any;
+  let searchSpy: any;
   let questionService: QuestionService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuestionDashboardComponent, QuestionListItemComponent],
+      declarations: [QuestionDashboardComponent, QuestionListItemComponent, LanguageChipComponent],
       imports: [
         BrowserAnimationsModule,
         MaterialModule,
@@ -92,14 +103,16 @@ describe('QuestionDashboardComponent', () => {
       providers: [
         AuthService,
         QuestionService,
+        AlertService,
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'questions' }]) } }
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(QuestionDashboardComponent);
+    alertService = fixture.debugElement.injector.get(AlertService);
     component = fixture.debugElement.componentInstance;
     questionService = fixture.debugElement.injector.get(QuestionService);
-    spy = spyOn(questionService, 'getPageableQuestions').and.returnValue(Observable.of(mockQuestionResponse));
+    searchSpy = spyOn(questionService, 'searchQuestions').and.returnValue(Observable.of(mockQuestionResponse));
   }));
 
   it('should create the question dashboard component', async(() => {
@@ -124,5 +137,35 @@ describe('QuestionDashboardComponent', () => {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
     component.goToQuestionDetails(question);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['../question', question.id], { relativeTo: route });
+  }));
+
+  it('should call searchQuestion()', fakeAsync(() => {
+    component.searchQuestion('');
+    expect(questionService.searchQuestions).toHaveBeenCalledWith(0, component.pageSize, 'title', '');
+  }));
+
+  it('should handle errors if searchQuestion() has errors', async(() => {
+    searchSpy.and.returnValue(Observable.throw(errorResponse));
+    spyOn(alertService, 'error');
+
+    component.searchQuestion('');
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('should handle errors if getQuestions() has errors', async(() => {
+    searchSpy.and.returnValue(Observable.throw(errorResponse));
+    spyOn(alertService, 'error');
+
+    component.getQuestions();
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('a new page event should navigate to a new page of results', async(() => {
+    component.searchQuestion('');
+    component.pageEvent = mockPageEvent;
+    expect(questionService.searchQuestions).toHaveBeenCalled();
+    expect(component.pageEvent.pageIndex).toEqual(1);
   }));
 });

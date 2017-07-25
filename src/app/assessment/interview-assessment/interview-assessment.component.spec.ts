@@ -1,7 +1,8 @@
+import { QuestionAnswer } from './../../domains/question-answer';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
-import { NewQuestionEvent, AnswerQuestionEvent } from 'app/domains/events/web-socket-event';
+import { NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
 import { StompService } from 'ng2-stomp-service';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +23,8 @@ import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, Form
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
+import { LanguageChipComponent } from 'app/language-chip/language-chip.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
@@ -46,10 +49,27 @@ describe('InterviewAssessmentComponent', () => {
   }];
 
   const answerEvent: AnswerQuestionEvent = {
-    title: 'ae_title1',
-    body: 'ae_body1',
-    language: 'ae_language1',
-    answer: 'ae_answer1',
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
+    answer: 'Answer1',
+    questionResponseId: 'ae_',
+    timestamp: new Date(),
+  };
+
+  const questionAnswer: QuestionAnswer = {
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
+    answer: 'Answer1',
+    questionResponseId: 'ae_',
+
+   };
+
+  const newQuestionEvent: NewQuestionEvent = {
+    title: 'Title1',
+    body: 'Body1',
+    language: 'Java',
     questionResponseId: 'ae_',
     timestamp: new Date(),
   };
@@ -65,6 +85,8 @@ describe('InterviewAssessmentComponent', () => {
     send(data: any) { }
   };
 
+  const languages = ['Java', 'Scala', 'C#'];
+
   const questions: any[] = [
     {
       'id': 'id1',
@@ -74,7 +96,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy1',
       'createdDate': null,
       'modifiedBy': 'modifiedBy1',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Java',
     },
     {
       'id': 'id2',
@@ -84,7 +107,8 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy2',
       'createdDate': null,
       'modifiedBy': 'modifiedBy2',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'Scala',
     },
     {
       'id': 'id3',
@@ -94,9 +118,9 @@ describe('InterviewAssessmentComponent', () => {
       'createdBy': 'createdBy3',
       'createdDate': null,
       'modifiedBy': 'modifiedBy3',
-      'modifiedDate': null
+      'modifiedDate': null,
+      'language': 'C#',
     }
-
   ];
 
   class MdDialogRefMock {
@@ -104,7 +128,8 @@ describe('InterviewAssessmentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent],
+      declarations: [InterviewAssessmentComponent, QuestionListItemComponent, QuestionInfoDialogComponent,
+        LanguageChipComponent],
       imports: [
         HttpModule,
         RouterTestingModule,
@@ -112,6 +137,8 @@ describe('InterviewAssessmentComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         AceEditorModule,
+        ReactiveFormsModule,
+        StarRatingModule.forRoot(),
       ],
       providers: [
         AuthService,
@@ -123,6 +150,7 @@ describe('InterviewAssessmentComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: StompService, useValue: mockStomp },
         AssessmentWebSocketService,
+        FormBuilder,
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -147,6 +175,8 @@ describe('InterviewAssessmentComponent', () => {
     assessmentWebSocketService = fixture.debugElement.injector.get(AssessmentWebSocketService);
     spyOn(assessmentService, 'getAssessmentByGuid').and.returnValue(Observable.of(assessments[0]));
     spyOn(assessmentWebSocketService, 'getAnsweredQuestion').and.returnValue(answerEventSubject);
+    spyOn(questionService, 'getLanguages').and.returnValue(Observable.of(['Java', 'Python']));
+    component.initForm();
   });
 
   afterEach(() => {
@@ -159,6 +189,7 @@ describe('InterviewAssessmentComponent', () => {
   }));
 
   it('should populate with a list of questions', async(() => {
+    component.assessment = assessments[0];
     spyOn(questionService, 'getQuestions').and.returnValue(Observable.of(questions));
 
     component.getQuestions();
@@ -320,5 +351,98 @@ describe('InterviewAssessmentComponent', () => {
     spyOn(assessmentWebSocketService, 'sendConnectEvent');
     component.sendConnectEvent(assessments[0].interviewGuid);
     expect(assessmentWebSocketService.sendConnectEvent).toHaveBeenCalled();
+  });
+
+  it('should display a toast when a user pastes', () => {
+
+    alertService = fixture.debugElement.injector.get(AlertService);
+
+    spyOn(assessmentWebSocketService, 'getPasteEvent')
+      .and.returnValue(Observable.of(new PasteEvent()));
+    spyOn(alertService, 'error');
+    component.getPasteEvent(assessments[0].interviewGuid);
+    expect(alertService.error).toHaveBeenCalled();
+  });
+
+  it('should call questionService.getLanguages()', async(() => {
+    component.ngOnInit();
+    expect(questionService.getLanguages).toHaveBeenCalled();
+  }));
+
+  it('filterQuestions() returns questions with language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions('j').length).toEqual(1);
+  });
+
+  it('filterQuestions() returns all questions with no language', () => {
+    component.questions = questions;
+    expect(component.filterQuestions(null).length).toEqual(3);
+  });
+
+  it('filterLanguages() returns languages that match', () => {
+    component.languages = languages;
+    expect(component.filterLanguages('j').length).toEqual(1);
+  });
+
+  it('filterLanguages returns full list when no language', () => {
+    component.languages = languages;
+    expect(component.filterLanguages(null).length).toEqual(3);
+  });
+
+  it('calls updateSentQuestion when resuming an assessment', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.IN_PROGRESS;
+    component.assessment.questionAnswers = [questionAnswer];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledWith(questionAnswer);
+  });
+
+  it('does not call updateSentQuestion when resuming if assessment not in progress', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.NOT_STARTED;
+    component.assessment.questionAnswers = [questionAnswer];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledTimes(0);
+  });
+
+  it('does not call updateSentQuestion when resuming if questionAnswers is empty', () => {
+    component.assessment = assessments[0];
+    component.assessment.state = AssessmentStates.IN_PROGRESS;
+    component.assessment.questionAnswers = [];
+    spyOn(component, 'updateSentQuestion');
+    component.getCurrentQuestion();
+    expect(component.updateSentQuestion).toHaveBeenCalledTimes(0);
+  });
+
+  it('updateSentQuestion should set sentQuestion if there is a match', () => {
+    component.questions = questions;
+    component.updateSentQuestion(questionAnswer);
+    expect(component.sentQuestion).toBe(questions[0]);
+    expect(component.questionBody).toBe(questionAnswer.answer);
+  });
+
+  it('updateSentQuestion should not set sentQuestion if there is not a match', () => {
+    component.questions = questions;
+    const wrongAnswer = questionAnswer;
+    wrongAnswer.title = 'wrong_title';
+    component.updateSentQuestion(wrongAnswer);
+    expect(component.sentQuestion).toBeUndefined();
+    expect(component.questionBody).toBeUndefined();
+  });
+
+  it('updateSentQuestion should use body if param is NewQuestionEvent', () => {
+    component.questions = questions;
+    component.updateSentQuestion(newQuestionEvent);
+    expect(component.sentQuestion).toBe(questions[0]);
+    expect(component.questionBody).toBe(newQuestionEvent.body);
+  });
+
+  it('should update assessment.rating onRatingChange', () => {
+    component.assessment = assessments[0];
+    component.assessment.rating = 1;
+    component.onRatingChange({rating: 5});
+    expect(component.assessment.rating).toEqual(5);
   });
 });

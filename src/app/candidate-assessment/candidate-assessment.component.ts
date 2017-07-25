@@ -25,6 +25,11 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
   sub: Subscription;
   questionAnswer: AnswerQuestionEvent;
   mode = 'java';
+  theme = {
+    toggle: false,
+    name: 'monokai'
+  };
+
   @ViewChild(AceEditorComponent) aceEditor;
   private updatedAnswers: Subject<AnswerQuestionEvent> = new Subject<AnswerQuestionEvent>();
 
@@ -90,11 +95,12 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
     this.updatedAnswers.next(this.form.value as AnswerQuestionEvent);
   }
 
- ngAfterViewInit() {
-   this.aceEditor.getEditor().setOptions({
-    showPrintMargin: false,
-   });
- }
+  ngAfterViewInit() {
+    this.aceEditor.getEditor().setOptions({
+      showPrintMargin: false,
+      wrap: true
+    });
+  }
 
   submitAnswer() {
     this.sendAnswer();
@@ -109,6 +115,14 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
     const questionAnswer: AnswerQuestionEvent = this.form.value as AnswerQuestionEvent;
 
     this.assessmentWebSocketService.answerQuestion(this.assessmentId, questionAnswer);
+  }
+
+  sendPasteEvent() {
+    this.assessmentWebSocketService.sendPasteEvent(this.assessmentId);
+  }
+
+  setTheme() {
+    this.theme.name = this.theme.toggle ? 'sqlserver' : 'monokai';
   }
 
   ngOnDestroy() {

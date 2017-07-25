@@ -16,10 +16,8 @@
   flex: 1 1 auto;
 }
 
-.selected {
-  color: #607D88;
-  background-color: #DDD;
-  left: .1em;
+md-list {
+  padding: 0;
 }
 
 .wrapper {
@@ -29,19 +27,12 @@
   width: 100%;
 }
 
-.assessment:hover {
-  cursor: pointer;
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-
-md-list {
-  padding: 0;
-  margin-bottom: 4em;
-}
-
-md-paginator {
+.list-item-left {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  flex-basis:50%;
+}
+
+.info {
+  flex-basis:45%;
 }

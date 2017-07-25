@@ -9,7 +9,8 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "web.config"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -32,7 +33,8 @@
                   "../node_modules/ace-builds/src-min/mode-ruby.js",
                   "../node_modules/ace-builds/src-min/mode-php.js",
                   "../node_modules/ace-builds/src-min/mode-scala.js",
-                  "../node_modules/ace-builds/src-min/mode-java.js"],
+                  "../node_modules/ace-builds/src-min/mode-java.js",
+                  "../node_modules/ace-builds/src-min/theme-sqlserver.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -49,7 +51,7 @@
     {
       "project": "src/tsconfig.app.json",
       "exclude": "**/node_modules/**/*.ts"
-      
+
     },
     {
       "project": "src/tsconfig.spec.json",

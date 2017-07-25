@@ -1,3 +1,6 @@
+import { QuestionAnswer } from './../../domains/question-answer';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
@@ -6,11 +9,13 @@ import { QuestionInfoDialogComponent } from './../../question-info-dialog/questi
 import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService, editorTranslator } from './../../services/question/question.service';
-
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Assessment, AssessmentStates } from './../../domains/assessment';
 import { AssessmentService } from './../../services/assessment/assessment.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-interview-assessment',
@@ -21,19 +26,25 @@ export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
+  form: FormGroup;
   assessment: Assessment;
   dialogRef: MdDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
+  languages: string[];
+  language: string;
+  filteredQuestions: Observable<Question[]>;
+  filteredLanguages: Observable<string[]>;
   questions: Question[];
   questionBody: string;
   mode = 'java';
-  editorOptions: any = {showPrintMargin: false, wrap: true};
+  editorOptions: any = { showPrintMargin: false, wrap: true };
 
   assessmentStates: any = AssessmentStates;
 
   constructor(
     public dialog: MdDialog,
+    private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private router: Router,
@@ -43,27 +54,44 @@ export class InterviewAssessmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initializeWebSocket();
+    Observable.zip(this.questionService.getLanguages(), this.getAssessment()).subscribe((data) => {
+      this.languages = data[0];
+      this.assessment = data[1];
+      this.initForm();
+      this.initializeWebSocket();
+    }, err => console.error(err));
+  }
+
+  private getAssessment(): Observable<Assessment> {
+    return this.route.params.switchMap((params: Params) => {
+      return this.assessmentService.getAssessmentByGuid(params['guid']);
+    });
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      language: ['', []],
+    });
+
+    this.filteredLanguages = this.form.get('language').valueChanges.startWith(null).map(language => {
+        return this.filterLanguages(language);
+    });
   }
 
   initializeWebSocket(): void {
-    this.route.params
-      .switchMap((params: Params) => {
-        return this.assessmentService.getAssessmentByGuid(params['guid']);
-      }).subscribe(assessment => {
-        this.assessment = assessment;
-        if (this.assessment.state === AssessmentStates.CLOSED) {
-          this.router.navigate(['/interview/assessments']);
-          return;
-        }
-        if (this.assessment.state !== AssessmentStates.NOTES) {
-          document.getElementById('sidenavID').setAttribute('style', 'display: flex');
-        }
-        this.getQuestions();
-        this.getConnectEvent(this.assessment.interviewGuid);
-        this.getAnsweredQuestion(this.assessment.interviewGuid);
-        this.sendConnectEvent(this.assessment.interviewGuid);
-      });
+    if (this.assessment.state === AssessmentStates.CLOSED) {
+      this.router.navigate(['/interview/assessments']);
+      return;
+    }
+    if (this.assessment.state !== AssessmentStates.NOTES) {
+      document.getElementById('sidenavID').setAttribute('style', 'display: flex');
+    }
+    this.getQuestions();
+    this.getConnectEvent(this.assessment.interviewGuid);
+    this.getPasteEvent(this.assessment.interviewGuid);
+    this.getAnsweredQuestion(this.assessment.interviewGuid);
+    this.getNewQuestionEvent(this.assessment.interviewGuid);
+    this.sendConnectEvent(this.assessment.interviewGuid);
   }
 
   getAnsweredQuestion(guid: string): void {
@@ -83,13 +111,48 @@ export class InterviewAssessmentComponent implements OnInit {
     this.assessmentWebSocketService.sendConnectEvent(guid);
   }
 
+  getNewQuestionEvent(guid: string) {
+    this.assessmentWebSocketService.getNewQuestion(guid).subscribe(event => {
+      this.updateSentQuestion(event);
+    });
+  }
+
+  getPasteEvent(guid: string) {
+    this.assessmentWebSocketService.getPasteEvent(guid).subscribe(event => {
+      this.alertService.error('User has pasted!');
+    });
+  }
+
   getQuestions(): void {
     this.questionService.getQuestions().subscribe(questions => {
       this.questions = questions;
-    },
-      error => {
-        this.alertService.error('Could not get questions');
+      this.getCurrentQuestion();
+      this.filteredQuestions = this.form.get('language').valueChanges.startWith(null).map(language => {
+        return this.filterQuestions(language);
       });
+    },
+    error => {
+      this.alertService.error('Could not get questions');
+    });
+  }
+
+  getCurrentQuestion() {
+    if (this.assessment.questionAnswers.length > 0 && this.assessment.state === AssessmentStates.IN_PROGRESS) {
+      const latestQuestionAnswer = this.assessment.questionAnswers[this.assessment.questionAnswers.length - 1];
+      this.updateSentQuestion(latestQuestionAnswer);
+    }
+  }
+
+  updateSentQuestion(latestQuestionAnswer: QuestionAnswer | NewQuestionEvent) {
+      const currentQuestion = this.questions.find((question) => {
+        return question.title === latestQuestionAnswer.title && question.language === latestQuestionAnswer.language;
+      });
+      if (currentQuestion) {
+        this.sentQuestion = currentQuestion;
+        this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
+          (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
+        this.mode = editorTranslator(currentQuestion.language);
+      }
   }
 
   selectQuestion(question: Question): void {
@@ -158,5 +221,26 @@ export class InterviewAssessmentComponent implements OnInit {
 
   candidateAnsweredQuestion(event: AnswerQuestionEvent): void {
     this.questionBody = event.answer;
+  }
+
+  filterQuestions(val: string): Question[] {
+    const useExactMatch = this.languages && this.languages.indexOf(val) > -1;
+    return val ? this.questions.filter(q => {
+      if (useExactMatch) {
+        return q.language.toLowerCase() === val.toLowerCase();
+      }
+
+      return q.language.toLowerCase().indexOf(val.toLowerCase()) === 0;
+    }) : this.questions;
+  }
+
+  filterLanguages(val: string): string[] {
+    return val ? this.languages.filter(s => {
+      return s.toLowerCase().indexOf(val.toLowerCase()) === 0;
+    }) : this.languages;
+  }
+
+  onRatingChange($event) {
+    this.assessment.rating = $event.rating;
   }
 }

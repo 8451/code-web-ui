@@ -1,5 +1,7 @@
 # CodeWebUi
 
+![MainPage](https://github.8451.com/storage/user/490/files/06e25e54-7146-11e7-8876-e238e9eb0a9a)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
 ## Setup
@@ -45,3 +47,17 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Deployment Instructions
+
+**Note:** Use the azure-deploy.py file provided in the services repository
+
+**You may need to update `src/web.config` to proxy to the correct BFF endpoint.**
+
+**Just modify `<action type="Rewrite" url="https://code-bff.azurewebsites.net/api/v1/{R:1}" logRewrittenUrl="true" />`
+to point to the correct url**.
+
+```sh
+ng build --aot -prod
+python3 azure-deploy.py -d dist/ --host ${AZURE_HOST} -u code-web-ui\\${DEPLOY_USER} -xdt applicationHost.xdt
+```

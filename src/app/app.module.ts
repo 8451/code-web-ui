@@ -21,7 +21,10 @@ import {
   MdIconModule,
   MdSidenavModule,
   MdAutocompleteModule,
-  MdPaginatorModule
+  MdPaginatorModule,
+  MdExpansionModule,
+  MdChipsModule,
+  MdSlideToggleModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -45,6 +48,13 @@ import { QuestionInfoDialogComponent } from './question-info-dialog/question-inf
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
+import { AccountComponent } from './account/account.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
+import { LanguageChipComponent } from './language-chip/language-chip.component';
+import { GatewayComponent } from './gateway/gateway.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -65,6 +75,12 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     CandidateComponent,
     CandidateAssessmentComponent,
     ThankYouComponent,
+    AccountComponent,
+    ManageUsersComponent,
+    AssessmentDetailsComponent,
+    LanguageChipComponent,
+    GatewayComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +103,10 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
     AceEditorModule,
     MdPaginatorModule,
     MdAutocompleteModule,
+    MdExpansionModule,
+    MdChipsModule,
+    MdSlideToggleModule,
+    StarRatingModule.forRoot(),
   ],
   entryComponents: [
     DialogComponent,
