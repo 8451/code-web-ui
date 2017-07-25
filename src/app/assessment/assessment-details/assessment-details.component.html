@@ -20,6 +20,7 @@
     </md-card>
   </div>
   <div class="assessment-question-answers">
+    <h3 *ngIf="(filteredQuestionAnswers | async)?.length <= 0">No questions answered</h3>
     <md-accordion *ngIf="assessment" [displayMode]="displayMode" [multi]="multi" class="question-answer-accordion">
       <md-expansion-panel *ngFor="let questionAnswer of filteredQuestionAnswers | async; let isFirst = first" [expanded]="isFirst"
         class="question-answer-panel">
