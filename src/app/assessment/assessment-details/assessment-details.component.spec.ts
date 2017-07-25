@@ -36,7 +36,8 @@ describe('AssessmentDetailsComponent', () => {
     modifiedDate: new Date(1),
     state: AssessmentStates.NOTES,
     notes: 'notes',
-    questionAnswers: []
+    questionAnswers: [],
+    rating: 1,
   };
 
   beforeEach(async(() => {
@@ -116,5 +117,12 @@ describe('AssessmentDetailsComponent', () => {
   it('should return the correct mode when calling getMode', () => {
     const mode = component.getMode('Python3');
     expect(mode).toBe('python');
+  });
+
+  it('should update assessment.rating onRatingChange', () => {
+    mockAssessment.rating = 1;
+    component.assessment = mockAssessment;
+    component.onRatingChange({rating: 5});
+    expect(component.assessment.rating).toEqual(5);
   });
 });

@@ -24,6 +24,7 @@ import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } fr
 import { InterviewAssessmentComponent } from './interview-assessment.component';
 import { MaterialModule, MdDialog, MdDialogRef, OverlayRef, MdSidenav } from '@angular/material';
 import { LanguageChipComponent } from 'app/language-chip/language-chip.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 describe('InterviewAssessmentComponent', () => {
   let component: InterviewAssessmentComponent;
@@ -137,6 +138,7 @@ describe('InterviewAssessmentComponent', () => {
         BrowserAnimationsModule,
         AceEditorModule,
         ReactiveFormsModule,
+        StarRatingModule.forRoot(),
       ],
       providers: [
         AuthService,
@@ -435,5 +437,12 @@ describe('InterviewAssessmentComponent', () => {
     component.updateSentQuestion(newQuestionEvent);
     expect(component.sentQuestion).toBe(questions[0]);
     expect(component.questionBody).toBe(newQuestionEvent.body);
+  });
+
+  it('should update assessment.rating onRatingChange', () => {
+    component.assessment = assessments[0];
+    component.assessment.rating = 1;
+    component.onRatingChange({rating: 5});
+    expect(component.assessment.rating).toEqual(5);
   });
 });
