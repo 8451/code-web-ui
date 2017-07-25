@@ -1,3 +1,4 @@
+import { AlertService } from './../services/alert/alert.service';
 import { QuestionResponse } from './../domains/question-response';
 import { PageEvent, MdPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -32,9 +33,11 @@ export class QuestionDashboardComponent implements OnInit {
     return this._pageEvent;
   }
 
-  constructor(private questionService: QuestionService, private router: Router, private route: ActivatedRoute) {
-
-  }
+  constructor(
+    private questionService: QuestionService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.getQuestions();
@@ -51,7 +54,7 @@ export class QuestionDashboardComponent implements OnInit {
     this.questionService.searchQuestions(index, pageSize, 'title', this.searchString).subscribe(res => {
       this.setQuestions(res);
     }, error => {
-      console.error('error getting questions.');
+      this.alertService.error('Error getting questions');
     });
   }
 
@@ -60,6 +63,8 @@ export class QuestionDashboardComponent implements OnInit {
     this.questionService.searchQuestions(0, this.pageSize, 'title', this.searchString).subscribe(res => {
       this.setQuestions(res);
       this.paginator.pageIndex = 0;
+    }, error => {
+      this.alertService.error('Error getting questions');
     });
   }
 

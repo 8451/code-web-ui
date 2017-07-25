@@ -52,13 +52,12 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
 
   getAssessments() {
     let pageIndex = 0;
-    let pageSize = this.pageSize;
     if (this._pageEvent) {
       pageIndex = this.pageEvent.pageIndex;
-      pageSize = this.pageEvent.pageSize;
+      this.pageSize = this.pageEvent.pageSize;
     }
 
-    this.assessmentService.searchAssessments(pageIndex, pageSize, 'createdDate', this.searchString).subscribe(res => {
+    this.assessmentService.searchAssessments(pageIndex, this.pageSize, 'createdDate', this.searchString).subscribe(res => {
       this.setAssessments(res);
     });
   }
@@ -96,6 +95,10 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
 
   searchAssessment(searchString: string): void {
     this.searchString = searchString;
+    let pageSize = this.pageSize;
+    if (this._pageEvent) {
+      pageSize = this.pageEvent.pageSize;
+    }
     this.assessmentService.searchAssessments(0, this.pageSize, 'createdDate', searchString).subscribe(res => {
       this.setAssessments(res);
       this.paginator.pageIndex = 0;
