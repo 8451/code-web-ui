@@ -51,7 +51,7 @@ export class ManageUsersComponent implements OnInit {
     this.userService.searchUsers(index, pageSize, 'lastName', this.searchString).subscribe(res => {
       this.setUsers(res);
     }, error => {
-      console.error('error getting questions.');
+      this.alertService.error('Error getting users');
     });
   }
 
@@ -59,6 +59,8 @@ export class ManageUsersComponent implements OnInit {
     this.searchString = searchString;
     this.userService.searchUsers(0, this.pageSize, 'lastName', searchString).subscribe(res => {
       this.setUsers(res);
+    }, error => {
+      this.alertService.error('Error getting users');
     });
   }
 

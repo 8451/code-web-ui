@@ -77,8 +77,8 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     this.selectedAssessment = assessment;
   }
 
-  updateList(): void {
-    this.subscription = this.dialogRef.afterClosed().subscribe(() => {
+  private updateList(): void {
+    this.subscription = this.dialogRef.afterClosed().subscribe(res => {
       this.getAssessments();
     });
   }

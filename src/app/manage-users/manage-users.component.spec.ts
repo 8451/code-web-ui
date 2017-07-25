@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserResponse } from './../domains/user-response';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, PageEvent } from '@angular/material';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,7 @@ describe('ManageUsersComponent', () => {
   let fixture: ComponentFixture<ManageUsersComponent>;
   let userService: UserService;
   let alertService: AlertService;
+  let searchSpy: any;
 
   const errorResponse = new Response(new ResponseOptions({ status: 500, body: null }));
 
@@ -31,6 +32,11 @@ describe('ManageUsersComponent', () => {
     getToken() { }
   };
 
+  const mockPageEvent: PageEvent = {
+    pageIndex: 1,
+    pageSize: 5,
+    length: 15,
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -83,7 +89,7 @@ describe('ManageUsersComponent', () => {
     };
 
     spyOn(userService, 'getUsers').and.returnValue(Observable.of(mockUsers));
-    spyOn(userService, 'searchUsers').and.returnValue(Observable.of(mockUserResponse));
+    searchSpy = spyOn(userService, 'searchUsers').and.returnValue(Observable.of(mockUserResponse));
 
 
     fixture.detectChanges();
@@ -203,5 +209,30 @@ describe('ManageUsersComponent', () => {
   it('should call searchUser()', async(() => {
     component.searchUser('');
     expect(userService.searchUsers).toHaveBeenCalledWith(0, component.pageSize, 'lastName', '');
+  }));
+
+  it('should handle errors if searchUser() has errors', async(() => {
+    searchSpy.and.returnValue(Observable.throw(errorResponse));
+    spyOn(alertService, 'error');
+
+    component.searchUser('');
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('should handle errors if getUsers() has errors', async(() => {
+    searchSpy.and.returnValue(Observable.throw(errorResponse));
+    spyOn(alertService, 'error');
+
+    component.getUsers();
+
+    expect(alertService.error).toHaveBeenCalled();
+  }));
+
+  it('a new page event should navigate to a new page of results', async(() => {
+    component.searchUser('');
+    component.pageEvent = mockPageEvent;
+    expect(userService.searchUsers).toHaveBeenCalled();
+    expect(component.pageEvent.pageIndex).toEqual(1);
   }));
 });
