@@ -1,0 +1,33 @@
+.centered-button {
+    justify-content: center;
+}
+
+.left-spacer {
+    width: 16.5%;
+}
+
+.login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 66%;
+}
+
+.pic {
+    height: 50%;
+}
+
+.right-spacer {
+    margin: 0;
+    width: 16.5%;
+}
+
+.title-contents {
+    flex-direction: row;
+}
+
+.title-text {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

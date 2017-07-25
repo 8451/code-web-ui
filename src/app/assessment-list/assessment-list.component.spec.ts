@@ -165,4 +165,13 @@ describe('AssessmentListComponent', () => {
     component.selectAssessment(assessments[0]);
     expect(component.selectedAssessment).toEqual(assessments[0]);
   }));
+
+  it('should call assessmentService.exportCsv() when exportCsv() is called', () => {
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    spyOn(assessmentService, 'exportCsv');
+
+    component.exportCsv();
+
+    expect(assessmentService.exportCsv).toHaveBeenCalled();
+  });
 });

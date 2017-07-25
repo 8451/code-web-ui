@@ -4,6 +4,7 @@ import { Assessment, AssessmentStateResponse } from './../../domains/assessment'
 import { Injectable } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 
 @Injectable()
 export class AssessmentService {
@@ -54,7 +55,23 @@ export class AssessmentService {
       .catch(this.handleError);
   }
 
-  handleError(error: Response | any): Observable<string> {
+  exportCsv() {
+    this.http.get(`${this.assessmentsUrl}/csv`, {headers: this.authService.getHeaders()}).subscribe(val => {
+      const blob = new Blob([val.arrayBuffer()], {type: 'text/csv'});
+      const filename = 'assessments.csv';
+      this.saveCsv(blob, filename);
+    });
+  }
+
+  private saveCsv(file: Blob, filename: string) {
+      const url = window.URL.createObjectURL(file);
+      const anchor = document.createElement('a');
+      anchor.download = filename;
+      anchor.href = url;
+      anchor.click();
+  }
+
+  handleError (error: Response | any): Observable<string> {
     // TODO: add alert error messages
     return Observable.throw(error.statusText);
   }

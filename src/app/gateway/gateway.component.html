@@ -1,0 +1,22 @@
+<div class="component-wrapper">
+  <md-card [@flip]="loginFacing" class="centered-card">
+    <div class="flex-container-column login-component">
+      <app-login></app-login>
+      <md-card-actions>
+        <div class="gateway-buttons">
+          or  <label (click)="toggleComponent()">register</label>
+        </div>
+      </md-card-actions>
+    </div>
+  </md-card>
+  <md-card [@flip]="registerFacing" class="centered-card">
+    <div class="flex-container-column">
+      <app-register></app-register>
+      <md-card-actions>
+        <div class="gateway-buttons">
+          or  <label (click)="toggleComponent()">login</label>
+        </div>
+      </md-card-actions>
+    </div>
+  </md-card>
+</div>

@@ -3,6 +3,7 @@
     <div class="one-third-width full-height flex-container">
       <md-paginator #assessmentPaginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
       </md-paginator>
+      <button md-button color="primary" (click)="exportCsv()">Export</button>
     </div>
     <div class="search-box one-third-width full-height flex-container">
       <md-input-container floatPlaceholder="never">
