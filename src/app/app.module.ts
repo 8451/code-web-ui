@@ -24,7 +24,8 @@ import {
   MdPaginatorModule,
   MdExpansionModule,
   MdChipsModule,
-  MdSlideToggleModule
+  MdSlideToggleModule,
+  MdTooltipModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -106,6 +107,7 @@ import { StarRatingModule } from 'angular-star-rating';
     MdExpansionModule,
     MdChipsModule,
     MdSlideToggleModule,
+    MdTooltipModule,
     StarRatingModule.forRoot(),
   ],
   entryComponents: [

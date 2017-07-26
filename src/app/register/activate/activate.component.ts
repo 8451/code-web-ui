@@ -8,7 +8,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.component.html',
-  styleUrls: ['./activate.component.css']
+  styleUrls: ['./activate.component.scss']
 })
 export class ActivateComponent implements OnInit, OnDestroy {
 
@@ -22,12 +22,18 @@ export class ActivateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-     this.routeSubscription = this.route.params.subscribe(params => {
+    document.body.style.backgroundImage = 'url(../../assets/magenta-orange.jpg)';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
+    this.routeSubscription = this.route.params.subscribe(params => {
       this.activationCode = params['guid'] || '';
     });
   }
 
   ngOnDestroy() {
+    document.body.style.backgroundImage = 'none';
     this.routeSubscription.unsubscribe();
   }
 
@@ -36,9 +42,9 @@ export class ActivateComponent implements OnInit, OnDestroy {
       res => {
         this.alertService.info('Account activated!');
         this.router.navigate(['/login']);
-    }, error => {
-      this.alertService.error('Unable to activate your account.');
-    });
+      }, error => {
+        this.alertService.error('Unable to activate your account.');
+      });
   }
 
 }
