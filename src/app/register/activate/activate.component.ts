@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from './../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, HostListener, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { routerTransitionRight } from '../../../router.animations';
 
 @Component({

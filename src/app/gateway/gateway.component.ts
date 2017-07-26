@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate, keyframes, HostBinding } from '@angular/core';
 import { MdInputModule, MaterialModule, MdCardModule } from '@angular/material';
-import { routerTransitionTop } from '../../router.animations';
+import { routerTransitionTopEnter } from '../../router.animations';
 
 @Component({
   selector: 'app-gateway',
@@ -15,7 +15,7 @@ import { routerTransitionTop } from '../../router.animations';
       transition('back => front',
         animate('1000ms ease-in')),
     ]),
-      routerTransitionTop()
+      routerTransitionTopEnter()
   ]
 })
 export class GatewayComponent implements OnInit, OnDestroy {
