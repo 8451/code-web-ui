@@ -22,8 +22,10 @@
             <p md-line>{{user.username}}</p>
           </div>
           <div>
-            <button md-raised-button *ngIf="user.locked" (click)="unlockUser()" color="primary">Unlock Account</button>
-            <button md-raised-button *ngIf="user === selectedUser" (click)="deleteUser()" color="warn">Delete</button>
+            <md-icon md-raised-button *ngIf="user.locked" class="list-button" color="primary" 
+            mdTooltip="Unlock Account" mdTooltipPosition="left" (click)="unlockUser()">lock_open</md-icon>
+            <md-icon *ngIf="user === selectedUser" class="list-button" color="warn" 
+            mdTooltip="Delete Account" mdTooltipPosition="left" (click)="deleteUser()">delete</md-icon>
           </div>
         </div>
       </md-list-item>

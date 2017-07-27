@@ -4,7 +4,7 @@
 @include mat-core();
 
 .answer-border {
-  border-left: .375em solid #1384C5;
+  border-left: .375em solid #F67E27;
 }
 
 .error-snack {
@@ -209,11 +209,25 @@ app-language-chip {
 }
 
 .question-border {
-  border-left: .375em solid #E8028C;
+  border-left: .375em solid #ED008C;
 }
 
 .list-spacer {
   height: 4em;
+}
+
+.list-button {
+  height: 1em;
+  width: 1em;
+  font-size: 2em;
+}
+
+.list-button:hover {
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease; 
+  cursor: pointer;
 }
 
 .paging-and-search {

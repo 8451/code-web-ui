@@ -22,7 +22,12 @@ export class ActivateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-     this.routeSubscription = this.route.params.subscribe(params => {
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
+    this.routeSubscription = this.route.params.subscribe(params => {
       this.activationCode = params['guid'] || '';
     });
   }

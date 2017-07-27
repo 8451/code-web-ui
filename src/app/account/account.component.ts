@@ -28,7 +28,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'url(../../assets/magenta-blue.jpg)';
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
     document.body.style.backgroundPosition = 'center center';
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundAttachment = 'fixed';

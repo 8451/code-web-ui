@@ -1,7 +1,8 @@
 <div class="flex-container-column full-height">
   <div class="flex-container paging-and-search">
     <div class="one-third-width full-height flex-container">
-      <md-paginator #assessmentPaginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      <md-paginator #assessmentPaginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
       </md-paginator>
       <button md-button color="primary" (click)="exportCsv()">Export</button>
     </div>
@@ -25,9 +26,16 @@
             <star-rating-comp starType="svg" [rating]="assessment.rating" readOnly="true"></star-rating-comp>
           </div>
           <p *ngIf="assessment.state === assessmentStates.CLOSED && assessment !== selectedAssessment" class="completed-label">Completed on {{assessment.modifiedDate | date: "short"}}</p>
-          <button md-raised-button *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="assessment-button" type="button" color="warn" (click)="resumeAssessment(assessment)">Resume assessment</button>
-          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="assessment-button" type="button" color="accent" (click)="startAssessment()">Start assessment</button>
-          <button md-raised-button *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="assessment-button" type="button" color="primary" (click)="viewAssessment()">View assessment</button>
+
+          <md-icon *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="resume-assessment-button list-button"
+            mdTooltip="Resume" mdTooltipPosition="left" (click)="resumeAssessment(assessment)">update</md-icon>
+
+          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="start-assessment-button list-button"
+            mdTooltip="Start" mdTooltipPosition="left" (click)="startAssessment()">forward</md-icon>
+
+          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="view-assessment-button list-button"
+            mdTooltip="View" mdTooltipPosition="left" (click)="viewAssessment()">mode_edit</md-icon>
+
         </div>
       </md-list-item>
       <md-divider></md-divider>

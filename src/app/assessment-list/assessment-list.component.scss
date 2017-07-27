@@ -1,10 +1,3 @@
-.assessment-button {
-  margin-left: 5em;
-  width: 11.25em;
-  position: relative;
-  right: 0px;
-}
-
 .completed-label {
   font-size: .9em;
   display: flex;
@@ -16,15 +9,8 @@
   flex: 1 1 auto;
 }
 
-md-list {
-  padding: 0;
-}
-
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.info {
+  flex-basis:45%;
 }
 
 .list-item-left {
@@ -33,6 +19,25 @@ md-list {
   flex-basis:50%;
 }
 
-.info {
-  flex-basis:45%;
+md-list {
+  padding: 0;
+}
+
+.resume-assessment-button:hover {
+  color: #ff00b6;
+}
+
+.start-assessment-button:hover {
+  color: #02aaff;
+}
+
+.view-assessment-button:hover {
+  color: yellow;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }

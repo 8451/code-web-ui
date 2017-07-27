@@ -6,7 +6,8 @@
         <h5>{{sentQuestion.title}}</h5>
         <ace-editor id="ace-editor" class="editor" [(text)]="questionBody" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
         <h6>Suggested Answer</h6>
-        <pre class="question-answer">{{sentQuestion.suggestedAnswer}}</pre>
+        <pre *ngIf="sentQuestion.suggestedAnswer != ''" class="question-answer answer-border">{{sentQuestion.suggestedAnswer}}</pre>
+        <pre *ngIf="sentQuestion.suggestedAnswer === ''" class="question-answer answer-border">No suggested answer</pre>
     </div>
     <div *ngIf="assessment && assessment.state === assessmentStates.NOTES" (onload)="sidenav.toggle()" class="notes-area flex-container">
         <h5>Notes</h5>
