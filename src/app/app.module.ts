@@ -24,7 +24,8 @@ import {
   MdPaginatorModule,
   MdExpansionModule,
   MdChipsModule,
-  MdSlideToggleModule
+  MdSlideToggleModule,
+  MdTooltipModule
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -108,6 +109,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     MdExpansionModule,
     MdChipsModule,
     MdSlideToggleModule,
+    MdTooltipModule,
     StarRatingModule.forRoot(),
   ],
   entryComponents: [
