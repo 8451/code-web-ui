@@ -10,7 +10,7 @@ import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-new-assessment-dialog',
   templateUrl: './new-assessment-dialog.component.html',
-  styleUrls: ['./new-assessment-dialog.component.css']
+  styleUrls: ['./new-assessment-dialog.component.scss']
 })
 export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
   subscription;
