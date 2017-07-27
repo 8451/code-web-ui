@@ -73,7 +73,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   onSubmitForgotPassword() {
     if (this.guid) {
-      this.userService.resetForgottenPassword(this.form.value as ResetForgottenPassword).subscribe(res => {
+      this.userService.resetForgottenPassword(this.form.value as ResetForgottenPassword).subscribe(() => {
         this.router.navigate(['/login']);
       }, error => {
         this.alertService.error('Unable to reset password');
