@@ -17,6 +17,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QuestionDashboardComponent } from './question-dashboard/question-dashboard.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 export const routes: Routes = [
   {
     path: '',
@@ -95,6 +96,15 @@ export const routes: Routes = [
   {
     path: 'activate/:guid',
     component: ActivateComponent
+  },
+  {
+    path: 'forgot-password',
+    pathMatch: 'full',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'forgot-password/:guid',
+    component: ForgotPasswordComponent
   },
   {
     path: 'login',
