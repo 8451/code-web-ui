@@ -91,14 +91,6 @@ describe('AssessmentListComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should call createAssessment when the button is clicked and update list after close', fakeAsync(() => {
-    const button = fixture.debugElement.nativeElement.querySelector('.md-fab-bottom-right');
-    spyOn(component, 'createAssessment').and.callThrough();
-    button.click();
-
-    expect(component.createAssessment).toHaveBeenCalled();
-  }));
-
   it('should call startAssessment() which sets the selected assessment to AWAIT_EMAIL and navigates to interviewAssessment',
     fakeAsync(() => {
       spyOn(assessmentService, 'updateAssessment').and.returnValue(Observable.of(this.assessments));
