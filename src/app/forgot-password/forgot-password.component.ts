@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,22 +6,25 @@ import { AlertService } from '../services/alert/alert.service';
 import { passwordValid, sameValue } from '../validators';
 import { Subscription } from 'rxjs/Subscription';
 import { ResetForgottenPassword } from 'app/domains/reset-forgotten-password';
+import { routerTransitionTop } from '../../router.animations';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.scss'],
+  animations: [routerTransitionTop()]
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
-
+  @HostBinding('@routerTransition') routerTransition;
   form: FormGroup;
   guid: string;
   routeSubscription: Subscription;
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router,
-              private alertService: AlertService, private route: ActivatedRoute) { }
+    private alertService: AlertService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
     this.routeSubscription = this.route.params.subscribe(params => {
       this.guid = params['guid'] || '';
       if (this.guid) {
@@ -33,6 +36,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    document.body.style.backgroundImage = 'none';
     this.routeSubscription.unsubscribe();
   }
 
@@ -46,13 +50,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   buildFullForm() {
-    this.form  = this.fb.group({
-      firstName: ['', [
-        Validators.required,
-      ]],
-      lastName: ['', [
-        Validators.required,
-      ]],
+    this.form = this.fb.group({
       username: ['', [
         Validators.required,
         Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
@@ -67,8 +65,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       ]],
       resetGuid: [this.guid, [Validators.required]],
     }, {
-      validator: sameValue('confirmNewPassword', 'newPassword')
-    });
+        validator: sameValue('confirmNewPassword', 'newPassword')
+      });
   }
 
   onSubmitForgotPassword() {
