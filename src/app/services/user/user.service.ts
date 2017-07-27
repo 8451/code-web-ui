@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
+import { AlertService } from '../alert/alert.service';
+import { ResetForgottenPassword } from '../../domains/reset-forgotten-password';
 
 @Injectable()
 export class UserService {
@@ -13,7 +15,8 @@ export class UserService {
 
   constructor(
     private http: Http,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertService: AlertService,
   ) { }
 
   getUsers(): Observable<User[]> {
@@ -74,6 +77,20 @@ export class UserService {
     return this.http.get(`${this.userService}/activeUser`, { headers: this.authService.getHeaders() })
       .map(res => res.json().users[0])
       .catch(this.handleError);
+  }
+
+  forgotPassword(username: string) {
+    const urlParams = new URLSearchParams();
+    urlParams.set('username', username);
+    this.http.get(`${this.userService}/forgot-password`, {search: urlParams}).subscribe(res => {
+      this.alertService.info('Check your email to reset your password');
+    }, error => {
+      this.alertService.error('Error sending forgot password request');
+    });
+  }
+
+  resetForgottenPassword(request: ResetForgottenPassword): Observable<Response> {
+    return this.http.put(`${this.userService}/forgot-password`, request);
   }
 
   handleError(error: Response | any): Observable<any> {

@@ -12,6 +12,8 @@ import {
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { UserService } from './user.service';
+import { AlertService } from '../alert/alert.service';
+import { ResetForgottenPassword } from '../../domains/reset-forgotten-password';
 
 const mockUser = {
   users: [
@@ -76,7 +78,8 @@ describe('UserService', () => {
         MockBackend,
         BaseRequestOptions,
         UserService,
-        { provide: AuthService, useValue: mockAuthService }
+        { provide: AuthService, useValue: mockAuthService },
+        AlertService,
       ]
     });
   });
@@ -85,9 +88,9 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('createUser() should create and return user', fakeAsync(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('createUser() should create and return user', fakeAsync(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Post && connection.request.url.endsWith('users')) {
@@ -105,9 +108,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('updateUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('updateUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Put) {
@@ -125,9 +128,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('unlockUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService],
-   (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('unlockUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService, AlertService],
+   (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Put) {
@@ -144,9 +147,9 @@ describe('UserService', () => {
       });
    })));
 
-  it('updateUserAndPassword() should update user and password and return user', fakeAsync(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('updateUserAndPassword() should update user and password and return user', fakeAsync(inject([Http, MockBackend, AuthService,
+    AlertService], (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Put) {
@@ -165,9 +168,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('should get a list of users when getUsers', async(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('should get a list of users when getUsers', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         const response = new ResponseOptions({ body: mockUser });
@@ -180,9 +183,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('should delete a user when deleteUser is called', async(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('should delete a user when deleteUser is called', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         const response = new ResponseOptions({ body: mockUser });
@@ -195,9 +198,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('getActiveUser() should return the current user', fakeAsync(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('getActiveUser() should return the current user', fakeAsync(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         if (connection.request.method === RequestMethod.Get && connection.request.url.endsWith('activeUser')) {
@@ -215,9 +218,9 @@ describe('UserService', () => {
     }
   )));
 
-  it('searchUsers() should return a list of users', async(inject([Http, MockBackend, AuthService],
-    (http: Http, mockBackend: MockBackend, authService: AuthService) => {
-      const userService = new UserService(http, authService);
+  it('searchUsers() should return a list of users', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
         const response = new ResponseOptions({ body: mockUserResponse });
@@ -227,6 +230,52 @@ describe('UserService', () => {
       userService.searchUsers(0, 20, 'lastName', '').subscribe(res => {
         expect(res.users.length).toBe(mockUserResponse.users.length);
         expect(res.paginationTotalElements).toBe(mockUserResponse.paginationTotalElements);
+      });
+    }
+  )));
+
+  it('forgotPassword() success should call info', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
+      mockBackend.connections.subscribe(connection => {
+        connection.mockRespond(new Response(new ResponseOptions({body: null})));
+      });
+
+      spyOn(alertService, 'info');
+      userService.forgotPassword('test');
+      expect(alertService.info).toHaveBeenCalled();
+    })));
+
+  it('forgotPassword() error should call error', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
+      mockBackend.connections.subscribe(connection => {
+        connection.mockError(errorResponse);
+      });
+
+      spyOn(alertService, 'error');
+      userService.forgotPassword('test');
+      expect(alertService.error).toHaveBeenCalled();
+    }
+  )));
+
+  it('resetForgottenPassword() should return Response', async(inject([Http, MockBackend, AuthService, AlertService],
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+      const userService = new UserService(http, authService, alertService);
+      mockBackend.connections.subscribe(connection => {
+        connection.mockRespond(new Response(new ResponseOptions({body: null, status: 200})));
+      });
+
+      const request: ResetForgottenPassword = {
+        username: 'test@test.com',
+        firstName: 'Bob',
+        lastName: 'Jammin',
+        newPassword: 'Bob.Jammin.IsAwesome',
+        resetGuid: '1234-5112-423131',
+      };
+
+      userService.resetForgottenPassword(request).subscribe(res => {
+        expect(res.ok).toBeTruthy();
       });
     }
   )));

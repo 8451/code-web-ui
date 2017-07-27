@@ -55,6 +55,7 @@ import { LanguageChipComponent } from './language-chip/language-chip.component';
 import { GatewayComponent } from './gateway/gateway.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { StarRatingModule } from 'angular-star-rating';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { StarRatingModule } from 'angular-star-rating';
     AssessmentDetailsComponent,
     LanguageChipComponent,
     GatewayComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
