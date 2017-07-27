@@ -21,6 +21,7 @@ html {
   min-height: 100%;
   height: 100%;
 }
+
 body {
   box-sizing: border-box;
   height: 100%;
@@ -28,6 +29,10 @@ body {
   margin: 0px;
   font-family: Helvetica;
   font-size: 16pt;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .flex-container {
@@ -193,6 +198,10 @@ md-list-item.selected {
   color: #607D88 !important;
   background-color: #DDD;
   left: .1em;
+}
+
+md-card-title {
+  color: white;   
 }
 
 md-chip {
