@@ -42,6 +42,12 @@ const mockUser = {
   ]
 };
 
+const mockResetPasswordRequest: ResetForgottenPassword = {
+  username: 'test@test.com',
+  newPassword: 'Bob.Jammin.IsAwesome',
+  resetGuid: '1234-5112-423131',
+};
+
 const mockUserResponse = {
   users: mockUser.users,
   paginationTotalElements: mockUser.users.length
@@ -129,7 +135,7 @@ describe('UserService', () => {
   )));
 
   it('unlockUser() should update and return user', fakeAsync(inject([Http, MockBackend, AuthService, AlertService],
-   (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
+    (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
       const userService = new UserService(http, authService, alertService);
 
       mockBackend.connections.subscribe((connection: MockConnection) => {
@@ -145,7 +151,7 @@ describe('UserService', () => {
         compareUsers(user, mockUser.users[0]);
       }, error => {
       });
-   })));
+    })));
 
   it('updateUserAndPassword() should update user and password and return user', fakeAsync(inject([Http, MockBackend, AuthService,
     AlertService], (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
@@ -238,7 +244,7 @@ describe('UserService', () => {
     (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
       const userService = new UserService(http, authService, alertService);
       mockBackend.connections.subscribe(connection => {
-        connection.mockRespond(new Response(new ResponseOptions({body: null})));
+        connection.mockRespond(new Response(new ResponseOptions({ body: null })));
       });
 
       spyOn(alertService, 'info');
@@ -263,18 +269,10 @@ describe('UserService', () => {
     (http: Http, mockBackend: MockBackend, authService: AuthService, alertService: AlertService) => {
       const userService = new UserService(http, authService, alertService);
       mockBackend.connections.subscribe(connection => {
-        connection.mockRespond(new Response(new ResponseOptions({body: null, status: 200})));
+        connection.mockRespond(new Response(new ResponseOptions({ body: null, status: 200 })));
       });
 
-      const request: ResetForgottenPassword = {
-        username: 'test@test.com',
-        firstName: 'Bob',
-        lastName: 'Jammin',
-        newPassword: 'Bob.Jammin.IsAwesome',
-        resetGuid: '1234-5112-423131',
-      };
-
-      userService.resetForgottenPassword(request).subscribe(res => {
+      userService.resetForgottenPassword(mockResetPasswordRequest).subscribe(res => {
         expect(res.ok).toBeTruthy();
       });
     }

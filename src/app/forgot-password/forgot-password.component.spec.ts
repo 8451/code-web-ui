@@ -13,8 +13,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const mockUserService: any = {
-  forgotPassword(username: string) {},
-  resetForgottenPassword(resetForgottenPassword: ResetForgottenPassword) {}
+  forgotPassword(username: string) { },
+  resetForgottenPassword(resetForgottenPassword: ResetForgottenPassword) { }
+};
+
+const mockResetForgottenPasswordForm: any = {
+  username: 'email@8451.com',
+  newPassword: 'Password1',
+  confirmNewPassword: 'Password1',
+  resetGuid: '1234'
 };
 
 
@@ -24,7 +31,7 @@ describe('ForgotPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordComponent ],
+      declarations: [ForgotPasswordComponent],
       imports: [
         FormsModule,
         MdCardModule,
@@ -35,11 +42,11 @@ describe('ForgotPasswordComponent', () => {
       ],
       providers: [
         AlertService,
-        {provide: UserService, useValue: mockUserService},
+        { provide: UserService, useValue: mockUserService },
         FormBuilder,
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -50,14 +57,14 @@ describe('ForgotPasswordComponent', () => {
 
   function setupNoGuid() {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
-    route.params = Observable.of({guid: null});
+    route.params = Observable.of({ guid: null });
     component.ngOnInit();
     tick();
   }
 
   function setupWithGuid() {
     const route = fixture.debugElement.injector.get(ActivatedRoute);
-    route.params = Observable.of({guid: '1234'});
+    route.params = Observable.of({ guid: '1234' });
     component.ngOnInit();
     tick();
   }
@@ -66,28 +73,24 @@ describe('ForgotPasswordComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should build simple form when no guid', fakeAsync(() => {
+  it('should build a simple form when there is no guid', fakeAsync(() => {
     setupNoGuid();
     expect(Object.keys(component.form.controls).length).toBe(1);
     expect(Object.keys(component.form.controls)[0]).toBe('username');
   }));
 
-  it('should build complete form when guid', fakeAsync(() => {
+  it('should build a complete form when there is a guid', fakeAsync(() => {
     setupWithGuid();
-    expect(Object.keys(component.form.controls).length).toBe(6);
-    expect(Object.keys(component.form.controls)[0]).toBe('firstName');
-    expect(Object.keys(component.form.controls)[1]).toBe('lastName');
-    expect(Object.keys(component.form.controls)[2]).toBe('username');
-    expect(Object.keys(component.form.controls)[3]).toBe('newPassword');
-    expect(Object.keys(component.form.controls)[4]).toBe('confirmNewPassword');
-    expect(Object.keys(component.form.controls)[5]).toBe('resetGuid');
+    expect(Object.keys(component.form.controls).length).toBe(Object.keys(mockResetForgottenPasswordForm).length);
   }));
 
   it('should call forgotPassword on service w/ no guid', fakeAsync(() => {
     setupNoGuid();
     const userService = fixture.debugElement.injector.get(UserService);
     spyOn(userService, 'forgotPassword');
+
     component.onSubmitForgotPassword();
+
     expect(userService.forgotPassword).toHaveBeenCalled();
   }));
 
@@ -97,16 +100,11 @@ describe('ForgotPasswordComponent', () => {
     const router = fixture.debugElement.injector.get(Router);
     spyOn(userService, 'resetForgottenPassword').and.returnValue(Observable.of(true));
     spyOn(router, 'navigate');
-    component.form.setValue({
-      firstName: 'name',
-      lastName: 'name',
-      username: 'email@8451.com',
-      newPassword: 'Password1',
-      confirmNewPassword: 'Password1',
-      resetGuid: '1234'
-    });
+
+    component.form.setValue(mockResetForgottenPasswordForm);
     component.onSubmitForgotPassword();
     tick();
+
     expect(userService.resetForgottenPassword).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
   }));
@@ -117,16 +115,11 @@ describe('ForgotPasswordComponent', () => {
     const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(userService, 'resetForgottenPassword').and.returnValue(Observable.throw(true));
     spyOn(alertService, 'error');
-    component.form.setValue({
-      firstName: 'name',
-      lastName: 'name',
-      username: 'email@8451.com',
-      newPassword: 'Password1',
-      confirmNewPassword: 'Password1',
-      resetGuid: '1234'
-    });
+
+    component.form.setValue(mockResetForgottenPasswordForm);
     component.onSubmitForgotPassword();
     tick();
+
     expect(userService.resetForgottenPassword).toHaveBeenCalled();
     expect(alertService.error).toHaveBeenCalled();
   }));
