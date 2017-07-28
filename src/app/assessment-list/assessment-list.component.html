@@ -27,13 +27,13 @@
           </div>
           <p *ngIf="assessment.state === assessmentStates.CLOSED && assessment !== selectedAssessment" class="completed-label">Completed on {{assessment.modifiedDate | date: "short"}}</p>
 
-          <md-icon *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="resume-assessment-button list-button"
+          <md-icon *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="list-button"
             mdTooltip="Resume" mdTooltipPosition="left" (click)="resumeAssessment(assessment)">update</md-icon>
 
-          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="start-assessment-button list-button"
+          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="list-button"
             mdTooltip="Start" mdTooltipPosition="left" (click)="startAssessment()">forward</md-icon>
 
-          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="view-assessment-button list-button"
+          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="list-button"
             mdTooltip="View" mdTooltipPosition="left" (click)="viewAssessment()">mode_edit</md-icon>
 
         </div>
