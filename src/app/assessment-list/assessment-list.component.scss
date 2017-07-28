@@ -9,6 +9,15 @@
   flex: 1 1 auto;
 }
 
+.icon-button {
+  align-self: center;
+  color: #717171;
+}
+
+.icon-button:hover {
+  color: #EF1E74;
+}
+
 .info {
   flex-basis:45%;
 }
@@ -21,18 +30,6 @@
 
 md-list {
   padding: 0;
-}
-
-.resume-assessment-button:hover {
-  color: #ff00b6;
-}
-
-.start-assessment-button:hover {
-  color: #02aaff;
-}
-
-.view-assessment-button:hover {
-  color: yellow;
 }
 
 .wrapper {

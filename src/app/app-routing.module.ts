@@ -83,11 +83,6 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'register',
-    pathMatch: 'full',
-    component: RegisterComponent
-  },
-  {
     path: 'activate',
     component: ActivateComponent,
     pathMatch: 'full'

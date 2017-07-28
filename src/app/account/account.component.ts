@@ -96,7 +96,7 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.router.navigate(['/login']);
         } else {
           this.alertService.info('Account updated');
-          this.router.navigate(['/interview/account']);
+          this.router.navigate(['/interview/assessments']);
         }
       }, error => {
         this.alertService.error('Error updating account');

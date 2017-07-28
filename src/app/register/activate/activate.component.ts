@@ -3,15 +3,17 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from './../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { routerTransitionRight } from '../../../router.animations';
 
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.component.html',
-  styleUrls: ['./activate.component.scss']
+  styleUrls: ['./activate.component.scss'],
+  animations: [routerTransitionRight()]
 })
 export class ActivateComponent implements OnInit, OnDestroy {
-
+  @HostBinding('@routerTransition') routerTransition;
   activationCode: string;
   routeSubscription: Subscription;
 
@@ -29,6 +31,7 @@ export class ActivateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    document.body.style.backgroundImage = 'none';
     this.routeSubscription.unsubscribe();
   }
 
@@ -37,9 +40,9 @@ export class ActivateComponent implements OnInit, OnDestroy {
       res => {
         this.alertService.info('Account activated!');
         this.router.navigate(['/login']);
-    }, error => {
-      this.alertService.error('Unable to activate your account.');
-    });
+      }, error => {
+        this.alertService.error('Unable to activate your account.');
+      });
   }
 
 }

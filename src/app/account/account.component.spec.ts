@@ -113,7 +113,7 @@ describe('AccountComponent', () => {
     expect(userService.updateUser).toHaveBeenCalledWith(mockUser.users[0]);
     expect(alertService.info).toHaveBeenCalledTimes(1);
     expect(alertService.error).toHaveBeenCalledTimes(0);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview/account']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/interview/assessments']);
   });
 
   it('onSubmitUpdate() should redirect to login when the form is valid and username is dirty', () => {

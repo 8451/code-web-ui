@@ -1,11 +1,13 @@
-<md-card>
-  <md-card-title>Activate</md-card-title>
-  <md-card-content>
-    <p>You have been sent an email with an activation link.</p>
-    <p>Please copy and paste the code below, or click the link in the email.</p>
-    <md-input-container class="full-width">
-      <input mdInput type="text" required [(ngModel)]="activationCode" name="activation-code" placeholder="Activation Code">
-    </md-input-container>
-    <button md-raised-button color="primary" (click)="activate()">Activate</button>
-  </md-card-content>
-</md-card>
+<div class="flex-container activate-container">
+  <md-card>
+    <md-card-title class="card-title">Activate</md-card-title>
+    <md-card-content class="flex-container">
+      <p>You have been sent an email with an activation link.</p>
+      <p>Please copy and paste the code below, or click the link in the email.</p>
+      <md-input-container class="full-width">
+        <input mdInput type="text" required [(ngModel)]="activationCode" name="activation-code" placeholder="Activation Code">
+        <md-icon mdSuffix mdTooltip="Activate" mdTooltipPosition="below" class="activate-button" (click)="activate()">arrow_forward</md-icon>
+      </md-input-container>
+    </md-card-content>
+  </md-card>
+</div>

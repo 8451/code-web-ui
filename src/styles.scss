@@ -7,6 +7,11 @@
   border-left: .375em solid #F67E27;
 }
 
+.card-title {
+  color: white;   
+  text-align: center;
+}
+
 .error-snack {
   background-color: mat-color($mat-red, 400) !important;
 }
@@ -200,10 +205,6 @@ md-list-item.selected {
   left: .1em;
 }
 
-md-card-title {
-  color: white;   
-}
-
 md-chip {
   margin-left: 1em;
 }
@@ -221,6 +222,21 @@ app-language-chip {
   border-left: .375em solid #ED008C;
 }
 
+.icon-button {
+  height: 1em;
+  width: 1em;
+  font-size: 2em;
+}
+
+.icon-button:hover {
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease; 
+  color: #F4613E;
+  cursor: pointer;
+}
+
 .list-spacer {
   height: 4em;
 }
@@ -236,6 +252,7 @@ app-language-chip {
   -moz-transition: all 500ms ease;
   -o-transition: all 500ms ease;
   transition: all 500ms ease; 
+  color: #F4613E;
   cursor: pointer;
 }
 
