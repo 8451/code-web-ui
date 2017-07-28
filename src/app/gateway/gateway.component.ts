@@ -27,11 +27,7 @@ export class GatewayComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'url(../../assets/magenta-orange.jpg)';
-    document.body.style.backgroundPosition = 'center center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
     this.loginFacing = 'front';
     this.registerFacing = 'back';
     this.component = 'login';

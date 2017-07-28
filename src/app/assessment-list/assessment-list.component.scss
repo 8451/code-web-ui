@@ -1,10 +1,3 @@
-.assessment-button {
-  margin-left: 5em;
-  width: 11.25em;
-  position: relative;
-  right: 0px;
-}
-
 .completed-label {
   font-size: .9em;
   display: flex;
@@ -16,6 +9,25 @@
   flex: 1 1 auto;
 }
 
+.icon-button {
+  align-self: center;
+  color: #717171;
+}
+
+.icon-button:hover {
+  color: #EF1E74;
+}
+
+.info {
+  flex-basis:45%;
+}
+
+.list-item-left {
+  display: flex;
+  align-items: center;
+  flex-basis:50%;
+}
+
 md-list {
   padding: 0;
 }
@@ -25,14 +37,4 @@ md-list {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-}
-
-.list-item-left {
-  display: flex;
-  align-items: center;
-  flex-basis:50%;
-}
-
-.info {
-  flex-basis:45%;
 }

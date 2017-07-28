@@ -4,7 +4,7 @@ import { languageColor } from '../services/question/question.service';
 @Component({
   selector: 'app-language-chip',
   templateUrl: './language-chip.component.html',
-  styleUrls: ['./language-chip.component.css']
+  styleUrls: ['./language-chip.component.scss']
 })
 export class LanguageChipComponent implements OnInit {
 

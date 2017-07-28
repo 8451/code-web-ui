@@ -4,7 +4,12 @@
 @include mat-core();
 
 .answer-border {
-  border-left: .375em solid #1384C5;
+  border-left: .375em solid #F67E27;
+}
+
+.card-title {
+  color: white;   
+  text-align: center;
 }
 
 .error-snack {
@@ -21,6 +26,7 @@ html {
   min-height: 100%;
   height: 100%;
 }
+
 body {
   box-sizing: border-box;
   height: 100%;
@@ -28,6 +34,10 @@ body {
   margin: 0px;
   font-family: Helvetica;
   font-size: 16pt;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .flex-container {
@@ -209,11 +219,41 @@ app-language-chip {
 }
 
 .question-border {
-  border-left: .375em solid #E8028C;
+  border-left: .375em solid #ED008C;
+}
+
+.icon-button {
+  height: 1em;
+  width: 1em;
+  font-size: 2em;
+}
+
+.icon-button:hover {
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease; 
+  color: #F4613E;
+  cursor: pointer;
 }
 
 .list-spacer {
   height: 4em;
+}
+
+.list-button {
+  height: 1em;
+  width: 1em;
+  font-size: 2em;
+}
+
+.list-button:hover {
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease; 
+  color: #F4613E;
+  cursor: pointer;
 }
 
 .paging-and-search {
