@@ -25,7 +25,7 @@ describe('AccountComponent', () => {
     id: 'id1',
     firstName: 'Test',
     lastName: 'Test',
-    username: 'test@8451.com',
+    username: 'test@email.com',
   };
 
   const mockUser = {
@@ -34,14 +34,14 @@ describe('AccountComponent', () => {
         id: 'id1',
         firstName: 'First Name',
         lastName: 'Last Name',
-        username: 'test@8451.com',
+        username: 'test@email.com',
         password: '',
       },
       {
         id: 'id1',
         firstName: 'First Name',
         lastName: 'Last Name',
-        username: 'test@8451.com',
+        username: 'test@email.com',
         password: 'newPassword1!',
       },
     ]
@@ -157,7 +157,7 @@ describe('AccountComponent', () => {
     component.form.setValue({
       firstName: mockUser.users[0].firstName,
       lastName: mockUser.users[0].lastName,
-      username: 'email@invalid.com',
+      username: 'invalid.com',
     });
     spyOn(userService, 'updateUser').and.returnValue(Observable.of(mockUser.users[0]));
     spyOn(alertService, 'info');
