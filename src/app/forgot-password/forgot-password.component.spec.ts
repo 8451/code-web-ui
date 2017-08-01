@@ -18,7 +18,7 @@ const mockUserService: any = {
 };
 
 const mockResetForgottenPasswordForm: any = {
-  username: 'email@8451.com',
+  username: 'email@email.com',
   newPassword: 'Password1',
   confirmNewPassword: 'Password1',
   resetGuid: '1234'

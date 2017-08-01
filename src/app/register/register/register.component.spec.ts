@@ -21,7 +21,7 @@ describe('RegisterComponent', () => {
   const mockForm = {
     firstName: 'Test',
     lastName: 'Test',
-    username: 'test@8451.com',
+    username: 'test@email.com',
     password: 'testPassword1',
     confirmPassword: 'testPassword1'
   };
@@ -64,15 +64,15 @@ describe('RegisterComponent', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
-  it('control invalid when not 8451 username', () => {
+  it('control invalid when username doesnt match email schema', () => {
       const emailControl = component.form.get('username');
-      emailControl.setValue('test@gmail.com');
+      emailControl.setValue('test.com');
       expect(emailControl.valid).toBe(false);
   });
 
-  it('control valid when 8451 username', () => {
+  it('control valid when username matches email schema', () => {
     const emailControl = component.form.get('username');
-    emailControl.setValue('test@8451.com');
+    emailControl.setValue('test@email.com');
     expect(emailControl.valid).toBe(true);
   });
 

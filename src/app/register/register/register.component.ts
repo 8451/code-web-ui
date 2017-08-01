@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { AlertService } from './../../services/alert/alert.service';
 import { Router } from '@angular/router';
 import { UserService } from './../../services/user/user.service';
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit {
       ]],
       username: ['', [
         Validators.required,
-        Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
+        Validators.pattern(environment.emailValidator)
       ]],
       password: ['', [
         Validators.required,

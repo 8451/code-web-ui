@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
@@ -44,7 +45,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       username: ['', [
         Validators.required,
-        Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
+        Validators.pattern(environment.emailValidator)
       ]],
     });
   }
@@ -53,7 +54,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       username: ['', [
         Validators.required,
-        Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
+        Validators.pattern(environment.emailValidator)
       ]],
       newPassword: ['', [
         Validators.required,

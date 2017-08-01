@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { UserVerification } from './../domains/user-verification';
 import { AuthService } from './../services/auth/auth.service';
 import { User } from './../domains/user';
@@ -7,6 +8,7 @@ import { UserService } from './../services/user/user.service';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { passwordValid, sameValue } from 'app/validators';
+
 
 @Component({
   selector: 'app-account',
@@ -48,7 +50,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       ]],
       username: ['', [
         Validators.required,
-        Validators.pattern('[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@8451.com')
+        Validators.pattern(environment.emailValidator),
       ]],
     });
   }
