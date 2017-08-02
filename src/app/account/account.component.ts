@@ -111,8 +111,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     const passwordFields = this.fb.group({
       currentPassword: ['', [
         Validators.required,
-        Validators.minLength(8),
-        passwordValid
       ]],
       newPassword: ['', [
         Validators.required,

@@ -1,3 +1,4 @@
+import { AceEditorModule } from 'ng2-ace-editor/ng2-ace-editor';
 import { MdDialogRef } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -28,6 +29,9 @@ describe('QuestionInfoDialogComponent', () => {
       declarations: [QuestionInfoDialogComponent],
       providers: [
         { provide: MdDialogRef, useClass: MdDialogRefMock }
+      ],
+      imports: [
+        AceEditorModule,
       ]
     })
       .compileComponents();
@@ -48,6 +52,6 @@ describe('QuestionInfoDialogComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.question-title').textContent).toContain(question.title);
-    expect(compiled.querySelector('.question-body').textContent).toContain(question.body);
+    expect(compiled.querySelector('.question-body')).toBeTruthy();
   });
 });

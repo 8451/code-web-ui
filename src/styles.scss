@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~@angular/material/theming';
-@include mat-core();
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '~@angular/material/theming';
+// @include mat-core();
+@import "./md-theme.scss";
 
 .answer-border {
   border-left: .375em solid #F67E27;

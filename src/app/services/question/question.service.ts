@@ -7,6 +7,22 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/toPromise';
 
+const languages = {
+  'SQL': { editorName: 'sql', color: '#DAD8D8' },
+  'Python': { editorName: 'python', color: '#3572A5' },
+  'C#': { editorName: 'csharp', color: '#178600' },
+  'C': { editorName: 'c_cpp', color: '#555555' },
+  'C++': { editorName: 'c_cpp', color: '#F34B7D' },
+  'Powershell': { editorName: 'powershell', color: '#012456' },
+  'Bash': { editorName: 'sh', color: '#89E051' },
+  'Javascript': { editorName: 'javascript', color: '#89E051' },
+  'Typescript': { editorName: 'typescript', color: '#2B7489' },
+  'Ruby': { editorName: 'ruby', color: '#701516' },
+  'PHP': { editorName: 'php', color: '#4F5D95' },
+  'Scala': { editorName: 'scala', color: '#C22D40' },
+  'Java': { editorName: 'java', color: '#B07219' }
+};
+
 @Injectable()
 export class QuestionService {
 
@@ -58,9 +74,8 @@ export class QuestionService {
   }
 
   getLanguages(): Observable<string[]> {
-    return this.http.get(`${this.questionsUrl}/languages`, { headers: this.authService.getHeaders() })
-      .map(res => res.json().languages)
-      .catch(this.handleError);
+    return Observable.of(Object.keys(languages));
+
   }
   handleError(error: Response | any): Observable<any> {
     // TODO: add alert error messages
@@ -68,23 +83,6 @@ export class QuestionService {
   }
 
 }
-
-const languages = {
-  'SQL': { editorName: 'sql', color: '#DAD8D8' },
-  'Python2': { editorName: 'python', color: '#3572A5' },
-  'Python3': { editorName: 'python', color: '#3572A5' },
-  'C#': { editorName: 'csharp', color: '#178600' },
-  'C': { editorName: 'c_cpp', color: '#555555' },
-  'C++': { editorName: 'c_cpp', color: '#F34B7D' },
-  'Powershell': { editorName: 'powershell', color: '#012456' },
-  'Bash': { editorName: 'sh', color: '#89E051' },
-  'Javascript': { editorName: 'javascript', color: '#89E051' },
-  'Typescript': { editorName: 'typescript', color: '#2B7489' },
-  'Ruby': { editorName: 'ruby', color: '#701516' },
-  'PHP': { editorName: 'php', color: '#4F5D95' },
-  'Scala': { editorName: 'scala', color: '#C22D40' },
-  'Java': { editorName: 'java', color: '#B07219' }
-};
 
 export function editorTranslator(serviceValue: string): string {
   const obj = languages[serviceValue];

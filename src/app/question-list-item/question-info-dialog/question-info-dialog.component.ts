@@ -1,3 +1,4 @@
+import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { MdDialogRef } from '@angular/material';
 import { Question } from './../domains/question';
 import { Component, OnInit, Input } from '@angular/core';
@@ -8,6 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./question-info-dialog.component.scss']
 })
 export class QuestionInfoDialogComponent implements OnInit {
+
+  mode = 'java';
+  editorOptions: any = {
+    showPrintMargin: false,
+    wrap: true,
+    maxLines: 20,
+    highlightActiveLine: false,
+    showGutter: false
+  };
 
   question: Question;
   constructor(public dialogRef: MdDialogRef<QuestionInfoDialogComponent>) { }

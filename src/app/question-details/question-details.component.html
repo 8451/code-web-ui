@@ -7,10 +7,9 @@
         <input mdInput placeholder="Question Title" maxlength="50" name="title" formControlName="title" required>
       </md-input-container>
       <h6>Question Body</h6>
-      <ace-editor id="body-editor" class="editor-container" name="body" formControlName="body" [mode]="mode" [options]="editorOptions" required></ace-editor>
+      <ace-editor id="body-editor" class="editor-container question-border" [theme]="'sqlserver'" name="body" formControlName="body" [mode]="mode" [options]="editorOptions" required></ace-editor>
       <h6>Suggested Answer</h6>
-      <ace-editor id="answer-editor" class="editor-container" name="suggestedAnswer" formControlName="suggestedAnswer" [mode]="mode" [options]="editorOptions"
-        required></ace-editor>
+      <ace-editor id="answer-editor" class="editor-container answer-border" [theme]="'sqlserver'" name="suggestedAnswer" formControlName="suggestedAnswer" [mode]="mode" [options]="editorOptions"></ace-editor>
     </div>
 
     <md-card class="question-metadata">

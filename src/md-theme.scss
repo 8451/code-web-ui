@@ -1,20 +1,16 @@
+@import '~@angular/material/theming';
+@include mat-core();
 
-@import '~@angular/material/core/theming/all-theme';
+$unicorn-light-app-primary: mat-palette($mat-pink, 900, A100, 900);
+// #8bc34a
+// #B2FF59
+// #558B2F
+$unicorn-light-app-secondary: mat-palette($mat-lime, 600, A100, 800);
+// #00bcd4
+// #18FFFF
+// #00838F
+$unicorn-light-app-warn: mat-palette($mat-red);
 
-@include md-core();
+$unicorn-light-theme: mat-light-theme($unicorn-light-app-primary, $unicorn-light-app-secondary, $unicorn-light-app-warn);
 
-$primary: md-palette($md-cyan);
-$accent: md-palette($md-amber);
-
-$theme: md-light-theme($primary, $accent);
-
-@include angular-material-theme($theme);
-
-.dark-theme {
-  $dark-p: md-palette($md-pink, 700);
-  $dark-a: md-palette($md-blue-grey);
-
-  $dark-t: md-dark-theme($dark-p, $dark-a);
-
-  @include angular-material-theme($dark-t);
-}
+@include angular-material-theme($unicorn-light-theme);
