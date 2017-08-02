@@ -248,12 +248,15 @@ app-language-chip {
 }
 
 .list-button:hover {
+  cursor: pointer;
+}
+
+.list-button-theme:hover {
   -webkit-transition: all 500ms ease;
   -moz-transition: all 500ms ease;
   -o-transition: all 500ms ease;
   transition: all 500ms ease; 
   color: #F4613E;
-  cursor: pointer;
 }
 
 .paging-and-search {
