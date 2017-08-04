@@ -98,14 +98,17 @@ describe('ForgotPasswordComponent', () => {
     setupWithGuid();
     const userService = fixture.debugElement.injector.get(UserService);
     const router = fixture.debugElement.injector.get(Router);
+    const alertService = fixture.debugElement.injector.get(AlertService);
     spyOn(userService, 'resetForgottenPassword').and.returnValue(Observable.of(true));
     spyOn(router, 'navigate');
+    spyOn(alertService, 'info');
 
     component.form.setValue(mockResetForgottenPasswordForm);
     component.onSubmitForgotPassword();
     tick();
 
     expect(userService.resetForgottenPassword).toHaveBeenCalled();
+    expect(alertService.info).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
   }));
 
