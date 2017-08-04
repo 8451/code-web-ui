@@ -36,9 +36,14 @@ export class InterviewAssessmentComponent implements OnInit {
   filteredQuestions: Observable<Question[]>;
   filteredLanguages: Observable<string[]>;
   questions: Question[];
+  questionAnswer: string;
   questionBody: string;
   mode = 'java';
-  editorOptions: any = { showPrintMargin: false, wrap: true };
+  editorOptions: any = {
+    showPrintMargin: false,
+    wrap: true,
+    highlightActiveLine: false
+  };
 
   assessmentStates: any = AssessmentStates;
 
@@ -74,7 +79,7 @@ export class InterviewAssessmentComponent implements OnInit {
     });
 
     this.filteredLanguages = this.form.get('language').valueChanges.startWith(null).map(language => {
-        return this.filterLanguages(language);
+      return this.filterLanguages(language);
     });
   }
 
@@ -131,9 +136,9 @@ export class InterviewAssessmentComponent implements OnInit {
         return this.filterQuestions(language);
       });
     },
-    error => {
-      this.alertService.error('Could not get questions');
-    });
+      error => {
+        this.alertService.error('Could not get questions');
+      });
   }
 
   getCurrentQuestion() {
@@ -144,15 +149,16 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   updateSentQuestion(latestQuestionAnswer: QuestionAnswer | NewQuestionEvent) {
-      const currentQuestion = this.questions.find((question) => {
-        return question.title === latestQuestionAnswer.title && question.language === latestQuestionAnswer.language;
-      });
-      if (currentQuestion) {
-        this.sentQuestion = currentQuestion;
-        this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
-          (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
-        this.mode = editorTranslator(currentQuestion.language);
-      }
+    const currentQuestion = this.questions.find((question) => {
+      return question.title === latestQuestionAnswer.title && question.language === latestQuestionAnswer.language;
+    });
+    if (currentQuestion) {
+      this.sentQuestion = currentQuestion;
+      this.questionBody = (<QuestionAnswer>latestQuestionAnswer).answer ?
+        (<QuestionAnswer>latestQuestionAnswer).answer : latestQuestionAnswer.body;
+      this.questionAnswer = currentQuestion.suggestedAnswer;
+      this.mode = editorTranslator(currentQuestion.language);
+    }
   }
 
   selectQuestion(question: Question): void {
@@ -216,6 +222,7 @@ export class InterviewAssessmentComponent implements OnInit {
     this.assessmentWebSocketService.sendNewQuestion(this.assessment.interviewGuid, newQuestionEvent);
     this.sentQuestion = this.selectedQuestion;
     this.questionBody = this.sentQuestion.body;
+    this.questionAnswer = this.sentQuestion.suggestedAnswer;
     this.mode = editorTranslator(this.selectedQuestion.language);
   }
 

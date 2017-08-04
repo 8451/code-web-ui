@@ -115,7 +115,7 @@ describe('AssessmentDetailsComponent', () => {
   }));
 
   it('should return the correct mode when calling getMode', () => {
-    const mode = component.getMode('Python3');
+    const mode = component.getMode('Python');
     expect(mode).toBe('python');
   });
 

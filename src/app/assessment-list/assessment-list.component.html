@@ -34,7 +34,7 @@
             mdTooltip="Start" mdTooltipPosition="left" (click)="startAssessment()">forward</md-icon>
 
           <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="list-button list-button-theme"
-            mdTooltip="View" mdTooltipPosition="left" (click)="viewAssessment()">mode_edit</md-icon>
+            mdTooltip="View" mdTooltipPosition="left" (click)="viewAssessment()">visibility</md-icon>
 
         </div>
       </md-list-item>
@@ -42,7 +42,7 @@
     </div>
     <div class="list-spacer"></div>
   </md-list>
-  <button md-fab class="md-fab-bottom-right" color="primary" (click)="createAssessment()">
+  <button md-fab class="md-fab-bottom-right" (click)="createAssessment()">
     <md-icon>add</md-icon>
   </button>
 </div>

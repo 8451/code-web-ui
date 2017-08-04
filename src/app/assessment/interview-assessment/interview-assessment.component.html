@@ -4,9 +4,9 @@
     </div>
     <div *ngIf="sentQuestion && assessment.state === assessmentStates.IN_PROGRESS" class="assessment-area">
         <h5>{{sentQuestion.title}}</h5>
-        <ace-editor id="ace-editor" class="editor" [(text)]="questionBody" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
+        <ace-editor id="ace-editor" class="editor question-border" [theme]="'sqlserver'" [(text)]="questionBody" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
         <h6>Suggested Answer</h6>
-        <pre *ngIf="sentQuestion.suggestedAnswer != ''" class="question-answer answer-border">{{sentQuestion.suggestedAnswer}}</pre>
+        <ace-editor *ngIf="questionAnswer != ''" id="ace-editor" class="editor answer-border" [theme]="'sqlserver'" [(text)]="questionAnswer" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
         <pre *ngIf="sentQuestion.suggestedAnswer === ''" class="question-answer answer-border">No suggested answer</pre>
     </div>
     <div *ngIf="assessment && assessment.state === assessmentStates.NOTES" (onload)="sidenav.toggle()" class="notes-area flex-container">
@@ -15,7 +15,7 @@
         <textarea #notes class="editor"></textarea>
         <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
-    <md-sidenav #sidenav id="sidenavID" mode="side" opened="true" align="end">
+    <md-sidenav #sidenav id="sidenavID" class="mat-elevation-z5" mode="side" opened="true" align="end">
         <div id="title-wrapper">
           <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
           <form [formGroup]="form" *ngIf="form">
