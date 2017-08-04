@@ -1,53 +1,5 @@
 import { trigger, state, animate, style, transition } from '@angular/animations';
 
-// export function routerTransitionRight() {
-//     return slideToRight();
-// }
-
-// export function routerTransitionRightEnter() {
-//     return slideToRightEnter();
-// }
-
-// export function routerTransitionRightLeave() {
-//     return slideToRightLeave();
-// }
-
-// export function routerTransitionLeft() {
-//     return slideToLeft();
-// }
-
-// export function routerTransitionLeftEnter() {
-//     return slideToLeftEnter();
-// }
-
-// export function routerTransitionLeftLeave() {
-//     return slideToLeftLeave();
-// }
-
-// export function routerTransitionBottom() {
-//     return slideToBottom();
-// }
-
-// export function routerTransitionBottomEnter() {
-//     return slideToBottomEnter();
-// }
-
-// export function routerTransitionBottomLeave() {
-//     return slideToBottomLeave();
-// }
-
-// export function routerTransitionTop() {
-//     return slideToTop();
-// }
-
-// export function routerTransitionTopEnter() {
-//     return slideToTopEnter();
-// }
-
-// export function routerTransitionTopLeave() {
-//     return slideToTopLeave();
-// }
-
 export function slideToRight() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
