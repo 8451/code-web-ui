@@ -7,13 +7,13 @@ import { AlertService } from '../services/alert/alert.service';
 import { passwordValid, sameValue } from '../validators';
 import { Subscription } from 'rxjs/Subscription';
 import { ResetForgottenPassword } from 'app/domains/reset-forgotten-password';
-import { routerTransitionTop } from '../../router.animations';
+import { slideToTop } from '../../router.animations';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
-  animations: [routerTransitionTop()]
+  animations: [slideToTop()]
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   @HostBinding('@routerTransition') routerTransition;

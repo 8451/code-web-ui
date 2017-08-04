@@ -1,54 +1,6 @@
 import { trigger, state, animate, style, transition } from '@angular/animations';
 
-export function routerTransitionRight() {
-    return slideToRight();
-}
-
-export function routerTransitionRightEnter() {
-    return slideToRightEnter();
-}
-
-export function routerTransitionRightLeave() {
-    return slideToRightLeave();
-}
-
-export function routerTransitionLeft() {
-    return slideToLeft();
-}
-
-export function routerTransitionLeftEnter() {
-    return slideToLeftEnter();
-}
-
-export function routerTransitionLeftLeave() {
-    return slideToLeftLeave();
-}
-
-export function routerTransitionBottom() {
-    return slideToBottom();
-}
-
-export function routerTransitionBottomEnter() {
-    return slideToBottomEnter();
-}
-
-export function routerTransitionBottomLeave() {
-    return slideToBottomLeave();
-}
-
-export function routerTransitionTop() {
-    return slideToTop();
-}
-
-export function routerTransitionTopEnter() {
-    return slideToTopEnter();
-}
-
-export function routerTransitionTopLeave() {
-    return slideToTopLeave();
-}
-
-function slideToRight() {
+export function slideToRight() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -63,7 +15,7 @@ function slideToRight() {
     ]);
 }
 
-function slideToRightEnter() {
+export function slideToRightEnter() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -74,7 +26,7 @@ function slideToRightEnter() {
     ]);
 }
 
-function slideToRightLeave() {
+export function slideToRightLeave() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -85,7 +37,7 @@ function slideToRightLeave() {
     ]);
 }
 
-function slideToLeft() {
+export function slideToLeft() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -100,7 +52,7 @@ function slideToLeft() {
     ]);
 }
 
-function slideToLeftEnter() {
+export function slideToLeftEnter() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -111,7 +63,7 @@ function slideToLeftEnter() {
     ]);
 }
 
-function slideToLeftLeave() {
+export function slideToLeftLeave() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%' })),
         state('*', style({ position: 'fixed', width: '100%' })),
@@ -122,7 +74,7 @@ function slideToLeftLeave() {
     ]);
 }
 
-function slideToBottom() {
+export function slideToBottom() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
@@ -137,7 +89,7 @@ function slideToBottom() {
     ]);
 }
 
-function slideToBottomEnter() {
+export function slideToBottomEnter() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
@@ -148,7 +100,7 @@ function slideToBottomEnter() {
     ]);
 }
 
-function slideToBottomLeave() {
+export function slideToBottomLeave() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
@@ -159,7 +111,7 @@ function slideToBottomLeave() {
     ]);
 }
 
-function slideToTop() {
+export function slideToTop() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
@@ -174,7 +126,7 @@ function slideToTop() {
     ]);
 }
 
-function slideToTopEnter() {
+export function slideToTopEnter() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
@@ -185,7 +137,7 @@ function slideToTopEnter() {
     ]);
 }
 
-function slideToTopLeave() {
+export function slideToTopLeave() {
     return trigger('routerTransition', [
         state('void', style({ position: 'fixed', width: '100%', height: '100%' })),
         state('*', style({ position: 'fixed', width: '100%', height: '100%' })),
