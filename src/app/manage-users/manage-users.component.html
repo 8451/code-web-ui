@@ -22,10 +22,9 @@
             <p md-line>{{user.username}}</p>
           </div>
           <div>
-            <md-icon md-raised-button *ngIf="user.locked" class="list-button" color="primary" 
-            mdTooltip="Unlock Account" mdTooltipPosition="left" (click)="unlockUser()">lock_open</md-icon>
-            <md-icon *ngIf="user === selectedUser" class="list-button" color="warn" 
-            mdTooltip="Delete Account" mdTooltipPosition="left" (click)="deleteUser()">delete</md-icon>
+            <md-icon *ngIf="user.locked" class="list-button" color="primary" mdTooltip="Unlock Account" mdTooltipPosition="left" (click)="unlockUser()">lock_open</md-icon>
+            <md-icon *ngIf="user === selectedUser" class="list-button" color="warn" mdTooltip="Delete Account" mdTooltipPosition="left"
+              (click)="deleteUser()">delete</md-icon>
           </div>
         </div>
       </md-list-item>
