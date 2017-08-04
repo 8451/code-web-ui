@@ -4,13 +4,13 @@ import { UserService } from './../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { routerTransitionRight } from '../../../router.animations';
+import { slideToRight } from '../../../router.animations';
 
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.component.html',
   styleUrls: ['./activate.component.scss'],
-  animations: [routerTransitionRight()]
+  animations: [slideToRight()]
 })
 export class ActivateComponent implements OnInit, OnDestroy {
   @HostBinding('@routerTransition') routerTransition;
