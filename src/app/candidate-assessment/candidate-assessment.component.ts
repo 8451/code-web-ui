@@ -31,7 +31,7 @@ export class CandidateAssessmentComponent implements OnInit, OnDestroy, AfterVie
   };
 
   @ViewChild(AceEditorComponent) aceEditor;
-  private updatedAnswers: Subject<AnswerQuestionEvent> = new Subject<AnswerQuestionEvent>();
+  private updatedAnswers = new Subject<AnswerQuestionEvent>();
 
   constructor(
     private formBuilder: FormBuilder,
