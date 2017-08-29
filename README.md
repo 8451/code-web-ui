@@ -23,7 +23,7 @@ The web application will default to referencing the service and BFF in the CI en
 * MongoDB
     - Open a terminal and run `mongod` in order to start your local mongo service.
 * code-bff on port 8090
-    - In `proxy.conf.json` change the target to `localhost:8090/api`. Do not push this change.
+    - In `proxy.conf.json` change the target to `localhost:8090`. Do not push this change.
     - Additional configuration is needed in the BFF so that it references the local service. See the readme `code-bff` for further help.
 * code-service on port 8080
 
