@@ -1,6 +1,6 @@
 # CodeWebUi
 
-![MainPage](https://github.8451.com/storage/user/490/files/06e25e54-7146-11e7-8876-e238e9eb0a9a)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/52cc0e25b2c940c7af7f1f15961457c5)](https://www.codacy.com/app/tomd8451/code-web-ui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=8451/code-web-ui&amp;utm_campaign=Badge_Grade)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
