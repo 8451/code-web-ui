@@ -25,7 +25,7 @@ import 'rxjs/add/operator/map';
 export class InterviewAssessmentComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
-  @ViewChild(AceEditorComponent) aceEditor;
+  @ViewChild('answer') aceEditor;
   form: FormGroup;
   assessment: Assessment;
   dialogRef: MatDialogRef<any>;
@@ -88,15 +88,19 @@ export class InterviewAssessmentComponent implements OnInit {
       this.router.navigate(['/interview/assessments']);
       return;
     }
-    if (this.assessment.state !== AssessmentStates.NOTES) {
-      document.getElementById('sidenavID').setAttribute('style', 'display: flex');
-    }
+    // if (this.assessment.state !== AssessmentStates.NOTES) {
+    //   document.getElementById('sidenavID').setAttribute('style', 'display: flex');
+    // }
     this.getQuestions();
     this.getConnectEvent(this.assessment.interviewGuid);
     this.getPasteEvent(this.assessment.interviewGuid);
     this.getAnsweredQuestion(this.assessment.interviewGuid);
     this.getNewQuestionEvent(this.assessment.interviewGuid);
     this.sendConnectEvent(this.assessment.interviewGuid);
+  }
+
+  shouldHideSidebar() {
+    return this.assessment.state === AssessmentStates.NOTES;
   }
 
   getAnsweredQuestion(guid: string): void {

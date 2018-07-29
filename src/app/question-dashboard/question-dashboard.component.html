@@ -4,12 +4,10 @@
       <mat-paginator #questionPaginator [length]="totalQuestions" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
       </mat-paginator>
     </div>
-    <div class="search-box one-third-width full-height flex-container">
       <mat-form-field floatPlaceholder="never">
-        <mat-icon mdPrefix class="search-icon">search</mat-icon>
+        <mat-label><mat-icon class="search-icon">search</mat-icon>Search</mat-label>
         <input #search matInput placeholder="Search" (keyup.enter)="searchQuestion(search.value)">
       </mat-form-field>
-    </div>
   </div>
   <h3 *ngIf="questions && !questions.length">No Questions</h3>
   <mat-list>

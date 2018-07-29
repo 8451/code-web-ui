@@ -5,15 +5,17 @@ import { Subscription } from 'rxjs/Subscription';
 import { StompRService } from '@stomp/ng2-stompjs';
 import { Injectable } from '@angular/core';
 import { NewQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
+import * as SockJS from 'sockjs-client';
 
 @Injectable()
 export class AssessmentWebSocketService {
 
-  socketUrl = '/api/v1/socket';
+  socketUrl = 'http://localhost:8090/api/v1/socket';
+  socket = new SockJS(this.socketUrl)
 
   constructor(public stomp: StompRService) {
     stomp.config = {
-      url: this.socketUrl,
+      url: () => this.socket,
       headers: {
 
       },
