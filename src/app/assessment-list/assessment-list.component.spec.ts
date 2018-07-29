@@ -12,13 +12,22 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { AssessmentListComponent } from './assessment-list.component';
 import {
-  MdDialogModule, MdCardModule, MaterialModule, MdDialogRef,
-  MdInputModule, MdDialog, OverlayRef, MdDialogContainer, PageEvent, ScrollStrategy
+  MatDialogModule, 
+  MatCardModule, 
+  MatDialogRef,
+  MatInputModule,
+  MatIconModule,
+  MatDialog,
+  MatDialogConfig, 
+  MatPaginatorModule,
+  PageEvent
 } from '@angular/material';
+
+import { OverlayModule, ScrollStrategy} from '@angular/cdk/overlay'
 
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
-import { StarRatingModule } from 'angular-star-rating';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AssessmentListComponent', () => {
   let component: AssessmentListComponent;
@@ -53,8 +62,14 @@ describe('AssessmentListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AssessmentListComponent, NewAssessmentDialogComponent],
-      imports: [MaterialModule, MdCardModule, MdDialogModule, HttpModule, BrowserAnimationsModule,
-        StarRatingModule.forRoot()],
+      imports: [
+        MatDialogModule, 
+        MatInputModule, 
+        MatPaginatorModule,
+        HttpModule, 
+        BrowserAnimationsModule,
+        MatIconModule
+      ],
       providers: [
         AuthService,
         AssessmentService,
@@ -62,7 +77,8 @@ describe('AssessmentListComponent', () => {
         FormBuilder,
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: { url: Observable.of([{ path: 'assessments' }]) } }
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
       .overrideModule(BrowserDynamicTestingModule, {
         set: {

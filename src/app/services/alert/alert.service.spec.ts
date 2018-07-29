@@ -50,6 +50,6 @@ describe('AlertService', () => {
     let alert: Alert<any> = null;
     service.getAlert().subscribe(msg => alert = msg);
     const result = service.confirmation('Do you want to continue?');
-    expect(alert.result).toEqual(result);
+    expect(alert.result).toBeTruthy();
   }));
 });

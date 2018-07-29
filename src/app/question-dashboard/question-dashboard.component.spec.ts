@@ -12,7 +12,10 @@ import { async, fakeAsync, ComponentFixture, TestBed, inject } from '@angular/co
 
 import { QuestionDashboardComponent } from './question-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule, PageEvent } from '@angular/material';
+import { MatListModule, MatButtonModule, MatInputModule, PageEvent, MatIconModule,
+  MatPaginatorModule,
+  MatChipsModule,
+} from '@angular/material';
 import { routes } from '../app-routing.module';
 import { LanguageChipComponent } from '../language-chip/language-chip.component';
 
@@ -96,7 +99,12 @@ describe('QuestionDashboardComponent', () => {
       declarations: [QuestionDashboardComponent, QuestionListItemComponent, LanguageChipComponent],
       imports: [
         BrowserAnimationsModule,
-        MaterialModule,
+        MatButtonModule,
+        MatInputModule,
+        MatListModule,
+        MatIconModule,
+        MatChipsModule,
+        MatPaginatorModule,
         RouterTestingModule,
         HttpModule,
       ],

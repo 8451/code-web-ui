@@ -1,0 +1,162 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "code-web-ui": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/web.config"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/ace-builds/src-min/ace.js",
+              "node_modules/ace-builds/src-min/mode-sql.js",
+              "node_modules/ace-builds/src-min/mode-python.js",
+              "node_modules/ace-builds/src-min/mode-csharp.js",
+              "node_modules/ace-builds/src-min/mode-c_cpp.js",
+              "node_modules/ace-builds/src-min/mode-powershell.js",
+              "node_modules/ace-builds/src-min/mode-sh.js",
+              "node_modules/ace-builds/src-min/mode-typescript.js",
+              "node_modules/ace-builds/src-min/mode-ruby.js",
+              "node_modules/ace-builds/src-min/mode-php.js",
+              "node_modules/ace-builds/src-min/mode-scala.js",
+              "node_modules/ace-builds/src-min/mode-java.js",
+              "node_modules/ace-builds/src-min/theme-sqlserver.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "code-web-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "code-web-ui:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "code-web-ui:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/ace-builds/src-min/ace.js",
+              "node_modules/ace-builds/src-min/mode-sql.js",
+              "node_modules/ace-builds/src-min/mode-python.js",
+              "node_modules/ace-builds/src-min/mode-csharp.js",
+              "node_modules/ace-builds/src-min/mode-c_cpp.js",
+              "node_modules/ace-builds/src-min/mode-powershell.js",
+              "node_modules/ace-builds/src-min/mode-sh.js",
+              "node_modules/ace-builds/src-min/mode-typescript.js",
+              "node_modules/ace-builds/src-min/mode-ruby.js",
+              "node_modules/ace-builds/src-min/mode-php.js",
+              "node_modules/ace-builds/src-min/mode-scala.js",
+              "node_modules/ace-builds/src-min/mode-java.js",
+              "node_modules/ace-builds/src-min/theme-sqlserver.js"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/web.config"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**/*.ts"
+            ]
+          }
+        }
+      }
+    },
+    "code-web-ui-e2e": {
+      "root": "e2e",
+      "sourceRoot": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "code-web-ui:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**/*.ts"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "code-web-ui",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}

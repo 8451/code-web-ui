@@ -5,7 +5,6 @@ import { AuthService } from './../../services/auth/auth.service';
 import { AssessmentStates } from 'app/domains/assessment';
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
@@ -15,6 +14,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssessmentDetailsComponent } from './assessment-details.component';
 import { LanguageChipComponent } from '../../language-chip/language-chip.component';
 import { StarRatingModule } from 'angular-star-rating';
+import { MatExpansionModule, MatCardModule } from '../../../../node_modules/@angular/material';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AssessmentDetailsComponent', () => {
   let component: AssessmentDetailsComponent;
@@ -46,11 +47,12 @@ describe('AssessmentDetailsComponent', () => {
       imports: [
         HttpModule,
         RouterTestingModule,
-        MaterialModule,
+        MatExpansionModule,
+        MatCardModule,
+        StarRatingModule,
         BrowserAnimationsModule,
         FormsModule,
         AceEditorModule,
-        StarRatingModule.forRoot(),
       ],
       providers: [
         AssessmentService,
@@ -58,6 +60,9 @@ describe('AssessmentDetailsComponent', () => {
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter }
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA
       ]
     })
       .compileComponents();

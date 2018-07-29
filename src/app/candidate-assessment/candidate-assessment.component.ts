@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AssessmentStates } from 'app/domains/assessment';
-import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
+import { AceEditorComponent } from 'ng2-ace-editor';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { editorTranslator } from 'app/services/question/question.service';

@@ -3,64 +3,64 @@
   <div class="question-content-container flex-container">
 
     <div class="question-data flex-container">
-      <md-input-container class="question-title">
-        <input mdInput placeholder="Question Title" maxlength="50" name="title" formControlName="title" required>
-      </md-input-container>
+      <mat-form-field class="question-title">
+        <input matInput placeholder="Question Title" maxlength="50" name="title" formControlName="title" required>
+      </mat-form-field>
       <h6>Question Body</h6>
       <ace-editor id="body-editor" class="editor-container question-border" [theme]="'sqlserver'" name="body" formControlName="body" [mode]="mode" [options]="editorOptions" required></ace-editor>
       <h6>Suggested Answer</h6>
       <ace-editor id="answer-editor" class="editor-container answer-border" [theme]="'sqlserver'" name="suggestedAnswer" formControlName="suggestedAnswer" [mode]="mode" [options]="editorOptions"></ace-editor>
     </div>
 
-    <md-card class="question-metadata">
-      <md-card-title>
+    <mat-card class="question-metadata">
+      <mat-card-title>
         Question Details
-      </md-card-title>
-      <md-card-content>
-        <md-list>
-          <md-list-item>
-            <md-input-container class="difficulty">
-              <input mdInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
-              <md-error>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-form-field class="difficulty">
+              <input matInput placeholder="Difficulty" type="number" min="1" max="5" name="difficulty" formControlName="difficulty" required>
+              <mat-error>
                 Choose a difficulty between 1-5
-              </md-error>
-            </md-input-container>
-          </md-list-item>
-          <md-list-item class="language-item">
-            <md-input-container class="language">
-              <input mdInput placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language" required>
-            </md-input-container>
-            <md-autocomplete #auto="mdAutocomplete">
-              <md-option *ngFor="let language of filteredLanguages | async" [value]="language">
-                {{ language }}
-              </md-option>
-            </md-autocomplete>
-          </md-list-item>
-          <md-list-item>
-            <h4 md-line>Modified by</h4>
-            <p md-line>{{form.controls['modifiedBy'].value}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h4 md-line>Modified on</h4>
-            <p md-line>{{form.controls['modifiedDate'].value | date: "medium"}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h4 md-line>Created by</h4>
-            <p md-line>{{form.controls['createdBy'].value}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h4 md-line>Created on</h4>
-            <p md-line>{{form.controls['createdDate'].value | date: "medium"}}</p>
-          </md-list-item>
-        </md-list>
-      </md-card-content>
-    </md-card>
+              </mat-error>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item class="language-item">
+            <mat-form-field class="language">
+              <input matInput placeholder="Language" [matAutocomplete]="auto" type="text" name="language" formControlName="language" required>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
+                  {{ language }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 mat-line>Modified by</h4>
+            <p mat-line>{{form.controls['modifiedBy'].value}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 mat-line>Modified on</h4>
+            <p mat-line>{{form.controls['modifiedDate'].value | date: "medium"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 mat-line>Created by</h4>
+            <p mat-line>{{form.controls['createdBy'].value}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 mat-line>Created on</h4>
+            <p mat-line>{{form.controls['createdDate'].value | date: "medium"}}</p>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
 
   </div>
   <div class="flex-container add-delete">
-    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
-    <button md-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>
-    <button md-raised-button color="warn" type="button" *ngIf="isNew" (click)="navigateBack()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">{{isNew ? 'Add' : 'Save'}}</button>
+    <button mat-raised-button color="warn" type="button" *ngIf="!isNew" (click)="deleteQuestion()">Delete</button>
+    <button mat-raised-button color="warn" type="button" *ngIf="isNew" (click)="navigateBack()">Cancel</button>
   </div>
 
 </form>

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogComponent } from './dialog.component';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Alert, AlertType } from '../../domains/alert';
 
 class MdDialogRefMock {
@@ -21,7 +21,7 @@ describe('DialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DialogComponent ],
-      providers: [ { provide: MdDialogRef, useClass: MdDialogRefMock } ]
+      providers: [ { provide: MatDialogRef, useClass: MdDialogRefMock } ]
     }).compileComponents();
 
   }));

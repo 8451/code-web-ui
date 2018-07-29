@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageChipComponent } from './language-chip.component';
-import { MaterialModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material';
 
 describe('LanguageChipComponent', () => {
   let component: LanguageChipComponent;
@@ -10,7 +10,7 @@ describe('LanguageChipComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule,
+        MatChipsModule,
       ],
       declarations: [ LanguageChipComponent ]
     })

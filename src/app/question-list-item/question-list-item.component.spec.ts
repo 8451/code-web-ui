@@ -6,8 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from '../domains/question';
 
 import { QuestionListItemComponent } from './question-list-item.component';
-import { MaterialModule } from '@angular/material';
 import { LanguageChipComponent } from '../language-chip/language-chip.component';
+import { MatListModule, MatChipsModule } from '@angular/material';
 
 
 describe('QuestionListItemComponent', () => {
@@ -31,7 +31,8 @@ describe('QuestionListItemComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MaterialModule,
+        MatListModule,
+        MatChipsModule,
         BrowserAnimationsModule
       ],
       declarations: [

@@ -1,6 +1,6 @@
 import { AlertService } from './../services/alert/alert.service';
 import { QuestionResponse } from './../domains/question-response';
-import { PageEvent, MdPaginator } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '../services/question/question.service';
@@ -15,7 +15,7 @@ import { Question } from '../domains/question';
 export class QuestionDashboardComponent implements OnInit {
 
   questions: Question[];
-  @ViewChild('questionPaginator') paginator: MdPaginator;
+  @ViewChild('questionPaginator') paginator: MatPaginator;
 
   totalQuestions = 100;
   pageSize = 10;

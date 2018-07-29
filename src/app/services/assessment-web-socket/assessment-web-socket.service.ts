@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { ConnectEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { StompService } from 'ng2-stomp-service';
+import { StompRService } from '@stomp/ng2-stompjs';
 import { Injectable } from '@angular/core';
 import { NewQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
 
@@ -11,100 +11,75 @@ export class AssessmentWebSocketService {
 
   socketUrl = '/api/v1/socket';
 
-  constructor(public stomp: StompService) {
-    stomp.configure({
-      host: this.socketUrl,
-      debug: true,
-      queue: { 'init': false }
-    });
+  constructor(public stomp: StompRService) {
+    stomp.config = {
+      url: this.socketUrl,
+      headers: {
 
-    stomp.startConnect().then(() => {
-      stomp.done('init');
-    });
+      },
+      heartbeat_in: 0, // Typical value 0 - disabled
+      heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+    
+      // Wait in milliseconds before attempting auto reconnect
+      // Set to 0 to disable
+      // Typical value 5000 (5 seconds)
+      reconnect_delay: 5000,
+    
+      // Will log diagnostics on console
+      debug: true
+    };
+
+    this.stomp.initAndConnect();
   }
 
   sendConnectEvent(guid: string) {
-    this.stomp.after('init').then(() => {
-      this.stomp.send(`/assessment/${guid}/connect`, new ConnectEvent());
-    });
+    this.stomp.publish(`/assessment/${guid}/connect`, JSON.stringify(new ConnectEvent()))
   }
 
   getConnectEvent(guid: string): Observable<ConnectEvent> {
-    const connect: Subject<ConnectEvent> = new Subject<ConnectEvent>();
-    this.stomp.after('init').then(() => {
-      this.stomp.subscribe(`/topic/assessment/${guid}/connect`, (data) => {
-        connect.next(data);
-      });
+    return this.stomp.subscribe(`/topic/assessment/${guid}/connect`).map(message => {
+      return JSON.parse(message.body);
     });
-    return connect;
   }
 
   getNewQuestion(guid: string): Observable<NewQuestionEvent> {
-    const newQuestion: Subject<NewQuestionEvent> = new Subject<NewQuestionEvent>();
-    this.stomp.after('init').then(() => {
-      this.stomp.subscribe(`/topic/assessment/${guid}/new-question`, (data) => {
-        newQuestion.next(data);
-      });
+    return this.stomp.subscribe(`/topic/assessment/${guid}/new-question`).map(message => {
+      return JSON.parse(message.body);
     });
-    return newQuestion;
   }
 
   sendNewQuestion(guid: string, question: NewQuestionEvent): void {
-    this.stomp.after('init').then(() => {
-      this.stomp.send(`/assessment/${guid}/new-question`, question);
-    });
+    this.stomp.publish(`/assessment/${guid}/new-question`, JSON.stringify(question));
   }
 
   answerQuestion(guid: string, answerQuestion: AnswerQuestionEvent): void {
-    this.stomp.after('init').then(() => {
-      this.stomp.send(`/assessment/${guid}/answer-question`, answerQuestion);
-    });
+    this.stomp.publish(`/assessment/${guid}/answer-question`, JSON.stringify(answerQuestion));
   }
 
   getAnsweredQuestion(guid: string): Observable<AnswerQuestionEvent> {
-    const answeredQuestion: Subject<AnswerQuestionEvent> = new Subject<AnswerQuestionEvent>();
-
-    this.stomp.after('init').then(() => {
-      this.stomp.subscribe(`/topic/assessment/${guid}/answer-question`, (data) => {
-        answeredQuestion.next(data);
-      });
+    return this.stomp.subscribe(`/topic/assessment/${guid}/answer-question`).map(message => {
+      return JSON.parse(message.body);
     });
-
-    return answeredQuestion;
   }
 
   sendEndAssessment(guid: string, event: EndAssessmentEvent) {
-    this.stomp.after('init').then(() => {
-      this.stomp.send(`/assessment/${guid}/end-assessment`, event);
-    });
+    this.stomp.publish(`/assessment/${guid}/end-assessment`, JSON.stringify(event));
   }
 
-  getEndAssessment(guid: string): Subject<EndAssessmentEvent> {
-    const assessmentEndedEvent: Subject<EndAssessmentEvent> = new Subject<EndAssessmentEvent>();
-
-    this.stomp.after('init').then(() => {
-      this.stomp.subscribe(`/topic/assessment/${guid}/end-assessment`, (event) => {
-        assessmentEndedEvent.next(event);
-      });
+  getEndAssessment(guid: string): Observable<EndAssessmentEvent> {
+    return this.stomp.subscribe(`/topic/assessment/${guid}/end-assessment`).map(message => {
+      return JSON.parse(message.body);
     });
-
-    return assessmentEndedEvent;
   }
 
   sendPasteEvent(guid: string) {
-    this.stomp.after('init').then(() => {
-      this.stomp.send(`/assessment/${guid}/paste`, new PasteEvent());
-    });
+    this.stomp.publish(`/assessment/${guid}/paste`, JSON.stringify(new PasteEvent()));
   }
 
   getPasteEvent(guid: string): Observable<PasteEvent> {
-    const paste: Subject<PasteEvent> = new Subject<PasteEvent>();
-    this.stomp.after('init').then(() => {
-      this.stomp.subscribe(`/topic/assessment/${guid}/paste`, (data) => {
-        paste.next(data);
-      });
+    return this.stomp.subscribe(`/topic/assessment/${guid}/paste`).map(message => {
+      return JSON.parse(message.body);
     });
-    return paste;
   }
 
 }

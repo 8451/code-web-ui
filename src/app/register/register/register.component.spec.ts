@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
 import { UserService } from './../../services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './../../app-routing.module';
 import { NgForm, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
@@ -12,6 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 import { RegisterComponent } from './register.component';
+import { MatCardModule, MatInputModule } from '../../../../node_modules/@angular/material';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -32,7 +32,8 @@ describe('RegisterComponent', () => {
         FormsModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        MaterialModule,
+        MatCardModule,
+        MatInputModule,
         BrowserAnimationsModule,
       ],
       declarations: [RegisterComponent],

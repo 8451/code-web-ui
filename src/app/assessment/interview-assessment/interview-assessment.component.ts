@@ -1,12 +1,12 @@
 import { QuestionAnswer } from './../../domains/question-answer';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
+import { AceEditorComponent } from 'ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../../services/alert/alert.service';
 import { QuestionInfoDialogComponent } from './../../question-info-dialog/question-info-dialog.component';
-import { MdDialogRef, MdDialog, MdSidenav } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSidenav } from '@angular/material';
 import { Question } from './../../domains/question';
 import { QuestionService, editorTranslator } from './../../services/question/question.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -24,11 +24,11 @@ import 'rxjs/add/operator/map';
 })
 export class InterviewAssessmentComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild(AceEditorComponent) aceEditor;
   form: FormGroup;
   assessment: Assessment;
-  dialogRef: MdDialogRef<any>;
+  dialogRef: MatDialogRef<any>;
   selectedQuestion: Question;
   sentQuestion: Question;
   languages: string[];
@@ -48,7 +48,7 @@ export class InterviewAssessmentComponent implements OnInit {
   assessmentStates: any = AssessmentStates;
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private questionService: QuestionService,

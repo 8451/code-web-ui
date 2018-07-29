@@ -1,4 +1,3 @@
-import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
 import { Observable } from 'rxjs/Observable';
 import { Question } from './../domains/question';
 import { Component, OnInit, NgModule, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
@@ -7,7 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { QuestionService, editorTranslator } from '../services/question/question.service';
 import { AlertService } from '../services/alert/alert.service';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { MdAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material';
 import 'rxjs/add/operator/switchMap';
 
 

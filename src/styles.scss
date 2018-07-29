@@ -4,7 +4,7 @@
 // @import '~@angular/material/theming';
 // @include mat-core();
 @import "./md-theme.scss";
-@import "~angular-star-rating/assets/scss/star-rating";
+@import '~css-star-rating/scss/star-rating';
 .answer-border {
     border-left: .375em solid #F67E27;
 }
@@ -272,7 +272,7 @@ app-language-chip {
     margin-right: .3em;
 }
 
-star-rating-comp div:focus {
+star-rating div:focus {
     outline: none;
 }
 

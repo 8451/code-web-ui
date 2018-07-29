@@ -2,24 +2,24 @@
   <div class="left-spacer">
   </div>
   <div class="login-body">
-    <md-card-title class="title-text two-third-width">
+    <mat-card-title class="title-text two-third-width">
       <img src="../../assets/CoDE-negative-logo.png" class="full-width half-height" />
-    </md-card-title>
-    <md-card-content class="full-width">
+    </mat-card-title>
+    <mat-card-content class="full-width">
       <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
         <div class="spacer">
-          <md-input-container class="full-width">
-            <input mdInput placeholder="Email" required title="Email" formControlName="username">
-          </md-input-container>
-          <md-input-container class="full-width">
-            <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
-          </md-input-container>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" required title="Email" formControlName="username">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Password" required title="Password" formControlName="password">
+          </mat-form-field>
         </div>
         <div class="centered-button flex-container">
-          <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
         </div>
       </form>
-    </md-card-content>
+    </mat-card-content>
   </div>
   <div class="right-spacer">
   </div>

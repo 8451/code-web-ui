@@ -1,5 +1,4 @@
-import { AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
-import { MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Question } from './../domains/question';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -20,7 +19,7 @@ export class QuestionInfoDialogComponent implements OnInit {
   };
 
   question: Question;
-  constructor(public dialogRef: MdDialogRef<QuestionInfoDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<QuestionInfoDialogComponent>) { }
 
   ngOnInit() {
   }

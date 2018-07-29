@@ -5,12 +5,11 @@ import { ForgotPasswordComponent } from './forgot-password.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
 import { AlertService } from '../services/alert/alert.service';
-import { MdCardModule, MdInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http, HttpModule } from '@angular/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MatCardModule, MatInputModule, MatIconModule } from '@angular/material';
 
 const mockUserService: any = {
   forgotPassword(username: string) { },
@@ -34,8 +33,9 @@ describe('ForgotPasswordComponent', () => {
       declarations: [ForgotPasswordComponent],
       imports: [
         FormsModule,
-        MdCardModule,
-        MdInputModule,
+        MatCardModule,
+        MatInputModule,
+        MatIconModule,
         RouterTestingModule,
         ReactiveFormsModule,
         NoopAnimationsModule,

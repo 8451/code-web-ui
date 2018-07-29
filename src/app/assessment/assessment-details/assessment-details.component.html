@@ -1,43 +1,43 @@
 <h3 *ngIf="!assessment">Assessment not found</h3>
 <div *ngIf="assessment" class="assessment-container flex-container">
   <div class="candidate-details flex-container">
-    <md-card>
-      <md-card-title>
+    <mat-card>
+      <mat-card-title>
         <div class="flex-container">
           <div>{{assessment.firstName}} {{assessment.lastName}}</div>
-          <star-rating-comp starType="svg" [rating]="assessment.rating" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
+          <star-rating starType="svg" [rating]="assessment.rating" (ratingChange)="onRatingChange($event)"></star-rating>
         </div>
-      </md-card-title>
-      <md-card-subtitle>
+      </mat-card-title>
+      <mat-card-subtitle>
         {{assessment.email}}
-      </md-card-subtitle>
-      <md-card-content>
+      </mat-card-subtitle>
+      <mat-card-content>
 
         <h3>Notes</h3>
-        <md-input-container class="notes-input-container">
+        <mat-form-field class="notes-input-container">
           <textarea mdInput [(ngModel)]="assessment.notes" class="notes-textarea"></textarea>
-        </md-input-container>
-      </md-card-content>
-      <md-card-actions>
-        <button md-button color="primary" type="submit" (click)="saveAssessment()">Save</button>
-      </md-card-actions>
-    </md-card>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" type="submit" (click)="saveAssessment()">Save</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
   <div class="assessment-question-answers">
     <h3 *ngIf="(filteredQuestionAnswers | async)?.length <= 0">No questions answered</h3>
-    <md-accordion *ngIf="assessment" [displayMode]="displayMode" [multi]="multi" class="question-answer-accordion">
-      <md-expansion-panel *ngFor="let questionAnswer of filteredQuestionAnswers | async; let isFirst = first" [expanded]="isFirst"
+    <mat-accordion *ngIf="assessment" [displayMode]="displayMode" [multi]="multi" class="question-answer-accordion">
+      <mat-expansion-panel *ngFor="let questionAnswer of filteredQuestionAnswers | async; let isFirst = first" [expanded]="isFirst"
         class="question-answer-panel">
-        <md-expansion-panel-header class="flex-container">{{questionAnswer.title}}
+        <mat-expansion-panel-header class="flex-container">{{questionAnswer.title}}
           <app-language-chip [language]="questionAnswer.language"></app-language-chip>
-        </md-expansion-panel-header>
+        </mat-expansion-panel-header>
         <h5>Question</h5>
         <ace-editor class="editor question-border" [theme]="'sqlserver'" [(text)]="questionAnswer.body" [mode]="getMode(questionAnswer.language)"
           [options]="editorOptions" [readOnly]="true"></ace-editor>
         <h5>Answer</h5>
         <ace-editor class="editor answer-border" [theme]="'sqlserver'" [(text)]="questionAnswer.answer" [mode]="getMode(questionAnswer.language)"
           [options]="editorOptions" [readOnly]="true"></ace-editor>
-      </md-expansion-panel>
-    </md-accordion>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>

@@ -1,13 +1,13 @@
-<md-list-item>
+<mat-list-item>
   <div class="info">
     <div class="flex-container centered-flex-container">
-      <h4 md-line id="questionTitle">{{question.title}}</h4>
+      <h4 mat-line id="questionTitle">{{question.title}}</h4>
       <app-language-chip [language]="question.language"></app-language-chip>
     </div>
-    <p md-line id="subtitle">
+    <p mat-line id="subtitle">
       Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}
       <br> Difficulty: {{question.difficulty}}
     </p>
   </div>
-</md-list-item>
-<md-divider></md-divider>
+</mat-list-item>
+<mat-divider></mat-divider>
