@@ -1,9 +1,9 @@
-import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
+import { AssessmentWebSocketService, stompConfig } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
-import { StompRService } from '@stomp/ng2-stompjs';
+import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -126,7 +126,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AuthService,
     AssessmentWebSocketService,
     CanActivateAuthguard,
-    StompRService
+    StompService,
+    {
+      provide: StompConfig,
+      useValue: stompConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,9 @@
 import { ConnectEvent, NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from './../../domains/events/web-socket-event';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import { StompRService } from '@stomp/ng2-stompjs';
+import { StompService, StompConfig} from '@stomp/ng2-stompjs';
 import { TestBed, inject, async, getTestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AssessmentWebSocketService } from './assessment-web-socket.service';
+import { AssessmentWebSocketService, stompConfig } from './assessment-web-socket.service';
 
 const mockSubscription = {
   unsubscribe() { }
@@ -43,7 +43,10 @@ const mockStomp = {
 describe('AssessmentWebSocketService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AssessmentWebSocketService, { provide: StompRService, useValue: mockStomp }]
+      providers: [
+        { provide: StompConfig, useValue: {url: ''}},
+        { provide: StompService, useValue: mockStomp },   
+        AssessmentWebSocketService,   ]
     });
   });
 

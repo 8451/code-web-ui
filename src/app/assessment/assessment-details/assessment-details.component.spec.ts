@@ -49,7 +49,7 @@ describe('AssessmentDetailsComponent', () => {
         RouterTestingModule,
         MatExpansionModule,
         MatCardModule,
-        StarRatingModule,
+        StarRatingModule.forRoot(),
         BrowserAnimationsModule,
         FormsModule,
         AceEditorModule,

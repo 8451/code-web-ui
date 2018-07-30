@@ -3,8 +3,8 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { ConnectEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
-import { StompService, StompRService } from '@stomp/ng2-stompjs';
-import { AssessmentWebSocketService } from './../../services/assessment-web-socket/assessment-web-socket.service';
+import { StompService, StompConfig } from '@stomp/ng2-stompjs';
+import { AssessmentWebSocketService, stompConfig } from './../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertService } from './../../services/alert/alert.service';
 import { Question } from './../../domains/question';
@@ -149,7 +149,8 @@ describe('InterviewAssessmentComponent', () => {
         AlertService,
         { provide: ActivatedRoute, useValue: { params: Observable.from([{ 'guid': '1234' }]) } },
         { provide: Router, useValue: mockRouter },
-        { provide: StompRService, useValue: mockStomp },
+        { provide: StompService, useValue: mockStomp },
+        { provide: StompConfig, useValue: {url: ''} }, 
         AssessmentWebSocketService,
         FormBuilder,
       ],

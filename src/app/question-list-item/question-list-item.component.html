@@ -1,13 +1,13 @@
-<mat-list-item>
-  <div class="info">
-    <div class="flex-container centered-flex-container">
-      <h4 mat-line id="questionTitle">{{question.title}}</h4>
-      <app-language-chip [language]="question.language"></app-language-chip>
-    </div>
-    <p mat-line id="subtitle">
-      Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}
-      <br> Difficulty: {{question.difficulty}}
-    </p>
-  </div>
+<mat-list-item class="mat-typography">
+  <h2 matLine id="questionTitle">{{question.title}}</h2>
+  <p matLine>
+    Modified by: {{question.modifiedBy}} on {{question.modifiedDate | date: 'medium'}}
+  </p>
+  <p matLine>
+    Difficulty: {{question.difficulty}}
+  </p>
+  <ng-container>
+      <app-language-chip matListIcon [language]="question.language"></app-language-chip>
+  </ng-container>
 </mat-list-item>
 <mat-divider></mat-divider>

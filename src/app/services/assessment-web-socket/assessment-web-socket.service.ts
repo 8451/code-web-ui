@@ -2,36 +2,26 @@ import { Observable } from 'rxjs/Rx';
 import { ConnectEvent, AnswerQuestionEvent, EndAssessmentEvent } from './../../domains/events/web-socket-event';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { StompRService } from '@stomp/ng2-stompjs';
+import { StompRService, StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { Injectable } from '@angular/core';
 import { NewQuestionEvent, PasteEvent } from 'app/domains/events/web-socket-event';
 import * as SockJS from 'sockjs-client';
 
+export const stompConfig: StompConfig ={
+  url: () => new SockJS('/api/v1/socket'),
+  headers: {
+
+  },
+  heartbeat_in: 0, // Typical value 0 - disabled
+  heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+  reconnect_delay: 5000,
+  debug: false
+};
+
 @Injectable()
 export class AssessmentWebSocketService {
-
-  socketUrl = 'http://localhost:8090/api/v1/socket';
-  socket = new SockJS(this.socketUrl)
-
-  constructor(public stomp: StompRService) {
-    stomp.config = {
-      url: () => this.socket,
-      headers: {
-
-      },
-      heartbeat_in: 0, // Typical value 0 - disabled
-      heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
-    
-      // Wait in milliseconds before attempting auto reconnect
-      // Set to 0 to disable
-      // Typical value 5000 (5 seconds)
-      reconnect_delay: 5000,
-    
-      // Will log diagnostics on console
-      debug: true
-    };
-
-    this.stomp.initAndConnect();
+  
+  constructor(public stomp: StompService) {
   }
 
   sendConnectEvent(guid: string) {

@@ -2,10 +2,10 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { AssessmentStateResponse, AssessmentStates } from './../domains/assessment';
 import { Subject } from 'rxjs/Subject';
 import { AnswerQuestionEvent, EndAssessmentEvent } from './../domains/events/web-socket-event';
-import { StompService, StompRService } from '@stomp/ng2-stompjs';
+import { StompService, StompConfig} from '@stomp/ng2-stompjs';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { AssessmentService } from './../services/assessment/assessment.service';
-import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
+import { AssessmentWebSocketService, stompConfig } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -66,7 +66,8 @@ describe('CandidateAssessmentComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
         AlertService,
-        { provide: StompRService, useValue: mockStomp },
+        { provide: StompService, useValue: mockStomp },
+        { provide: StompConfig, useValue: {url: ''}},
         AssessmentWebSocketService,
         { provide: Router, useValue: mockRouter },
         { provide: AssessmentService, useValue: mockAssessmentService}
