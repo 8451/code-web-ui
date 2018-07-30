@@ -3,7 +3,6 @@ import { AlertService } from './../../services/alert/alert.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Http, BaseRequestOptions, ConnectionBackend, RequestMethod, ResponseOptions, Response } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User } from './../../domains/user';
@@ -13,6 +12,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, inject } from '@angular/co
 
 import { ActivateComponent } from './activate.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatCardModule, MatInputModule, MatIconModule } from '@angular/material';
 
 
 describe('ActivateComponent', () => {
@@ -38,7 +38,9 @@ describe('ActivateComponent', () => {
         FormsModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        MaterialModule,
+        MatCardModule,
+        MatInputModule,
+        MatIconModule,
         BrowserAnimationsModule,
       ],
       providers: [

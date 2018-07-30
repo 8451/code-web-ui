@@ -3,7 +3,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from '../services/alert/alert.service';
 import { Subscription } from 'rxjs/Subscription';
-import { MdSnackBar, MdDialog, MdDialogRef } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Alert, AlertType } from '../domains/alert';
 
 
@@ -16,7 +16,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   alertSubscription: Subscription = null;
 
-  constructor(private alertService: AlertService, public snackBar: MdSnackBar, public dialog: MdDialog) { }
+  constructor(private alertService: AlertService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.alertSubscription = this.alertService.getAlert().subscribe((alert) => this.handleAlert(alert));
@@ -45,7 +45,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   openErrorSnackBar(alert: Alert<any>, action: string) {
     this.snackBar.open(alert.message, action, {
-      duration: alert.duration, extraClasses: ['error-snack']
+      duration: alert.duration, panelClass: ['error-snack']
     });
   }
 

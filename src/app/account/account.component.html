@@ -1,43 +1,43 @@
-<md-card id="register-card" md-raised-card class="centered-card">
-  <md-card-title class="card-title">Account Information</md-card-title>
-  <md-card-content>
+<mat-card id="register-card" mat-raised-card class="centered-card">
+  <mat-card-title class="card-title">Account Information</mat-card-title>
+  <mat-card-content>
     <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmitUpdate()">
       <div class="spacer">
-        <md-input-container class="full-width">
-          <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
-        </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
-        </md-input-container>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="Email" required title="Email Address" formControlName="username">
-          <md-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="First Name" required title="First Name" formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email" required title="Email Address" formControlName="username">
+          <mat-error>
             Must have a valid email address
-          </md-error>
-        </md-input-container>
-        <md-input-container *ngIf="canChangePassword" class="full-width">
-          <input mdInput type="password" placeholder="Current Password" required title="Current Password" formControlName="currentPassword">
-        </md-input-container>
-        <md-input-container *ngIf="canChangePassword" class="full-width">
-          <input mdInput type="password" placeholder="New Password" required title="New Password" formControlName="newPassword">
-          <md-error *ngIf="form.controls['newPassword'].hasError('minlength')">
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="canChangePassword" class="full-width">
+          <input matInput type="password" placeholder="Current Password" required title="Current Password" formControlName="currentPassword">
+        </mat-form-field>
+        <mat-form-field *ngIf="canChangePassword" class="full-width">
+          <input matInput type="password" placeholder="New Password" required title="New Password" formControlName="newPassword">
+          <mat-error *ngIf="form.controls['newPassword'].hasError('minlength')">
             Password must have at least 8 characters
-          </md-error>
-          <md-error *ngIf="form.controls['newPassword'].hasError('passwordValid')">
+          </mat-error>
+          <mat-error *ngIf="form.controls['newPassword'].hasError('passwordValid')">
             Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
-          </md-error>
-        </md-input-container>
-        <md-input-container *ngIf="canChangePassword" class="full-width">
-          <input mdInput type="password" placeholder="Re-Type New Password" required title="Confirm Password" formControlName="confirmPassword">
-          <md-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="canChangePassword" class="full-width">
+          <input matInput type="password" placeholder="Re-Type New Password" required title="Confirm Password" formControlName="confirmPassword">
+          <mat-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
             Passwords must match
-          </md-error>
-        </md-input-container>
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="centered-button">
-        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
-        <button *ngIf="!canChangePassword" md-raised-button type="button" (click)="changePassword()">Change password</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
+        <button *ngIf="!canChangePassword" mat-raised-button type="button" (click)="changePassword()">Change password</button>
       </div>
     </form>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

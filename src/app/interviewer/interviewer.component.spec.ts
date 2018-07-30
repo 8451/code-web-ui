@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from '../services/auth/auth.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
+import { MatButtonModule } from '@angular/material';
 import { InterviewerComponent } from './interviewer.component';
 
 @Component({
@@ -56,7 +56,8 @@ describe('InterviewerComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([{ path: '', pathMatch: 'full', redirectTo: '/interview' },
         { path: 'interview', component: InterviewerComponent, children: [{ path: 'assessments', component: DummyComponent }] },
-        ])
+        ]),
+        MatButtonModule
       ]
     })
       .compileComponents();

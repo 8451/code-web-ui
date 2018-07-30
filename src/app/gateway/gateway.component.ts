@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate, keyframes, HostBinding } from '@angular/core';
-import { MdInputModule, MaterialModule, MdCardModule } from '@angular/material';
+import { Component, OnInit, OnDestroy, HostBinding} from '@angular/core';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import { slideToTopEnter } from '../../router.animations';
 
 @Component({

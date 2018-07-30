@@ -1,47 +1,49 @@
-<md-sidenav-container>
+<mat-drawer-container autosize>
     <div *ngIf="assessment && assessment.state != assessmentStates.NOTES" class="full-width">
-        <md-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" class="open-icon flex-right">menu</md-icon>
+        <mat-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" class="open-icon flex-right">menu</mat-icon>
     </div>
     <div *ngIf="sentQuestion && assessment.state === assessmentStates.IN_PROGRESS" class="assessment-area">
         <h5>{{sentQuestion.title}}</h5>
-        <ace-editor id="ace-editor" class="editor question-border" [theme]="'sqlserver'" [(text)]="questionBody" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
+        <ace-editor id="ace-editor" class="editor question-border" [theme]="'sqlserver'" [(text)]="questionBody" [mode]="mode" [options]="editorOptions"
+            [readOnly]="true"></ace-editor>
         <h6>Suggested Answer</h6>
-        <ace-editor *ngIf="questionAnswer != ''" id="ace-editor" class="editor answer-border" [theme]="'sqlserver'" [(text)]="questionAnswer" [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
+        <ace-editor *ngIf="questionAnswer != ''" id="ace-editor" class="editor answer-border" [theme]="'sqlserver'" [(text)]="questionAnswer"
+            [mode]="mode" [options]="editorOptions" [readOnly]="true"></ace-editor>
         <pre *ngIf="sentQuestion.suggestedAnswer === ''" class="question-answer answer-border">No suggested answer</pre>
     </div>
     <div *ngIf="assessment && assessment.state === assessmentStates.NOTES" (onload)="sidenav.toggle()" class="notes-area flex-container">
         <h5>Notes</h5>
-        <star-rating-comp starType="svg" [rating]="assessment.rating" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
+        <star-rating starType="svg" [rating]="assessment.rating" (onRatingChange)="onRatingChange($event)"></star-rating>
         <textarea #notes class="editor"></textarea>
-        <button md-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
+        <button mat-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>
-    <md-sidenav #sidenav id="sidenavID" class="mat-elevation-z5" mode="side" opened="true" align="end">
+    <mat-drawer #sidenav id="sidenavID" class="mat-elevation-z5" mode="side" [opened]="!shouldHideSidebar()" position="end">
         <div id="title-wrapper">
-          <md-icon id="close-icon" (click)="sidenav.toggle()">close</md-icon>
-          <form [formGroup]="form" *ngIf="form">
-            <md-input-container class="language">
-              <input mdInput #languageField placeholder="Language" [mdAutocomplete]="auto" type="text" name="language" formControlName="language">
-            </md-input-container>
-            <md-autocomplete #auto="mdAutocomplete">
-              <md-option *ngFor="let language of filteredLanguages | async" [value]="language">
-                {{ language }}
-              </md-option>
-            </md-autocomplete>
-          </form>
+            <mat-icon id="close-icon" (click)="sidenav.toggle()">close</mat-icon>
+            <form [formGroup]="form" *ngIf="form">
+                <mat-form-field class="language">
+                    <input matInput #languageField placeholder="Language" [matAutocomplete]="auto" type="text" name="language" formControlName="language">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
+                            {{ language }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
         </div>
         <div id="list-wrapper">
-            <md-list class="sidenav-list">
+            <mat-list class="sidenav-list">
                 <div *ngFor="let question of filteredQuestions | async" [class.selected]="selectedQuestion === question">
                     <app-question-list-item [question]="question" (click)="selectQuestion(question)"></app-question-list-item>
                 </div>
-            </md-list>
+            </mat-list>
         </div>
         <div id="button-wrapper">
             <div>
-                <button md-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
-                <button md-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
+                <button mat-raised-button class="flex-down" color="primary" (click)="sendQuestion()">Select</button>
+                <button mat-raised-button class="flex-down" color="accent" (click)="previewQuestion()">Preview</button>
             </div>
-                <button md-raised-button class="end-assessment" color="warn" (click)="endAssessment()">End assessment</button>
+            <button mat-raised-button class="end-assessment" color="warn" (click)="endAssessment()">End assessment</button>
         </div>
-    </md-sidenav>
-</md-sidenav-container>
+    </mat-drawer>
+</mat-drawer-container>

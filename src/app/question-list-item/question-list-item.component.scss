@@ -1,24 +1,4 @@
-.centered-flex-container {
-  align-items: center;
-}
-
-.info {
-  width: 92%;
-}
-
-md-list-item {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  box-sizing: border-box;
-}
-
-.question:hover {
-  cursor: pointer;
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-
-#questionTitle {
-  margin: 0;
+.mat-list-icon {
+  height: auto !important;
+  width: auto !important;
 }

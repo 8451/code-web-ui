@@ -1,48 +1,48 @@
 <div class="flex-container-column full-height">
   <div class="flex-container paging-and-search">
     <div class="one-third-width full-height flex-container">
-      <md-paginator #assessmentPaginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      <mat-paginator #assessmentPaginator [length]="totalAssessments" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
         (page)="pageEvent = $event">
-      </md-paginator>
-      <md-icon class="icon-button"  mdTooltip="Download all assessments" mdTooltipPosition="right" (click)="exportCsv()">file_download</md-icon>
+      </mat-paginator>
+      <mat-icon class="icon-button"  matTooltip="Download all assessments" matTooltipPosition="right" (click)="exportCsv()">file_download</mat-icon>
     </div>
     <div class="search-box one-third-width full-height flex-container">
-      <md-input-container floatPlaceholder="never">
-        <md-icon mdPrefix class="search-icon">search</md-icon>
-        <input #search mdInput placeholder="Search" (keyup.enter)="searchAssessment(search.value)">
-      </md-input-container>
+      <mat-form-field floatPlaceholder="never">
+        <mat-label><mat-icon mdPrefix class="search-icon">search</mat-icon> Search</mat-label>
+        <input #search matInput placeholder="Search" (keyup.enter)="searchAssessment(search.value)">
+      </mat-form-field>
     </div>
   </div>
   <h3 *ngIf="assessments && !assessments.length">No Assessments</h3>
-  <md-list>
+  <mat-list>
     <div *ngFor="let assessment of assessments">
-      <md-list-item [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
+      <mat-list-item [class.selected]="assessment === selectedAssessment" (click)="selectAssessment(assessment)">
         <div class="wrapper">
           <div class="list-item-left">
             <div class="info">
-              <h4 md-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
-              <p md-line>{{assessment.email}}</p>
+              <h4 mat-line>{{assessment.firstName}} {{assessment.lastName}}</h4>
+              <p mat-line>{{assessment.email}}</p>
             </div>
-            <star-rating-comp starType="svg" [rating]="assessment.rating" readOnly="true"></star-rating-comp>
+            <star-rating starType="svg" [rating]="assessment.rating" readOnly="true"></star-rating>
           </div>
           <p *ngIf="assessment.state === assessmentStates.CLOSED && assessment !== selectedAssessment" class="completed-label">Completed on {{assessment.modifiedDate | date: "short"}}</p>
 
-          <md-icon *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="list-button list-button-theme"
-            mdTooltip="Resume" mdTooltipPosition="left" (click)="resumeAssessment(assessment)">update</md-icon>
+          <mat-icon *ngIf="assessment.state === assessmentStates.IN_PROGRESS || assessment.state === assessmentStates.NOTES" class="list-button list-button-theme"
+            matTooltip="Resume" matTooltipPosition="left" (click)="resumeAssessment(assessment)">update</mat-icon>
 
-          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="list-button list-button-theme"
-            mdTooltip="Start" mdTooltipPosition="left" (click)="startAssessment()">forward</md-icon>
+          <mat-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.NOT_STARTED" class="list-button list-button-theme"
+            matTooltip="Start" matTooltipPosition="left" (click)="startAssessment()">forward</mat-icon>
 
-          <md-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="list-button list-button-theme"
-            mdTooltip="View" mdTooltipPosition="left" (click)="viewAssessment()">visibility</md-icon>
+          <mat-icon *ngIf="assessment === selectedAssessment && selectedAssessment.state === assessmentStates.CLOSED" class="list-button list-button-theme"
+            matTooltip="View" matTooltipPosition="left" (click)="viewAssessment()">visibility</mat-icon>
 
         </div>
-      </md-list-item>
-      <md-divider></md-divider>
+      </mat-list-item>
+      <mat-divider></mat-divider>
     </div>
     <div class="list-spacer"></div>
-  </md-list>
-  <button md-fab class="md-fab-bottom-right" (click)="createAssessment()">
-    <md-icon>add</md-icon>
+  </mat-list>
+  <button mat-fab class="mat-fab-bottom-right" (click)="createAssessment()">
+    <mat-icon>add</mat-icon>
   </button>
 </div>

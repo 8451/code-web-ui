@@ -1,7 +1,7 @@
 import { AlertService } from './../services/alert/alert.service';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Assessment, AssessmentStates } from './../domains/assessment';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
@@ -16,7 +16,7 @@ export class NewAssessmentDialogComponent implements OnInit, OnDestroy {
   subscription;
   form: FormGroup;
 
-  constructor(public dialogRef: MdDialogRef<NewAssessmentDialogComponent>, private alertService: AlertService,
+  constructor(public dialogRef: MatDialogRef<NewAssessmentDialogComponent>, private alertService: AlertService,
               private assessmentService: AssessmentService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {

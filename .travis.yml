@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - '8.4'
+  - '8.9'
 
 script:
   - ng build --prod
@@ -21,4 +21,4 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-  - ng test -sr
+  - ng test --watch=false

@@ -1,8 +1,8 @@
-import { AceEditorModule } from 'ng2-ace-editor/ng2-ace-editor';
-import { MdDialogRef } from '@angular/material';
+import { AceEditorModule } from 'ng2-ace-editor';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionInfoDialogComponent } from './question-info-dialog.component';
+import { MatDialogRef } from '../../../node_modules/@angular/material';
 
 describe('QuestionInfoDialogComponent', () => {
   let component: QuestionInfoDialogComponent;
@@ -28,7 +28,7 @@ describe('QuestionInfoDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [QuestionInfoDialogComponent],
       providers: [
-        { provide: MdDialogRef, useClass: MdDialogRefMock }
+        { provide: MatDialogRef, useClass: MdDialogRefMock }
       ],
       imports: [
         AceEditorModule,

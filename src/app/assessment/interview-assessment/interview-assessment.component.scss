@@ -44,19 +44,19 @@ html, .full-height {
   flex-grow: 1;
 }
 
-md-sidenav {
-  display: none;
+mat-drawer {
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width:25em;
 }
 
-md-sidenav-container {
+mat-drawer-container {
   height: 100%;
   background: white;
 }
 
-md-icon {
+mat-icon {
   font-size: 2.5em;
   height: 1em;
   width: 1em;

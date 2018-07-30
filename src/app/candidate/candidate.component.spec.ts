@@ -1,7 +1,5 @@
 import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
-import { StompService } from 'ng2-stomp-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
 import { ActivateComponent } from './../register/activate/activate.component';
@@ -29,7 +27,6 @@ describe('CandidateComponent', () => {
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MaterialModule,
         RouterTestingModule.withRoutes([ {path: '', pathMatch: 'full', redirectTo: '/interview'},
         {path: 'candidate', component: CandidateComponent, children: [{path: 'assessments', component: DummyComponent}]}
         ])],

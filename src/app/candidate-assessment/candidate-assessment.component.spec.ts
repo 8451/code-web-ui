@@ -2,20 +2,20 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { AssessmentStateResponse, AssessmentStates } from './../domains/assessment';
 import { Subject } from 'rxjs/Subject';
 import { AnswerQuestionEvent, EndAssessmentEvent } from './../domains/events/web-socket-event';
-import { StompService } from 'ng2-stomp-service';
+import { StompService, StompConfig} from '@stomp/ng2-stompjs';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { AssessmentService } from './../services/assessment/assessment.service';
-import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
+import { AssessmentWebSocketService, stompConfig } from './../services/assessment-web-socket/assessment-web-socket.service';
 import { AlertService } from './../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CandidateAssessmentComponent } from './candidate-assessment.component';
+import { MatInputModule, MatToolbarModule, MatSlideToggleModule } from '@angular/material';
 
 describe('CandidateAssessmentComponent', () => {
   let component: CandidateAssessmentComponent;
@@ -41,8 +41,8 @@ describe('CandidateAssessmentComponent', () => {
   const mockRouter = { navigate: spy = jasmine.createSpy('navigate') };
 
   const mockStomp = {
-    configure(object: any) {},
-    startConnect() {return Promise.resolve(); },
+    initAndConnect(object: any) {},
+    publish() { },
     done(queue: string) {},
     after(queue: string) {return Promise.resolve(); },
     subscribe(address: string, fun: (data: any) => void ) {},
@@ -58,13 +58,16 @@ describe('CandidateAssessmentComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         BrowserAnimationsModule,
-        MaterialModule,
+        MatToolbarModule,
+        MatInputModule,
+        MatSlideToggleModule,
         AceEditorModule,
       ],
       providers: [
         { provide: ActivatedRoute, useValue: {params: Observable.of([{id: '12345'}])}},
         AlertService,
         { provide: StompService, useValue: mockStomp },
+        { provide: StompConfig, useValue: {url: ''}},
         AssessmentWebSocketService,
         { provide: Router, useValue: mockRouter },
         { provide: AssessmentService, useValue: mockAssessmentService}
@@ -105,9 +108,9 @@ describe('CandidateAssessmentComponent', () => {
   });
 
   it('should display a toast when submitted', () => {
-    spyOn(assessmentWebSocketService, 'answerQuestion');
+    spyOn(assessmentWebSocketService, 'answerQuestion').and.callThrough();
     const alertService = fixture.debugElement.injector.get(AlertService);
-    spyOn(alertService, 'info');
+    spyOn(alertService, 'info').and.callThrough();
     component.form.setValue({
       title: question.title,
       body: question.body,

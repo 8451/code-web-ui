@@ -1,25 +1,25 @@
 <div class="component-wrapper">
-  <md-card [@flip]="loginFacing" class="centered-card">
+  <mat-card [@flip]="loginFacing" class="centered-card">
     <div class="flex-container-column login-component">
       <app-login></app-login>
-      <md-card-actions>
+      <mat-card-actions>
         <div class="gateway-buttons">
           <a routerLink="/forgot-password">forgot password?</a>
         </div>
         <div class="gateway-buttons">
           or  <label (click)="toggleComponent()">register</label>
         </div>
-      </md-card-actions>
+      </mat-card-actions>
     </div>
-  </md-card>
-  <md-card [@flip]="registerFacing" class="centered-card">
+  </mat-card>
+  <mat-card [@flip]="registerFacing" class="centered-card">
     <div class="flex-container-column">
       <app-register></app-register>
-      <md-card-actions>
+      <mat-card-actions>
         <div class="gateway-buttons">
           or  <label (click)="toggleComponent()">login</label>
         </div>
-      </md-card-actions>
+      </mat-card-actions>
     </div>
-  </md-card>
+  </mat-card>
 </div>

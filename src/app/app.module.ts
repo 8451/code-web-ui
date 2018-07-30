@@ -1,31 +1,31 @@
-import { AssessmentWebSocketService } from './services/assessment-web-socket/assessment-web-socket.service';
+import { AssessmentWebSocketService, stompConfig } from './services/assessment-web-socket/assessment-web-socket.service';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { AssessmentService } from './services/assessment/assessment.service';
-import { StompService } from 'ng2-stomp-service';
+import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdListModule,
-  MdToolbarModule,
-  MdGridListModule,
-  MdInputModule,
-  MdSnackBarModule,
-  MdDialogModule,
-  MdIconModule,
-  MdSidenavModule,
-  MdAutocompleteModule,
-  MdPaginatorModule,
-  MdExpansionModule,
-  MdChipsModule,
-  MdSlideToggleModule,
-  MdTooltipModule
+  MatButtonModule,
+  MatCardModule,
+  MatListModule,
+  MatToolbarModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatDialogModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatAutocompleteModule,
+  MatPaginatorModule,
+  MatExpansionModule,
+  MatChipsModule,
+  MatSlideToggleModule,
+  MatTooltipModule,
 } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -55,7 +55,7 @@ import { AssessmentDetailsComponent } from './assessment/assessment-details/asse
 import { LanguageChipComponent } from './language-chip/language-chip.component';
 import { GatewayComponent } from './gateway/gateway.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { StarRatingModule } from 'angular-star-rating';
+import { StarRatingModule } from 'angular-star-rating'
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
@@ -92,24 +92,24 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdCardModule,
-    MdListModule,
-    MdToolbarModule,
-    MdGridListModule,
-    MdInputModule,
-    MdSnackBarModule,
-    MdDialogModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatDialogModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdSidenavModule,
+    MatIconModule,
+    MatSidenavModule,
     AceEditorModule,
-    MdPaginatorModule,
-    MdAutocompleteModule,
-    MdExpansionModule,
-    MdChipsModule,
-    MdSlideToggleModule,
-    MdTooltipModule,
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
     StarRatingModule.forRoot(),
   ],
   entryComponents: [
@@ -118,14 +118,19 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     NewAssessmentDialogComponent,
     QuestionInfoDialogComponent,
   ],
-  providers: [AlertService,
+  providers: [
+    AlertService,
     QuestionService,
     AssessmentService,
     UserService,
     AuthService,
     AssessmentWebSocketService,
     CanActivateAuthguard,
-    StompService
+    StompService,
+    {
+      provide: StompConfig,
+      useValue: stompConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

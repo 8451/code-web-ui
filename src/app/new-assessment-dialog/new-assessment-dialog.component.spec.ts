@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Headers, Http, BaseRequestOptions, XHRBackend, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdDialogRef, MdInputModule, MaterialModule } from '@angular/material';
+import { MatDialogRef, MatInputModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssessmentService } from './../services/assessment/assessment.service';
 import { Assessment, AssessmentStates } from './../domains/assessment';
@@ -43,11 +43,17 @@ describe('NewAssessmentDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule],
+      imports: [
+        MatButtonModule,
+        MatInputModule,
+        FormsModule, 
+        BrowserAnimationsModule,
+        ReactiveFormsModule
+      ],
       declarations: [NewAssessmentDialogComponent],
       providers: [
         { provide: AuthService, useValue: mockAuthService},
-        { provide: MdDialogRef, useClass: MdDialogRefMock },
+        { provide: MatDialogRef, useClass: MdDialogRefMock },
         AssessmentService,
         MockBackend,
         BaseRequestOptions,

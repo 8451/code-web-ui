@@ -1,37 +1,37 @@
-<md-card-title class="card-title">Register</md-card-title>
-<md-card-content>
+<mat-card-title class="card-title">Register</mat-card-title>
+<mat-card-content>
   <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmitRegister()">
     <div class="spacer">
-      <md-input-container class="two-third-width">
-        <input mdInput placeholder="First Name" required title="First Name" formControlName="firstName">
-      </md-input-container>
-      <md-input-container class="two-third-width">
-        <input mdInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
-      </md-input-container>
-      <md-input-container class="two-third-width">
-        <input mdInput placeholder="Email" required title="Email Address" formControlName="username">
-        <md-error>
+      <mat-form-field class="two-third-width">
+        <input matInput placeholder="First Name" required title="First Name" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field class="two-third-width">
+        <input matInput placeholder="Last Name" required title="Last Name" formControlName="lastName">
+      </mat-form-field>
+      <mat-form-field class="two-third-width">
+        <input matInput placeholder="Email" required title="Email Address" formControlName="username">
+        <mat-error>
           Must have a valid email address
-        </md-error>
-      </md-input-container>
-      <md-input-container class="two-third-width">
-        <input mdInput type="password" placeholder="Password" required title="Password" formControlName="password">
-        <md-error *ngIf="form.controls['password'].hasError('minlength')">
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="two-third-width">
+        <input matInput type="password" placeholder="Password" required title="Password" formControlName="password">
+        <mat-error *ngIf="form.controls['password'].hasError('minlength')">
           Password must have at least 8 characters
-        </md-error>
-        <md-error *ngIf="form.controls['password'].hasError('passwordValid')">
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].hasError('passwordValid')">
           Password must contain at least 3 of uppercase, lowercase, punctuation, or numbers
-        </md-error>
-      </md-input-container>
-      <md-input-container class="two-third-width">
-        <input mdInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">
-        <md-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="two-third-width">
+        <input matInput type="password" placeholder="Confirm Password" required title="Confirm Password" formControlName="confirmPassword">
+        <mat-error *ngIf="form.controls['confirmPassword'].hasError('sameValue')">
           Passwords must match
-        </md-error>
-      </md-input-container>
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="centered-button">
-      <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
     </div>
   </form>
-</md-card-content>
+</mat-card-content>

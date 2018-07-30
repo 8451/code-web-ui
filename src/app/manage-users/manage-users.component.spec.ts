@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserResponse } from './../domains/user-response';
-import { MaterialModule, PageEvent } from '@angular/material';
+import { MatPaginatorModule, MatListModule, PageEvent, MatIconModule, MatInputModule } from '@angular/material';
 import { AuthService } from './../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -43,7 +43,10 @@ describe('ManageUsersComponent', () => {
       declarations: [ManageUsersComponent],
       imports: [
         HttpModule,
-        MaterialModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatIconModule,
+        MatInputModule,
         BrowserAnimationsModule
       ],
       providers: [

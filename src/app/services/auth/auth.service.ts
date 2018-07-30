@@ -19,7 +19,7 @@ export class AuthService {
     });
   }
 
-  login(username: string, password: string): Observable<boolean> {
+  login(username: string, password: string): Observable<boolean | any> {
     return this.http.post(this.authService,
       { username: username, password: password })
       .map(res => {

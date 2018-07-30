@@ -1,10 +1,10 @@
 import { Alert, AlertType } from './../domains/alert';
 import { DialogComponent } from './dialog/dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule, MdSnackBar, MdDialogRef } from '@angular/material';
 import { AlertService } from './../services/alert/alert.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlertComponent } from './alert.component';
+import { MatSnackBarModule, MatDialogModule, MatDialogRef } from '../../../node_modules/@angular/material';
 
 describe('AlertComponent', () => {
   let component: AlertComponent;
@@ -23,7 +23,8 @@ describe('AlertComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule,
+        MatSnackBarModule,
+        MatDialogModule,
         BrowserAnimationsModule
       ],
       declarations: [ AlertComponent ],
@@ -66,7 +67,7 @@ describe('AlertComponent', () => {
 
     component.handleAlert(confirmationAlert);
 
-    component.dialog.afterOpen.subscribe((result: MdDialogRef<DialogComponent>) => {
+    component.dialog.afterOpen.subscribe((result: MatDialogRef<DialogComponent>) => {
       expect(result.componentInstance.alert).toBeTruthy();
     });
   });

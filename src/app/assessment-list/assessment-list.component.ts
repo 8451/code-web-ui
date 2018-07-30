@@ -4,7 +4,7 @@ import { AlertService } from './../services/alert/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MdDialog, MdDialogRef, MdPaginator, PageEvent } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator, PageEvent } from '@angular/material';
 import { Assessment, AssessmentStates } from './../domains/assessment';
 import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-assessment-dialog.component';
 
@@ -16,12 +16,12 @@ import { NewAssessmentDialogComponent } from './../new-assessment-dialog/new-ass
 export class AssessmentListComponent implements OnInit, OnDestroy {
 
   assessments: Assessment[];
-  dialogRef: MdDialogRef<NewAssessmentDialogComponent>;
+  dialogRef: MatDialogRef<NewAssessmentDialogComponent>;
   subscription: Subscription;
   selectedAssessment: Assessment;
   assessmentStates: any = AssessmentStates;
   searchString = '';
-  @ViewChild('assessmentPaginator') paginator: MdPaginator;
+  @ViewChild('assessmentPaginator') paginator: MatPaginator;
 
   totalAssessments = 100;
   pageSize = 10;
@@ -39,7 +39,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private assessmentService: AssessmentService,
     private router: Router,
     private alertService: AlertService,

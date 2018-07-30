@@ -1,7 +1,6 @@
-import { AceEditorModule, AceEditorComponent } from 'ng2-ace-editor/ng2-ace-editor';
+import { AceEditorModule } from 'ng2-ace-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, Input } from '@angular/core';
-import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './../services/auth/auth.service';
 import { AlertService } from './../services/alert/alert.service';
@@ -13,6 +12,10 @@ import { async, ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angu
 import { ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { QuestionDetailsComponent } from './question-details.component';
 import { ActivatedRoute, Params, Router, ActivatedRouteSnapshot, UrlSegment } from '@angular/router';
+import { MatAutocompleteModule, 
+  MatInputModule,
+  MatCardModule,
+  MatListModule, } from '@angular/material';
 
 describe('QuestionDetailsComponent', () => {
   let questionService: QuestionService;
@@ -36,7 +39,10 @@ describe('QuestionDetailsComponent', () => {
         HttpModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        MaterialModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatCardModule,
+        MatListModule,
         BrowserAnimationsModule,
         AceEditorModule,
       ],
