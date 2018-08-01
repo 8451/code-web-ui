@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@import '../../../../node_modules/@angular/material/theming';
 
 #candidateForm {
     height: 100%;
     display: flex;
-    justify-content: center;    
+    justify-content: center;
     align-items: center;
 }
 
@@ -54,7 +54,7 @@ $selected-color: mat-color($mat-deep-purple, 50);
 }
 .app-body {
     overflow-y: auto;
-    height: 100%; 
+    height: 100%;
     margin: auto;
 }
 

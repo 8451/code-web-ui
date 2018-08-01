@@ -1,8 +1,8 @@
-import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
+import { AssessmentWebSocketService } from '../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
-import { ActivateComponent } from './../register/activate/activate.component';
+import { ActivateComponent } from '../../register/activate/activate.component';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';

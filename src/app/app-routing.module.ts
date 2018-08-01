@@ -3,9 +3,9 @@ import { GatewayComponent } from './gateway/gateway.component';
 import { AccountComponent } from './account/account.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AssessmentDetailsComponent } from './assessment/assessment-details/assessment-details.component';
-import { ThankYouComponent } from './thank-you/thank-you.component';
-import { CandidateAssessmentComponent } from './candidate-assessment/candidate-assessment.component';
-import { CandidateComponent } from './candidate/candidate.component';
+import { ThankYouComponent } from './candidates/thank-you/thank-you.component';
+import { CandidateAssessmentComponent } from './candidates/candidate-assessment/candidate-assessment.component';
+import { CandidateComponent } from './candidates/candidate/candidate.component';
 import { InterviewerComponent } from './interviewer/interviewer.component';
 import { CanActivateAuthguard } from './services/auth/can-activate.authguard';
 import { LoginComponent } from './login/login.component';
@@ -26,17 +26,7 @@ export const routes: Routes = [
   },
   {
     path: 'candidate',
-    component: CandidateComponent,
-    children: [
-      {
-        path: 'thank-you',
-        component: ThankYouComponent,
-      },
-      {
-        path: ':id',
-        component: CandidateAssessmentComponent
-      },
-    ]
+    loadChildren: './candidates/candidates.module#CandidatesModule'
   },
   {
     path: 'interview',

@@ -1,8 +1,8 @@
 import { Subject } from 'rxjs/Subject';
-import { AssessmentService } from './../services/assessment/assessment.service';
-import { AnswerQuestionEvent } from './../domains/events/web-socket-event';
-import { AssessmentWebSocketService } from './../services/assessment-web-socket/assessment-web-socket.service';
-import { AlertService } from './../services/alert/alert.service';
+import { AssessmentService } from '../../services/assessment/assessment.service';
+import { AnswerQuestionEvent } from '../../domains/events/web-socket-event';
+import { AssessmentWebSocketService } from '../../services/assessment-web-socket/assessment-web-socket.service';
+import { AlertService } from '../../services/alert/alert.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
