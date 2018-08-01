@@ -1,0 +1,54 @@
+@import '../../../../node_modules/@angular/material/theming';
+
+$nav-bar-height: 2.5em;
+
+$selected-color: mat-color($mat-deep-purple, 50);
+
+.app-body {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.app-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    background-image: linear-gradient(45deg, #ED008C, #F67E27);
+    color: white;
+    align-content: center;
+    height: $nav-bar-height;
+    div {
+        display: flex;
+    }
+    img {
+        height: 75%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: auto;
+    }
+}
+
+.body-wrapper {
+    padding-top: $nav-bar-height;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+button.selected {
+    border-bottom: .321em solid white;
+    border-radius: 0;
+}
+
+.navigation-content-left {
+    flex: 1 1 20%;
+}
+
+.navigation-content-right {
+    flex: 1 1 20%;
+    justify-content: flex-end;
+}

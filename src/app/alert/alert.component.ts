@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { DialogComponent } from './dialog/dialog.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from '../services/alert/alert.service';
