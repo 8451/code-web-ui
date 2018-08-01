@@ -1,12 +1,12 @@
 import { FormBuilder } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { LoginComponent } from './../login/login.component';
+import { LoginComponent } from '../login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { GatewayComponent } from './gateway.component';
-import { RegisterComponent } from './../register/register/register.component';
+import { RegisterComponent } from '../register/register/register.component';
 
 @Component({
   selector: 'app-login',

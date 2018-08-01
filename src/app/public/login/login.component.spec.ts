@@ -1,11 +1,11 @@
-import { AlertService } from './../services/alert/alert.service';
+import { AlertService } from '../../services/alert/alert.service';
 import { Observable } from 'rxjs/Rx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { MockBackend } from '@angular/http/testing';
 import { Http, HttpModule, Response, ResponseOptions } from '@angular/http';
-import { AuthService } from './../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatInputModule, MatCardModule, MatIconModule } from '@angular/material';

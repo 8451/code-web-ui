@@ -1,10 +1,10 @@
-import { ResetForgottenPassword } from './../domains/reset-forgotten-password';
+import { ResetForgottenPassword } from '../../domains/reset-forgotten-password';
 import { Observable } from 'rxjs/Observable';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../services/user/user.service';
-import { AlertService } from '../services/alert/alert.service';
+import { UserService } from '../../services/user/user.service';
+import { AlertService } from '../../services/alert/alert.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http, HttpModule } from '@angular/http';

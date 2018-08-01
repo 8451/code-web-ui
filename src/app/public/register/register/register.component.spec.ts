@@ -1,17 +1,16 @@
 import { ResponseOptions, Response } from '@angular/http';
-import { AlertService } from './../../services/alert/alert.service';
+import { AlertService } from '../../../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
-import { User } from './../../domains/user';
-import { UserService } from './../../services/user/user.service';
+import { User } from '../../../domains/user';
+import { UserService } from '../../../services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppRoutingModule } from './../../app-routing.module';
 import { NgForm, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 import { RegisterComponent } from './register.component';
-import { MatCardModule, MatInputModule } from '../../../../node_modules/@angular/material';
+import { MatCardModule, MatInputModule } from '@angular/material';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;

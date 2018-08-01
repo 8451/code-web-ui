@@ -1,13 +1,13 @@
-import { environment } from './../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from '../services/alert/alert.service';
-import { passwordValid, sameValue } from '../validators';
+import { AlertService } from '../../services/alert/alert.service';
+import { passwordValid, sameValue } from '../../validators';
 import { Subscription } from 'rxjs/Subscription';
 import { ResetForgottenPassword } from 'app/domains/reset-forgotten-password';
-import { slideToTop } from '../../router.animations';
+import { slideToTop } from '../../../router.animations';
 
 @Component({
   selector: 'app-forgot-password',

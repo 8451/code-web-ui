@@ -1,10 +1,10 @@
-import { AlertService } from './../../services/alert/alert.service';
+import { AlertService } from '../../../services/alert/alert.service';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from './../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { slideToRight } from '../../../router.animations';
+import { slideToRight } from '../../../../router.animations';
 
 @Component({
   selector: 'app-activate',

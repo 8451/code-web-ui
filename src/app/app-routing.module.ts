@@ -1,9 +1,9 @@
-import { NotFoundComponent } from './not-found/not-found.component';
-import { GatewayComponent } from './gateway/gateway.component';
-import { ActivateComponent } from './register/activate/activate.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
+import { GatewayComponent } from './public/gateway/gateway.component';
+import { ActivateComponent } from './public/register/activate/activate.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './public/forgot-password/forgot-password.component';
 export const routes: Routes = [
   {
     path: '',
