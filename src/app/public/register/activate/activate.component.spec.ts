@@ -1,5 +1,5 @@
 import { AuthService } from '../../../services/auth/auth.service';
-import { AlertService } from '../../../services/alert/alert.service';
+import { AlertService } from '../../../alert/alert-service/alert.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Http, BaseRequestOptions, ConnectionBackend, RequestMethod, ResponseOptions, Response } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

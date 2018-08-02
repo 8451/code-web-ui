@@ -6,7 +6,7 @@ import { NewQuestionEvent, AnswerQuestionEvent, PasteEvent } from 'app/domains/e
 import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { AssessmentWebSocketService, stompConfig } from '../../services/assessment-web-socket/assessment-web-socket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { Question } from '../../domains/question';
 import { QuestionService } from '../../services/question/question.service';
 import { QuestionInfoDialogComponent } from '../question-info-dialog/question-info-dialog.component';

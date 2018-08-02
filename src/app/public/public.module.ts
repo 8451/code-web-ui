@@ -6,6 +6,7 @@ import {
   MatCardModule, MatIconModule,
   MatInputModule
 } from '@angular/material';
+import { AlertModule } from '../alert/alert.module';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { GatewayComponent } from './gateway/gateway.component';
 import { LoginComponent } from './login/login.component';
@@ -15,6 +16,7 @@ import { RegisterComponent } from './register/register/register.component';
 
 @NgModule({
   imports: [
+    AlertModule.forRoot(),
     CommonModule,
     MatCardModule,
     MatIconModule,

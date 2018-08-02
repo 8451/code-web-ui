@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, Input } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { AuthService } from '../../services/auth/auth.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { QuestionService } from '../../services/question/question.service';
 import { Question } from '../../domains/question';

@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="assessment && assessment.state === assessmentStates.NOTES" (onload)="sidenav.toggle()" class="notes-area flex-container">
         <h5>Notes</h5>
-        <star-rating starType="svg" [rating]="assessment.rating" (onRatingChange)="onRatingChange($event)"></star-rating>
+        <star-rating starType="svg" [rating]="assessment.rating" (ratingChange)="onRatingChange($event)"></star-rating>
         <textarea #notes class="editor"></textarea>
         <button mat-raised-button class="save-notes" color="primary" (click)="saveNotes(notes.value)">Save</button>
     </div>

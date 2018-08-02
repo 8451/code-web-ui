@@ -1,6 +1,6 @@
 import { AceEditorModule } from 'ng2-ace-editor';
 import { FormsModule } from '@angular/forms';
-import { AlertService } from './../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { AuthService } from './../../services/auth/auth.service';
 import { AssessmentStates } from 'app/domains/assessment';
 import { Observable } from 'rxjs/Observable';

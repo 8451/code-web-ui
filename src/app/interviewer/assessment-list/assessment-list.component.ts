@@ -1,6 +1,6 @@
 import { AssessmentResponse } from '../../domains/assessment-response';
 import { AssessmentService } from '../../services/assessment/assessment.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';

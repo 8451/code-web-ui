@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
-import { AlertService } from './alert/alert.service';
 import { AssessmentWebSocketService, stompConfig } from './assessment-web-socket/assessment-web-socket.service';
 import { AssessmentService } from './assessment/assessment.service';
 import { AuthService } from './auth/auth.service';
@@ -17,7 +16,6 @@ import { UserService } from './user/user.service';
     HttpModule,
   ],
   providers: [
-    AlertService,
     AssessmentService,
     AssessmentWebSocketService,
     AuthService,

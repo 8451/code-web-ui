@@ -2,7 +2,7 @@ import { environment } from '../../../environments/environment';
 import { UserVerification } from '../../domains/user-verification';
 import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../domains/user';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';

@@ -13,12 +13,14 @@ import {
   MatExpansionModule,
   MatChipsModule,
   MatTooltipModule,
-  MatIconModule, MatSidenavModule
+  MatIconModule, MatSidenavModule, MatDialogModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StarRatingModule } from 'angular-star-rating';
 import { AceEditorModule } from 'ng2-ace-editor';
+import { AlertComponent } from '../alert/alert.component';
 import { AlertModule } from '../alert/alert.module';
+import { DialogComponent } from '../alert/dialog/dialog.component';
 import { ServicesModule } from '../services/services.module';
 import { AccountComponent } from './account/account.component';
 import { AssessmentDetailsComponent } from './assessment-details/assessment-details.component';
@@ -37,7 +39,6 @@ import { QuestionListItemComponent } from './question-list-item/question-list-it
 
 @NgModule({
   imports: [
-    AlertModule,
     CommonModule,
     InterviewerRoutingModule,
     ServicesModule,
@@ -45,6 +46,7 @@ import { QuestionListItemComponent } from './question-list-item/question-list-it
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatDialogModule,
     MatCardModule,
     MatIconModule,
     MatListModule,
@@ -74,6 +76,10 @@ import { QuestionListItemComponent } from './question-list-item/question-list-it
     QuestionListItemComponent,
   ],
   entryComponents: [
+    NewAssessmentDialogComponent,
+    QuestionInfoDialogComponent,
+  ],
+  exports: [
     NewAssessmentDialogComponent,
     QuestionInfoDialogComponent,
   ]

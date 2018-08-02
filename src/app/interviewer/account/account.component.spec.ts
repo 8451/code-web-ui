@@ -1,7 +1,7 @@
 import { UserVerification } from '../../domains/user-verification';
 import { User } from '../../domains/user';
 import { Observable } from 'rxjs/Observable';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { UserService } from '../../services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

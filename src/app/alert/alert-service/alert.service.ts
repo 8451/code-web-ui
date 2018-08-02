@@ -8,7 +8,8 @@ export class AlertService {
 
   private message: Subject<Alert<any>> = new Subject<Alert<any>>();
 
-  constructor() { }
+  constructor() {
+  }
 
   getAlert(): Observable<Alert<any>> {
     return this.message;

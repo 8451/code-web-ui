@@ -1,5 +1,5 @@
 import { ResponseOptions, Response } from '@angular/http';
-import { AlertService } from '../../../services/alert/alert.service';
+import { AlertService } from '../../../alert/alert-service/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../../domains/user';
 import { UserService } from '../../../services/user/user.service';

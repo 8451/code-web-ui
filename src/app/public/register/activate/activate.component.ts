@@ -1,4 +1,4 @@
-import { AlertService } from '../../../services/alert/alert.service';
+import { AlertService } from '../../../alert/alert-service/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../../services/user/user.service';
 import { Subscription } from 'rxjs/Subscription';

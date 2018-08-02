@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatSlideToggleModule, MatToolbarModule } from '@angular/material';
 import { AceEditorModule } from 'ng2-ace-editor';
+import { AlertModule } from '../alert/alert.module';
 import { ServicesModule } from '../services/services.module';
 
 import { CandidatesRoutingModule } from './candidates-routing.module';

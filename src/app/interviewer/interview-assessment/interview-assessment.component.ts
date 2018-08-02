@@ -1,10 +1,8 @@
 import { QuestionAnswer } from '../../domains/question-answer';
-import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { AceEditorComponent } from 'ng2-ace-editor';
 import { NewQuestionEvent, AnswerQuestionEvent, EndAssessmentEvent } from '../../domains/events/web-socket-event';
 import { AssessmentWebSocketService } from '../../services/assessment-web-socket/assessment-web-socket.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { QuestionInfoDialogComponent } from '../question-info-dialog/question-info-dialog.component';
 import { MatDialogRef, MatDialog, MatSidenav } from '@angular/material';
 import { Question } from '../../domains/question';
@@ -100,7 +98,7 @@ export class InterviewAssessmentComponent implements OnInit {
   }
 
   shouldHideSidebar() {
-    return this.assessment.state === AssessmentStates.NOTES;
+    return this.assessment && this.assessment.state === AssessmentStates.NOTES;
   }
 
   getAnsweredQuestion(guid: string): void {

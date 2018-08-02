@@ -1,5 +1,5 @@
 import { AuthService } from '../../services/auth/auth.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { User } from '../../domains/user';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';

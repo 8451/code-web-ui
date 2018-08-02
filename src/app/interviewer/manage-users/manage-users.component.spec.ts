@@ -4,7 +4,7 @@ import { MatPaginatorModule, MatListModule, PageEvent, MatIconModule, MatInputMo
 import { AuthService } from '../../services/auth/auth.service';
 import { HttpModule, ResponseOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../domains/user';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';

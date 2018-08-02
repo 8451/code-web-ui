@@ -1,4 +1,4 @@
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { AssessmentService } from '../../services/assessment/assessment.service';
 import { Assessment, AssessmentStates } from '../../domains/assessment';
 import { MatDialogRef } from '@angular/material';

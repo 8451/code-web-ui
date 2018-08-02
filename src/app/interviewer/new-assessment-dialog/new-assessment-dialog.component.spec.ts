@@ -1,5 +1,5 @@
 import { AuthService } from '../../services/auth/auth.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { NewAssessmentDialogComponent } from './new-assessment-dialog.component';

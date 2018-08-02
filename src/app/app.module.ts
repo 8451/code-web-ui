@@ -1,5 +1,7 @@
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { AlertModule } from './alert/alert.module';
 import { PublicModule } from './public/public.module';
+import { AlertService } from './alert/alert-service/alert.service';
 import { ServicesModule } from './services/services.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -13,7 +15,7 @@ import { AppComponent } from './app.component';
     AppComponent,
   ],
   imports: [
-    AlertModule,
+    AlertModule.forRoot(),
     ServicesModule,
     PublicModule,
     BrowserModule,

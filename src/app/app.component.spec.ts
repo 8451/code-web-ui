@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './services/auth/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AlertService } from './services/alert/alert.service';
+import { AlertService } from './alert/alert-service/alert.service';
 import { AlertComponent } from './alert/alert.component';
 import { TestBed, async, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';

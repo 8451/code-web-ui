@@ -1,6 +1,6 @@
 import { UserResponse } from '../../domains/user-response';
 import { PageEvent } from '@angular/material';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { User } from '../../domains/user';
 import { UserService } from '../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';

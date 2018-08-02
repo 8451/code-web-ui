@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from './../../domains/user';
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
-import { AlertService } from '../alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { ResetForgottenPassword } from '../../domains/reset-forgotten-password';
 
 @Injectable()

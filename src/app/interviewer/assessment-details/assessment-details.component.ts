@@ -1,7 +1,7 @@
 import { editorTranslator, languageColor } from 'app/services/question/question.service';
 import { QuestionAnswer } from '../../domains/question-answer';
 import { Observable } from 'rxjs/Observable';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { AssessmentStates } from 'app/domains/assessment';
 import { Assessment } from '../../domains/assessment';
 import { ActivatedRoute, Router, Params } from '@angular/router';

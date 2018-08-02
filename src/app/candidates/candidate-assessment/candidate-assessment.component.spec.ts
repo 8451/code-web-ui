@@ -6,7 +6,7 @@ import { StompService, StompConfig} from '@stomp/ng2-stompjs';
 import { NewQuestionEvent } from 'app/domains/events/web-socket-event';
 import { AssessmentService } from '../../services/assessment/assessment.service';
 import { AssessmentWebSocketService, stompConfig } from '../../services/assessment-web-socket/assessment-web-socket.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';

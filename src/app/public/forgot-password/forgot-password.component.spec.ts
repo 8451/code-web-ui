@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http, HttpModule } from '@angular/http';

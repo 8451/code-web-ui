@@ -4,7 +4,7 @@ import { Component, OnInit, NgModule, ViewChild, AfterViewInit, ViewChildren } f
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { QuestionService, editorTranslator } from '../../services/question/question.service';
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { FormsModule, ReactiveFormsModule, Validators, NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material';
 import 'rxjs/add/operator/switchMap';

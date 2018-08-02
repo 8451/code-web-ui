@@ -1,4 +1,4 @@
-import { AlertService } from '../../services/alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { QuestionResponse } from '../../domains/question-response';
 import { PageEvent, MatPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
