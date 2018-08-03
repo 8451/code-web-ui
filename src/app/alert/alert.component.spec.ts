@@ -1,7 +1,7 @@
 import { Alert, AlertType } from './../domains/alert';
 import { DialogComponent } from './dialog/dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AlertService } from './../services/alert/alert.service';
+import { AlertService } from './alert-service/alert.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlertComponent } from './alert.component';
 import { MatSnackBarModule, MatDialogModule, MatDialogRef } from '../../../node_modules/@angular/material';

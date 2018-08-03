@@ -12,7 +12,7 @@ import {
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { UserService } from './user.service';
-import { AlertService } from '../alert/alert.service';
+import { AlertService } from '../../alert/alert-service/alert.service';
 import { ResetForgottenPassword } from '../../domains/reset-forgotten-password';
 
 const mockUser = {

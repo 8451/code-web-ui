@@ -1,7 +1,6 @@
-import { Observable } from 'rxjs/Observable';
 import { DialogComponent } from './dialog/dialog.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AlertService } from '../services/alert/alert.service';
+import { AlertService } from './alert-service/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Alert, AlertType } from '../domains/alert';
@@ -35,7 +34,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   openConfirmation(alert: Alert<any>) {
-    const dialog = this.dialog.open(DialogComponent);
+    const dialog = this.dialog.open(DialogComponent, {});
     dialog.componentInstance.alert = alert;
     dialog.afterClosed()
       .subscribe(result => {
