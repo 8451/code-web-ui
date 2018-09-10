@@ -6,7 +6,7 @@
 @import "./md-theme.scss";
 @import '~css-star-rating/scss/star-rating';
 .answer-border {
-    border-left: .375em solid #F67E27;
+    border-left: .375em solid #017687;
 }
 
 .card-title {
@@ -208,7 +208,7 @@ mat-list-item.selected {
 }
 
 .question-border {
-    border-left: .375em solid #ED008C;
+    border-left: .375em solid #6A00AC;
 }
 
 .icon-button {
@@ -222,7 +222,7 @@ mat-list-item.selected {
     -moz-transition: all 500ms ease;
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
-    color: #F4613E;
+    color: #017687;
     cursor: pointer;
 }
 
@@ -245,7 +245,7 @@ mat-list-item.selected {
     -moz-transition: all 500ms ease;
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
-    color: #F4613E;
+    color: #017687;
 }
 
 .paging-and-search {
