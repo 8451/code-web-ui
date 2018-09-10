@@ -24,7 +24,7 @@ export class ActivateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #6A00AC, #017687)';
     this.routeSubscription = this.route.params.subscribe(params => {
       this.activationCode = params['guid'] || '';
     });

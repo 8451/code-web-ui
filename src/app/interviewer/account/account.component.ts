@@ -30,7 +30,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    document.body.style.backgroundImage = 'linear-gradient(45deg, #ED008C, #F67E27)';
+    document.body.style.backgroundImage = 'linear-gradient(45deg, #6A00AC, #017687)';
     this.canChangePassword = false;
     this.formInit();
     this.fillForm();
